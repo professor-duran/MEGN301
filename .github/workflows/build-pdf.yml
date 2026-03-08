@@ -1,0 +1,45 @@
+name: Build PDF and Release
+
+# Trigger: runs every time you push to any branch
+on: push
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out your repository (gets the .tex and all images)
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Step 2: Compile the LaTeX document to PDF
+      # This uses a Docker container with a full TeX Live installation
+      # latexmk automatically runs pdflatex multiple times for cross-references
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: MEGN301_Compiled_Course_References_and_Notes.tex
+
+      # Step 3: Upload the PDF as a build artifact (downloadable from the Actions tab)
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MEGN301_Course_Notes_PDF
+          path: MEGN301_Compiled_Course_References_and_Notes.pdf
+
+      # Step 4: Create a timestamped draft release with the PDF attached
+      - name: Get timestamp
+        run: echo "TIMESTAMP=$(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Build ${{ env.TIMESTAMP }}"
+          tag_name: "build-${{ github.run_number }}"
+          files: MEGN301_Compiled_Course_References_and_Notes.pdf
+          draft: true
+          body: |
+            Automated build from commit ${{ github.sha }}
+            
+            **Compiled:** ${{ env.TIMESTAMP }}
+            **Branch:** ${{ github.ref_name }}
+            **Commit message:** ${{ github.event.head_commit.message }}
