@@ -21,36 +21,43 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Compile Course Notes (lives inside MEGN301_Course_Notes_GitHub/)
+      - name: List repo contents
+        run: |
+          echo "=== Root ==="
+          ls -la
+          echo ""
+          echo "=== All .tex files ==="
+          find . -name "*.tex" -type f
+          echo ""
+          echo "=== All .png files ==="
+          find . -name "*.png" -type f | head -20
+          echo ""
+          echo "=== All directories ==="
+          find . -maxdepth 1 -type d | sort
+
       - name: Compile Course Notes
         uses: xu-cheng/latex-action@v3
         with:
           root_file: MEGN301_Compiled_Course_References_and_Notes.tex
-          working_directory: MEGN301_Course_Notes_GitHub
 
-      # Compile Student Guide (lives at repo root)
       - name: Compile Student Guide
         uses: xu-cheng/latex-action@v3
         with:
           root_file: MEGN301_Student_Guide.tex
         continue-on-error: true
 
-      # Gather all PDFs into one place
       - name: Collect PDFs
         run: |
           mkdir -p _output
-          cp MEGN301_Course_Notes_GitHub/*.pdf _output/ 2>/dev/null || true
-          cp *.pdf _output/ 2>/dev/null || true
+          find . -maxdepth 2 -name "*.pdf" -not -path "./_output/*" -not -path "./_site/*" -exec cp {} _output/ \;
           echo "=== Compiled PDFs ==="
           for f in _output/*.pdf; do
-            if [ -f "$f" ]; then
-              size=$(du -h "$f" | cut -f1)
-              pages=$(pdfinfo "$f" 2>/dev/null | grep Pages | awk '{print $2}' || echo "?")
-              echo "  $(basename $f)  (${pages} pages, ${size})"
-            fi
+            [ -f "$f" ] || continue
+            size=$(du -h "$f" | cut -f1)
+            pages=$(pdfinfo "$f" 2>/dev/null | grep Pages | awk '{print $2}' || echo "?")
+            echo "  $(basename $f)  (${pages} pages, ${size})"
           done
 
-      # Upload as build artifacts
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -58,7 +65,6 @@ jobs:
           path: '_output/*.pdf'
           retention-days: 90
 
-      # Deploy to GitHub Pages
       - name: Prepare Pages site
         run: |
           mkdir -p _site
@@ -104,9 +110,7 @@ jobs:
           EOF
           done
           echo '    <p class="footer">Auto-compiled from source</p>' >> _site/index.html
-          echo '  </div>' >> _site/index.html
-          echo '</body>' >> _site/index.html
-          echo '</html>' >> _site/index.html
+          echo '  </div></body></html>' >> _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -116,7 +120,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
 
-      # Rolling latest release
       - name: Update latest release
         uses: softprops/action-gh-release@v2
         with:
