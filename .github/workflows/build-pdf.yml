@@ -1,17 +1,14 @@
 name: Build PDFs and Publish
 
-# ── Only rebuild when content actually changes ──
 on:
   push:
     paths:
       - '**.tex'
       - '**.png'
       - '**.jpg'
-      - '**.pdf'
       - '.github/workflows/build-pdfs.yml'
-  workflow_dispatch:  # Manual trigger button in the Actions tab
+  workflow_dispatch:
 
-# ── Permissions for Pages deployment and Releases ──
 permissions:
   contents: write
   pages: write
@@ -21,149 +18,113 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # ── 1. Check out the repo ──
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── 2. Compile all .tex files found in the root directory ──
-      #    This handles both the course notes and the student guide
-      #    Add more root_file entries as you create new documents
-      - name: Compile LaTeX documents
+      # Compile Course Notes (lives inside MEGN301_Course_Notes_GitHub/)
+      - name: Compile Course Notes
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: |
-            MEGN301_Compiled_Course_References_and_Notes.tex
-          # Uncomment the line below when you add the student guide:
-          # MEGN301_Student_Project_Guide.tex
+          root_file: MEGN301_Compiled_Course_References_and_Notes.tex
+          working_directory: MEGN301_Course_Notes_GitHub
 
-      # ── 3. List compiled PDFs (for the build log) ──
-      - name: List compiled PDFs
+      # Compile Student Guide (lives at repo root)
+      - name: Compile Student Guide
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: MEGN301_Student_Guide.tex
+        continue-on-error: true
+
+      # Gather all PDFs into one place
+      - name: Collect PDFs
         run: |
+          mkdir -p _output
+          cp MEGN301_Course_Notes_GitHub/*.pdf _output/ 2>/dev/null || true
+          cp *.pdf _output/ 2>/dev/null || true
           echo "=== Compiled PDFs ==="
-          ls -lh *.pdf
-          echo ""
-          for f in *.pdf; do
-            echo "$f: $(pdfinfo "$f" 2>/dev/null | grep Pages || echo 'unknown pages')"
+          for f in _output/*.pdf; do
+            if [ -f "$f" ]; then
+              size=$(du -h "$f" | cut -f1)
+              pages=$(pdfinfo "$f" 2>/dev/null | grep Pages | awk '{print $2}' || echo "?")
+              echo "  $(basename $f)  (${pages} pages, ${size})"
+            fi
           done
 
-      # ── 4. Upload PDFs as build artifacts ──
-      #    Downloadable from the Actions tab for 90 days
+      # Upload as build artifacts
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: MEGN301-PDFs
-          path: '*.pdf'
+          path: '_output/*.pdf'
           retention-days: 90
 
-      # ── 5. Deploy to GitHub Pages ──
-      #    Creates a simple index page linking to all PDFs
-      #    Students access at: https://<username>.github.io/MEGN310/
-      - name: Prepare Pages deployment
+      # Deploy to GitHub Pages
+      - name: Prepare Pages site
         run: |
           mkdir -p _site
-          cp *.pdf _site/
-
-          # Generate a clean index page
+          cp _output/*.pdf _site/ 2>/dev/null || true
           cat > _site/index.html << 'HTMLEOF'
           <!DOCTYPE html>
           <html lang="en">
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>MEGN 301 — Course Materials</title>
+            <title>MEGN 301 - Course Materials</title>
             <style>
               * { margin: 0; padding: 0; box-sizing: border-box; }
-              body { 
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                background: #f5f7fa; color: #21314D; padding: 2rem;
-              }
+              body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; background: #f5f7fa; color: #21314D; padding: 2rem; }
               .container { max-width: 700px; margin: 0 auto; }
               h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
               .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.95rem; }
-              .card {
-                background: white; border-radius: 12px; padding: 1.5rem;
-                margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-                transition: box-shadow 0.2s;
-              }
-              .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+              .card { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
               .card h2 { font-size: 1.1rem; margin-bottom: 0.4rem; }
               .card p { color: #555; font-size: 0.9rem; margin-bottom: 0.8rem; }
-              .card a {
-                display: inline-block; background: #21314D; color: white;
-                padding: 0.5rem 1.2rem; border-radius: 6px; text-decoration: none;
-                font-size: 0.9rem; font-weight: 500;
-              }
-              .card a:hover { background: #00796B; }
+              .btn { display: inline-block; background: #21314D; color: white; padding: 0.5rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.9rem; }
+              .btn:hover { background: #00796B; }
               .footer { margin-top: 2rem; color: #999; font-size: 0.8rem; text-align: center; }
             </style>
           </head>
           <body>
             <div class="container">
-              <h1>MEGN 301 — Mechanical Integration & Design</h1>
-              <p class="subtitle">Colorado School of Mines · Prof. Adam Duran · Spring 2026</p>
+              <h1>MEGN 301 - Mechanical Integration and Design</h1>
+              <p class="subtitle">Colorado School of Mines - Prof. Adam Duran - Spring 2026</p>
           HTMLEOF
-
-          # Auto-detect all PDFs and create cards
           for pdf in _site/*.pdf; do
+            [ -f "$pdf" ] || continue
             filename=$(basename "$pdf")
-            # Generate a friendly name from the filename
             friendly=$(echo "$filename" | sed 's/.pdf//' | sed 's/_/ /g')
             filesize=$(du -h "$pdf" | cut -f1)
             pages=$(pdfinfo "$pdf" 2>/dev/null | grep Pages | awk '{print $2}' || echo "?")
-            
             cat >> _site/index.html << EOF
               <div class="card">
                 <h2>$friendly</h2>
-                <p>${pages} pages · ${filesize}</p>
-                <a href="$filename" download>Download PDF</a>
+                <p>${pages} pages - ${filesize}</p>
+                <a class="btn" href="$filename" download>Download PDF</a>
               </div>
           EOF
           done
-
-          # Close the HTML
-          cat >> _site/index.html << 'HTMLEOF'
-              <p class="footer">
-                Auto-compiled from source · Last updated: BUILDDATE
-              </p>
-            </div>
-          </body>
-          </html>
-          HTMLEOF
-
-          # Insert actual build date
-          sed -i "s/BUILDDATE/$(date +'%B %d, %Y at %H:%M UTC')/" _site/index.html
+          echo '    <p class="footer">Auto-compiled from source</p>' >> _site/index.html
+          echo '  </div>' >> _site/index.html
+          echo '</body>' >> _site/index.html
+          echo '</html>' >> _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
 
-      # ── 6. Deploy to GitHub Pages ──
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
 
-      # ── 7. Update the "latest" release ──
-      #    This overwrites the same release every time, so students
-      #    always download from: github.com/<user>/MEGN310/releases/tag/latest
+      # Rolling latest release
       - name: Update latest release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: "Latest Build"
-          files: '*.pdf'
+          name: Latest Build
+          files: '_output/*.pdf'
           draft: false
           prerelease: false
           body: |
-            ## 📄 Current Course Materials
-
-            Always up-to-date. Download the PDFs below.
-
-            **Last compiled:** ${{ github.event.head_commit.timestamp }}
-            **Commit:** [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
-            **Change:** ${{ github.event.head_commit.message }}
-            
-            ---
-            
-            💡 **Tip:** Bookmark this page — these files are always the latest version.
-            
-            🌐 **Web access:** [${{ github.server_url }}/${{ github.repository }}](${{ github.server_url }}/${{ github.repository }})
+            Current course materials - always up to date.
+            Web access: https://professor-duran.github.io/MEGN301/
