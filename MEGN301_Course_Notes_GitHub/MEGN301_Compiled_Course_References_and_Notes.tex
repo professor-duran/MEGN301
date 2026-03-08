@@ -1733,7 +1733,7 @@ Each failure mode is scored on three scales (each rated 1--10):
 \text{RPN} = S \times O \times D
 \]
 
-RPN ranges from 1 to 1000. Higher RPN values indicate higher priority for corrective action. A common threshold for action is RPN $\geq 100$, though this varies by industry and application. \textbf{Important}: RPN is a \emph{ranking} tool, not a linear measurement. Because it is the product of three ordinal scales, an RPN of 200 is not ``twice as bad'' as an RPN of 100---it simply ranks higher in the prioritization queue. Use RPN to sort your failure modes from most to least critical and to allocate your limited design effort accordingly, but do not attempt to calculate percentage improvements or ratios between RPN values.
+RPN ranges from 1 to 1000. Higher RPN values indicate higher priority for corrective action. A common threshold for action is RPN $\geq 100$, though this varies by industry and application. \textbf{Important}: RPN is a \emph{ranking} tool, not a linear measurement. Because it is the product of three ordinal scales, an RPN of 200 is not ``twice as bad'' as an RPN of 100---it simply ranks higher in the prioritization queue (e.g., an RPN drop from 200 to 100 does not mean the risk is ``50\% better,'' only that it is now lower in the priority queue). Use RPN to sort your failure modes from most to least critical and to allocate your limited design effort accordingly, but do not attempt to calculate percentage improvements or ratios between RPN values.
 
 \needspace{4\baselineskip}
 \begin{keyconceptbox}[GreenShield: FMECA Fragment]
