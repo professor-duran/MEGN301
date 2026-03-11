@@ -158,7 +158,7 @@ Start a shared team engineering notebook (digital is fine---Google Docs, Notion,
 
 \subsection{Where to Find Deeper Technical Guidance}
 
-This guide tells you what to watch out for. The \textit{MEGN 301 Master Reference Document} (Compiled Course References and Notes) tells you \textit{how things work} in depth. It is organized in three parts: Part~I follows the design-build lifecycle (Chapters~1--6: problem definition through operations), Part~II provides technical reference material for electromechanical subsystems (connectors, power supplies, motors, fasteners, power transmission, injection molding), and Part~III provides detailed milestone guides for the three formal design reviews (Chapters~13--15: PDR, CDR, FDR). The sprint-to-chapter mapping in the front matter of that document shows you exactly which chapters to consult for each sprint. Use both documents together: this one for the quick-hit tips and warnings, and the reference document for the deeper ``why'' and ``how.''
+This guide tells you what to watch out for. The \textit{MEGN 301 Master Reference Document} tells you \textit{how things work} in depth. It is organized in two parts: Part~I follows the design-build lifecycle (Chapters~1--6: problem definition through operations) and Part~II provides technical reference material for electromechanical subsystems (connectors, power supplies, motors, power architecture, injection molding, PCB design, and microcontrollers). The front matter maps each sprint to the chapters you should consult. Use both documents together: this one for the quick-hit tips and warnings, and the reference document for the deeper ``why'' and ``how.''
 
 \begin{protip}
 \textbf{Understand the three questions that gate your project.} The three design reviews form a narrative arc, and each asks a progressively deeper question:
@@ -167,20 +167,16 @@ This guide tells you what to watch out for. The \textit{MEGN 301 Master Referenc
     \item \textbf{CDR} (Sprint~3): ``\textit{Will} this design work?'' --- Is the design complete enough to build? Every component specified, every interface defined?
     \item \textbf{FDR} (Sprints 5--7 + Final): ``\textit{How well did} it work?'' --- What are the test results? What worked, what did not, and what comes next?
 \end{enumerate}
-If you keep these three questions in mind from the start, you will always know what your deliverables are trying to demonstrate. The Master Reference Document, Part~III (Chapters~13--15), provides detailed deliverable checklists, evaluation criteria, and common failure patterns for each review.
+If you keep these three questions in mind from the start, you will always know what your deliverables are trying to demonstrate.
 \end{protip}
 
 \begin{tipbox}
-\textbf{Use the Artifact Progression Table as a semester-long checklist.} Part~III of the Master Reference Document includes a master table showing how every document (SDRD, RTM, FMEA, BOM, VCRM, CAD, wiring diagrams, etc.) evolves from PDR through CDR to FDR. Print it and bring it to every design review. There is no ``starting over'' between reviews---you are maturing the \textit{same} set of documents across the semester.
+\textbf{You are maturing the same documents all semester---not starting over.} Your SDRD, RTM, FMEA, BOM, VCRM, CAD models, and wiring diagrams all evolve from initial versions at PDR through detailed versions at CDR to final as-built versions at FDR. Keep every artifact under version control and update them continuously rather than treating each sprint's deliverables as isolated assignments.
 \end{tipbox}
 
 \begin{protip}
 \textbf{Maintain a Requirements Traceability Matrix (RTM) from Day 1.} The Master Reference Document introduces the RTM in Chapter~2---a simple table that links every requirement to its parent need, its verification method, and its current status. Open it at every team meeting and update it after every design decision. By the time you reach external testing in Sprint~6, a well-maintained RTM will let you immediately see which requirements are verified, which are still open, and which need attention. Teams that skip this step spend hours reconstructing traceability for the final report.
 \end{protip}
-
-\begin{tipbox}
-\textbf{Not sure what an acronym means?} The Master Reference Document includes a comprehensive Glossary of Acronyms and Key Terms in the back matter. If you encounter terms like VCRM, TAID, MoSCoW, RPN, ICD, or ConOps and are not sure what they mean, look them up there.
-\end{tipbox}
 
 \subsection{The Big Picture: How Sprints Map to the Engineering V-Model}
 
@@ -460,7 +456,7 @@ When building your decision matrix, weight the criteria \textit{before} scoring 
 \end{protip}
 
 \begin{faqbox}[Q: How do I know if my PDR package is ready?]
-Apply the \textbf{PDR Litmus Test} from Chapter~13 of the Master Reference Document: ``If a different engineering team read only our PDR package, could they independently arrive at the same concept selection and understand why it is the best choice?'' If the answer is yes, your PDR is defensible. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added to the package. Remember, PDR answers the question ``\textit{Should} this design work?'' Your deliverables must demonstrate that the problem is well-defined, the requirements are sound, and the selected concept is feasible.
+Apply the \textbf{PDR Litmus Test}: ``If a different engineering team read only our PDR package, could they independently arrive at the same concept selection and understand why it is the best choice?'' If the answer is yes, your PDR is defensible. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added to the package. Remember, PDR answers the question ``\textit{Should} this design work?'' Your deliverables must demonstrate that the problem is well-defined, the requirements are sound, and the selected concept is feasible.
 \end{faqbox}
 
 %=============================================================================
@@ -482,11 +478,11 @@ Imagine handing your CDR to a competent engineering team that has never met you.
 \end{faqbox}
 
 \begin{protip}
-\textbf{Build a power budget spreadsheet before anything else.} List every component with its voltage rail, continuous current draw, and peak current draw. Sum the columns and add a 25\% margin. This single spreadsheet will tell you whether your power supply is adequate, what regulator stages you need, and where your thermal hotspots will be. Motor inrush is the number-one power supply problem: a motor rated at 2\,A running may draw 15\,A at startup. Size your supply for inrush, not steady state. See the Master Reference Document, the Power Architecture chapter (Chapter~9), for design rules and the derating guideline: 20\% margin on power supplies, 25--50\% on motors, 25\% on pumps.
+\textbf{Build a power budget spreadsheet before anything else.} List every component with its voltage rail, continuous current draw, and peak current draw. Sum the columns and add a 25\% margin. This single spreadsheet will tell you whether your power supply is adequate, what regulator stages you need, and where your thermal hotspots will be. Motor inrush is the number-one power supply problem: a motor rated at 2\,A running may draw 15\,A at startup. Size your supply for inrush, not steady state. See the Master Reference Document, the Power Architecture chapter, for design rules and the derating guideline: 20\% margin on power supplies, 25--50\% on motors, 25\% on pumps.
 \end{protip}
 
 \begin{warnbox}
-\textbf{Separate your power and signal grounds.} Poor grounding is the most common cause of hard-to-diagnose intermittent failures in student projects---noisy sensor readings, MCU resets when a motor starts, dropped serial communication. Run motor power on dedicated ground wires back to the supply; never share ground paths between motors and sensitive electronics. Use star-point grounding: each subsystem gets its own ground conductor, and they all meet at one common point near the power supply. See the Master Reference Document, the Power Architecture chapter (Chapter~9), for the three-ground-domain strategy (signal, power, safety earth).
+\textbf{Separate your power and signal grounds.} Poor grounding is the most common cause of hard-to-diagnose intermittent failures in student projects---noisy sensor readings, MCU resets when a motor starts, dropped serial communication. Run motor power on dedicated ground wires back to the supply; never share ground paths between motors and sensitive electronics. Use star-point grounding: each subsystem gets its own ground conductor, and they all meet at one common point near the power supply. See the Master Reference Document, the Power Architecture chapter, for the three-ground-domain strategy (signal, power, safety earth).
 \end{warnbox}
 
 \begin{tipbox}
@@ -533,8 +529,16 @@ Complete your Order of Operations sheet \textit{before} walking into the machine
 \textbf{Document every electrical connection and every software flow \textit{now}, not later.} Your CDR should include a wiring diagram showing every component, wire color, gauge, connector part number, and pinout, plus a programming flowchart showing your main loop, state machine transitions, sensor reads, actuator control logic, and error handling. These diagrams are the electrical and software equivalents of your CAD drawings---without them, no one (including your future self at 10~PM during Sprint~5) can debug your system. See the Master Reference Document, Chapter~3, for wiring diagram and flowchart best practices.
 \end{tipbox}
 
+\begin{protip}
+\textbf{Decide early: dev boards or custom PCB?} Use development boards (Arduino, ESP32 DevKit, sensor breakouts) when your circuit is straightforward, form factor is not critical, the timeline is tight, or the design is still evolving. Use a custom PCB when a specific enclosure size is required, noise-sensitive analog signals demand a ground plane, or you need clean cable routing and high reliability. A well-wired dev board that meets requirements is superior to a custom PCB that delays the project. If you do go custom, the total timeline from design start to working board is 4--6 weeks (design, order from JLCPCB/PCBWay, ship, solder, debug), so your design must be frozen at CDR. See the Master Reference Document, PCB Design chapter, for the complete workflow, layout rules, and fab house options.
+\end{protip}
+
+\begin{warnbox}
+\textbf{ESP32 GPIO gotchas that will cost you a day of debugging.} If your project uses an ESP32 (the recommended MCU for this course), memorize these before assigning pins: \textbf{GPIO 6--11} are connected to internal flash---do not use them for anything or the board will not boot. \textbf{GPIO 34--39} are input-only---no output capability, no internal pull-ups. \textbf{ADC2 is disabled when Wi-Fi is active}---use only ADC1 channels (GPIO 32--39) for analog readings in any project that uses Wi-Fi. \textbf{3.3\,V logic only}---use level shifters for 5\,V sensors or actuators. \textbf{Boot pins (0, 2, 12, 15)} can prevent startup if pulled to unexpected levels. Safe GPIOs for general use: 4, 13, 14, 16--19, 21--23, 25--27, 32, 33. See the Master Reference Document, Microcontrollers chapter, for the complete pin map and power mode details.
+\end{warnbox}
+
 \begin{faqbox}[Q: How do I know if my CDR package is ready?]
-Apply the \textbf{CDR Litmus Test} from Chapter~14 of the Master Reference Document: ``If I handed this CDR package to a competent technician who has never seen this project, could they build the prototype from these documents alone?'' If the BOM is complete, the drawings are dimensioned, the wiring diagram is unambiguous, and the assembly sequence is clear---your CDR is ready. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added. CDR answers ``\textit{Will} this design work?''---it is the point of no return where you commit resources to procurement and fabrication.
+Apply the \textbf{CDR Litmus Test}: ``If I handed this CDR package to a competent technician who has never seen this project, could they build the prototype from these documents alone?'' If the BOM is complete, the drawings are dimensioned, the wiring diagram is unambiguous, and the assembly sequence is clear---your CDR is ready. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added. CDR answers ``\textit{Will} this design work?''---it is the point of no return where you commit resources to procurement and fabrication.
 \end{faqbox}
 
 \begin{tipbox}
@@ -572,6 +576,10 @@ When you record your demonstration video, narrate what you are doing and what th
 \begin{warnbox}
 \textbf{Never ``big-bang'' integrate.} Assembling every component at once and powering on is the fastest route to an undebuggable system. Instead, use bottom-up integration: verify each component individually, then add \textbf{one new element at a time} and test after each addition. When something breaks, the last thing you added (or its interface) is the prime suspect. For most electromechanical projects, a good integration sequence is: (1)~power supply first (everything depends on it), (2)~controller (the central hub), (3)~sensors (simplest interfaces), (4)~actuators (highest power, most failure modes), (5)~communication (can be tested last since it is not needed for core function).
 \end{warnbox}
+
+\begin{tipbox}
+\textbf{If you designed a custom PCB, follow the bring-up protocol before connecting it to anything.} (1)~Visual inspection under magnification for solder bridges, cold joints, and wrong-orientation parts. (2)~Continuity check with a multimeter---confirm no shorts between VCC and GND. (3)~Current-limited power: set your bench supply to 50\,mA limit and apply voltage. (4)~Measure every power rail with a multimeter. (5)~Smoke test: increase current to operating level, monitor for 60 seconds. (6)~Load firmware and test basic I/O. Skipping this sequence and plugging a freshly soldered board straight into your system is how you destroy both the board and the system in one step. See the Master Reference Document, PCB Design chapter, for the full protocol.
+\end{tipbox}
 
 \begin{tipbox}
 \textbf{Run multiple trials, not just one.} A subsystem that works once under ideal bench conditions may fail intermittently under real operating conditions. For each demonstration goal, run at least 3 trials (5 is better). Report the mean, standard deviation, and range of your measurements---for example, for a temperature sensor demo, report: ``Mean error = $0.32\,^{\circ}\text{C}$, $\sigma = 0.04\,^{\circ}\text{C}$, range $0.26$--$0.41\,^{\circ}\text{C}$, $n = 5$ trials at each of three test points,'' not just ``it read the right temperature.'' Test at boundary conditions, not just room temperature on a benchtop. A result of ``PASS with 36\% margin'' is far more convincing---and useful---than a bare ``PASS.''
@@ -736,15 +744,15 @@ For the Team Contribution table, have an honest team discussion before filling i
 \end{tipbox}
 
 \begin{faqbox}[Q: How do I know if my FDR package is complete?]
-Apply the \textbf{FDR Litmus Test} from Chapter~15 of the Master Reference Document. Ask six questions: Could a new engineering team who has never seen this project (1)~understand what the system does and why, (2)~operate it using only your Quick-Start Guide, (3)~identify what works and what does not from the VCRM, (4)~reproduce any test result from your test procedures, (5)~replace a failed component using the maintenance plan and spare parts list, and (6)~continue improving the design using your lessons learned and future work recommendations? Each ``no'' represents a gap in your documentation. FDR answers ``\textit{How well did} it work?''---it demands honest, evidence-based accounting, not a sales pitch.
+Apply the \textbf{FDR Litmus Test}. Ask six questions: Could a new engineering team who has never seen this project (1)~understand what the system does and why, (2)~operate it using only your Quick-Start Guide, (3)~identify what works and what does not from the VCRM, (4)~reproduce any test result from your test procedures, (5)~replace a failed component using the maintenance plan and spare parts list, and (6)~continue improving the design using your lessons learned and future work recommendations? Each ``no'' represents a gap in your documentation. FDR answers ``\textit{How well did} it work?''---it demands honest, evidence-based accounting, not a sales pitch.
 \end{faqbox}
 
 \begin{protip}
-\textbf{Prepare an as-designed vs.\ as-built comparison.} Chapter~15 (FDR) of the Master Reference Document emphasizes that your final report should include side-by-side comparisons of your CDR (as-designed) BOM vs.\ actual (as-built) BOM, and your estimated budget vs.\ actual expenditures. Every component substitution, addition, or deletion should be documented with a rationale. If you saved a CDR baseline snapshot during Sprint~3 (see the CDR tips above), this comparison is easy. If you did not, this will be a painful reconstruction.
+\textbf{Prepare an as-designed vs.\ as-built comparison.} Your final report should include side-by-side comparisons of your CDR (as-designed) BOM vs.\ actual (as-built) BOM, and your estimated budget vs.\ actual expenditures. Every component substitution, addition, or deletion should be documented with a rationale. If you saved a CDR baseline snapshot during Sprint~3 (see the CDR tips above), this comparison is easy. If you did not, this will be a painful reconstruction.
 \end{protip}
 
 \begin{tipbox}
-\textbf{Include O\&M materials in the appendix.} The FDR milestone guide (Chapter~15) expects three operations and maintenance deliverables: (1)~a one-page \textbf{Quick-Start Guide} with numbered steps and photos that enables your instructor to set up and operate the system in 10 minutes, (2)~a \textbf{maintenance plan} identifying wear items, replacement intervals, and a spare parts list with part numbers and vendors, and (3)~a \textbf{troubleshooting guide} organized as a symptom-based decision tree for the most common failure modes you discovered. These are not busywork---they demonstrate that you thought about the system beyond your own workbench.
+\textbf{Include O\&M materials in the appendix.} Your final report should include three operations and maintenance deliverables: (1)~a one-page \textbf{Quick-Start Guide} with numbered steps and photos that enables your instructor to set up and operate the system in 10 minutes, (2)~a \textbf{maintenance plan} identifying wear items, replacement intervals, and a spare parts list with part numbers and vendors, and (3)~a \textbf{troubleshooting guide} organized as a symptom-based decision tree for the most common failure modes you discovered. These are not busywork---they demonstrate that you thought about the system beyond your own workbench.
 \end{tipbox}
 
 \begin{protip}
@@ -789,6 +797,8 @@ Apply the \textbf{FDR Litmus Test} from Chapter~15 of the Master Reference Docum
     \item \textbf{Design for debugging.} Include test points in your circuits, print housings that can be opened, and write code with serial debug output. Your future self debugging at 10~PM will appreciate it.
     \item \textbf{Use keyed connectors everywhere.} If your design has multiple similar-looking electrical connections, specify keyed connectors that can only be inserted one way. Incorrect mating is one of the most common causes of electrical failure on first power-up in student projects---and it destroys components.
     \item \textbf{Never design your own AC-DC converter.} Always use a pre-certified (UL/CE listed) wall adapter. These are fully enclosed, safety-rated, and eliminate all mains-voltage hazards from your design. If your project involves lithium batteries, a Battery Management System (BMS) is mandatory for overcharge, deep-discharge, and short-circuit protection---and never charge lithium cells unattended without one.
+    \item \textbf{If you design a custom PCB, print it at 1:1 scale and place real components on the printout before ordering.} This single step catches 80\% of footprint errors---the most expensive PCB mistake, because a wrong footprint means a scrapped board. Also: place a 100\,nF decoupling capacitor within 5\,mm of every IC power pin, and fill your bottom layer with a ground copper pour. These are not optional.
+    \item \textbf{Use state machines and \texttt{millis()}-based timing in your firmware.} Avoid \texttt{delay()} calls, which block the CPU and make your system unresponsive. Structure your code around states (IDLE, READING, TRANSMITTING, SLEEPING) and use non-blocking timing. Enable the watchdog timer for crash recovery. Add a heartbeat LED as a system health indicator---if the LED stops blinking, something has hung.
 \end{itemize}
 
 \subsection{Using Campus Resources}
@@ -797,7 +807,7 @@ Apply the \textbf{FDR Litmus Test} from Chapter~15 of the Master Reference Docum
     \item \textbf{Bulk wire, heat shrink, and perf boards} are available on campus for free or at minimal cost (see Appendix B of the project document). Wire is available in BBW160 from TAs during office hours: 18~AWG stranded at \$0.19/ft, 24~AWG stranded at \$0.08/ft. Solderable perf boards are stocked in CTLM123 in several sizes. Include these per-unit costs in your BoM for accurate accounting, but do not waste budget ordering them from vendors.
     \item \textbf{Get manufacturing reviews early.} The machine shop assistants, Prof.\ Blood, and Master TAs can catch design-for-manufacturing issues before you waste material and time. This review is required---but even if it were not, you should do it.
     \item \textbf{Office hours exist for a reason.} Your instructor and TAs have seen dozens of these projects. Five minutes of their input can save you days of going down the wrong path.
-    \item \textbf{Use the Master Reference Document.} The \textit{Compiled Course References and Notes} is a comprehensive technical reference organized in three parts: Part~I covers the V-model design-build lifecycle with worked GreenShield examples, Part~II provides detailed electromechanical design guidance, and Part~III provides milestone-by-milestone checklists for PDR, CDR, and FDR with evaluation criteria and common failure patterns. Consult it whenever you need deeper guidance on requirements writing, trade studies, FMEA, test planning, integration debugging, DFM, or preparing for a design review.
+    \item \textbf{Use the Master Reference Document.} The \textit{Master Reference Document} is a comprehensive technical reference organized in two parts: Part~I covers the V-model design-build lifecycle with worked GreenShield examples, and Part~II provides detailed electromechanical design guidance including connectors, power supplies, motors, power architecture, injection molding, PCB design, and microcontroller selection. Consult it whenever you need deeper guidance on requirements writing, trade studies, FMEA, test planning, integration debugging, DFM, PCB layout, or ESP32 pin mapping.
 \end{itemize}
 
 %=============================================================================
