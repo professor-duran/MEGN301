@@ -1,4 +1,4 @@
-# LaTeX build artifacts
+# LaTeX auxiliary files
 *.aux
 *.log
 *.out
@@ -18,23 +18,5 @@
 *.ilg
 *.ind
 
-# Compiled PDFs (built by CI/CD, not tracked)
-*.pdf
-
-# GitHub Pages build directory
-_site/
-
-# Editor backups
-*~
-*.swp
-*.swo
-*.bak
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-*.sublime-*
+# Keep PDFs (built by GitHub Actions)
+!*.pdf
