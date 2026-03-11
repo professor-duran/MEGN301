@@ -1,18 +1,16 @@
-name: Build PDFs and Publish
+name: Build LaTeX PDFs
 
 on:
   push:
+    branches: [ main ]
     paths:
       - '**.tex'
-      - '**.png'
-      - '**.jpg'
+      - 'master_figs/**'
       - '.github/workflows/build-pdfs.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -21,113 +19,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: List repo contents
-        run: |
-          echo "=== Root ==="
-          ls -la
-          echo ""
-          echo "=== All .tex files ==="
-          find . -name "*.tex" -type f
-          echo ""
-          echo "=== All .png files ==="
-          find . -name "*.png" -type f | head -20
-          echo ""
-          echo "=== All directories ==="
-          find . -maxdepth 1 -type d | sort
-
-      - name: Compile Course Notes
+      - name: Build Master Reference Document
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: MEGN301_Compiled_Course_References_and_Notes.tex
+          root_file: megn301_master_reference.tex
+          latexmk_use_xelatex: false
+          args: -pdf -interaction=nonstopmode -file-line-error
+          extra_system_packages: ghostscript
 
-      - name: Compile Student Guide
+      - name: Build Student Guide
+        if: hashFiles('MEGN301_Student_Guide.tex') != ''
         uses: xu-cheng/latex-action@v3
         with:
           root_file: MEGN301_Student_Guide.tex
-        continue-on-error: true
+          latexmk_use_xelatex: false
+          args: -pdf -interaction=nonstopmode -file-line-error
 
-      - name: Collect PDFs
+      - name: Commit PDFs
         run: |
-          mkdir -p _output
-          find . -maxdepth 2 -name "*.pdf" -not -path "./_output/*" -not -path "./_site/*" -exec cp {} _output/ \;
-          echo "=== Compiled PDFs ==="
-          for f in _output/*.pdf; do
-            [ -f "$f" ] || continue
-            size=$(du -h "$f" | cut -f1)
-            pages=$(pdfinfo "$f" 2>/dev/null | grep Pages | awk '{print $2}' || echo "?")
-            echo "  $(basename $f)  (${pages} pages, ${size})"
-          done
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: MEGN301-PDFs
-          path: '_output/*.pdf'
-          retention-days: 90
-
-      - name: Prepare Pages site
-        run: |
-          mkdir -p _site
-          cp _output/*.pdf _site/ 2>/dev/null || true
-          cat > _site/index.html << 'HTMLEOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>MEGN 301 - Course Materials</title>
-            <style>
-              * { margin: 0; padding: 0; box-sizing: border-box; }
-              body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif; background: #f5f7fa; color: #21314D; padding: 2rem; }
-              .container { max-width: 700px; margin: 0 auto; }
-              h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
-              .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.95rem; }
-              .card { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-              .card h2 { font-size: 1.1rem; margin-bottom: 0.4rem; }
-              .card p { color: #555; font-size: 0.9rem; margin-bottom: 0.8rem; }
-              .btn { display: inline-block; background: #21314D; color: white; padding: 0.5rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.9rem; }
-              .btn:hover { background: #00796B; }
-              .footer { margin-top: 2rem; color: #999; font-size: 0.8rem; text-align: center; }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1>MEGN 301 - Mechanical Integration and Design</h1>
-              <p class="subtitle">Colorado School of Mines - Prof. Adam Duran - Spring 2026</p>
-          HTMLEOF
-          for pdf in _site/*.pdf; do
-            [ -f "$pdf" ] || continue
-            filename=$(basename "$pdf")
-            friendly=$(echo "$filename" | sed 's/.pdf//' | sed 's/_/ /g')
-            filesize=$(du -h "$pdf" | cut -f1)
-            pages=$(pdfinfo "$pdf" 2>/dev/null | grep Pages | awk '{print $2}' || echo "?")
-            cat >> _site/index.html << EOF
-              <div class="card">
-                <h2>$friendly</h2>
-                <p>${pages} pages - ${filesize}</p>
-                <a class="btn" href="$filename" download>Download PDF</a>
-              </div>
-          EOF
-          done
-          echo '    <p class="footer">Auto-compiled from source</p>' >> _site/index.html
-          echo '  </div></body></html>' >> _site/index.html
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
-
-      - name: Update latest release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: latest
-          name: Latest Build
-          files: '_output/*.pdf'
-          draft: false
-          prerelease: false
-          body: |
-            Current course materials - always up to date.
-            Web access: https://professor-duran.github.io/MEGN301/
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -f megn301_master_reference.pdf
+          if [ -f MEGN301_Student_Guide.pdf ]; then
+            git add -f MEGN301_Student_Guide.pdf
+          fi
+          # Only commit if there are changes
+          git diff --staged --quiet || git commit -m "Auto-build PDFs [skip ci]"
+          git push
