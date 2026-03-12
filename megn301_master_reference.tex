@@ -101,7 +101,7 @@ This reference document accompanies the MEGN~301 lecture modules and is organize
 \item \textbf{Chapter~7} (Operations \& Maintenance), \textbf{Chapter~8} (Post-Build Testing), and \textbf{Chapter~9} (End of Life) support system handoff and your FDR deliverables.
 \end{itemize}
 
-\textbf{Part~II: Technical Reference} provides detailed design guidance for common electromechanical subsystems. These chapters are reference material; consult them when your project involves connectors, power supplies, motors, pumps, protection circuits, gear trains, injection-molded parts, or printed circuit boards.
+\textbf{Part~II: Technical Reference} provides detailed design guidance for common electromechanical subsystems. These chapters are reference material; consult them when your project involves circuit analysis, connectors, power supplies, motors, pumps, protection circuits, gear trains, injection-molded parts, or printed circuit boards. Chapter~13 (Electronics Fundamentals) provides the foundational circuit theory, electrical safety practices, and component selection references that support all other technical chapters.
 
 Every chapter includes practice questions with worked answers. Use them for self-study and exam preparation.
 
@@ -117,14 +117,15 @@ The GreenShield system illustrates \emph{how} to move from problem statement to 
 
 \subsection*{What Should I Be Reading Right Now?}
 \begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{Just started your project?} $\to$ Chapter~1 (Problem Definition), Chapter~2 (Requirements)
-\item \textbf{Preparing for PDR?} $\to$ Chapter~3 (Concept Generation), Chapter~13 (PDR Deliverables)
-\item \textbf{Designing hardware?} $\to$ Chapters~7--12 (Technical Reference for your subsystem types)
-\item \textbf{Preparing for CDR?} $\to$ Chapter~14 (CDR Deliverables), verify BOM and schematics
-\item \textbf{Integration is failing?} $\to$ Chapter~5 (Integration), Chapter~9 (Power Architecture)
-\item \textbf{Motor won't spin?} $\to$ Chapter~8 \S8.2 (Motors \& Drivers), Chapter~9 (Brown-Out Blues)
-\item \textbf{Sensor readings are noisy?} $\to$ Chapter~9 \S9.3 (Grounding), Chapter~12 (PCB Layout Rules)
-\item \textbf{Preparing for FDR?} $\to$ Chapter~4 (V\&V), Chapter~6 (O\&M), Chapter~15 (FDR Deliverables)
+\item \textbf{Just started your project?} $\to$ Chapter~1 (Problem Definition), Chapter~3 (Requirements)
+\item \textbf{Preparing for PDR?} $\to$ Chapter~4 (Concept Generation), Chapter~19 (PDR Deliverables)
+\item \textbf{Need circuit basics?} $\to$ Chapter~13 (Electronics Fundamentals, Safety \& Component Selection)
+\item \textbf{Designing hardware?} $\to$ Chapters~10--18 (Technical Reference for your subsystem types)
+\item \textbf{Preparing for CDR?} $\to$ Chapter~20 (CDR Deliverables), verify BOM and schematics
+\item \textbf{Integration is failing?} $\to$ Chapter~6 (Integration), Chapter~12 (Power Architecture)
+\item \textbf{Motor won't spin?} $\to$ Chapter~11 \S11.2 (Motors \& Drivers), Chapter~12 (Power Architecture)
+\item \textbf{Sensor readings are noisy?} $\to$ Chapter~13 \S13.10 (Grounding), Chapter~17 (PCB Layout Rules)
+\item \textbf{Preparing for FDR?} $\to$ Chapter~5 (V\&V), Chapter~7 (O\&M), Chapter~21 (FDR Deliverables)
 \item \textbf{Studying for the exam?} $\to$ Practice questions at the end of every chapter
 \end{itemize}
 
@@ -4192,6 +4193,289 @@ Every MEGN~301 system is both an EMI source (motors, switching regulators, digit
   \item The classmate is correct when using a properly rated H-bridge driver IC (like L298N, DRV8871, BTS7960) that includes integrated flyback/freewheeling diodes across the output MOSFETs. These diodes handle the back-EMF from the motor. The classmate is \textbf{dangerously wrong} when: (a)~driving a relay, solenoid, or valve directly from a bare MOSFET or BJT; these loads have no integrated protection; (b)~the motor's back-EMF exceeds the driver's clamping capability; or (c)~using a driver module where the ``protection diodes'' are actually for the logic section, not the motor outputs. \textbf{Rule}: verify in the driver's datasheet that flyback diodes are explicitly rated for the motor's inductive energy.
 
   \item Solar input: blocking diode (Schottky, e.g., MBR2045) prevents battery discharge through panel at night. MPPT charge controller (e.g., Genasun GV-5 or Victron 75/15) sized for 3S LiPo with 12.6\,V charge termination. Reverse polarity: P-FET on both the solar input and the battery connector. TVS diode (18\,V standoff) on the solar input for transient protection. Load: battery feeds pump through a slow-blow fuse (3\,A for a 2\,A pump). Flyback diode across pump motor terminals. Voltage supervisor monitors battery voltage and disables pump via a load switch when battery drops below 10.5\,V to protect cells. The charge controller's MPPT algorithm ensures maximum solar harvest even as panel voltage varies with sun angle and temperature.
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════════════════
+
+
+\chapter{Electronics Fundamentals, Safety \& Component Selection}
+
+\vspace{1em}
+
+This chapter provides the foundational circuit theory, electrical safety practices, and practical component selection knowledge that supports every technical chapter in Part~II. If you are already comfortable with Ohm's Law and Kirchhoff's Laws, use this chapter as a quick reference. If these concepts are new, work through the examples before tackling amplifier circuits, power architecture, or PCB design.
+
+\vspace{1em}
+
+\section{Voltage, Current, Resistance, and Power}
+
+\textbf{Voltage} ($V$, measured in volts) is the electrical potential difference between two points; it is the ``pressure'' that pushes charge through a circuit. \textbf{Current} ($I$, measured in amperes) is the rate of charge flow: $I = dQ/dt$. Conventional current flows from higher to lower potential. \textbf{Resistance} ($R$, measured in ohms, $\Omega$) quantifies how strongly a material opposes current flow. \textbf{Power} ($P$, measured in watts) is the rate of energy transfer: $P = VI$. In a resistor, $P = I^2 R = V^2/R$.
+
+\begin{keyconceptbox}[Ohm's Law]
+The voltage across a resistor is proportional to the current through it:
+\begin{equation}
+V = IR \qquad \Leftrightarrow \qquad I = \frac{V}{R} \qquad \Leftrightarrow \qquad R = \frac{V}{I}
+\end{equation}
+This is the single most-used equation in electronics. It applies to any purely resistive element: resistors, wire, heating elements, and the on-resistance of a MOSFET switch.
+\end{keyconceptbox}
+
+\textbf{Conductance} ($G = 1/R$, measured in siemens, S) is the reciprocal of resistance and is convenient when combining parallel resistances: $G_{\text{total}} = G_1 + G_2 + \cdots$. \textbf{Energy} ($E$, measured in joules) is power integrated over time: $E = P \cdot t$. Battery capacity in milliamp-hours (mAh) converts to energy as $E = \text{mAh} \times V \times 3.6$ (in joules).
+
+
+\section{Kirchhoff's Laws}
+
+\subsection{Kirchhoff's Current Law (KCL)}
+The algebraic sum of currents entering a node is zero:
+\begin{equation}
+\sum I_{\text{in}} = \sum I_{\text{out}}
+\end{equation}
+Current is conserved. Whatever flows into a junction must flow out.
+
+\subsection{Kirchhoff's Voltage Law (KVL)}
+The algebraic sum of voltages around any closed loop is zero:
+\begin{equation}
+\sum V_{\text{loop}} = 0
+\end{equation}
+Energy is conserved. Voltage rises (sources) must equal voltage drops (resistors, loads) around any closed path.
+
+\begin{tipbox}[KVL Applied: Series Resistor Circuit]
+A 12\,V supply drives $R_1 = 4\,\text{k}\Omega$ and $R_2 = 8\,\text{k}\Omega$ in series. KVL: $V_s - V_{R1} - V_{R2} = 0$. Current: $I = 12/12{,}000 = 1\,\text{mA}$. Then $V_{R1} = 4\,\text{V}$ and $V_{R2} = 8\,\text{V}$. Check: $12 - 4 - 8 = 0$. KVL satisfied.
+\end{tipbox}
+
+
+\section{Series and Parallel Circuits}
+
+\subsection{Series Combination}
+Components in series carry the same current. Resistances add directly:
+\begin{equation}
+R_{\text{series}} = R_1 + R_2 + \cdots + R_n
+\end{equation}
+
+\subsection{Parallel Combination}
+Components in parallel share the same voltage. Reciprocals of resistance add:
+\begin{equation}
+\frac{1}{R_{\text{parallel}}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n}
+\end{equation}
+For two resistors: $R_{\text{parallel}} = R_1 R_2 / (R_1 + R_2)$. The total is always less than the smallest individual resistor.
+
+
+\section{Voltage Dividers}
+
+Two series resistors connected across a source produce an output voltage at their junction:
+\begin{equation}
+V_{\text{out}} = V_{\text{in}} \cdot \frac{R_2}{R_1 + R_2}
+\end{equation}
+Applications in MEGN~301: scaling sensor outputs to match ADC input ranges, creating reference voltages, and biasing amplifier circuits.
+
+\begin{warningbox}[Loading a Voltage Divider]
+A voltage divider only produces the calculated voltage if the load draws negligible current compared to the divider current. Rule of thumb: the load resistance should be at least 10$\times$ the divider output resistance ($R_1 \| R_2$). If not, use a voltage follower (op-amp buffer) to isolate the divider from the load.
+\end{warningbox}
+
+
+\section{Thevenin Equivalent Circuits}
+
+Any linear circuit can be reduced to a single voltage source ($V_{Th}$) in series with a single resistance ($R_{Th}$). $V_{Th}$ is the open-circuit voltage at the output terminals; $R_{Th}$ is the resistance seen from those terminals with all independent sources zeroed. This matters for instrumentation because every sensor has an output impedance. Connecting a low-impedance load causes a voltage drop across $R_{Th}$, producing a loading error. If $R_{Th} = 5\,\text{k}\Omega$ and the ADC input impedance is 1\,M$\Omega$, the loading error is 0.5\%; if the ADC impedance is only 10\,k$\Omega$, the error jumps to 33\%.
+
+
+\section{Capacitors and Inductors}
+
+A \textbf{capacitor} stores energy in an electric field: $Q = CV$, $I = C \cdot dV/dt$, $E = \frac{1}{2}CV^2$. It opposes changes in voltage, passes AC and blocks DC. Impedance: $Z_C = 1/(2\pi f C)$, decreasing with frequency. Types: ceramic (pF to $\mu$F, low ESR, ideal for decoupling), electrolytic ($\mu$F to mF, polarized, bulk storage), tantalum (compact, voltage-sensitive).
+
+An \textbf{inductor} stores energy in a magnetic field: $V = L \cdot dI/dt$, $E = \frac{1}{2}LI^2$. It opposes changes in current, passes DC and blocks AC. Impedance: $Z_L = 2\pi f L$, increasing with frequency. Motor windings, solenoid coils, and relay coils are all inductors, which is why they produce voltage spikes when switched (Chapter~12).
+
+
+\section{RC and RL Time Constants}
+
+An RC circuit has time constant $\tau = RC$. The step response charges to 63.2\% after $1\tau$ and 99.3\% after $5\tau$:
+\begin{equation}
+V_C(t) = V_{\text{final}}\left(1 - e^{-t/\tau}\right) \;\text{(charging)}, \qquad V_C(t) = V_0 \cdot e^{-t/\tau} \;\text{(discharging)}
+\end{equation}
+An RL circuit has time constant $\tau = L/R$, with analogous exponential current response. Applications: low-pass input filtering before an ADC ($f_c = 1/(2\pi RC)$), switch debouncing ($\tau \approx 10$\,ms), and understanding relay pull-in timing.
+
+
+\section{AC Fundamentals: Impedance, RMS, and Decibels}
+
+In AC circuits, resistance generalizes to \textbf{impedance} ($Z$), which has magnitude and phase. For a resistor: $Z_R = R$. For a capacitor: $Z_C = 1/(j\omega C)$. For an inductor: $Z_L = j\omega L$. Ohm's Law applies: $V = IZ$.
+
+\textbf{RMS} values represent the equivalent DC value delivering the same power: $V_{\text{RMS}} = V_{\text{peak}}/\sqrt{2} \approx 0.707 \cdot V_{\text{peak}}$ for sinusoidal signals. US household power: $V_{\text{peak}} = 170$\,V, $V_{\text{RMS}} = 120$\,V.
+
+\textbf{Decibels}: $\text{Gain (dB)} = 20\log_{10}(V_{\text{out}}/V_{\text{in}})$. Key values: $+6$\,dB $\approx$ doubling voltage, $-3$\,dB $=$ half-power point (filter cutoff), $-20$\,dB $=$ voltage reduced by 10$\times$. Decibels are additive through a signal chain.
+
+
+\section{Electrical and Electronics Safety}
+
+Electrical hazards in MEGN~301 projects range from minor (component damage from static discharge) to severe (shock, burns, or fire from mishandled power systems). The following practices are mandatory for all lab and project work.
+
+\subsection{Voltage and Current Hazards}
+The danger of electrical shock depends on current through the body, not voltage alone, but higher voltage drives more current through the body's resistance ($\sim$1\,k$\Omega$ hand-to-hand, wet conditions). Thresholds: 1\,mA is perceptible, 10--20\,mA causes involuntary muscle contraction (``can't let go''), 75--100\,mA across the heart is potentially fatal. At 120\,VAC across 1\,k$\Omega$ body resistance: $I = 120$\,mA, well above the lethal threshold.
+
+\textbf{Safe voltage thresholds}: below 30\,VDC or 25\,VAC RMS is generally considered safe for dry skin contact (IEC~61010). Between 30\,V and 48\,V, exercise caution: use insulated tools, avoid working on live circuits, and keep one hand in your pocket (the one-hand rule prevents hand-to-hand current paths across the heart). Above 48\,V (including all AC mains), only qualified personnel should work on live circuits; de-energize and lock out/tag out before touching.
+
+\subsection{Benchtop Power Supply Safety}
+Always start with current limiting set to the minimum expected value before turning on the output. Increase slowly while monitoring. This prevents damage to your circuit and limits energy delivery during a fault. When using multiple supply channels, be aware that some supplies share a common ground between channels; connecting them in series to create higher voltages may short through the chassis. Verify isolation before stacking. After powering down, discharge any capacitors in your circuit before touching. Large electrolytics (100\,$\mu$F+ at 24\,V+) store enough energy to produce a painful spark and weld probe tips.
+
+\subsection{Multimeter Safety}
+
+\begin{warningbox}[Current-Mode Dead-Short Trap]
+If the multimeter is left in current mode (probes in the current jacks, near-zero internal impedance) and connected in parallel across a voltage source, the meter becomes a short circuit. This blows the meter's internal fuse (best case) or damages the meter and circuit (worst case). After every current measurement, move the red probe back to the voltage jack and switch the dial to voltage mode. This is the single most common equipment damage mode in the lab.
+\end{warningbox}
+
+When measuring resistance, always de-energize the circuit first. The DMM's ohms mode injects a small current and measures the resulting voltage; if external voltage is present, the reading is meaningless and the meter may be damaged. For continuity checks (beep mode), the same rule applies.
+
+\subsection{Oscilloscope Ground Clip Hazard}
+The oscilloscope probe's ground clip is connected directly to earth ground through the scope chassis and the AC power cord. If you clip the ground lead to a node that is not at circuit ground, you create a short circuit through the earth ground path. This can destroy components, blow fuses, or trip breakers. The ground clip must always connect to circuit ground and nowhere else. To measure a floating voltage (voltage across a component not referenced to ground), use the math function to subtract two channels, or use a differential probe.
+
+\subsection{Static Discharge (ESD) Protection}
+CMOS components (including the ESP32, most op-amps, and all modern ICs) are sensitive to electrostatic discharge. A human body can accumulate 3,000--25,000\,V of static charge; discharging through an IC pin destroys the gate oxide. Mitigation: wear a grounded wrist strap when handling bare ICs and PCBs, store ICs in anti-static bags or foam until ready for assembly, touch a grounded metal surface before picking up components, and avoid working on carpet or synthetic surfaces that generate static.
+
+\subsection{Lithium Battery Safety}
+Lithium-ion and lithium-polymer cells are used in many MEGN~301 projects. They offer high energy density but present fire and explosion risks if mishandled. Mandatory practices: never short-circuit a lithium cell (even momentarily), never charge above the rated voltage (typically 4.2\,V per cell; overcharge causes thermal runaway and fire), never discharge below the minimum voltage (typically 3.0\,V; deep discharge causes internal copper dendrite growth that can short the cell on the next charge cycle), always use a proper battery management system (BMS) or charge controller IC, store cells at 3.7--3.8\,V per cell (approximately 40--60\% charge) for long-term storage, and never puncture, crush, or expose cells to temperatures above 60\degC{}.
+
+\begin{warningbox}[Thermal Runaway]
+If a lithium cell is swelling, hissing, smoking, or feels abnormally hot: do not touch it, clear the area, place it in a fire-safe container (metal bucket with sand if available), and notify lab staff. Lithium fires cannot be extinguished with water; use a Class~D extinguisher or dry sand. Include lithium battery handling in your project risk register and have a response plan documented before bringing cells into the lab.
+\end{warningbox}
+
+\subsection{Fire Safety for Electronics}
+Electronics fires most commonly result from: overcurrent through undersized wire (wire heats, insulation melts, fire starts), short circuits with no fuse protection (uncontrolled energy release), lithium battery failure (thermal runaway), and component overvoltage causing arcing. Prevention: fuse every power rail at or below the wire's current rating, use wire rated for the voltage and current, inspect solder joints for bridges before powering up, and keep a fire extinguisher (CO$_2$ or dry chemical, suitable for Class~C electrical fires) accessible in the workspace.
+
+
+\section{Resistor Color Code}
+
+Through-hole resistors use colored bands to encode their value. The standard 4-band code: first two bands are significant digits, the third is the multiplier, and the fourth is tolerance.
+
+\begin{center}
+\begin{tabular}{lccl}
+\toprule
+\textbf{Color} & \textbf{Digit} & \textbf{Multiplier} & \textbf{Tolerance} \\
+\midrule
+Black   & 0 & $\times 1$         & --- \\
+Brown   & 1 & $\times 10$        & $\pm 1\%$ \\
+Red     & 2 & $\times 100$       & $\pm 2\%$ \\
+Orange  & 3 & $\times 1{,}000$   & --- \\
+Yellow  & 4 & $\times 10{,}000$  & --- \\
+Green   & 5 & $\times 100{,}000$ & $\pm 0.5\%$ \\
+Blue    & 6 & $\times 1{,}000{,}000$ & $\pm 0.25\%$ \\
+Violet  & 7 & $\times 10{,}000{,}000$ & $\pm 0.1\%$ \\
+Gray    & 8 & ---                & $\pm 0.05\%$ \\
+White   & 9 & ---                & --- \\
+Gold    & --- & $\times 0.1$     & $\pm 5\%$ \\
+Silver  & --- & $\times 0.01$    & $\pm 10\%$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{5-band resistors} (precision, 1\% or better) use three significant digits, a multiplier, and a tolerance band.
+
+\begin{tipbox}[Reading Resistor Color Codes]
+\textbf{4-band}: Brown--Black--Orange--Gold $= 10 \times 1{,}000 = 10\,\text{k}\Omega$, $\pm 5\%$ (range: 9.5\,k$\Omega$ to 10.5\,k$\Omega$).
+
+\textbf{4-band}: Red--Violet--Red--Gold $= 27 \times 100 = 2.7\,\text{k}\Omega$, $\pm 5\%$.
+
+\textbf{5-band}: Brown--Red--Black--Brown--Brown $= 120 \times 10 = 1.2\,\text{k}\Omega$, $\pm 1\%$.
+
+\textbf{Mnemonic} (digit order 0--9): ``Better Be Right Or Your Great Big Venture Goes Wrong.''
+\end{tipbox}
+
+\begin{tipbox}[SMD Resistor Markings]
+Surface-mount resistors use a numeric code. The 3-digit code (e.g., ``103'') uses the first two digits as significant figures and the third as the number of zeros: $103 = 10 \times 10^3 = 10\,\text{k}\Omega$. The 4-digit code (e.g., ``4702'') uses three significant digits: $470 \times 10^2 = 47\,\text{k}\Omega$. ``R'' indicates a decimal point: ``4R7'' $= 4.7\,\Omega$.
+\end{tipbox}
+
+
+\section{Component Selection Reference}
+
+\subsection{Resistor Tolerance and Standard Values}
+Resistors come in standard value series spaced logarithmically. E12 (10\% tolerance): 12 values per decade (10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82). E24 (5\%): 24 values. E96 (1\%): 96 values. When designing a divider or filter, choose the nearest standard value and verify the circuit meets specifications at the tolerance extremes.
+
+\subsection{Power Rating}
+Every resistor has a maximum power dissipation. Standard through-hole: 1/4\,W. Verify $P = I^2R$ or $P = V^2/R$ at worst-case conditions. Exceeding the rating causes the resistor to overheat, change value, and eventually fail.
+
+\subsection{Capacitor Voltage Rating}
+Every capacitor has a maximum working voltage. Exceeding it causes dielectric breakdown. Derate by 50\%: use a 25\,V cap on a 12\,V rail. Electrolytic capacitors are polarized; reversing polarity causes catastrophic failure.
+
+\subsection{Wire Gauge Reference (AWG)}
+
+\begin{center}
+\begin{tabular}{cccl}
+\toprule
+\textbf{AWG} & \textbf{Diameter (mm)} & \textbf{Max Current (A)} & \textbf{Typical Use} \\
+\midrule
+30 & 0.25 & 0.5  & Wire-wrap, fine signal wiring \\
+28 & 0.32 & 0.8  & Ribbon cable, breadboard jumpers \\
+24 & 0.51 & 2.1  & Standard signal and sensor wiring \\
+22 & 0.64 & 3.0  & General purpose hookup wire \\
+20 & 0.81 & 5.0  & Power wiring, LED strips \\
+18 & 1.02 & 7.5  & Motor power, moderate loads \\
+16 & 1.29 & 10   & High-current motor, battery leads \\
+14 & 1.63 & 15   & High-power supply, automotive \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Current ratings are approximate for chassis wiring in open air. Bundled wires should be derated by 20--40\%. Use stranded wire for any connection subject to movement or vibration; solid wire work-hardens and breaks after repeated flexing.
+
+\subsection{SI Prefixes}
+
+\begin{center}
+\begin{tabular}{ccll}
+\toprule
+\textbf{Prefix} & \textbf{Symbol} & \textbf{Factor} & \textbf{Common Usage} \\
+\midrule
+pico  & p  & $10^{-12}$ & Capacitance (pF) \\
+nano  & n  & $10^{-9}$  & Capacitance (nF), time (ns) \\
+micro & $\mu$ & $10^{-6}$ & Voltage ($\mu$V), current ($\mu$A) \\
+milli & m  & $10^{-3}$  & Voltage (mV), current (mA) \\
+---   & ---  & $10^{0}$ & Base unit (V, A, $\Omega$, Hz) \\
+kilo  & k  & $10^{3}$   & Resistance (k$\Omega$), frequency (kHz) \\
+mega  & M  & $10^{6}$   & Resistance (M$\Omega$), frequency (MHz) \\
+giga  & G  & $10^{9}$   & Frequency (GHz) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warningbox}[Case Sensitivity]
+Lowercase ``m'' means milli ($10^{-3}$). Uppercase ``M'' means mega ($10^{6}$). Confusing them changes a value by a factor of one billion. A 4.7\,m$\Omega$ current-sense shunt is nine orders of magnitude different from a 4.7\,M$\Omega$ input bias resistor. Always verify case when reading datasheets.
+\end{warningbox}
+
+\subsection{Common Schematic Symbols}
+\textbf{Passive}: resistor (zigzag or rectangle), capacitor (two parallel lines; curved plate for polarized electrolytic), inductor (series of loops), fuse (thin line with break). \textbf{Semiconductors}: diode (triangle into bar), LED (diode with arrows), Zener (bent bar ends), NPN BJT (emitter arrow away from base), N-MOSFET (arrow inward on body diode). \textbf{Sources}: DC voltage (circle with $+$/$-$), AC (circle with sine wave), ground (three horizontal lines). \textbf{Active}: op-amp (triangle with $+$/$-$ inputs).
+
+
+\section{Grounding and Ground Loops}
+
+Ground is the 0\,V reference node. In practice, ground conductors carry return currents and have nonzero resistance, creating small voltage differences between ground points in different parts of the circuit. A ground loop occurs when multiple ground connections form a closed loop that picks up magnetically induced noise from nearby motors, transformers, or switching supplies.
+
+\begin{tipbox}[Star Grounding]
+Connect all subsystem grounds to a single point near the power supply rather than daisy-chaining. Keep signal ground (sensors, ADC) and power ground (motors, relays) on separate conductors that meet only at the star point. This prevents motor return currents from corrupting sensor measurements.
+\end{tipbox}
+
+
+\section{Multimeter and Oscilloscope Quick Reference}
+
+\textbf{Voltage}: probes in parallel across the component. DMM presents $>$1\,M$\Omega$ input impedance. \textbf{Current}: meter in series (break the circuit). Red probe must be in the current jack. \textbf{Resistance}: de-energize the circuit first; DMM injects a test current. \textbf{Continuity}: beeps if $<$50\,$\Omega$; circuit must be de-energized.
+
+\textbf{Oscilloscope}: the ground clip connects directly to earth ground through the power cord. Never clip it to anything other than circuit ground or you will create a short circuit through the earth path. To measure floating voltages, use channel math (Ch1 $-$ Ch2) or a differential probe.
+
+
+\section{Breadboard Conventions}
+
+The two long rails along the edges are bus strips (power and ground). Central rows of five-hole groups connect horizontally within each group but not across the center channel, which is sized to straddle DIP IC packages. Best practices: red rail for $V+$, blue for ground, short flat jumper wires color-coded by function, ICs straddling the center channel. Limitations: contact resistance 0.01--0.1\,$\Omega$ per connection (adds up), stray capacitance 2--5\,pF between rows (limits to $<$1\,MHz), and connections loosen over time. Never use a breadboard as a final deliverable at FDR.
+
+\begin{keyconceptbox}[Requirements Mapping: Electrical Safety and Component Selection]
+``All power rails shall be fused at or below the wire current rating per AWG specifications.'' ``The system shall include a physical power disconnect that de-energizes all actuators independently of firmware.'' ``Resistors in signal conditioning paths shall be 1\% tolerance (E96 series) or better.'' ``Decoupling capacitors shall have a voltage rating at least 1.5$\times$ the rail voltage.'' ``All lithium battery installations shall include a battery management system with overvoltage, undervoltage, and overcurrent protection.''
+\end{keyconceptbox}
+
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item A 9\,V battery drives $R_1 = 1\,\text{k}\Omega$ in series with the parallel combination of $R_2 = 2\,\text{k}\Omega$ and $R_3 = 3\,\text{k}\Omega$. Find the total current and voltage across each element.
+\item Identify the value and tolerance of a resistor with bands: Green--Blue--Red--Gold. Then identify: Orange--Orange--Brown--Brown--Brown (5-band).
+\item Your sensor has a Thevenin output of $V_{Th} = 2.5$\,V and $R_{Th} = 5\,\text{k}\Omega$. What voltage does an ADC with 1\,M$\Omega$ input impedance read? What about 10\,k$\Omega$ input impedance? What is the fix?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item $R_{2\|3} = (2 \times 3)/(2+3) = 1.2\,\text{k}\Omega$. $R_{\text{total}} = 1.0 + 1.2 = 2.2\,\text{k}\Omega$. $I = 9/2200 = 4.09$\,mA. $V_{R1} = 4.09$\,V. $V_{R2\|3} = 4.91$\,V. KVL check: $4.09 + 4.91 = 9.0$\,V.
+\item Green--Blue--Red--Gold: $56 \times 100 = 5.6\,\text{k}\Omega$, $\pm 5\%$. Orange--Orange--Brown--Brown--Brown: $331 \times 10 = 3.31\,\text{k}\Omega$, $\pm 1\%$.
+\item With 1\,M$\Omega$: $V = 2.5 \times 10^6/(5000 + 10^6) = 2.488$\,V (0.5\% error, negligible). With 10\,k$\Omega$: $V = 2.5 \times 10{,}000/(5000 + 10{,}000) = 1.667$\,V (33\% error, unacceptable). Fix: add a unity-gain buffer (voltage follower op-amp) between the sensor and the ADC to present high impedance to the sensor and low impedance to the ADC.
 \end{enumerate}
 
 
