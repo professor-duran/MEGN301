@@ -115,19 +115,35 @@ Throughout Part~I, teal-bordered \textsf{GS} boxes follow a single design, the G
 The GreenShield system illustrates \emph{how} to move from problem statement to requirements, how to conduct a trade study, and how to write a test plan. It is \textbf{not} a prescription for your project. Your problem, stakeholders, requirements, and architecture will be different. Use GreenShield to understand the process, not to copy components or design decisions.
 \end{warningbox}
 
-\subsection*{What Should I Be Reading Right Now?}
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{Just started your project?} $\to$ Chapter~1 (Problem Definition), Chapter~3 (Requirements)
-\item \textbf{Preparing for PDR?} $\to$ Chapter~4 (Concept Generation), Chapter~19 (PDR Deliverables)
-\item \textbf{Need circuit basics?} $\to$ Chapter~13 (Electronics Fundamentals, Safety \& Component Selection)
-\item \textbf{Designing hardware?} $\to$ Chapters~10--18 (Technical Reference for your subsystem types)
-\item \textbf{Preparing for CDR?} $\to$ Chapter~20 (CDR Deliverables), verify BOM and schematics
-\item \textbf{Integration is failing?} $\to$ Chapter~6 (Integration), Chapter~12 (Power Architecture)
-\item \textbf{Motor won't spin?} $\to$ Chapter~11 \S11.2 (Motors \& Drivers), Chapter~12 (Power Architecture)
-\item \textbf{Sensor readings are noisy?} $\to$ Chapter~13 \S13.10 (Grounding), Chapter~17 (PCB Layout Rules)
-\item \textbf{Preparing for FDR?} $\to$ Chapter~5 (V\&V), Chapter~7 (O\&M), Chapter~21 (FDR Deliverables)
-\item \textbf{Studying for the exam?} $\to$ Practice questions at the end of every chapter
-\end{itemize}
+
+% ========== WHAT SHOULD I BE READING ==========
+\chapter*{What Should I Be Reading Right Now?}
+\addcontentsline{toc}{chapter}{What Should I Be Reading Right Now?}
+
+\begin{center}\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{If you are\ldots} & \textbf{Your problem} & \textbf{Go to} \\
+\midrule
+Just starting your project & Need problem statement and stakeholders & Ch.~1 \\
+Writing requirements & Need SHALL statements and SDRD format & Ch.~3 \\
+Preparing for PDR & Need concept generation and trade study & Ch.~4, Ch.~19 \\
+Need circuit basics & Ohm's Law, KVL/KCL, component selection & Ch.~13 \\
+Selecting connectors & Wire-to-wire, fluid fittings, thread types & Ch.~10 \\
+Choosing a motor or pump & Sizing, driver selection, derating & Ch.~11 \\
+Designing power architecture & Protection, grounding, battery safety & Ch.~12 \\
+Designing a PCB & Schematic capture, layout, fab ordering & Ch.~17 \\
+Programming the ESP32 & Pin mapping, protocols, firmware structure & Ch.~18 \\
+Preparing for CDR & Detailed design freeze, deliverables checklist & Ch.~20 \\
+Integration is failing & Bottom-up strategy, debugging process & Ch.~6 \\
+Motor won't spin & Driver wiring, power rail brown-out & Ch.~11, Ch.~12 \\
+Sensor readings are noisy & Grounding, decoupling, layout & Ch.~13, Ch.~17 \\
+Writing test procedures & V\&V methods, TAID, VCRM & Ch.~5, Ch.~8 \\
+Preparing for FDR & O\&M, post-build V\&V, deliverables & Ch.~7, Ch.~21 \\
+Studying for the exam & Formula summary and practice questions & Every chapter \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \subsection*{Sprint-to-Chapter Mapping}
 
@@ -139,16 +155,54 @@ The GreenShield system illustrates \emph{how} to move from problem statement to 
 \midrule
 1 & 1--2 & Team formation, problem definition, stakeholder analysis & Ch.~1 & Problem statement, stakeholder map, ConOps \\
 2 & 3--4 & Requirements, architecture, competitive analysis & Ch.~2, 3 & SDRD, functional decomposition \\
-3 & 5--6 & Concept generation, trade studies, preliminary design & Ch.~3 & Morph.\ chart, decision matrix, \textbf{PDR} \\
-4 & 7--8 & Detailed design, procurement, prototyping & Ch.~7--12 & BOM, schematics, CAD, orders \\
-5 & 9--10 & Fabrication, subsystem testing, integration begins & Ch.~4, 5 & Subsystem test results, \textbf{CDR} \\
-6 & 11--13 & System integration, V\&V execution, debugging & Ch.~4, 5, 9 & VCRM, test reports, system demos \\
-7 & 14--15 & Final V\&V, documentation, O\&M package & Ch.~6 & O\&M manual, as-built docs \\
+3 & 5--6 & Concept generation, trade studies, preliminary design & Ch.~4 & Morph.\ chart, decision matrix, \textbf{PDR} \\
+4 & 7--8 & Detailed design, procurement, prototyping & Ch.~10--18 & BOM, schematics, CAD, orders \\
+5 & 9--10 & Fabrication, subsystem testing, integration begins & Ch.~5, 6 & Subsystem test results, \textbf{CDR} \\
+6 & 11--13 & System integration, V\&V execution, debugging & Ch.~5, 6, 8 & VCRM, test reports, system demos \\
+7 & 14--15 & Final V\&V, documentation, O\&M package & Ch.~7, 9 & O\&M manual, as-built docs \\
 Final & 16 & Final design review, reflection, knowledge transfer & Part~III & \textbf{FDR} presentation \& package \\
 \bottomrule
 \end{tabularx}
 \caption{Sprint-to-chapter mapping for a 16-week MEGN 301 project.}
 \end{table}
+
+
+% ========== LABORATORY SAFETY ==========
+\chapter*{Laboratory Safety and Equipment Care}
+\addcontentsline{toc}{chapter}{Laboratory Safety and Equipment Care}
+
+This chapter establishes mandatory safety practices for all MEGN~301 lab and project work. Electrical and mechanical hazards are present any time you are building, testing, or demonstrating your projects. The practices below are not suggestions; they are requirements.
+
+\section*{Electrical Hazards}
+The danger of electrical shock depends on current through the body, not voltage alone, but higher voltage drives more current through the body's resistance ($\sim$1\,k$\Omega$ hand-to-hand, wet skin). Thresholds: 1\,mA is perceptible, 10--20\,mA causes involuntary muscle contraction (``can't let go''), 75--100\,mA across the heart is potentially fatal.
+
+\textbf{Safe voltage thresholds} (IEC~61010): below 30\,VDC or 25\,VAC RMS is generally safe for dry skin contact. Between 30\,V and 48\,V, use insulated tools and the one-hand rule (keep one hand in your pocket to prevent hand-to-hand current paths across the heart). Above 48\,V, including all AC mains: de-energize and lock out before touching.
+
+\section*{Benchtop Power Supply}
+Always set current limiting to the minimum expected value before enabling the output. Increase slowly while monitoring. When using multiple channels, verify isolation between channels before connecting them in series. After powering down, discharge large capacitors before touching the circuit.
+
+\section*{Multimeter Safety}
+\begin{warningbox}[Current-Mode Dead-Short Trap]
+If the multimeter is left in current mode (probes in the current jacks) and connected in parallel across a voltage source, the meter becomes a short circuit. This blows the internal fuse or damages the meter and circuit. After every current measurement, move the red probe back to the voltage jack. Always measure resistance and continuity on de-energized circuits only.
+\end{warningbox}
+
+\section*{Oscilloscope Ground Clip}
+The oscilloscope probe's ground clip connects directly to earth ground through the power cord. Clipping it to any node other than circuit ground creates a short circuit through the earth path, which can destroy components and trip breakers. The ground clip must always connect to circuit ground. For floating measurements, use channel math (Ch1 $-$ Ch2) or a differential probe.
+
+\section*{ESD Protection}
+CMOS components (ESP32, op-amps, all modern ICs) are sensitive to electrostatic discharge. A human body can accumulate 3,000--25,000\,V. Wear a grounded wrist strap when handling bare ICs and PCBs, store components in anti-static bags, and touch a grounded surface before picking up components.
+
+\section*{Lithium Battery Safety}
+Lithium-ion and lithium-polymer cells present fire and explosion risks if mishandled. Mandatory: never short-circuit a cell, never charge above rated voltage (typically 4.2\,V/cell), never discharge below minimum (typically 3.0\,V/cell), always use a battery management system (BMS), and never puncture, crush, or overheat cells. If a cell is swelling, hissing, or smoking: clear the area, place in a fire-safe container (metal bucket with sand), and notify lab staff. Lithium fires require a Class~D extinguisher or dry sand, not water.
+
+\section*{Mechanical Hazards}
+Rotating machinery (motors, gears, belts) can entangle hair, clothing, and fingers. Tie back long hair, remove dangling jewelry, and keep hands clear of moving parts during operation. Spring-loaded mechanisms and pressurized fluid systems store energy that can release unexpectedly. Wear safety glasses when cutting, drilling, soldering, or working with pressurized systems.
+
+\section*{Soldering Safety}
+Soldering irons operate at 300--400\,\degC{}. Always return the iron to its stand when not actively soldering. Work in a ventilated area or use a fume extractor; solder flux fumes are irritating and potentially harmful with prolonged exposure. Lead-free solder is standard; if using leaded solder, wash hands thoroughly afterward and never eat or drink at the soldering bench.
+
+\section*{Fire Safety}
+Electronics fires most commonly result from overcurrent through undersized wire, short circuits without fuse protection, or lithium battery failure. Prevention: fuse every power rail at or below the wire's rated current, inspect solder joints for bridges before powering up, and keep a CO$_2$ or dry chemical fire extinguisher (Class~C rated for electrical fires) accessible in the workspace. Know the location of the nearest fire extinguisher and emergency exit before beginning any lab work.
 
 \mainmatter
 
@@ -197,40 +251,6 @@ Document each persona interview with: persona description, key quotes, identifie
 Never ask ``Would you use this?''; people say yes to be polite. Instead ask about \emph{past behavior}: ``When did you last face this problem? What did you do?'' Past actions predict future behavior far better than hypothetical opinions.
 \end{tipbox}
 
-
-\subsection{Market Analysis and Competitive Positioning}
-Before defining your problem, understand what already exists. A market analysis answers three questions: Who else has tried to solve this problem? What did they build? And where are the opportunities to do better?
-
-\textbf{Part A: Competitive Product Survey.} Identify at least three competing products or existing solutions. For each, document features, strengths, weaknesses, price point, and user reviews. Synthesize: What features are universally present (table stakes)? What features are missing or poorly executed (opportunities)? What do customers complain about most (unmet needs)?
-
-\textbf{Part B: Patent Landscape.} Search patents.google.com for relevant utility patents. Record: (1) filing date (patents expire after 20 years), (2) abstract, and (3) claims. The purpose is freedom to operate: can your design avoid infringing active claims?
-
-\begin{tipbox}[Reading Patents Efficiently]
-Read the abstract first. Then skip to the claims at the end. Claims define the legal boundaries. If your design does not practice every element of an independent claim, you do not infringe. Expired patents contain detailed engineering you can freely use.
-\end{tipbox}
-
-The competitive analysis feeds directly into the ``WHY IT MATTERS'' element of your problem statement; you cannot justify a project without knowing what already exists.
-
-\subsection{Customer Discovery and the Entrepreneurial Mindset}
-Engineering teams that design in isolation build systems nobody wants. Customer discovery is the practice of systematically interviewing potential users to validate your assumptions about the problem before committing to a solution.
-
-Three components of the entrepreneurial mindset (KEEN 3~C's):
-
-\textbf{Curiosity}: Ask open-ended questions that reveal unstated needs. ``Tell me about the last time you had this problem'' yields richer insight than ``Would you use a product that does X?''
-
-\textbf{Connections}: Link what you learn across interviews. If three different user types independently mention the same pain point, that is a strong signal of a real need.
-
-\textbf{Creating Value}: Translate insights into requirements that deliver measurable value. A feature is only valuable if it solves a problem the customer actually has.
-
-\begin{tipbox}[From Customer Discovery to Requirements]
-The output of customer discovery is a set of validated needs, organized by priority:
-\begin{enumerate}[nosep,leftmargin=1.5em]
-\item \textbf{Must-have needs} (mentioned by most users, significant pain): become SHALL requirements.
-\item \textbf{Important needs} (mentioned by some users, moderate impact): become SHOULD goals.
-\item \textbf{Nice-to-have needs} (mentioned rarely, low impact): become COULD features, pursued if budget allows.
-\end{enumerate}
-This maps directly to the MoSCoW framework discussed later in this chapter.
-\end{tipbox}
 
 \subsection{Problem vs.\ Solution Thinking}
 Engineers instinctively jump to solutions. The discipline of problem definition requires staying in the \textbf{problem space} (what is wrong, who is affected, what the consequences are) before entering the \textbf{solution space} (technologies, components, architectures).
@@ -371,20 +391,6 @@ Every ConOps sentence should map to at least one requirement. Unmapped sentences
 \item \textbf{IEEE 29148}: Requirements engineering processes.
 \end{itemize}
 \end{keyconceptbox}
-
-\section{Artifact Handoff: What Chapter 1 Produces}
-\begin{table}[htbp]\centering\small
-\begin{tabularx}{\textwidth}{l X l}
-\toprule
-\textbf{Artifact} & \textbf{Description} & \textbf{Used In} \\
-\midrule
-Problem Statement & Five-element statement (who/what/where/why/constraints) & Ch.~2 \\
-Stakeholder Map & Power/interest grid with engagement strategies & Ch.~2, 4 \\
-Concept of Operations & Plain-language usage scenarios with operational modes & Ch.~2, 6 \\
-Competitive Analysis & 3--5 existing solutions with gap identification & Ch.~3 \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \section{Stakeholder Analysis Techniques}
 \subsection{Stakeholder Identification}
@@ -664,17 +670,6 @@ The SDRD is the single authoritative document that captures all system-level req
 The SDRD is a living document; baselined at PDR and updated under change control through CDR and FDR.
 
 
-\subsection{The System Design Requirements Document (SDRD)}
-The SDRD is the single authoritative document capturing all system-level requirements, their rationale, traceability, and verification methods. Structure:
-\begin{enumerate}[nosep,leftmargin=1.5em]
-\item \textbf{Introduction}: system overview, scope, applicable documents.
-\item \textbf{System Description}: ConOps summary, system boundary, external interfaces.
-\item \textbf{Requirements}: organized by functional, performance, and non-functional categories. Each entry: unique ID, shall-statement, rationale, parent traceability, verification method (T/A/I/D).
-\item \textbf{Traceability Matrix}: forward (need $\to$ requirement) and backward (requirement $\to$ need).
-\item \textbf{Verification Plan Summary}: method assignments and planned test phases.
-\end{enumerate}
-The SDRD is baselined at PDR and updated under change control through CDR and FDR.
-
 \subsection{What Is a Requirement?}
 A requirement is a formal statement of a capability or constraint the system must satisfy. It uses the word \textbf{shall} to indicate mandatory compliance. ``The system \emph{shall} measure ambient temperature'' is a requirement. ``Should'' and ``will'' are non-binding.
 
@@ -738,11 +733,6 @@ Functional decomposition produces a tree of functions (verb-noun). Architecture 
 The allocation matrix reveals integration complexity: modules that implement many functions are high-risk single points of failure.
 
 
-\subsection{From Functions to Architecture Blocks}
-Functional decomposition produces a tree of functions (verb-noun pairs). Architecture allocation maps each leaf function to a physical module. This mapping is one-to-many (one function may require multiple modules) and many-to-one (one module may implement multiple functions). Document this in an \textbf{allocation matrix}: rows = functions, columns = physical modules, cells = primary/supporting role.
-
-The allocation matrix reveals integration complexity: modules implementing many functions are high-risk. Modules sharing functions require careful interface definition.
-
 \subsection{Interface Definition}
 Once functions map to modules, define interfaces between them with Interface Control Documents (ICDs): what crosses the boundary (signals, power, data), in what format (protocols, voltage levels), with what constraints (bandwidth, latency).
 
@@ -771,11 +761,6 @@ Every system operates in an environment that imposes constraints. Systematically
 \item \textbf{Materials}: RoHS compliance, California Prop 65, food-contact (FDA 21 CFR).
 \end{itemize}
 
-
-\subsection{Requirements--Architecture Iteration}
-Requirements and architecture co-evolve. Initial requirements drive a candidate architecture; that architecture reveals implementation constraints (weight, power, thermal) that feed back as new requirements or modified targets. This iteration is normal, but must be \textbf{documented}. Each iteration produces a revised SDRD version with change rationale.
-
-\textbf{Convergence test}: when two consecutive iterations change fewer than 5\% of requirements, the design is stable enough to baseline at PDR.
 
 \section{Environmental and Regulatory Constraints}
 Every system operates in an environment that imposes constraints. Systematically address:
@@ -901,20 +886,6 @@ Each leaf maps to a physical component. ``Measure Air Temp'' $\to$ DS18B20 senso
 \item \textbf{IEEE 1233}: Guide for developing system requirements specifications.
 \end{itemize}
 \end{keyconceptbox}
-
-\section{Artifact Handoff: What Chapter 2 Produces}
-\begin{table}[htbp]\centering\small
-\begin{tabularx}{\textwidth}{l X l}
-\toprule
-\textbf{Artifact} & \textbf{Description} & \textbf{Used In} \\
-\midrule
-SDRD & System requirements with traceability and V\&V assignments & Ch.~3--6, PDR \\
-Functional Decomposition & Function tree from mission to leaf functions & Ch.~3 \\
-Allocation Matrix & Functions mapped to physical modules & Ch.~5 \\
-Trade Study Reports & Weighted decision matrices with sensitivity analysis & Ch.~3, PDR \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \section{Writing Good Requirements: Advanced Techniques}
 \subsection{The SHALL/SHOULD/MAY Hierarchy}
@@ -1069,22 +1040,6 @@ The reverse engineering analysis directly feeds concept generation:
 \item The component inventory reveals standard parts that you can reuse or specify.
 \end{enumerate}
 
-
-\section{Reverse Engineering}
-Before generating new concepts, understand how existing solutions work. Reverse engineering builds engineering intuition and directly informs concept generation.
-
-\subsection{The Reverse Engineering Process}
-\begin{enumerate}[leftmargin=1.5em]
-\item \textbf{Document the as-received state}: photograph from all angles before disassembly. Record weight, dimensions, labels, model numbers.
-\item \textbf{Systematic disassembly}: remove fasteners in order, photograph each step, bag and label all hardware. Use the right tools; forcing components obscures design intent.
-\item \textbf{Identify components and materials}: measure with calipers (not rulers). Magnet test for ferrous metals. Identify standard parts (bearings, fasteners, seals) by markings.
-\item \textbf{Analyze the architecture}: create a block diagram showing subsystem connections. Identify functional groups, signal flows, and power distribution.
-\item \textbf{Assess design decisions}: Why did the original designers make each choice? What manufacturing processes were used (injection molding witness lines, machining marks, weld joints)?
-\item \textbf{Create deliverables}: BOM, exploded view photograph or CAD, functional analysis report.
-\end{enumerate}
-
-\subsection{What Reverse Engineering Reveals}
-Assembly sequence (what goes in first comes out last; this drives DFA decisions). Material choices and manufacturing methods. Standard vs.\ custom parts ratio. Design-for-cost decisions. Wear patterns on used products that reveal failure modes.
 
 \section{Generating Concepts}
 \subsection{Diverge Then Converge}
@@ -1643,19 +1598,6 @@ SYS-005 & Accuracy $\pm$0.5\,\degC{} & T & PARTIAL & PASS \\
 \end{itemize}
 \end{keyconceptbox}
 
-\section{Artifact Handoff: What Chapter 4 Produces}
-\begin{table}[htbp]\centering\small
-\begin{tabularx}{\textwidth}{l X l}
-\toprule
-\textbf{Artifact} & \textbf{Description} & \textbf{Used In} \\
-\midrule
-VCRM & Reqs linked to test status & CDR, FDR \\
-Test Procedures & Reproducible procedures for T-method reqs & Ch.~5 \\
-Test Reports & Results with data, verdict, and DRs & FDR \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
 \section{Test Method Selection: T-A-I-D}
 Every requirement must be verified by one of four methods:
 
@@ -1697,14 +1639,6 @@ A test procedure must be detailed enough that someone who did not design the sys
 
 \textbf{Safety}: any hazards and required precautions. ``High voltage present when cover is removed. Do not touch exposed terminals.''
 
-\section{Failure Modes and Effects Analysis (FMEA)}
-FMEA systematically identifies potential failure modes, their effects, and their causes, then prioritizes them for mitigation:
-
-For each component or function: (1) how can it fail (failure mode)? (2) what happens to the system if it fails (effect)? (3) how severe is the effect (severity: 1--10)? (4) how likely is the failure (occurrence: 1--10)? (5) how likely is the failure to be detected before it causes harm (detection: 1--10)? (6) Risk Priority Number: $\text{RPN} = S \times O \times D$.
-
-Prioritize mitigation actions for the highest RPNs. Common mitigations: redundancy (add a backup), derating (operate components below their maximum ratings), testing (detect failures before deployment), and design changes (eliminate the failure mode entirely).
-
-In MEGN~301, a simplified FMEA covering the top 10 failure modes is expected in the CDR package. Focus on: safety-critical failures (fire, shock, mechanical injury), mission-critical failures (system cannot perform its primary function), and high-probability failures (connectors, batteries, moving parts).
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]
 \item Explain how a system can pass all verification tests but fail validation. Give a concrete example.
@@ -1849,60 +1783,6 @@ Three pillars: \textbf{Version control} (Git for code, revision letters for draw
 \subsection{Critical Subsystem Demonstrations}
 Before full integration, each subsystem should pass a standalone demonstration. Three steps: (1) \textbf{Plan}: define what the subsystem demonstrates, test equipment needed, pass/fail criteria. (2) \textbf{Execute}: run the demonstration with data recording; video for design review. (3) \textbf{Document}: 1-page summary with data, photos, verdict; a CDR deliverable.
 
-\subsection{The N\textsuperscript{2} (N-Squared) Diagram}
-The N\textsuperscript{2} diagram maps interfaces between subsystems. Modules on the diagonal; cell $(i,j)$ describes what module $i$ sends \emph{to} module $j$. Empty cells = no interface. Dense rows = high-integration-risk modules.
-
-Building one: list modules on the diagonal; for each pair ask ``does module $i$ send anything to $j$?''; fill in signal type, protocol, voltage, data rate.
-
-\begin{greenshieldbox}[GreenShield: N\textsuperscript{2} Diagram]
-\small
-\begin{tabularx}{\textwidth}{l|c|c|c|c|c}
- & \textbf{Sensor} & \textbf{MCU} & \textbf{Relay} & \textbf{Comms} & \textbf{PSU} \\
-\hline
-\textbf{Sensor} & --- & Temp (I2C) & & & \\
-\hline
-\textbf{MCU} & Config & --- & GPIO high/low & UART TX & \\
-\hline
-\textbf{Relay} & & Status (GPIO) & --- & & \\
-\hline
-\textbf{Comms} & & UART RX & & --- & \\
-\hline
-\textbf{PSU} & 3.3V & 3.3V & 12V & 3.3V &; \\
-\end{tabularx}
-
-PSU row is dense (interfaces with everything). MCU column is dense (receives from everything). Both are high-risk integration points. The I2C interface between Sensor and MCU requires defined pull-up ownership.
-\end{greenshieldbox}
-
-\begin{greenshieldbox}[GreenShield: Integration Failure: I\textsuperscript{2}C Pull-Up Error]
-The sensor team assumed the MCU board provided I2C pull-ups. The MCU team assumed the breakout board had them. Neither did. Result: bus floated, intermittent communication, 8 hours of debugging.
-
-\textbf{Root cause}: ICD did not specify pull-up ownership. \textbf{Fix}: every ICD must explicitly state which side provides pull-ups, termination resistors, and bias voltages.
-\end{greenshieldbox}
-
-\begin{tipbox}[Case Study: Diagnosing the Brown-Out Blues]
-A greenhouse controller worked on the bench but reset randomly in the field. Debugging: (1) Reproduced only when relay switched on. (2) Isolated: relay disconnected = stable. (3) Characterized: oscilloscope showed 800\,mV dip on 3.3\,V rail at relay switch-on. (4) Root cause: relay coil inrush drew 150\,mA through shared trace, drooping MCU supply below brown-out threshold. (5) Fix: 470\,$\mu$F cap on MCU rail, separate relay power trace. Regression: 100 relay cycles, zero resets.
-\end{tipbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: Sec.\ 4.6 (Implementation), Sec.\ 4.7 (Integration).
-\item \textbf{NASA SP-2016-6105 Rev 2}: Ch.\ 5.1 (Product Implementation), Ch.\ 5.2 (Product Integration).
-\end{itemize}
-\end{keyconceptbox}
-
-\section{Artifact Handoff: What Chapter 5 Produces}
-\begin{table}[htbp]\centering\small
-\begin{tabularx}{\textwidth}{l X l}
-\toprule
-\textbf{Artifact} & \textbf{Description} & \textbf{Forward Reference} \\
-\midrule
-Integration Plan & Build sequence, test gates, interface test list & CDR deliverable \\
-N\textsuperscript{2} Diagram & Interface matrix with signal/power definitions & ICD verification \\
-Integration Test Results & Subsystem and system-level test data & Ch.~4 (VCRM), FDR \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
 \section{The Integration Challenge}
 Subsystem integration is where student projects most commonly fail. Each subsystem may work perfectly on the bench in isolation, but when connected together, unexpected interactions emerge: electrical noise from the motor corrupts sensor readings, the mechanical frame flexes under load and misaligns optical sensors, the firmware timing that worked with one sensor fails when three sensors share the same bus, and the power supply that was adequate for bench testing sags under full system load.
 
@@ -1947,15 +1827,6 @@ When something does not work after integration, resist the urge to change multip
 \begin{warningbox}[The Integration Time Estimate]
 Students consistently underestimate integration time. A common estimate: ``we have 5 subsystems, each takes 1 day to build, so we need 5 days.'' Reality: building takes 5 days, but integration and debugging takes 5--15 more days. Budget at least 30\% of the total project time for integration and testing. If you have 15 weeks, reserve weeks 10--15 for integration, testing, and FDR preparation.
 \end{warningbox}
-\section{Configuration Management}
-As the system evolves through integration and testing, keeping track of what changed, when, and why becomes critical. Configuration management (CM) practices prevent the chaos of ``I thought you changed that back'' and ``which firmware version is on this board?''
-
-\textbf{Version control}: use a Git repository for all firmware, CAD files, and documentation. Every change has a commit message explaining what was changed and why. You can always revert to a previous version if a change introduces a problem.
-
-\textbf{Hardware configuration log}: maintain a physical logbook (or spreadsheet) recording every hardware change: ``2026-03-15: Replaced R7 from 10k to 4.7k to fix gain error. ADN.'' Include the date, the change, the reason, and the person's initials. This log is invaluable when debugging: ``the system worked Tuesday but not Wednesday'' becomes a solvable problem if you know what changed between Tuesday and Wednesday.
-
-\textbf{Build configuration tag}: when you have a known-good system configuration (hardware + firmware + calibration), tag it. Label the hardware (tape a note: ``Config v2.3, 2026-03-15''), tag the Git repository (``git tag v2.3''), and note the calibration date. If a change breaks something, you can revert to the tagged configuration.
-
 \section{Interface Testing}
 Before connecting two subsystems, verify each interface independently using loopback testing:
 
@@ -2108,65 +1979,6 @@ This is a \textbf{testable requirement}; verify it by demonstration (TAID method
 
 End-of-life: design for disassembly (fasteners not adhesives), single-material design for recyclability, hazardous material handling (batteries, solvents), data sanitization.
 
-
-\subsection{The Bathtub Curve}
-Component failure rate follows the ``bathtub curve'':
-\begin{enumerate}[nosep,leftmargin=1.5em]
-\item \textbf{Infant mortality} (decreasing rate): manufacturing defects and weak components fail early. Mitigate with burn-in testing and quality inspection.
-\item \textbf{Useful life} (constant rate): random failures at a steady rate. This is the MTBF region.
-\item \textbf{Wear-out} (increasing rate): fatigue, corrosion, seal degradation, bearing wear. Mitigate with preventive replacement before onset.
-\end{enumerate}
-For student projects, most failures occur in Phase~1 (build quality). Burn-in your system for 48+ hours before the final demonstration.
-
-\subsection{FMECA: Failure Modes, Effects, and Criticality Analysis}
-\textbf{Important}: Your FMEA should have \emph{started} during concept generation and architecture (Chapters~2--3), not here. By the O\&M phase, you are updating the FMEA with field-observed failure data and refining RPN scores, not creating it from scratch. If your team's first FMEA appears at FDR, it is too late to design out any failure mode it reveals.
-
-FMECA extends FMEA by adding \textbf{Criticality Analysis}. For MEGN~301, use simplified FMEA with RPN (Risk Priority Number = Severity $\times$ Occurrence $\times$ Detection, each 1--10). Focus design effort on the top 5 RPN items.
-
-\subsection{Writing Maintainability Requirements}
-Examples of often-neglected maintainability requirements:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item ``The system shall allow sensor replacement without disassembling the enclosure.''
-\item ``The system shall provide LED indication of power, communication, and fault status.''
-\item ``The system shall allow firmware update via USB without opening the enclosure.''
-\item ``All field-replaceable modules shall use tool-free connectors.''
-\end{itemize}
-
-\begin{greenshieldbox}[GreenShield: O\&M Requirement Trace]
-\small
-\begin{tabularx}{\textwidth}{l X l}
-\toprule
-\textbf{Req ID} & \textbf{O\&M Requirement} & \textbf{Parent Need} \\
-\midrule
-OM-001 & Sensor replacement without enclosure disassembly & Operator cannot solder \\
-OM-002 & Status LEDs for power, comms, fault & Remote monitoring \\
-OM-003 & Battery replacement $<$5 min & Off-grid concept \\
-OM-004 & All wear items documented with intervals & Long-term operation \\
-\bottomrule
-\end{tabularx}
-\end{greenshieldbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: Sec.\ 4.12--4.15 (Transition, Operation, Maintenance, Disposal).
-\item \textbf{NASA SP-2016-6105 Rev 2}: Ch.\ 6.3 (Reliability, Maintainability, Availability).
-\item \textbf{IEC 60300}: Dependability management standards.
-\item \textbf{MIL-STD-1629A}: Procedures for performing FMECA.
-\end{itemize}
-\end{keyconceptbox}
-
-\section{Artifact Handoff: What Chapter 6 Produces}
-\begin{table}[htbp]\centering\small
-\begin{tabularx}{\textwidth}{l X l}
-\toprule
-\textbf{Artifact} & \textbf{Description} & \textbf{Forward Reference} \\
-\midrule
-O\&M Manual & Quick-start, operating, maintenance, troubleshooting guides & FDR deliverable \\
-FMEA/FMECA & Failure mode analysis with RPN ranking & Design iteration \\
-Spare Parts List & Wear items with vendors, lead times, replacement intervals & Handoff package \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \section{Operational Concepts}
 Every engineered system has an operational context: who uses it, where, how often, for how long, and under what conditions. The operational concept document (ConOps) describes this context and drives design decisions for reliability, maintainability, and user interface.
@@ -2479,23 +2291,6 @@ Systems are retired when they can no longer perform their intended function at a
 
 \section{Design for End of Life (DfEOL)}
 DfEOL decisions made during the design phase dramatically affect EOL cost and environmental impact.
-
-\subsection{Design for Disassembly (DfD)}
-Products designed for disassembly can be efficiently separated into material streams for recycling. Key principles:
-
-\textbf{Minimize material variety}: use the fewest number of different materials. A product with aluminum, steel, ABS, polycarbonate, silicone, and neoprene requires six separation steps; one with only aluminum and ABS requires two.
-
-\textbf{Mark materials}: stamp or mold the material identification code (SPI resin codes for plastics: \#1 PET, \#2 HDPE, \#5 PP, \#7 ABS) on every plastic part. Without marking, recyclers cannot sort materials and the parts go to landfill.
-
-\textbf{Use reversible fasteners}: screws (especially standardized sizes) allow disassembly with common tools. Snap fits that are designed for disassembly (with a tool-accessible release tab) are also acceptable. Adhesives, ultrasonic welds, and blind rivets prevent disassembly and force destructive separation.
-
-\textbf{Modular architecture}: group components by material and by end-of-life fate. A module containing only the PCB and electronics can be sent to an e-waste processor. A module containing only aluminum structural parts can go directly to a metal recycler. Mixed modules (electronics glued to a steel frame) require manual separation that is often uneconomical.
-
-\begin{greenshieldbox}[GreenShield DfD Requirement]
-All GreenShield projects SHALL be disassemblable into material-homogeneous modules using only hand tools (Phillips screwdriver, hex keys, pliers) within 5 minutes. This is a formal course requirement, not a suggestion. Document the disassembly procedure with photographs in the FDR package.
-
-\textbf{The Disassembly Metric}: at FDR, the review board will time a disassembly demonstration. A team member who did \emph{not} perform the original assembly will disassemble the system while another team member records the time. The target: $T_{\text{disassembly}} \leq 5$ minutes to separate into $\geq 3$ material-homogeneous streams (metals, plastics, electronics/battery). Systems exceeding 5 minutes or requiring destructive separation (cutting, prying, breaking adhesive bonds) receive a sustainability deduction. This metric transforms ``Design for Disassembly'' from a qualitative aspiration into a verifiable engineering requirement.
-\end{greenshieldbox}
 
 \subsection{Design for Recycling (DfR)}
 Beyond disassembly, DfR ensures the separated materials can actually be recycled:
@@ -4650,15 +4445,6 @@ The minimum thread engagement length to develop full bolt strength: for steel bo
 Under vibration, threaded fasteners can loosen. Prevention methods: (1) \textbf{Nylon-insert lock nuts} (Nyloc): a nylon collar in the nut provides friction that resists loosening. Effective, low cost, one-time use. (2) \textbf{Thread-locking adhesive} (Loctite): blue (242) for medium strength (removable with hand tools), red (271) for permanent (requires heat to remove). (3) \textbf{Split lock washers}: limited effectiveness; largely replaced by Nordlock wedge-locking washers. (4) \textbf{Safety wire}: for high-vibration aerospace applications (drilling the bolt head and wiring to an adjacent bolt).
 
 \section{Bearing Selection and Installation}
-\subsection{Bearing Types}
-\textbf{Deep groove ball bearings}: the most common type. Support radial loads and moderate axial loads. Available in standard metric sizes (e.g., 608: 8\,mm bore, 22\,mm OD, used in skateboards and 3D printer wheels). Low friction, high speed capability.
-
-\textbf{Angular contact ball bearings}: designed for combined radial and axial loads. Used in pairs (back-to-back or face-to-face) to support axial loads in both directions. Common in spindle applications.
-
-\textbf{Needle roller bearings}: thin rollers provide high radial load capacity in a compact radial envelope. Used where space is limited (hinge pins, rocker arms).
-
-\textbf{Sleeve (journal) bearings}: a plain cylindrical surface (bronze, PTFE, or polymer) with lubricant film between shaft and bearing. Simple, low cost, quiet. Adequate for low-speed, low-load applications (drawer slides, door hinges, cable pulleys).
-
 \subsection{Bearing Sizing}
 Bearings are sized by their rated life, which depends on the applied load:
 \begin{equation}
@@ -4871,19 +4657,6 @@ Mechanical power transmission converts the motor's output (speed and torque at t
 P = T \cdot \omega
 \end{equation}
 where $P$ is power (W), $T$ is torque (N$\cdot$m), and $\omega$ is angular velocity (rad/s). Power is conserved (minus friction losses), so reducing speed increases torque proportionally: $T_{\text{out}} = T_{\text{in}} \times (N_{\text{in}}/N_{\text{out}}) \times \eta$ where $\eta$ is the efficiency.
-
-\section{Gear Trains}
-\subsection{Spur Gears}
-The most common gear type for parallel shafts. Gear ratio: $i = N_2/N_1 = d_2/d_1$ where $N$ is the number of teeth and $d$ is the pitch diameter. For a 20-tooth pinion driving a 60-tooth gear: $i = 3$, meaning the output speed is $1/3$ of the input and the output torque is $3\times$ the input (minus friction).
-
-\textbf{Module (metric)} or \textbf{diametral pitch (imperial)} defines the tooth size: module $m = d/N$ (mm). Common modules for small mechanisms: 0.5, 1.0, 1.5, 2.0\,mm. Both gears in a mesh must have the same module.
-
-\textbf{Pressure angle}: typically 20\degC{} (standard). The 14.5\degC{} pressure angle is obsolete but still encountered on legacy equipment. Do not mesh gears with different pressure angles.
-
-\textbf{Backlash}: the clearance between mating gear teeth. Necessary for thermal expansion and lubrication, but introduces positioning error. For precision applications, use anti-backlash gears (split gears with spring preload) or zero-backlash harmonic drives.
-
-\subsection{Compound Gear Trains}
-For large speed reductions ($i > 10$), use multiple stages. A two-stage train with $i_1 = 5$ and $i_2 = 4$ gives total $i = 20$ with two compact stages rather than one impractically large gear. Planetary gear sets achieve ratios of 3--10 in a single compact stage and are used in servo drives, cordless tool transmissions, and automotive automatic transmissions.
 
 \section{Belt and Chain Drives}
 \textbf{Timing belts} (synchronous belts): positive engagement (no slip). Tooth profiles: GT2 (2\,mm pitch, standard for 3D printers and small mechanisms), HTD (higher torque capacity for larger systems). Advantages: precise speed ratio, no lubrication, quiet. Sizing: select belt width for the required torque; the belt manufacturer's catalog provides power ratings per unit width for each tooth profile.
