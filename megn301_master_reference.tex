@@ -107,7 +107,7 @@
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
 
 
-\hypersetup{colorlinks=true,linkcolor=MinesBlue,urlcolor=AccentTeal,citecolor=MinesBlue}
+\hypersetup{colorlinks=true,linkcolor=MinesBlue,urlcolor=AccentTeal,citecolor=MinesBlue,plainpages=false,pdfpagelabels,hypertexnames=false}
 
 \begin{document}
 
@@ -867,7 +867,8 @@ Requirements are the single most important deliverable in the design process. Ge
 \begin{figure}[htbp]\centering
 \begin{tikzpicture}[>=Stealth]
 % Axes
-\draw[->,line width=1pt,MinesBlue] (0,0) -- (12.5,0) node[below,font=\small\sffamily]{Project Phase};
+\draw[->,line width=1pt,MinesBlue] (0,0) -- (12.5,0);
+\node[font=\small\sffamily,MinesBlue] at (6.5,-1.0) {Project Phase};
 \draw[->,line width=1pt,MinesBlue] (0,0) -- (0,5.5) node[above,font=\small\sffamily,rotate=90,anchor=south]{Relative Cost of Change};
 % Phase labels
 \foreach \x/\lbl in {1.5/Requirements, 3.5/Architecture, 5.5/Design, 7.5/Build, 9.5/Integration, 11.5/Field} {
@@ -1064,19 +1065,19 @@ Wi-Fi/BLE (0.10) & 5 (0.50) & 1 (0.10) & 1 (0.10) \\
 }
 % ESP32 line (decreasing: high power = lower score as weight increases)
 \draw[line width=1.8pt,AccentTeal,smooth] plot coordinates {(1,4.9) (3,4.6) (5,4.3) (7,4.0) (9,3.7)};
-\node[font=\scriptsize\sffamily\bfseries,AccentTeal,right] at (9.1,3.7) {ESP32};
+\node[font=\scriptsize\sffamily\bfseries,AccentTeal,right] at (9.1,3.5) {ESP32};
 % STM32L4 line (increasing: low power = higher score)
 \draw[line width=1.8pt,vdefine,smooth] plot coordinates {(1,3.4) (3,3.7) (5,4.0) (7,4.3) (9,4.6)};
 \node[font=\scriptsize\sffamily\bfseries,vdefine,right] at (9.1,4.6) {STM32L4};
 % ATmega line (middle, slight increase)
 \draw[line width=1.2pt,MinesSilver,smooth,densely dashed] plot coordinates {(1,3.5) (3,3.6) (5,3.7) (7,3.8) (9,3.9)};
-\node[font=\scriptsize\sffamily,MinesSilver,right] at (9.1,3.9) {ATmega};
+\node[font=\scriptsize\sffamily,MinesSilver,right] at (9.1,4.1) {ATmega};
 % Current weight marker
 \draw[densely dotted,WarnOrange,line width=0.8pt] (4,0) -- (4,5.0);
 \node[font=\tiny\sffamily\bfseries,WarnOrange,fill=white,inner sep=1pt] at (4,5.0) {Current: 0.25};
 % Crossover point
 \fill[diagRed] (6.2,4.15) circle (2.5pt);
-\node[font=\tiny\sffamily,diagRed,above right,inner sep=1pt] at (6.2,4.15) {Crossover at $\sim$0.35};
+\node[font=\tiny\sffamily,diagRed,above,inner sep=2pt,yshift=2pt] at (6.2,4.15) {Crossover at $\sim$0.35};
 % Robustness annotation
 \draw[<->,line width=0.7pt,AccentTeal] (4,4.35) -- node[right,font=\tiny\sffamily,AccentTeal,fill=white,inner sep=1pt]{Margin} (4,3.85);
 \end{tikzpicture}
@@ -1776,6 +1777,7 @@ The VCRM is not a static document; it evolves at each project milestone:
 \end{itemize}
 
 \begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
     >=Stealth,arr/.style={->, line width=1.2pt, color=MinesSilver}
 ]
@@ -1788,7 +1790,7 @@ The VCRM is not a static document; it evolves at each project milestone:
 };
 \node[mlabel=vdefine, above=3pt of pdr] {PDR};
 
-\node[milestone=vbuild] (cdr) at (5.5,0) {
+\node[milestone=vbuild] (cdr) at (6.5,0) {
     \textbf{7 requirements}\\[2pt]
     Methods: confirmed\\
     Procedures: reviewed\\
@@ -1798,7 +1800,7 @@ The VCRM is not a static document; it evolves at each project milestone:
 };
 \node[mlabel=vbuild, above=3pt of cdr] {CDR};
 
-\node[milestone=vverify] (fdr) at (11,0) {
+\node[milestone=vverify] (fdr) at (13,0) {
     \textbf{7 requirements}\\[2pt]
     Methods: executed\\
     Procedures: completed\\
@@ -1808,9 +1810,10 @@ The VCRM is not a static document; it evolves at each project milestone:
 };
 \node[mlabel=vverify, above=3pt of fdr] {FDR};
 
-\draw[arr] (pdr.east) -- node[above,font=\tiny\sffamily,MinesSilver]{Build \& test subsystems} (cdr.west);
-\draw[arr] (cdr.east) -- node[above,font=\tiny\sffamily,MinesSilver]{System V\&V campaign} (fdr.west);
-\end{tikzpicture}
+\draw[arr] (pdr.east) -- node[above,font=\tiny\sffamily,MinesSilver,fill=white,inner sep=2pt,yshift=4pt]{Build \& test subsystems} (cdr.west);
+\draw[arr] (cdr.east) -- node[above,font=\tiny\sffamily,MinesSilver,fill=white,inner sep=2pt,yshift=4pt]{System V\&V campaign} (fdr.west);
+\end{tikzpicture}%
+}% end resizebox
 \caption{VCRM evolution across milestones. At PDR, all requirements are planned. At CDR, subsystem-level analysis and early tests fill in results. At FDR, every requirement has a final verdict with supporting data.}\label{fig:vcrm_evolution}
 \end{figure}
 
@@ -4250,11 +4253,13 @@ Every electromechanical system needs a deliberately designed power architecture.
 \draw[arr] (vreg3) -- (mcu);
 
 % Ground returns (dashed)
-\draw[gnd] (mot.south) -- ++(0,-0.5) -| node[below,font=\tiny\sffamily,diagGreen,pos=0.15]{Power GND} (0,-2.0);
-\draw[gnd] (sen.south) -- ++(0,-0.7) -| node[below,font=\tiny\sffamily,diagGreen,pos=0.3]{Signal GND} (0,-2.0);
+\draw[gnd] (mot.south) -- ++(0,-0.5) -| (0,-2.0);
+\draw[gnd] (sen.south) -- ++(0,-0.7) -| (0,-2.0);
 \draw[gnd] (mcu.south) -- ++(0,-0.9) -| (0,-2.0);
+\node[font=\tiny\sffamily,diagGreen,fill=white,inner sep=1pt] at (8.0,-1.85) {Power GND};
+\node[font=\tiny\sffamily,diagGreen,fill=white,inner sep=1pt] at (4.5,-2.15) {Signal GND};
 \fill[diagGreen] (0,-2.0) circle (2pt);
-\node[font=\tiny\sffamily\bfseries,diagGreen,below] at (0,-2.1) {Star Point};
+\node[font=\tiny\sffamily\bfseries,diagGreen,left] at (-0.15,-2.0) {Star Point};
 
 % Stage labels
 \node[font=\tiny\sffamily,MinesSilver,above] at (3.1,0.7) {INPUT STAGE};
@@ -4757,7 +4762,7 @@ Applications in MEGN~301: scaling sensor outputs to match ADC input ranges, crea
 \node[font=\tiny\sffamily\bfseries,left] at (6.5,4) {$V_{\text{in}}$};
 % Vout node with error
 \fill[WarnOrange] (9.5,2.5) circle (2pt);
-\node[font=\tiny\sffamily\bfseries,above right] at (9.6,2.6) {$V_{\text{out}}'<V_{\text{out}}$};
+\node[font=\tiny\sffamily\bfseries,WarnOrange,above,yshift=3pt] at (9.5,2.7) {$V_{\text{out}}'<V_{\text{out}}$};
 % Ground
 \draw[line width=0.8pt] (6.5,0) -- (11.6,0);
 \node[font=\tiny\sffamily] at (9.0,-0.3) {GND};
