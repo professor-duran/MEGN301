@@ -1,6 +1,6 @@
 \documentclass[11pt,letterpaper]{article}
 
-% --- Packages ---
+%. Packages ---
 \usepackage[margin=1in, headheight=24pt]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -19,7 +19,7 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning, arrows.meta, calc, decorations.pathreplacing, fit, backgrounds}
 
-% --- Colors ---
+%. Colors ---
 \definecolor{minesblue}{RGB}{33,69,126}
 \definecolor{minesgold}{RGB}{204,174,0}
 \definecolor{tipgreen}{RGB}{34,120,58}
@@ -30,7 +30,7 @@
 \definecolor{vbuild}{RGB}{90,90,90}
 \definecolor{vverify}{RGB}{34,120,58}
 
-% --- Hyperref Setup ---
+%. Hyperref Setup ---
 \hypersetup{
     colorlinks=true,
     linkcolor=minesblue,
@@ -38,7 +38,7 @@
     citecolor=minesblue
 }
 
-% --- Header/Footer ---
+%. Header/Footer ---
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\textcolor{minesblue}{\textbf{MEGN 301 -- Mechanical Integration and Design}}}
@@ -47,7 +47,7 @@
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{minesblue}\leaders\hrule height \headrulewidth\hfill}}
 
-% --- Custom tcolorbox environments ---
+%. Custom tcolorbox environments ---
 \newtcolorbox{faqbox}[1][]{
     colback=lightgray,
     colframe=minesblue,
@@ -88,7 +88,7 @@
     left=6pt, right=6pt, top=4pt, bottom=4pt
 }
 
-% --- New: Sprint Priorities box ---
+%. New: Sprint Priorities box ---
 \newtcolorbox{priorities}{
     colback=minesblue!5,
     colframe=minesblue!60,
@@ -100,7 +100,7 @@
     before upper={\small}
 }
 
-% --- Section formatting ---
+%. Section formatting ---
 \titleformat{\section}
     {\Large\bfseries\color{minesblue}}
     {\thesection}{1em}{}[\vspace{-4pt}\textcolor{minesgold}{\rule{\textwidth}{1.5pt}}]
@@ -109,10 +109,10 @@
     {\large\bfseries\color{minesblue!80}}
     {\thesubsection}{1em}{}
 
-% --- Document ---
+%. Document ---
 \begin{document}
 
-% --- Title ---
+%. Title ---
 \begin{center}
     {\LARGE\bfseries\textcolor{minesblue}{MEGN 301 Design Project}}\\[6pt]
     {\Large\textcolor{minesblue!70}{Frequently Asked Questions \& Tips for Success}}\\[8pt]
@@ -158,16 +158,16 @@ Start a shared team engineering notebook (digital is fine---Google Docs, Notion,
 
 \subsection{Where to Find Deeper Technical Guidance}
 
-This guide tells you what to watch out for. The \textit{MEGN 301 Master Reference Document} tells you \textit{how things work} in depth. It is organized in two parts: Part~I follows the design-build lifecycle (Chapters~1--6: problem definition through operations) and Part~II provides technical reference material for electromechanical subsystems (connectors, power supplies, motors, power architecture, injection molding, PCB design, and microcontrollers). The front matter maps each sprint to the chapters you should consult. Use both documents together: this one for the quick-hit tips and warnings, and the reference document for the deeper ``why'' and ``how.''
+This guide tells you what to watch out for. The \textit{MEGN 301 Master Reference Document} tells you \textit{how things work} in depth. It is organized in three parts: Part~I follows the design-build lifecycle (Chapters~1--9: problem definition through end-of-life), Part~II provides technical reference material for electromechanical subsystems (connectors, power supplies, motors, power architecture, electronics fundamentals, sensor/actuator selection, fasteners, bearings, power transmission, injection molding, PCB design, microcontrollers, and systematic debugging), and Part~III covers the three formal design reviews (PDR, CDR, FDR) with deliverable checklists and evaluation criteria. The front matter includes a sprint-to-chapter mapping table, a ``What Should I Be Reading Right Now?'' triage guide, and a Laboratory Safety chapter. Use both documents together: this guide for the quick-hit tips and warnings, and the reference document for the deeper ``why'' and ``how.''
 
 \begin{protip}
 \textbf{Understand the three questions that gate your project.} The three design reviews form a narrative arc, and each asks a progressively deeper question:
 \begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
-    \item \textbf{PDR} (Sprints 1--2): ``\textit{Should} this design work?'' --- Is the problem clear, are the requirements sound, and is the selected concept feasible?
-    \item \textbf{CDR} (Sprint~3): ``\textit{Will} this design work?'' --- Is the design complete enough to build? Every component specified, every interface defined?
-    \item \textbf{FDR} (Sprints 5--7 + Final): ``\textit{How well did} it work?'' --- What are the test results? What worked, what did not, and what comes next?
+    \item \textbf{PDR} (Sprints 1--2): ``\textit{Should} this design work?'' Is the problem clear, are the requirements sound, and is the selected concept feasible?
+    \item \textbf{CDR} (Sprint~3): ``\textit{Will} this design work?'' Is the design complete enough to build? Every component specified, every interface defined?
+    \item \textbf{FDR} (Sprints 5--7 + Final): ``\textit{How well did} it work?'' What are the test results? What worked, what did not, and what comes next?
 \end{enumerate}
-If you keep these three questions in mind from the start, you will always know what your deliverables are trying to demonstrate.
+If you keep these three questions in mind from the start, you will always know what your deliverables are trying to demonstrate. Part~III of the Master Reference Document provides detailed deliverable checklists, evaluation criteria tables, and common failure patterns for each review.
 \end{protip}
 
 \begin{tipbox}
@@ -175,19 +175,19 @@ If you keep these three questions in mind from the start, you will always know w
 \end{tipbox}
 
 \begin{protip}
-\textbf{Maintain a Requirements Traceability Matrix (RTM) from Day 1.} The Master Reference Document introduces the RTM in Chapter~2---a simple table that links every requirement to its parent need, its verification method, and its current status. Open it at every team meeting and update it after every design decision. By the time you reach external testing in Sprint~6, a well-maintained RTM will let you immediately see which requirements are verified, which are still open, and which need attention. Teams that skip this step spend hours reconstructing traceability for the final report.
+\textbf{Maintain a Requirements Traceability Matrix (RTM) from Day 1.} The Master Reference Document introduces the RTM in Chapter~3---a simple table that links every requirement to its parent need, its verification method, and its current status. Open it at every team meeting and update it after every design decision. By the time you reach external testing in Sprint~6, a well-maintained RTM will let you immediately see which requirements are verified, which are still open, and which need attention. Teams that skip this step spend hours reconstructing traceability for the final report.
 \end{protip}
 
 \subsection{The Big Picture: How Sprints Map to the Engineering V-Model}
 
 Students often ask how the individual sprints connect to each other. The diagram below maps our sprint sequence onto the classic systems engineering V-model. The key insight is that the left side of the V (definition and design) and the right side (verification and validation) are \textit{mirror images}: every requirement you write in Sprint~1 must have a corresponding test executed in Sprints~5--6. If you keep this traceability in mind from the start, the later sprints become dramatically smoother.
 
-\begin{figure}[ht!]
+\begin{figure}[htbp]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
     >=Stealth,
-    % --- Node styles ---
+    %. Node styles ---
     defblock/.style={
         rectangle, rounded corners=4pt, draw=vdefine, fill=vdefine!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
@@ -235,7 +235,7 @@ Students often ask how the individual sprints connect to each other. The diagram
 \node[verblock] (R2) at (12.0, -3.0)  {External Team\\Testing};
 \node[verblock] (R1) at (13.5, 0)     {Refinement \&\\Final Report};
 
-% --- Sprint labels: LEFT side for left arm, RIGHT side for right arm ---
+%. Sprint labels: LEFT side for left arm, RIGHT side for right arm ---
 \node[slabel=vdefine, left=6pt of L1]  {Sprint 1};
 \node[slabel=vdefine, left=6pt of L2]  {Sprint 2};
 \node[slabel=vdefine, left=6pt of L3]  {Sprint 3};
@@ -244,7 +244,7 @@ Students often ask how the individual sprints connect to each other. The diagram
 \node[slabel=vverify, right=6pt of R2] {Sprint 6};
 \node[slabel=vverify, right=6pt of R1] {Sprint 7 + Final};
 
-% --- Flow arrows (clean vertical paths — no labels in the way) ---
+%. Flow arrows (clean vertical paths — no labels in the way) ---
 \draw[flow=vdefine] (L1.south) -- (L2.north);
 \draw[flow=vdefine] (L2.south) -- (L3.north);
 \draw[flow=vbuild]  (L3.south) -- (B.north west);
@@ -252,7 +252,7 @@ Students often ask how the individual sprints connect to each other. The diagram
 \draw[flow=vverify] (R3.north) -- (R2.south);
 \draw[flow=vverify] (R2.north) -- (R1.south);
 
-% --- Horizontal traceability arrows (same y-level matched pairs) ---
+%. Horizontal traceability arrows (same y-level matched pairs) ---
 \draw[trace] (L1.east) -- node[tracelabel, midway] 
     {Reqs \& Test Plan $\longleftrightarrow$ Final Validation} (R1.west);
 
@@ -262,13 +262,13 @@ Students often ask how the individual sprints connect to each other. The diagram
 \draw[trace] (L3.east) -- node[tracelabel, midway] 
     {Design $\longleftrightarrow$ System Demo} (R3.west);
 
-% --- Arm labels — pushed well outside the V to avoid crossing arrows ---
+%. Arm labels — pushed well outside the V to avoid crossing arrows ---
 \node[rotate=63, font=\footnotesize\sffamily\bfseries, color=vdefine!50]
     at (-2.4, -3.0) {DEFINE \& DESIGN};
 \node[rotate=-63, font=\footnotesize\sffamily\bfseries, color=vverify!50]
     at (15.9, -3.0) {VERIFY \& VALIDATE};
 
-% --- Bottom label ---
+%. Bottom label ---
 \node[font=\footnotesize\sffamily\bfseries, color=vbuild!40]
     at (6.75, -9.8) {BUILD \& INTEGRATE};
 
@@ -370,6 +370,10 @@ Write your requirements and your test plan \textit{at the same time}. If you can
 \end{tipbox}
 
 \begin{protip}
+\textbf{Every technical choice must trace to a requirement.} When you select a motor, connector, or PCB trace width in Part~II of the Master Reference Document, look for the Requirements Mapping box at the end of each chapter. It shows exactly how to translate a datasheet parameter into a formal shall-statement. If you cannot write a requirement for a component choice, you have not justified the selection.
+\end{protip}
+
+\begin{protip}
 \textbf{Prioritize requirements using MoSCoW.} Not all requirements are equally critical. Classify each as: \textbf{Must} (system fails without it---becomes a SHALL requirement), \textbf{Should} (important but system works without it---becomes a SHOULD goal), \textbf{Could} (nice-to-have, pursue if budget allows), or \textbf{Won't} (explicitly excluded from this version). This prevents scope creep and helps your team focus on the requirements that matter most when time gets tight. See the Master Reference Document, Chapter~1, for how MoSCoW ties into stakeholder needs management.
 \end{protip}
 
@@ -384,7 +388,7 @@ Yes. If a requirement exists in your SDRD but has no test, then you have no way 
 \end{faqbox}
 
 \begin{tipbox}
-\textbf{Know the four verification methods (TAID).} Not every requirement is verified by running a physical test. The four methods are: \textbf{Test} (measure performance under controlled conditions), \textbf{Analysis} (verify by calculation, simulation, or modeling), \textbf{Inspection} (verify by visual or dimensional examination), and \textbf{Demonstration} (verify by operating the system through its use cases). Assign a verification method to each requirement when you write it. Most of your requirements will use Test or Demonstration, but some (e.g., material compliance, dimensional tolerances) may be verified by Inspection or Analysis. See the Master Reference Document, Chapter~4, for detailed guidance on TAID and writing test procedures.
+\textbf{Know the four verification methods (TAID).} Not every requirement is verified by running a physical test. The four methods are: \textbf{Test} (measure performance under controlled conditions), \textbf{Analysis} (verify by calculation, simulation, or modeling), \textbf{Inspection} (verify by visual or dimensional examination), and \textbf{Demonstration} (verify by operating the system through its use cases). Assign a verification method to each requirement when you write it. Most of your requirements will use Test or Demonstration, but some (e.g., material compliance, dimensional tolerances) may be verified by Inspection or Analysis. See the Master Reference Document, Chapter~5, for detailed guidance on TAID and writing test procedures.
 \end{tipbox}
 
 \subsection{Sprint Retrospective}
@@ -420,10 +424,14 @@ Measure twice (or three times). Tolerances on consumer products can be surprisin
 \end{protip}
 
 \begin{warnbox}
-Explicitly document the \textbf{connectors and power draw} of the COTS product during reverse engineering. One of the most common integration failures occurs when an add-on system pulls more current than the parent product's power supply can handle, or when the team orders a mating connector with the wrong pitch (e.g., 2.0\,mm vs.\ 2.54\,mm JST headers). Record connector type, pin count, pitch, voltage, and rated/measured current draw. This information is critical for your CDR and will prevent expensive, time-consuming mistakes in Sprints~3--4.
+Explicitly document the \textbf{connectors and power draw} of the COTS product during reverse engineering. One of the most common integration failures occurs when an add-on system pulls more current than the parent product's power supply can handle, or when the team orders a mating connector with the wrong pitch (e.g., 2.0\,mm vs.\ 2.54\,mm JST headers). Record connector type, pin count, pitch, voltage, and rated/measured current draw. For any stainless steel fluid fittings, apply nickel anti-seize compound before assembly to prevent thread galling (a cold-weld that permanently destroys both parts). This information is critical for your CDR and will prevent expensive, time-consuming mistakes in Sprints~3--4.
 \end{warnbox}
 
 \subsection{Failure Modes and Effects Analysis (FMEA)}
+
+\begin{tipbox}
+\textbf{Start your FMEA now, not at FDR.} The Master Reference Document positions FMEA as a design-phase tool (Chapters~2--3), not a post-mortem. Performing FMEA during architecture enables you to design out critical failure modes before ordering parts. Waiting until the final report turns FMEA into an autopsy.
+\end{tipbox}
 
 \begin{faqbox}[Q: How do I identify failure modes I have not thought of yet?]
 Systematically walk through every component and every interface in your system and ask: ``What happens if this breaks, jams, shorts, overheats, receives the wrong input, or loses power?'' Also consider misuse scenarios---what if the user does something unexpected? The USCSB ExxonMobil video assigned in this sprint is an excellent example of how overlooked failure modes cascade into catastrophic outcomes.
@@ -489,6 +497,20 @@ Imagine handing your CDR to a competent engineering team that has never met you.
 \textbf{Identify a ``Plan B'' component for every critical item.} For any single-source or sole-vendor component in your BoM, record a backup part number and vendor in a notes column. If your specialty sensor, MOSFET, or pump goes out of stock the week before CDR, you need to order the backup \textit{immediately}---not start a new search. This is especially important for projects with specialty components like the \textit{Sous Vide Supreme} (heating elements) and \textit{Sol-Mate Purification Pal} (solar charge controllers), where lead times can exceed two weeks.
 \end{tipbox}
 
+\subsection{Sensor and Actuator Selection}
+
+\begin{faqbox}[Q: How do I choose the right sensor for my project?]
+Use the six-criteria framework from Chapter~14 of the MRD: (1)~What physical quantity? (2)~What range and accuracy does your requirement specify? (3)~What bandwidth (fastest change)? (4)~What output type does your MCU accept? (5)~What is the operating environment? (6)~Budget? Match these to candidate sensors, then prefer the one with the simplest signal conditioning. A \$5 digital I2C sensor that plugs directly into the ESP32 may be a better choice than a \$2 analog sensor that needs a bridge, amplifier, and anti-alias filter.
+\end{faqbox}
+
+\begin{warnbox}
+\textbf{Every actuator needs a driver circuit.} No motor, solenoid, or heater connects directly to a GPIO pin. Before you order an actuator, verify you also have the driver (H-bridge for DC motors, ESC for BLDC, stepper driver for steppers, MOSFET + flyback diode for solenoids, SSR for AC heaters). If the driver is not in your BoM, add it now. See Chapter~11 (Motors \& Pumps) and Chapter~12 (Power Architecture) for driver selection.
+\end{warnbox}
+
+\begin{tipbox}
+\textbf{Check sensor output compatibility before ordering.} Three things must match: (1)~output voltage range fits your ADC (a 10\,V sensor on a 3.3\,V ESP32 will saturate and may damage the ADC), (2)~output impedance is compatible ($>$100:1 ratio with ADC input impedance), and (3)~response time is fast enough ($\tau_{\text{sensor}} < f_{\text{signal}}/5$). Chapter~14 has the full selection framework and specification tables.
+\end{tipbox}
+
 \subsection{Purchase Requests}
 
 \begin{faqbox}[Q: When should we submit our purchase request?]
@@ -526,11 +548,11 @@ Complete your Order of Operations sheet \textit{before} walking into the machine
 \end{protip}
 
 \begin{tipbox}
-\textbf{Document every electrical connection and every software flow \textit{now}, not later.} Your CDR should include a wiring diagram showing every component, wire color, gauge, connector part number, and pinout, plus a programming flowchart showing your main loop, state machine transitions, sensor reads, actuator control logic, and error handling. These diagrams are the electrical and software equivalents of your CAD drawings---without them, no one (including your future self at 10~PM during Sprint~5) can debug your system. See the Master Reference Document, Chapter~3, for wiring diagram and flowchart best practices.
+\textbf{Document every electrical connection and every software flow \textit{now}, not later.} Your CDR should include a wiring diagram showing every component, wire color, gauge, connector part number, and pinout, plus a programming flowchart showing your main loop, state machine transitions, sensor reads, actuator control logic, and error handling. These diagrams are the electrical and software equivalents of your CAD drawings---without them, no one (including your future self at 10~PM during Sprint~5) can debug your system. See the Master Reference Document, Chapter~6, for wiring diagram and flowchart best practices.
 \end{tipbox}
 
 \begin{protip}
-\textbf{Decide early: dev boards or custom PCB?} Use development boards (Arduino, ESP32 DevKit, sensor breakouts) when your circuit is straightforward, form factor is not critical, the timeline is tight, or the design is still evolving. Use a custom PCB when a specific enclosure size is required, noise-sensitive analog signals demand a ground plane, or you need clean cable routing and high reliability. A well-wired dev board that meets requirements is superior to a custom PCB that delays the project. If you do go custom, the total timeline from design start to working board is 4--6 weeks (design, order from JLCPCB/PCBWay, ship, solder, debug), so your design must be frozen at CDR. See the Master Reference Document, PCB Design chapter, for the complete workflow, layout rules, and fab house options.
+\textbf{Decide early: dev boards or custom PCB?} Use development boards (Arduino, ESP32 DevKit, sensor breakouts) when your circuit is straightforward, form factor is not critical, the timeline is tight, or the design is still evolving. Use a custom PCB when a specific enclosure size is required, noise-sensitive analog signals demand a ground plane, or you need clean cable routing and high reliability. A well-wired dev board that meets requirements is superior to a custom PCB that delays the project. If you do go custom, the total timeline from design start to working board is 4--6 weeks (design, order from JLCPCB/PCBWay, ship, solder, debug), so your design must be frozen at CDR. See the Master Reference Document, Chapter~18 (PCB Design), for the complete workflow, layout rules, and fab house options.
 \end{protip}
 
 \begin{warnbox}
@@ -574,11 +596,11 @@ When you record your demonstration video, narrate what you are doing and what th
 \end{protip}
 
 \begin{warnbox}
-\textbf{Never ``big-bang'' integrate.} Assembling every component at once and powering on is the fastest route to an undebuggable system. Instead, use bottom-up integration: verify each component individually, then add \textbf{one new element at a time} and test after each addition. When something breaks, the last thing you added (or its interface) is the prime suspect. For most electromechanical projects, a good integration sequence is: (1)~power supply first (everything depends on it), (2)~controller (the central hub), (3)~sensors (simplest interfaces), (4)~actuators (highest power, most failure modes), (5)~communication (can be tested last since it is not needed for core function).
+\textbf{Never ``big-bang'' integrate.} Assembling every component at once and powering on is the fastest route to an undebuggable system. Instead, use the bottom-up debugging methodology from Chapter~20 of the Master Reference Document: verify each component individually, then add \textbf{one new element at a time} and test after each addition. When something breaks, the last thing you added (or its interface) is the prime suspect. For most electromechanical projects, a good integration sequence is: (1)~power supply first (everything depends on it), (2)~controller (the central hub), (3)~sensors (simplest interfaces), (4)~actuators (highest power, most failure modes), (5)~communication (can be tested last since it is not needed for core function). Chapter~20 of the MRD covers the complete debugging pyramid, signal walk technique, and the five-step protocol in detail.
 \end{warnbox}
 
 \begin{tipbox}
-\textbf{If you designed a custom PCB, follow the bring-up protocol before connecting it to anything.} (1)~Visual inspection under magnification for solder bridges, cold joints, and wrong-orientation parts. (2)~Continuity check with a multimeter---confirm no shorts between VCC and GND. (3)~Current-limited power: set your bench supply to 50\,mA limit and apply voltage. (4)~Measure every power rail with a multimeter. (5)~Smoke test: increase current to operating level, monitor for 60 seconds. (6)~Load firmware and test basic I/O. Skipping this sequence and plugging a freshly soldered board straight into your system is how you destroy both the board and the system in one step. See the Master Reference Document, PCB Design chapter, for the full protocol.
+\textbf{If you designed a custom PCB, follow the bring-up protocol before connecting it to anything.} (1)~Visual inspection under $\geq$10$\times$ magnification (loupe or USB microscope) for solder bridges on fine-pitch ICs, cold joints, tombstoned 0603 passives, and wrong-orientation parts. A teammate must co-sign the inspection before power is applied. (2)~Continuity check with a multimeter---confirm no shorts between VCC and GND. (3)~Current-limited power: set your bench supply to 50\,mA limit and apply voltage. (4)~Measure every power rail with a multimeter. (5)~Smoke test: increase current to operating level, monitor for 60 seconds. (6)~Load firmware and test basic I/O. Skipping this sequence and plugging a freshly soldered board straight into your system is how you destroy both the board and the system in one step. See the Master Reference Document, Chapter~18 (PCB Design), for the full protocol.
 \end{tipbox}
 
 \begin{tipbox}
@@ -606,7 +628,7 @@ Not at all---design iteration is expected and encouraged. What matters is that y
 \end{faqbox}
 
 \begin{protip}
-\textbf{When debugging integration failures, follow a five-step process.} (1)~\textbf{Reproduce}: make the failure happen reliably and note the exact conditions. A failure you cannot reproduce is a failure you cannot fix. (2)~\textbf{Isolate}: disconnect modules one at a time until the failure stops---the last module disconnected is the prime suspect. (3)~\textbf{Characterize}: measure signals at the interface with an oscilloscope or multimeter and compare to your ICD specifications. (4)~\textbf{Root-cause}: determine whether the problem is hardware, software, or an interface specification error. (5)~\textbf{Fix and regression-test}: implement the fix, verify it resolves the original failure, then \textit{re-run all previously passed tests} to confirm the fix did not break anything else. \textbf{Change ONE variable at a time.} If you swap firmware and a component simultaneously, you will not know which change fixed it---and the other may have introduced a new latent defect.
+\textbf{When debugging integration failures, follow the five-step protocol from Chapter~20 of the MRD.} (1)~\textbf{Reproduce}: make the failure happen reliably and note the exact conditions. A failure you cannot reproduce is a failure you cannot fix. (2)~\textbf{Isolate}: disconnect modules one at a time until the failure stops---the last module disconnected is the prime suspect. (3)~\textbf{Characterize}: measure signals at the interface with an oscilloscope or multimeter and compare to your ICD specifications. (4)~\textbf{Root-cause}: determine whether the problem is hardware, software, or an interface specification error. (5)~\textbf{Fix and regression-test}: implement the fix, verify it resolves the original failure, then \textit{re-run all previously passed tests} to confirm the fix did not break anything else. \textbf{Change ONE variable at a time.} If you swap firmware and a component simultaneously, you will not know which change fixed it---and the other may have introduced a new latent defect.
 \end{protip}
 
 \begin{tipbox}
@@ -618,7 +640,7 @@ Do not forget to update your Bill of Materials (Part B) with actual costs, inclu
 \end{warnbox}
 
 \begin{protip}
-\textbf{Build a Verification Cross-Reference Matrix (VCRM) before the system demo.} The VCRM is a simple table linking each requirement to its verification method, test procedure ID, and current status (Open, Verified, Failed, Waived). By Sprint~5, you should be able to fill in most of this table. It becomes the single artifact that tells the complete project story at your final review, and it makes writing the final report dramatically easier. See the Master Reference Document, Chapter~4, for a worked VCRM example at PDR, CDR, and FDR milestones.
+\textbf{Build a Verification Cross-Reference Matrix (VCRM) before the system demo.} The VCRM is a simple table linking each requirement to its verification method, test procedure ID, and current status (Open, Verified, Failed, Waived). By Sprint~5, you should be able to fill in most of this table. It becomes the single artifact that tells the complete project story at your final review, and it makes writing the final report dramatically easier. See the Master Reference Document, Chapter~5, for a worked VCRM example at PDR, CDR, and FDR milestones.
 \end{protip}
 
 \begin{tipbox}
@@ -714,7 +736,7 @@ The main body should contain your narrative, key results, and high-level design 
 \end{faqbox}
 
 \begin{faqbox}[Q: What should go in the ``Future Work'' and ``Hazards Discussion'' sections?]
-For \textbf{Future Work}: think in terms of lifecycle. What refinements would bring the prototype to a production-ready product? Consider serviceability (can a technician access and replace the most failure-prone components?), maintenance planning (what are the wear items and their replacement intervals?), and a spare parts list with vendor part numbers. Thinking about Operations \& Maintenance is not an afterthought---it accounts for 50--70\% of a product's lifecycle cost. For the \textbf{Hazards Discussion}: revisit your FMEA with updated RPN scores. Discuss the highest-RPN failure modes you identified, what design changes you made to mitigate them, and whether those changes actually reduced the risk. Also address any new hazards discovered during prototyping and testing that were not in the original FMEA. See the Master Reference Document, Chapter~6, for the design-for-serviceability principles and FMECA methodology.
+For \textbf{Future Work}: think in terms of lifecycle and sustainability. The Master Reference Document includes a formal Design for Disassembly requirement: ``The system shall be fully disassembled into its base material categories using only standard hand tools in under 5 minutes.'' This is testable at FDR by demonstration. If your design uses permanent adhesives where fasteners would work, document why and propose a DfD-compliant redesign for the next version. What refinements would bring the prototype to a production-ready product? Consider serviceability (can a technician access and replace the most failure-prone components?), maintenance planning (what are the wear items and their replacement intervals?), and a spare parts list with vendor part numbers. Thinking about Operations \& Maintenance is not an afterthought---it accounts for 50--70\% of a product's lifecycle cost. For the \textbf{Hazards Discussion}: revisit your FMEA with updated RPN scores. Discuss the highest-RPN failure modes you identified, what design changes you made to mitigate them, and whether those changes actually reduced the risk. Also address any new hazards discovered during prototyping and testing that were not in the original FMEA. See the Master Reference Document, Chapter~7, for the design-for-serviceability principles and FMECA methodology.
 \end{faqbox}
 
 \begin{faqbox}[Q: How honest should the ``Lessons Learned'' section be?]
@@ -796,7 +818,7 @@ Apply the \textbf{FDR Litmus Test}. Ask six questions: Could a new engineering t
     \item \textbf{Have a ``Plan B'' component.} For any single-source critical component, know what your fallback is if it is out of stock, damaged on arrival, or does not perform as specified.
     \item \textbf{Design for debugging.} Include test points in your circuits, print housings that can be opened, and write code with serial debug output. Your future self debugging at 10~PM will appreciate it.
     \item \textbf{Use keyed connectors everywhere.} If your design has multiple similar-looking electrical connections, specify keyed connectors that can only be inserted one way. Incorrect mating is one of the most common causes of electrical failure on first power-up in student projects---and it destroys components.
-    \item \textbf{Never design your own AC-DC converter.} Always use a pre-certified (UL/CE listed) wall adapter. These are fully enclosed, safety-rated, and eliminate all mains-voltage hazards from your design. If your project involves lithium batteries, a Battery Management System (BMS) is mandatory for overcharge, deep-discharge, and short-circuit protection---and never charge lithium cells unattended without one.
+    \item \textbf{Never design your own AC-DC converter.} Always use a pre-certified (UL/CE listed) wall adapter. These are fully enclosed, safety-rated, and eliminate all mains-voltage hazards from your design. If your project involves lithium batteries, a Battery Management System (BMS) is mandatory for overcharge, deep-discharge, and short-circuit protection. Never charge lithium cells unattended; a LiPo fire releases toxic gas and can close a lab. Always charge in a fireproof LiPo safety bag. See the Master Reference Document, Chapter~12, for the complete battery safety requirements.
     \item \textbf{If you design a custom PCB, print it at 1:1 scale and place real components on the printout before ordering.} This single step catches 80\% of footprint errors---the most expensive PCB mistake, because a wrong footprint means a scrapped board. Also: place a 100\,nF decoupling capacitor within 5\,mm of every IC power pin, and fill your bottom layer with a ground copper pour. These are not optional.
     \item \textbf{Use state machines and \texttt{millis()}-based timing in your firmware.} Avoid \texttt{delay()} calls, which block the CPU and make your system unresponsive. Structure your code around states (IDLE, READING, TRANSMITTING, SLEEPING) and use non-blocking timing. Enable the watchdog timer for crash recovery. Add a heartbeat LED as a system health indicator---if the LED stops blinking, something has hung.
 \end{itemize}
@@ -807,7 +829,7 @@ Apply the \textbf{FDR Litmus Test}. Ask six questions: Could a new engineering t
     \item \textbf{Bulk wire, heat shrink, and perf boards} are available on campus for free or at minimal cost (see Appendix B of the project document). Wire is available in BBW160 from TAs during office hours: 18~AWG stranded at \$0.19/ft, 24~AWG stranded at \$0.08/ft. Solderable perf boards are stocked in CTLM123 in several sizes. Include these per-unit costs in your BoM for accurate accounting, but do not waste budget ordering them from vendors.
     \item \textbf{Get manufacturing reviews early.} The machine shop assistants, Prof.\ Blood, and Master TAs can catch design-for-manufacturing issues before you waste material and time. This review is required---but even if it were not, you should do it.
     \item \textbf{Office hours exist for a reason.} Your instructor and TAs have seen dozens of these projects. Five minutes of their input can save you days of going down the wrong path.
-    \item \textbf{Use the Master Reference Document.} The \textit{Master Reference Document} is a comprehensive technical reference organized in two parts: Part~I covers the V-model design-build lifecycle with worked GreenShield examples, and Part~II provides detailed electromechanical design guidance including connectors, power supplies, motors, power architecture, injection molding, PCB design, and microcontroller selection. Consult it whenever you need deeper guidance on requirements writing, trade studies, FMEA, test planning, integration debugging, DFM, PCB layout, or ESP32 pin mapping.
+    \item \textbf{Use the Master Reference Document.} The \textit{Master Reference Document} is a comprehensive technical reference organized in three parts: Part~I covers the V-model design-build lifecycle with worked GreenShield examples, Part~II provides detailed electromechanical design guidance including connectors, power supplies, motors, power architecture, fasteners, bearings, power transmission, injection molding, PCB design, and microcontroller selection, and Part~III walks through PDR, CDR, and FDR deliverables with evaluation rubrics. Every Part~II chapter ends with a Requirements Mapping box showing how to translate technical specs into testable shall-statements. Consult the Quick Reference Tables appendix for consolidated design values.
 \end{itemize}
 
 %=============================================================================
@@ -816,7 +838,7 @@ Apply the \textbf{FDR Litmus Test}. Ask six questions: Could a new engineering t
 
 The following table provides a high-level overview of deliverables by sprint. Always refer to the official project document and Canvas for exact submission requirements and deadlines.
 
-\begin{table}[h!]
+\begin{table}[htbp]
 \centering
 \small
 \begin{tabularx}{\textwidth}{@{} c l X @{}}

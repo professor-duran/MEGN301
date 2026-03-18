@@ -101,7 +101,7 @@ This reference document accompanies the MEGN~301 lecture modules and is organize
 \item \textbf{Chapter~7} (Operations \& Maintenance), \textbf{Chapter~8} (Post-Build Testing), and \textbf{Chapter~9} (End of Life) support system handoff and your FDR deliverables.
 \end{itemize}
 
-\textbf{Part~II: Technical Reference} provides detailed design guidance for common electromechanical subsystems. These chapters are reference material; consult them when your project involves circuit analysis, connectors, power supplies, motors, pumps, protection circuits, gear trains, injection-molded parts, or printed circuit boards. Chapter~13 (Electronics Fundamentals) provides the foundational circuit theory, electrical safety practices, and component selection references that support all other technical chapters.
+\textbf{Part~II: Technical Reference} provides detailed design guidance for common electromechanical subsystems. These chapters are reference material; consult them when your project involves circuit analysis, sensor/actuator selection, connectors, power supplies, motors, pumps, protection circuits, gear trains, injection-molded parts, printed circuit boards, or systematic debugging. Chapter~13 (Electronics Fundamentals) provides the foundational circuit theory and safety practices; Chapter~14 (Sensors \& Actuators) covers transduction principles and selection; Chapter~20 (Debugging) teaches the bottom-up methodology for finding and fixing problems.
 
 Every chapter includes practice questions with worked answers. Use them for self-study and exam preparation.
 
@@ -127,19 +127,21 @@ The GreenShield system illustrates \emph{how} to move from problem statement to 
 \midrule
 Just starting your project & Need problem statement and stakeholders & Ch.~1 \\
 Writing requirements & Need SHALL statements and SDRD format & Ch.~3 \\
-Preparing for PDR & Need concept generation and trade study & Ch.~4, Ch.~19 \\
+Preparing for PDR & Need concept generation and trade study & Ch.~4, Ch.~21 \\
 Need circuit basics & Ohm's Law, KVL/KCL, component selection & Ch.~13 \\
+Selecting a sensor or actuator & Transduction principles, specifications & Ch.~14 \\
 Selecting connectors & Wire-to-wire, fluid fittings, thread types & Ch.~10 \\
 Choosing a motor or pump & Sizing, driver selection, derating & Ch.~11 \\
 Designing power architecture & Protection, grounding, battery safety & Ch.~12 \\
-Designing a PCB & Schematic capture, layout, fab ordering & Ch.~17 \\
-Programming the ESP32 & Pin mapping, protocols, firmware structure & Ch.~18 \\
-Preparing for CDR & Detailed design freeze, deliverables checklist & Ch.~20 \\
-Integration is failing & Bottom-up strategy, debugging process & Ch.~6 \\
+Designing a PCB & Schematic capture, layout, fab ordering & Ch.~18 \\
+Programming the ESP32 & Pin mapping, protocols, firmware structure & Ch.~19 \\
+Preparing for CDR & Detailed design freeze, deliverables checklist & Ch.~22 \\
+Integration is failing & Bottom-up strategy, debugging process & Ch.~6, Ch.~20 \\
+System not working & Systematic debugging methodology & Ch.~20 \\
 Motor won't spin & Driver wiring, power rail brown-out & Ch.~11, Ch.~12 \\
-Sensor readings are noisy & Grounding, decoupling, layout & Ch.~13, Ch.~17 \\
+Sensor readings are noisy & Grounding, decoupling, layout & Ch.~13, Ch.~18 \\
 Writing test procedures & V\&V methods, TAID, VCRM & Ch.~5, Ch.~8 \\
-Preparing for FDR & O\&M, post-build V\&V, deliverables & Ch.~7, Ch.~21 \\
+Preparing for FDR & O\&M, post-build V\&V, deliverables & Ch.~7, Ch.~23 \\
 Studying for the exam & Formula summary and practice questions & Every chapter \\
 \bottomrule
 \end{tabularx}
@@ -156,9 +158,9 @@ Studying for the exam & Formula summary and practice questions & Every chapter \
 1 & 1--2 & Team formation, problem definition, stakeholder analysis & Ch.~1 & Problem statement, stakeholder map, ConOps \\
 2 & 3--4 & Requirements, architecture, competitive analysis & Ch.~2, 3 & SDRD, functional decomposition \\
 3 & 5--6 & Concept generation, trade studies, preliminary design & Ch.~4 & Morph.\ chart, decision matrix, \textbf{PDR} \\
-4 & 7--8 & Detailed design, procurement, prototyping & Ch.~10--18 & BOM, schematics, CAD, orders \\
-5 & 9--10 & Fabrication, subsystem testing, integration begins & Ch.~5, 6 & Subsystem test results, \textbf{CDR} \\
-6 & 11--13 & System integration, V\&V execution, debugging & Ch.~5, 6, 8 & VCRM, test reports, system demos \\
+4 & 7--8 & Detailed design, procurement, prototyping & Ch.~10--19 & BOM, schematics, CAD, orders \\
+5 & 9--10 & Fabrication, subsystem testing, integration begins & Ch.~5, 6, 20 & Subsystem test results, \textbf{CDR} \\
+6 & 11--13 & System integration, V\&V execution, debugging & Ch.~5, 6, 8, 20 & VCRM, test reports, system demos \\
 7 & 14--15 & Final V\&V, documentation, O\&M package & Ch.~7, 9 & O\&M manual, as-built docs \\
 Final & 16 & Final design review, reflection, knowledge transfer & Part~III & \textbf{FDR} presentation \& package \\
 \bottomrule
@@ -4277,6 +4279,94 @@ The two long rails along the edges are bus strips (power and ground). Central ro
 % ══════════════════════════════════════════════════════════════════════
 
 
+\chapter{Principles of Sensors and Actuators}
+
+\vspace{1em}
+
+This chapter covers the physical principles of transduction: how sensors convert physical quantities into electrical signals and how actuators convert electrical commands into physical action. Understanding these principles allows you to select the right component for a given requirement, predict its limitations, and design the signal conditioning or driver circuit that bridges it to your controller.
+
+\vspace{1em}
+
+\section{Transduction: Converting Between Physical Domains}
+A \textbf{transducer} converts energy from one domain to another. A \textbf{sensor} (input transducer) converts a physical quantity (temperature, pressure, strain, displacement, flow, light, acceleration) into an electrical signal. An \textbf{actuator} (output transducer) converts an electrical command into physical action (force, torque, displacement, heat, flow). The choice of transduction mechanism determines sensitivity, range, linearity, bandwidth, and failure modes.
+
+\section{Sensor Classification by Transduction Mechanism}
+
+\textbf{Resistive}: the measurand changes resistance. Examples: strain gauges (piezoresistive effect), RTDs (temperature coefficient of platinum), thermistors (semiconductor oxide), potentiometers (wiper position). Output is measured with a Wheatstone bridge or voltage divider.
+
+\textbf{Capacitive}: the measurand changes capacitance by varying plate area, gap, or dielectric. Examples: MEMS accelerometers (proof mass changes gap), humidity sensors (dielectric absorbs moisture), touchscreens (finger changes fringe capacitance). Measured with oscillator circuits or capacitance-to-digital converters.
+
+\textbf{Inductive/Electromagnetic}: the measurand changes inductance or generates voltage via Faraday's law. Examples: LVDTs (displacement changes transformer coupling), tachometers (rotation generates AC voltage), eddy current proximity sensors.
+
+\textbf{Piezoelectric}: mechanical stress generates charge (Seebeck effect in reverse). Examples: dynamic force/pressure sensors (quartz, PZT), accelerometers, ultrasonic transducers. Critical limitation: piezoelectric sensors measure only \emph{dynamic} quantities; charge leaks for static loads.
+
+\textbf{Thermoelectric}: temperature difference at a junction of dissimilar metals generates voltage (Seebeck effect). The thermocouple produces $\sim$10--60\,$\mu$V/\degC{} depending on type, requiring amplification and cold-junction compensation.
+
+\textbf{Optical/Photoelectric}: light intensity, wavelength, or interference pattern encodes the measurand. Examples: photodiodes (light to current), fiber-optic sensors (strain changes transmission), pyrometers (infrared radiation indicates temperature without contact), encoders (slotted disc produces digital pulses).
+
+\section{Sensor Output Types}
+\textbf{Analog output}: continuous voltage or current proportional to measurand (thermocouples, pressure transducers, 4--20\,mA loop sensors). Requires ADC for digital processing. \textbf{Digital output}: digital word or pulse train directly readable by MCU (encoders, I2C/SPI sensors like BME280, DS18B20). \textbf{Self-generating}: produces energy from measurand without excitation (thermocouples, piezoelectric). \textbf{Modulating}: requires external excitation; measurand modifies the excitation (strain gauges need bridge voltage, RTDs need current source, LVDTs need AC drive).
+
+\section{Key Sensor Specifications}
+When selecting a sensor, evaluate these against your system requirements:
+
+\textbf{Range}: min/max measurable values. Operating beyond range produces saturated or damaged output. \textbf{Sensitivity}: $S = \Delta V_{\text{out}}/\Delta x$ (mV/\degC{}, mV/V per microstrain, etc.). Higher sensitivity means better SNR. \textbf{Resolution}: smallest detectable change, limited by noise or quantization. \textbf{Accuracy}: closeness to true value ($\pm$\% FS or $\pm$ absolute units). \textbf{Linearity}: deviation from straight-line input-output relationship ($\pm$\% FS). \textbf{Response time / Bandwidth}: how fast the sensor tracks changes; must exceed $5\times$ the signal frequency. \textbf{Repeatability}: consistency of successive readings under identical conditions. \textbf{Hysteresis}: output difference for same input on increasing vs. decreasing sweeps. \textbf{Output impedance}: affects loading when connected to measurement circuits.
+
+\begin{keyconceptbox}[Sensor Selection Decision Framework]
+(1) What physical quantity? (2) What range and accuracy does the requirement specify? (3) What bandwidth (fastest change to capture)? (4) What output type does your DAQ/MCU accept? (5) What is the operating environment (temperature, moisture, vibration)? (6) Budget? Match these six criteria to candidate sensors, then prefer the simplest signal conditioning path.
+\end{keyconceptbox}
+
+\section{Common Sensor Types for MEGN 301 Projects}
+
+\subsection{Temperature}
+\textbf{Thermocouples} (Type K, J, T): self-generating, wide range, fast response, rugged. $\mu$V-level output requires amplification. \textbf{RTDs} (Pt100): excellent accuracy ($\pm$0.1\,\degC{}), highly linear, stable. Slower, requires bridge excitation. \textbf{Thermistors} (NTC): very high sensitivity (10$\times$ TC), small, but highly nonlinear and limited range. \textbf{Digital ICs} (DS18B20, TMP36): convenient one-wire or analog output; limited accuracy ($\pm$0.5\,\degC{}).
+
+\subsection{Strain, Force, and Pressure}
+\textbf{Foil strain gauges}: $\sim$2\,mV/V at full scale, require Wheatstone bridge and instrumentation amplifier. \textbf{Load cells}: factory-calibrated strain gauge assemblies for direct force/weight measurement. \textbf{Piezoelectric}: dynamic force only, very high bandwidth ($>$100\,kHz). \textbf{Piezoresistive pressure sensors}: strain gauges on silicon diaphragm; available in gauge, differential, and absolute configurations.
+
+\subsection{Motion and Position}
+\textbf{Potentiometers}: simple analog position, mechanical wear limits life. \textbf{Encoders}: incremental (pulse count for position, frequency for speed) or absolute (unique code per angle). \textbf{MEMS accelerometers} (ADXL345, MPU6050): digital I2C/SPI output for acceleration, tilt, vibration. \textbf{Ultrasonic} (HC-SR04): 2\,cm--4\,m non-contact range, $\pm$3\,mm.
+
+\subsection{Flow}
+\textbf{Differential pressure} (orifice plate, Venturi, Pitot): pressure drop proportional to $v^2$. \textbf{Turbine}: rotor frequency proportional to flow. \textbf{Ultrasonic transit-time}: non-invasive clamp-on. \textbf{Electromagnetic}: Faraday's law, no moving parts, requires conductive fluid.
+
+\section{Actuator Principles}
+
+\subsection{Electromagnetic Actuators}
+\textbf{DC motors} (brushed, BLDC): torque proportional to current, speed proportional to voltage minus back-EMF. Controlled via PWM + H-bridge (Chapter~12). \textbf{Stepper motors}: discrete steps (typically 1.8\degC{}/step), open-loop positioning, no encoder required. \textbf{Servo motors}: integrated motor + feedback + controller; accept position/velocity commands. \textbf{Solenoids}: linear on/off force from energized coil; fast ($<$10\,ms), inductive (flyback diode mandatory per Chapter~12).
+
+\subsection{Thermal Actuators}
+\textbf{Resistive heaters}: $P = I^2R$, controlled via PWM through SSR or MOSFET. \textbf{Peltier devices}: semiconductor heat pump; can heat or cool depending on current direction; low efficiency.
+
+\subsection{Fluid Actuators}
+\textbf{Pumps}: positive-displacement (gear, peristaltic) for precise metering; centrifugal for high flow. \textbf{Valves}: solenoid for on/off; proportional valves for variable flow. \textbf{Cylinders}: hydraulic (high force, 100--350\,bar) or pneumatic (lower force, 4--8\,bar).
+
+\begin{warningbox}[Every Actuator Needs a Driver]
+No motor, solenoid, or heater connects directly to a microcontroller GPIO pin. Motors need H-bridges or ESCs. Solenoids need MOSFETs with flyback diodes. Heaters need SSRs or MOSFETs with current limiting. Chapter~11 (Power Supplies, Motors \& Pumps) covers selection; Chapter~12 (Power Architecture) covers driver circuits and protection.
+\end{warningbox}
+
+\begin{keyconceptbox}[Requirements Mapping: Sensors and Actuators]
+``The temperature sensor shall measure 0--200\,\degC{} with $\pm$1.0\,\degC{} accuracy and response time $<$2.0\,s.'' ``The drive motor shall produce $\geq$0.5\,N$\cdot$m continuous torque at 500\,RPM with $\pm$5\% speed regulation.'' ``The flow sensor shall measure 0--10\,L/min with $\pm$3\% FS accuracy and a pulse output compatible with the ESP32 GPIO.'' Every sensor and actuator specification traces to a testable system requirement.
+\end{keyconceptbox}
+
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item You need to measure temperature inside a running engine (range 200--800\,\degC{}, accuracy $\pm$2\,\degC{}, response $<$1\,s). Which sensor type and why? What signal conditioning?
+\item Explain why a piezoelectric force sensor cannot measure the static weight of an object, even though it easily detects the impact when the object is dropped.
+\item A stepper motor has 200 steps/rev driven at 400 pulses/s. What is the shaft speed in RPM?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Type K thermocouple. Range covers 200--800\,\degC{} (RTDs max at $\sim$850\,\degC{} but cost more). Type K accuracy is $\pm$2.2\,\degC{} or 0.75\%. Exposed-junction bead: $\tau < 0.5$\,s in moving gas. Signal conditioning: thermocouple amplifier with cold-junction compensation (AD8495 analog or MAX31855 digital).
+\item Piezoelectric sensors generate charge from stress ($Q = d \times F$). For static loads, charge is generated at application but leaks away through crystal insulation resistance and amplifier input impedance ($\tau = R \times C$, typically seconds). After $5\tau$, output decays to zero. Dynamic forces continuously generate new charge, maintaining output.
+\item $400 / 200 = 2$\,rev/s $= 120$\,RPM.
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════════════════
+
+
 
 \chapter{Mechanical Fasteners \& Bearings}
 
@@ -5793,6 +5883,129 @@ The ESP32's WiFi transmitter draws 240\,mA peak, causing $\sim$200\,mV sag on a 
 \item Target runtime: 60 days = 1440 hours. Required average current: $I_{avg} = 2000/1440 = 1.39$\,mA. Let $t_{on}$ = active seconds per 60-second cycle. $I_{avg} = (t_{on} \times 80 + (60 - t_{on}) \times 0.01)/60 = 1.39$. Solving: $t_{on} \times 80 + 0.60 - 0.01 t_{on} = 83.4$. $79.99 t_{on} = 82.8$. $t_{on} = 1.035$\,s. Maximum active time: $\sim$1.0\,s per minute. This is tight; the team should optimize wake time or use a larger battery.
 \end{enumerate}
 
+
+
+\chapter{Systematic Debugging and Troubleshooting}
+
+A working system is never assembled all at once. It is built in layers, verified at each layer, and only combined into the full system after each layer passes. Debugging is not what you do when something goes wrong; it is the disciplined verification process you follow at every stage. Students who skip this process and assemble everything at once (``big-bang integration,'' which Chapter~6 warns against) consistently spend 5--10$\times$ more time debugging than students who follow the bottom-up approach.
+
+\section{Why Bottom-Up Debugging Matters}
+Consider a GreenShield system with five components: temperature sensor, signal conditioning amplifier, ESP32 MCU, SSR heater driver, and a 500\,W cartridge heater. If you wire everything and power on, the fault could be in any of the five components, any of the four interfaces, the power supply, the wiring, or the firmware. That is at least 15 possible failure locations.
+
+Bottom-up debugging reduces the search space at every step. Verify the sensor alone: eliminated. Verify the amplifier with a known input: eliminated. By the time you connect the full chain, the fault is almost certainly at the most recently added interface, not buried inside a previously verified component.
+
+\begin{keyconceptbox}[The Debugging Pyramid]
+\textbf{Level 1: Component.} Test each part in isolation. Does the sensor produce the right voltage? Does the MOSFET switch? Does the firmware blink an LED?
+
+\textbf{Level 2: Interface.} Connect two adjacent components. Does the amplifier correctly amplify the sensor? Does the ADC read the correct voltage?
+
+\textbf{Level 3: Subsystem.} Connect a functional chain (sensor $\to$ amp $\to$ ADC $\to$ MCU display). Does the displayed value match the physical input?
+
+\textbf{Level 4: System.} Connect all subsystems. Does the PID controller read the sensor, compute correctly, and drive the heater to setpoint?
+
+Never advance with failures at the current level. Failures compound exponentially.
+\end{keyconceptbox}
+
+\section{Debugging Hardware}
+
+\subsection{Visual Inspection}
+Before applying power, inspect: solder bridges (especially fine-pitch ICs), cold joints (dull, grainy), missing components, wrong orientation (electrolytic caps, diodes, ICs), loose wires, pinched insulation. A 10$\times$ magnifier is essential. The PCB chapter's mandatory inspection applies here for all hardware, not just PCBs.
+
+\subsection{Continuity and Short-Circuit Check}
+Power off. Multimeter continuity mode: verify VCC and GND are not shorted, all ground connections are continuous, and signal connections reach their destinations at both ends.
+
+\subsection{Power-Up Sequence}
+Current-limited bench supply at 50\,mA initially. A healthy circuit draws predictable current; a fault draws zero (open) or excessive (short). Measure every power rail before connecting ICs or modules.
+
+\subsection{Signal Tracing: The Signal Walk}
+Inject a known signal at the input and trace it stage by stage with an oscilloscope. At each node, compare measured vs. expected (from your circuit calculations). The first deviation localizes the fault.
+
+\begin{tipbox}[The Signal Walk Protocol]
+Start at the sensor output. Measure. Move one stage downstream: after the divider, after the amplifier, at the ADC input pin. At each point ask: is the amplitude correct? Is the offset correct? Is the frequency content correct? The first point where measured $\neq$ expected narrows the fault to that stage. Five minutes of walking saves hours of guessing.
+\end{tipbox}
+
+\subsection{Common Hardware Faults}
+\textbf{Open connection}: signal present upstream, absent or floating downstream. Oscilloscope shows 60\,Hz pickup on the floating node. \textbf{Short circuit}: two nodes at the same voltage that should differ; supply current higher than expected. \textbf{Wrong value}: circuit functions but with incorrect gain, cutoff, or bias; compare measured node voltages to calculated values. \textbf{Reversed component}: electrolytic may swell; reversed diode conducts wrong direction; reversed IC draws excessive current. \textbf{Dead IC}: outputs unresponsive; replace with known-good to confirm.
+
+\begin{warningbox}[Change One Thing at a Time]
+If you swap a component AND change a wire AND edit firmware simultaneously, and it starts working, you do not know which change fixed it. One of the others may have introduced a latent fault. Make one change, test, record, then decide the next change.
+\end{warningbox}
+
+\section{Debugging Firmware}
+
+\subsection{Incremental Development}
+Mirror the hardware pyramid: (1) Blink (verify toolchain and MCU function), (2) Serial output (print variables to confirm code execution), (3) Single peripheral (one ADC channel, one GPIO, one I2C device), (4) Peripheral combinations (add one at a time, regression test), (5) Control logic (add PID only after all I/O works).
+
+\subsection{Common Firmware Bugs}
+\textbf{Wrong pin assignment}: GPIO in code $\neq$ physical wiring. Print the pin number; verify against wiring diagram. \textbf{Missing initialization}: ADC reads zero or random values. Verify every peripheral init call. \textbf{Blocking calls}: \texttt{delay()} stops all processing. Use \texttt{millis()}-based timing. \textbf{Integer overflow}: 16-bit counter wraps at 65,535. Use \texttt{uint32\_t} for timestamps. \textbf{I2C bus hang}: failed device holds SDA low. Implement bus recovery (toggle SCL 9$\times$) and timeouts.
+
+\begin{tipbox}[Serial Monitor = Oscilloscope for Code]
+Print everything during development: ADC raw values, engineering units, PID error and output, state transitions, loop execution time. When behavior is unexpected, the serial log tells you exactly which variable went wrong and when. Remove verbose printing only after the system is verified.
+\end{tipbox}
+
+\section{Debugging Integrated Systems}
+
+\subsection{The Integration Test Sequence}
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Power rail verification}: all supply voltages correct under load before connecting active components.
+\item \textbf{Sensor-to-display path}: sensor + conditioning + ADC + MCU only. Known physical input $\to$ correct displayed value.
+\item \textbf{Command-to-actuator path}: disconnect sensor feedback. Fixed command $\to$ correct actuator response.
+\item \textbf{Open-loop dry run}: both paths connected, manual setpoints. Verify sensor reflects actuator effect.
+\item \textbf{Closed-loop commissioning}: enable PID with conservative gains ($K_p$ at 25\% of expected, $K_i = K_d = 0$). Increase gradually.
+\end{enumerate}
+
+\subsection{Common Integration Failures}
+\textbf{Ground loops}: motor return current flows through sensor ground, injecting noise. Fix: star grounding (Chapter~12). \textbf{Brown-out}: actuator inrush current sags the supply, resetting the MCU. Fix: separate rails, bulk capacitors ($>$470\,$\mu$F). \textbf{EMI}: PWM switching noise couples into sensor signals. Fix: snubbers, decoupling, physical separation. \textbf{Timing conflicts}: loop takes longer than control period. Fix: measure loop time; prioritize time-critical tasks. \textbf{Feedback polarity error}: positive feedback instead of negative; system immediately saturates. Fix: verify increasing output drives process variable toward setpoint.
+
+\subsection{The Five-Step Debugging Protocol}
+\textbf{Step 1: Reproduce.} Make the failure happen reliably. A failure you cannot reproduce cannot be systematically fixed.
+
+\textbf{Step 2: Isolate.} Disconnect subsystems one at a time. The last one disconnected is the suspect. Or substitute a known-good signal to bypass suspect components.
+
+\textbf{Step 3: Measure.} Oscilloscope, multimeter, serial monitor at the suspected location. Compare measured vs. expected.
+
+\textbf{Step 4: Hypothesize and test.} Form a specific, testable hypothesis. Design one measurement that confirms or refutes it.
+
+\textbf{Step 5: Fix and regression test.} Fix it. Verify the original failure is resolved. Re-run all previously passing tests to confirm nothing else broke.
+
+\subsection{Debugging Tools}
+\textbf{Multimeter}: first reach; DC/AC voltage, current, resistance, continuity. Cannot capture transients. \textbf{Oscilloscope}: waveforms, timing, transient events, PWM verification, protocol debugging. Learn triggering. \textbf{Logic analyzer}: multi-channel digital capture with protocol decode (SPI, I2C, UART). \textbf{Bench supply current limit}: diagnostic tool, not just safety; anomalous current draw reveals faults. \textbf{Serial terminal/logger}: timestamped firmware variable capture for intermittent fault analysis.
+
+\section{Building a Debugging Mindset}
+
+Five principles that distinguish expert debuggers:
+
+\textbf{1. Expect problems.} No circuit works on the first try. No firmware is bug-free. Plan debugging time in your schedule.
+
+\textbf{2. Trust measurements, not assumptions.} ``It should be 2.5\,V'' is an assumption. ``The multimeter reads 0.3\,V'' is a measurement. When they disagree, the measurement wins.
+
+\textbf{3. Binary search.} Measure at the midpoint of the signal chain. If correct, fault is downstream; if not, upstream. Halves the search with each measurement.
+
+\textbf{4. Rubber duck debugging.} Explain the problem aloud. Articulating forces you to organize your understanding and often reveals the wrong assumption.
+
+\textbf{5. Walk away after 30 minutes.} Fatigue causes fixation. A fresh perspective spots the obvious error that tunnel vision concealed.
+
+\begin{warningbox}[Document Every Debug Session]
+Keep a debug log: date, symptom, tests performed, measurements, hypothesis, fix, result. When the same failure reappears (it will), you have the answer in 30 seconds. The debug log also demonstrates professional practice for your FDR documentation.
+\end{warningbox}
+
+\begin{keyconceptbox}[Requirements Mapping: Debugging and Verification]
+``Each subsystem shall be individually verified with documented test results before integration.'' ``The integration sequence shall follow a bottom-up protocol with entry/exit criteria at each level.'' ``All power rails shall be verified under load before active components are connected.'' ``The debug log shall record all faults, diagnostics, root causes, and corrective actions.''
+\end{keyconceptbox}
+
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item You connect your complete GreenShield system and the heater runs at full power regardless of temperature. Describe your debugging steps starting from the pyramid.
+\item Thermocouple readings are accurate with the motor off but show $\pm$5\,\degC{} noise (25\,kHz spikes) when the motor runs. Root cause and three mitigations?
+\item A teammate says ``I changed the wiring, the firmware, and the op-amp, and now it works.'' Why is this a problem?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Disconnect heater driver from MCU. Check MCU PWM output on oscilloscope: is duty cycle varying? If stuck at 100\%, fault is upstream (firmware or sensor path). Disconnect sensor; substitute known voltage from bench supply: does PWM change? If not, firmware fault (PID saturated, wrong pin, positive feedback). If PWM does vary with bench supply but not with sensor, fault is in the sensor or its conditioning. Isolate one interface at a time.
+\item 25\,kHz matches PWM switching frequency. Motor switching current couples into thermocouple path via ground loop or shared conductor. (1) Star grounding: separate ground wires for TC amplifier and motor driver. (2) Low-pass filter ($f_c \approx 100$\,Hz) at amplifier input. (3) Twisted-pair TC leads routed away from motor wiring.
+\item Three simultaneous changes: cannot identify which one fixed the problem. One of the other changes may have introduced a latent fault. Correct approach: revert all three, apply one at a time, test after each.
+\end{enumerate}
 
 
 \part{Major Project Milestones}
