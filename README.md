@@ -8,13 +8,12 @@
 
 | Document | Download |
 |----------|----------|
-| **Master Reference Document** | [megn301_master_reference.pdf](megn301_master_reference.pdf) |
-| **Student Guide** | [MEGN301_Student_Guide.pdf](MEGN301_Student_Guide.pdf) |
+| **Master Reference Document** | [📥 Download PDF](https://raw.githubusercontent.com/professor-duran/MEGN301/main/megn301_master_reference.pdf) |
+| **Student Guide** | [📥 Download PDF](https://raw.githubusercontent.com/professor-duran/MEGN301/main/MEGN301_Student_Guide.pdf) |
 
 > PDFs are automatically rebuilt on every push to `main` via GitHub Actions.
 
 ## Repository Structure
-
 ```
 megn301_mrd/                         Master Reference Document (modular LaTeX)
 ├── main.tex                            Driver file
@@ -32,7 +31,6 @@ megn301_sg/                          Student Guide (modular LaTeX)
 ```
 
 ## Building Locally
-
 ```bash
 # Master Reference Document (3-pass for index)
 cd megn301_mrd
