@@ -27,7 +27,6 @@ jobs:
           root_file: main.tex
           working_directory: megn301_mrd
           args: -pdf -interaction=nonstopmode -file-line-error
-          extra_system_packages: texlive-science
 
       - name: Build MRD - makeindex
         run: |
@@ -40,7 +39,6 @@ jobs:
           root_file: main.tex
           working_directory: megn301_mrd
           args: -pdf -interaction=nonstopmode -file-line-error
-          extra_system_packages: texlive-science
 
       - name: Build MRD - Final pass
         uses: xu-cheng/latex-action@v3
@@ -48,7 +46,6 @@ jobs:
           root_file: main.tex
           working_directory: megn301_mrd
           args: -pdf -interaction=nonstopmode -file-line-error
-          extra_system_packages: texlive-science
 
       - name: Build Student Guide - Pass 1
         uses: xu-cheng/latex-action@v3
@@ -56,7 +53,6 @@ jobs:
           root_file: main.tex
           working_directory: megn301_sg
           args: -pdf -interaction=nonstopmode -file-line-error
-          extra_system_packages: texlive-science
 
       - name: Build Student Guide - Pass 2
         uses: xu-cheng/latex-action@v3
@@ -64,7 +60,6 @@ jobs:
           root_file: main.tex
           working_directory: megn301_sg
           args: -pdf -interaction=nonstopmode -file-line-error
-          extra_system_packages: texlive-science
 
       - name: Copy PDFs to root
         run: |
