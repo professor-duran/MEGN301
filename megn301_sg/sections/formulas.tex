@@ -1,0 +1,87 @@
+\section{Quick Reference: Key Formulas and Design Rules}
+%=============================================================================
+
+\begin{checklistbox}[Formulas You Will Use]
+\begin{itemize}[leftmargin=*, itemsep=2pt, topsep=0pt]
+    \item \textbf{Motor torque}: $\tau = K_t \times I$\quad Back-EMF: $V_e = K_e \times \omega$
+    \item \textbf{Gear ratio}: $GR = N_2/N_1 = \omega_1/\omega_2 = \tau_2/\tau_1$
+    \item \textbf{Lead screw linear speed}: $v = \text{lead} \times \text{RPM} / 60$
+    \item \textbf{Bolt torque}: $T = K \cdot F \cdot d$\quad ($K=0.20$ dry, $0.15$ lubed)
+    \item \textbf{Bearing life}: $L_{10} = (C/P)^p \times 10^6 / (60n)$ hours
+    \item \textbf{Battery runtime}: $t = C_{\text{mAh}} / I_{\text{mA}}$ hours (derate 20\%)
+    \item \textbf{RPN}: Severity $\times$ Occurrence $\times$ Detection (scale 1--10 each)
+    \item \textbf{Availability}: $A = \text{MTBF} / (\text{MTBF} + \text{MTTR})$
+\end{itemize}
+\end{checklistbox}
+
+\begin{checklistbox}[Design Rules to Memorize]
+\begin{itemize}[leftmargin=*, itemsep=2pt, topsep=0pt]
+    \item \textbf{Current margin}: size wires and traces at $\geq$125\% of max continuous current
+    \item \textbf{Torque margin}: select motors with $\geq$150\% of required torque
+    \item \textbf{Decoupling}: 100\,nF ceramic $\leq$5\,mm from every IC power pin
+    \item \textbf{Star-point grounding}: separate signal, power, and safety ground conductors
+    \item \textbf{Flyback diodes}: mandatory on every inductive load (motor, relay, solenoid)
+    \item \textbf{Thread engagement}: steel 1.5$d$, aluminum 2.0$d$, plastic 2.5$d$
+    \item \textbf{ESP32 safe GPIOs}: 4, 13, 14, 16--19, 21--23, 25--27, 32, 33
+    \item \textbf{ESP32 off-limits}: GPIO 6--11 (flash); 34--39 (input only); ADC2 (Wi-Fi conflict)
+    \item \textbf{One change at a time}: during debugging, never change two variables simultaneously
+\end{itemize}
+\end{checklistbox}
+
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    tsbox/.style={rectangle, rounded corners=3pt, draw=minesblue, fill=minesblue!6,
+        text width=3.0cm, minimum height=0.9cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.7pt},
+    toollbl/.style={font=\tiny\sffamily\itshape, color=tipgreen},
+    qdec/.style={diamond, draw=warnred, fill=warnred!6, aspect=2.2,
+        text width=1.8cm, align=center, font=\tiny\sffamily\bfseries,
+        inner sep=1pt, line width=0.6pt},
+    arr/.style={->, line width=0.8pt, color=minesblue},
+    yeslbl/.style={font=\tiny\sffamily, color=tipgreen},
+    nolbl/.style={font=\tiny\sffamily, color=warnred}
+]
+% Title
+\node[font=\normalsize\sffamily\bfseries,minesblue] at (5,5.5) {Troubleshooting First Response};
+
+% Row 1
+\node[tsbox] (s1) at (0,4) {Power OK?\\{\tiny All rails correct?}};
+\node[toollbl,below=1pt of s1] {Multimeter};
+\node[qdec] (d1) at (3.2,4) {Yes?};
+
+% Row 2
+\node[tsbox] (s2) at (6.0,4) {Signals present?\\{\tiny PWM, I2C, UART}};
+\node[toollbl,below=1pt of s2] {Oscilloscope};
+\node[qdec] (d2) at (9.2,4) {Yes?};
+
+% Row 3
+\node[tsbox] (s3) at (6.0,1.5) {Firmware running?\\{\tiny Serial output?}};
+\node[toollbl,below=1pt of s3] {Serial monitor};
+\node[qdec] (d3) at (9.2,1.5) {Yes?};
+
+% Fix boxes
+\node[tsbox,draw=warnred,fill=warnred!6] (f1) at (0,1.5) {Fix power first\\{\tiny Fuse, wiring,\\polarity, supply}};
+\node[tsbox,draw=warnred,fill=warnred!6] (f2) at (12.2,4) {Fix signal path\\{\tiny Pin assignment,\\driver, wiring}};
+\node[tsbox,draw=warnred,fill=warnred!6] (f3) at (12.2,1.5) {Fix firmware\\{\tiny Pin config, init,\\timing, state}};
+
+% OK box
+\node[tsbox,draw=tipgreen,fill=tipgreen!8] (ok) at (6.0,-0.8) {Interface fault\\{\tiny Isolate: disconnect\\subsystems one by one}};
+\node[toollbl,below=1pt of ok] {Logic analyzer};
+
+% Arrows
+\draw[arr] (s1) -- (d1);
+\draw[arr] (d1) -- node[above,yeslbl]{Yes} (s2);
+\draw[arr] (d1) -- node[left,nolbl]{No} (f1);
+\draw[arr] (s2) -- (d2);
+\draw[arr] (d2) -- node[above,nolbl]{No} (f2);
+\draw[arr] (d2) -- node[left,yeslbl]{Yes} (s3);
+\draw[arr] (s3) -- (d3);
+\draw[arr] (d3) -- node[above,nolbl]{No} (f3);
+\draw[arr] (d3) -- node[left,yeslbl]{Yes} (ok);
+
+\end{tikzpicture}%
+}% end resizebox
+\caption{Troubleshooting first response. Follow left to right, top to bottom. Fix power first (most common cause), then check signals, then firmware. If all three check out, the fault is at an interface; isolate by disconnecting subsystems one at a time. See MRD Chapter~20 for the full five-step debugging protocol.}
+\end{figure}

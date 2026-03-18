@@ -1,0 +1,173 @@
+\chapter{End of Life \& System Retirement}\label{ch:eol}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~3}: Skim the Design for Recycling and Design for Disassembly sections; let them influence material and fastener choices at CDR. \textbf{Sprint~7}: Read the full chapter when writing your FDR disassembly procedure and disposal plan. \textbf{Related}: FMEA from Chapter~3 (p.\,\pageref{ch:requirements}); O\&M from Chapter~7 (p.\,\pageref{ch:oandm}); FDR deliverables in Chapter~23 (p.\,\pageref{ch:fdr}).
+\end{tipbox}
+
+\section{Why End of Life Matters}
+Every engineered system eventually reaches the end of its useful life. The decisions made during the design phase determine whether end-of-life (EOL) is a manageable, planned event or an expensive, hazardous crisis. Responsible engineering requires considering the complete life cycle: design, manufacture, use, maintenance, and retirement. This chapter addresses the final phase, which is the most commonly neglected in student projects and early-career engineering.
+
+The European Union's Waste Electrical and Electronic Equipment (WEEE\index{WEEE Directive}) Directive, the Restriction of Hazardous Substances (RoHS) Directive, and similar regulations worldwide make EOL planning a legal requirement for commercial products. Even for MEGN~301 prototypes, understanding EOL principles demonstrates professional maturity and prepares you for industry practice.
+
+\section{Failure Modes That Trigger Retirement}
+Systems are retired when they can no longer perform their intended function at acceptable cost or risk:
+
+\textbf{Wear-out failure}: components degrade with use. Bearings develop play, seals harden and leak, brushes wear to nubs, solder joints fatigue from thermal cycling, and batteries lose capacity. Wear-out is predictable and can be mitigated by maintenance and part replacement, but eventually the cumulative degradation makes continued operation uneconomical.
+
+\textbf{Technological obsolescence}: the system still functions but is outperformed by newer technology at lower cost. A 10-year-old data acquisition system with 12-bit resolution and 100\,kS/s is functionally obsolete when current devices offer 24-bit and 1\,MS/s for the same price. Obsolescence is driven by Moore's Law for electronics and by continuous improvement in manufacturing processes.
+
+\textbf{Component obsolescence}: a critical component (IC, sensor, connector) is discontinued by the manufacturer and no equivalent replacement is available. This is increasingly common as component life cycles shorten. Designing with widely available, multi-sourced components extends the system's serviceable life.
+
+\textbf{Regulatory obsolescence}: new safety, environmental, or performance regulations make the system non-compliant. A product containing lead-based solder became non-compliant in the EU after RoHS. A vehicle emissions system may become obsolete when emission standards tighten.
+
+\textbf{Economic obsolescence}: maintenance costs exceed the cost of replacement. When annual repair costs approach 50\% of replacement cost, retirement and replacement is typically more economical.
+
+\section{Design for End of Life (DfEOL)}
+DfEOL decisions made during the design phase dramatically affect EOL cost and environmental impact.
+
+\subsection{Design for Recycling (DfR)}
+Beyond disassembly, DfR ensures the separated materials can actually be recycled:
+
+\textbf{Avoid material contamination}: a steel screw in an aluminum part contaminates the aluminum melt. Use same-material fasteners where possible, or use fasteners that are easily removable.
+
+\textbf{Avoid composite materials}: fiber-reinforced plastics, metal-plastic laminates, and overmolded assemblies cannot be separated into their constituent materials and are generally landfilled.
+
+\textbf{Avoid hazardous materials}: lead (solder), cadmium (some plating), mercury (certain switches and sensors), hexavalent chromium (some corrosion treatments), and brominated flame retardants (some PCB materials) are regulated by RoHS and WEEE and complicate recycling. Use lead-free solder (SAC305), RoHS-compliant components, and halogen-free PCB substrates.
+
+\subsection{Design for Remanufacturing}
+Remanufacturing returns a used product to like-new condition by replacing worn components while retaining the structural elements. It requires: standardized interfaces (so replacement parts from the next generation fit), accessible wear parts (bearings, seals, brushes located for easy replacement), and robust structural elements (designed for multiple service lives).
+
+Remanufacturing reduces environmental impact by 80--95\% compared to manufacturing from raw materials, because the energy-intensive structural components (castings, machined housings, stamped frames) are reused.
+
+\section{Battery End of Life}
+Lithium batteries (LiPo, Li-ion, LFP) require special EOL handling because they contain flammable electrolytes, toxic electrode materials, and store significant electrical energy even when ``dead'' (a ``depleted'' LiPo still holds $\sim$3.0\,V).
+
+\textbf{Collection and transportation}: discharged batteries are classified as hazardous materials for shipping. They must be individually packaged in non-conductive material, with terminals taped to prevent short circuits. Damaged or swollen batteries require fireproof containers for transport.
+
+\textbf{Recycling process}: batteries are mechanically shredded in an inert atmosphere, then hydrometallurgically processed to recover lithium, cobalt, nickel, and copper. Recovery rates: cobalt $> 95\%$, nickel $> 90\%$, lithium $\sim$50\% (improving with new processes). The recovered metals re-enter the battery supply chain.
+
+\textbf{Second-life applications}: EV batteries that no longer meet automotive performance requirements (below 80\% capacity) often have sufficient capacity for stationary energy storage. Repurposing for grid storage extends the useful life by 5--10 years before final recycling.
+
+\begin{warningbox}[Never Dispose of Lithium Batteries in Regular Trash]
+Lithium batteries in landfills are punctured by compactors, causing thermal runaway\index{thermal runaway} (fire and toxic gas release). They are the leading cause of recycling facility fires. All lithium batteries must be returned to designated collection points (Best Buy, Home Depot, university recycling centers) or shipped to licensed battery recyclers (e.g., Call2Recycle).
+\end{warningbox}
+
+\section{Electronics End of Life}
+Printed circuit boards contain: copper (traces and vias), tin and lead or tin-silver-copper (solder), gold (connector fingers and wire bond pads), fiberglass (substrate), epoxy (FR-4 resin), and various metals in components (iron, nickel, tantalum, rare earths). PCBs are classified as e-waste and must be processed by licensed e-waste recyclers.
+
+The recycling process: (1) mechanical shredding, (2) magnetic separation (ferrous metals), (3) eddy-current separation (non-ferrous metals), (4) smelting to recover copper and precious metals, (5) controlled incineration of organic fraction (fiberglass, epoxy) with emissions treatment. Recovery rates for precious metals exceed 98\%; base metals 90--95\%.
+
+\textbf{Data security}: if the system contains non-volatile memory (EEPROM, flash, SD card) with sensitive data (user information, calibration secrets, firmware IP), the memory must be securely erased or physically destroyed before recycling.
+
+\section{Mechanical Component End of Life}
+\textbf{Metals}: aluminum, steel, copper, and brass are infinitely recyclable without degradation. Aluminum recycling uses only 5\% of the energy required for primary production. Ensure parts are free of non-metallic contaminants (adhesives, plastics, coatings) before recycling, or accept the lower-value ``mixed metal'' stream.
+
+\textbf{Plastics}: thermoplastics (ABS, PET, PP, HDPE) can be melted and reprocessed, but each recycling cycle degrades the polymer (reduced strength, discoloration). Thermosets (epoxy, phenolic) and elastomers (silicone, neoprene) cannot be remelted and are typically landfilled or incinerated for energy recovery. 3D-printed PLA is industrially compostable but does not degrade in home compost or landfill conditions.
+
+\textbf{Fasteners}: mixed fasteners (steel screws in aluminum parts) contaminate both material streams. During disassembly, sort fasteners by material. Stainless steel and zinc-plated steel are both recyclable but must be separated.
+
+\section{System Retirement Procedure}
+A structured retirement procedure ensures safety, data preservation, and responsible disposal:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Decommission}: disconnect from power, drain fluids, discharge capacitors, remove batteries. Lock out/tag out per safety procedures.
+\item \textbf{Data preservation}: download all logged data, calibration records, and maintenance history. Archive for the required retention period (7 years for quality records per ISO~9001).
+\item \textbf{Data destruction}: securely erase or destroy non-volatile memory containing sensitive information.
+\item \textbf{Hazardous material removal}: remove batteries, fluids (oil, coolant), mercury-containing components, and any materials requiring special handling. Package for hazardous waste disposal.
+\item \textbf{Disassembly}: separate into material-homogeneous modules per the DfD procedure.
+\item \textbf{Material disposition}: route each material stream to the appropriate recycler or disposal pathway. Document the disposition of each module.
+\item \textbf{Record keeping}: file the retirement record documenting the date, responsible person, material dispositions, and any hazardous waste manifests.
+\end{enumerate}
+
+\section{Life Cycle Cost and Total Cost of Ownership}
+The total cost of ownership (TCO) includes all costs from acquisition through retirement:
+\begin{equation}
+\text{TCO} = C_{\text{acquisition}} + \sum_{t=1}^{L} \frac{C_{\text{operating}}(t) + C_{\text{maintenance}}(t)}{(1+r)^t} + \frac{C_{\text{disposal}}}{(1+r)^L}
+\end{equation}
+where $L$ is the service life (years), $r$ is the discount rate, and the summation accounts for the time value of money. For many systems, the acquisition cost is only 20--30\% of TCO; operating and maintenance costs dominate. Designing for low maintenance cost (reliable components, easy access to wear parts, self-diagnostic firmware) reduces TCO more than reducing the purchase price.
+
+\section{Life Cycle Assessment: A Simplified Approach for MEGN 301}
+A full Life Cycle Assessment (LCA) per ISO~14040 is a months-long effort. For MEGN~301, a simplified assessment captures the key insights:
+
+\textbf{Step 1: Material inventory.} Weigh each component or estimate from CAD models. Categorize by material: aluminum, steel, ABS, PLA, copper (PCB + wire), lithium (battery), silicone, glass (LCD), etc.
+
+\textbf{Step 2: Embodied energy.} Multiply each material mass by its embodied energy factor (MJ/kg): aluminum 170, steel 25, ABS 95, PLA 55, copper 60, lithium battery 400, glass 15, silicone 110. Sum to get total embodied energy.
+
+\textbf{Step 3: Use-phase energy.} Power consumption $\times$ operating hours $\times$ expected lifetime. A 10\,W device operating 8 hours/day for 5 years: $10 \times 8 \times 365 \times 5 = 146{,}000$\,Wh $= 526$\,MJ.
+
+\textbf{Step 4: Compare.} If the total embodied energy (Step 2) is 50\,MJ and the use-phase energy (Step 3) is 526\,MJ, then 91\% of the life-cycle energy is in the use phase. Design effort should focus on reducing power consumption, not reducing material weight. Conversely, if the product is passive (no power consumption), 100\% of the impact is in materials, and material selection and recyclability dominate.
+
+\textbf{Step 5: End-of-life credit.} Recycling recovers some embodied energy. Aluminum recycling saves 95\% of primary production energy. Steel: 75\%. Plastics: 50--80\% (depending on contamination). Subtract the recycling credit from the total to get the net life-cycle energy.
+
+\section{Circular Economy Principles}
+The traditional linear economy follows ``take-make-dispose'': extract raw materials, manufacture products, use them, and discard them. The \textbf{circular economy\index{circular economy}} (Figure~\ref{fig:circular_hierarchy}) aims to keep materials in use indefinitely through:
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,]
+% Inverted pyramid - most preferred at top, least at bottom
+\node[tier=diagGreen, minimum width=11cm] (t1) at (0,3.5) {Refuse --- Eliminate unnecessary features and products};
+\node[tier=diagGreen, minimum width=9.5cm] (t2) at (0,2.7) {Reduce --- Minimize material use and weight};
+\node[tier=AccentTeal, minimum width=8.0cm] (t3) at (0,1.9) {Reuse --- Multiple use cycles without reprocessing};
+\node[tier=AccentTeal, minimum width=6.5cm] (t4) at (0,1.1) {Repair --- Fix with standard tools and parts};
+\node[tier=MinesBlue, minimum width=5.0cm] (t5) at (0,0.3) {Refurbish --- Return to like-new condition};
+\node[tier=MinesBlue, minimum width=3.8cm] (t6) at (0,-0.5) {Remanufacture --- New wear parts};
+\node[tier=WarnOrange, minimum width=2.8cm] (t7) at (0,-1.3) {Recycle --- Recover materials};
+
+% Axis label
+\draw[<-,line width=0.7pt,MinesSilver] (-6.2,-1.5) -- (-6.2,3.7);
+\node[font=\tiny\sffamily\bfseries,MinesSilver,rotate=90] at (-6.6,1.1) {Most preferred};
+
+% Landfill at bottom
+\node[tier=diagRed, minimum width=2.0cm] (t8) at (0,-2.1) {\textcolor{white}{Landfill}};
+\node[font=\tiny\sffamily\itshape,diagRed] at (3.5,-2.1) {Last resort};
+\end{tikzpicture}
+\caption{Circular economy hierarchy (most to least preferred). Design decisions should target the highest feasible tier. Recycling is better than landfill but is the lowest form of material recovery. Design for Repair and Design for Disassembly (Chapter~7, p.\,\pageref{ch:oandm}) enable the middle tiers.}\label{fig:circular_hierarchy}
+\end{figure}
+
+\textbf{Refuse}: eliminate unnecessary products and features. Does the product really need a full-color LCD, or would a simple LED indicator suffice?
+
+\textbf{Reduce}: minimize material use. Topology optimization, thin-wall design, and lightweighting reduce the mass (and embodied energy) of each product.
+
+\textbf{Reuse}: design for multiple use cycles without reprocessing. Refillable containers, rechargeable batteries, and modular upgradeable electronics extend the useful life.
+
+\textbf{Repair}: design for easy repair with standard tools and available spare parts. A product that lasts 10 years with one repair is more sustainable than one that lasts 3 years and is discarded.
+
+\textbf{Refurbish}: return used products to like-new condition by replacing worn components and updating firmware/software.
+
+\textbf{Remanufacture}: disassemble, clean, inspect, and reassemble with new wear parts. The structural components serve multiple product generations.
+
+\textbf{Recycle}: recover materials for use in new products. This is the last resort in the circular hierarchy, not the first.
+
+\section{Regulatory Landscape}
+\textbf{WEEE Directive} (EU): producers are financially responsible for collecting and recycling end-of-life electrical and electronic equipment. Products must be marked with the crossed-out wheelie bin symbol. Consumers can return e-waste to retailers free of charge.
+
+\textbf{RoHS Directive} (EU): restricts the use of lead, mercury, cadmium, hexavalent chromium, PBB, and PBDE in electrical equipment. Maximum concentrations: 0.1\% by weight (0.01\% for cadmium). Applies to products sold in the EU regardless of where they are manufactured.
+
+\textbf{REACH Regulation} (EU): requires registration of chemical substances used in products. Substances of Very High Concern (SVHCs) must be disclosed to customers and may be restricted or banned.
+
+\textbf{California Proposition 65}: requires warnings for products containing chemicals known to cause cancer or reproductive harm. Broadly applicable because products sold online may reach California consumers.
+
+\textbf{EPA regulations} (US): governs disposal of hazardous waste including batteries, mercury-containing devices, and PCBs (polychlorinated biphenyls, found in old transformer oil and some capacitors). Improper disposal carries civil and criminal penalties.
+
+\section{Product Takeback and Extended Producer Responsibility}
+Under Extended Producer Responsibility (EPR) laws, the manufacturer bears the cost of collecting and recycling their products at end of life. This creates a direct financial incentive to design for recyclability: a product that costs \$5 to recycle is more profitable than one that costs \$50.
+
+Design strategies to reduce takeback cost: (1) minimize material variety (fewer recycling streams), (2) eliminate hazardous materials (avoids special handling), (3) design for automated disassembly (reduces labor cost), (4) mark all materials clearly (enables automated sorting), and (5) make the product compact when disassembled (reduces shipping cost for returns).
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Your GreenShield prototype contains: an aluminum enclosure, an ABS 3D-printed housing, a PCB with ESP32, a 2000\,mAh LiPo battery, a DC motor, silicone tubing, and stainless steel fasteners. Write a disassembly procedure and identify the disposal pathway for each component.
+\item Calculate the TCO for a system with acquisition cost \$500, annual operating cost \$50, annual maintenance cost \$100, disposal cost \$75, service life 5 years, and discount rate 5\%. Compare to just the acquisition cost.
+\item A competitor's product uses adhesive to bond the battery to the frame, making battery replacement impossible. Your product uses a screwed battery compartment. Compare the EOL implications. Which design is more sustainable, and why?
+\item Research the RoHS Directive. List the six originally restricted substances and their maximum concentration limits. Which of these might be present in a typical MEGN~301 prototype?
+\item Your team's motor has a rated life of 5000 hours. The system operates 8 hours/day, 250 days/year. When should the motor be replaced? What design feature would make this replacement easier?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Disassembly: (1) Remove 4 screws from enclosure lid (Phillips \#2). (2) Disconnect battery JST connector; remove battery from Velcro mount. $\to$ Battery recycler (Call2Recycle). (3) Unscrew PCB (4$\times$ M3). Disconnect motor and tubing connectors. $\to$ PCB to e-waste recycler. (4) Remove motor (2$\times$ M3). $\to$ Motor to e-waste (contains copper and magnets). (5) Pull silicone tubing from barb fittings. $\to$ Landfill (silicone not recyclable). (6) Separate ABS housing (no fasteners to aluminum). $\to$ ABS: plastics recycler (\#7). (7) Aluminum enclosure + SS screws. $\to$ Separate screws (steel) from enclosure (aluminum). Both to metal recycler. Time: $\sim$4 minutes.
+\item TCO $= 500 + \sum_{t=1}^{5} (50+100)/(1.05)^t + 75/(1.05)^5 = 500 + 150(4.329) + 75(0.784) = 500 + 649 + 59 = \$1{,}208$. The acquisition cost (\$500) is only 41\% of TCO. Operating and maintenance (\$649) dominate.
+\item Adhesive-bonded battery: battery cannot be replaced when degraded (entire product discarded, $\sim$2 years). Battery cannot be separated for recycling (contaminated with adhesive). Product life limited by battery life. Screwed compartment: battery replaced in 2 minutes, extending product life by 2--3 battery generations ($\sim$6--8 years). Battery cleanly removable for recycling. The screwed design is more sustainable by a factor of 3--4$\times$ in product lifetime and eliminates the adhesive contamination problem.
+\item RoHS restricts: lead ($<$0.1\%), mercury ($<$0.1\%), cadmium ($<$0.01\%), hexavalent chromium ($<$0.1\%), PBB ($<$0.1\%), PBDE ($<$0.1\%). In a typical MEGN~301 prototype: lead may be present in hand-soldered joints if leaded solder (Sn63/Pb37) is used instead of lead-free. Hexavalent chromium may be present in some zinc-plated fasteners. Solution: use SAC305 lead-free solder and verify fastener plating is RoHS-compliant.
+\item Service life: $5000/(8 \times 250) = 2.5$ years. Plan motor replacement at 2 years (before failure, with safety margin). Design for easy replacement: mount the motor with a quick-release bracket (two screws), use a detachable electrical connector (not hardwired), and include the motor part number in the maintenance manual.
+\end{enumerate}

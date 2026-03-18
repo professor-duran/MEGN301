@@ -1,0 +1,53 @@
+\chapter*{What Should I Be Reading Right Now?}
+\addcontentsline{toc}{chapter}{What Should I Be Reading Right Now?}
+
+\begin{center}\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{If you are\ldots} & \textbf{Your problem} & \textbf{Go to} \\
+\midrule
+Just starting your project & Need problem statement and stakeholders & Ch.~1, p.\,\pageref{ch:problem} \\
+Writing requirements & Need SHALL statements and SDRD format & Ch.~3, p.\,\pageref{ch:requirements} \\
+Preparing for PDR & Need concept generation and trade study & Ch.~4, p.\,\pageref{ch:concept}; Ch.~21, p.\,\pageref{ch:pdr} \\
+Need circuit basics & Ohm's Law, KVL/KCL, component selection & Ch.~13, p.\,\pageref{ch:electronics} \\
+Selecting a sensor or actuator & Transduction principles, specifications & Ch.~14, p.\,\pageref{ch:sensors} \\
+Selecting connectors & Wire-to-wire, fluid fittings, thread types & Ch.~10, p.\,\pageref{ch:connectors} \\
+Choosing a motor or pump & Sizing, driver selection, derating & Ch.~11, p.\,\pageref{ch:motors} \\
+Designing power architecture & Protection, grounding, battery safety & Ch.~12, p.\,\pageref{ch:power} \\
+Designing a PCB & Schematic capture, layout, fab ordering & Ch.~18, p.\,\pageref{ch:pcb} \\
+Programming the ESP32 & Pin mapping, protocols, firmware structure & Ch.~19, p.\,\pageref{ch:mcu} \\
+Preparing for CDR & Detailed design freeze, deliverables checklist & Ch.~22, p.\,\pageref{ch:cdr} \\
+Integration is failing & Bottom-up strategy, debugging process & Ch.~6, p.\,\pageref{ch:integration}; Ch.~20, p.\,\pageref{ch:debug} \\
+System not working & Systematic debugging methodology & Ch.~20, p.\,\pageref{ch:debug} \\
+Motor won't spin & Driver wiring, power rail brown-out & Ch.~11, p.\,\pageref{ch:motors}; Ch.~12, p.\,\pageref{ch:power} \\
+Sensor readings are noisy & Grounding, decoupling, layout & Ch.~13, p.\,\pageref{ch:electronics}; Ch.~18, p.\,\pageref{ch:pcb} \\
+Writing test procedures & V\&V methods, TAID, VCRM & Ch.~5, p.\,\pageref{ch:vv}; Ch.~8, p.\,\pageref{ch:postbuild} \\
+Preparing for FDR & O\&M, post-build V\&V, deliverables & Ch.~7, p.\,\pageref{ch:oandm}; Ch.~23, p.\,\pageref{ch:fdr} \\
+Studying for the exam & Formula summary and practice questions & Every chapter \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{Sprint-to-Chapter Mapping}
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabularx}{\textwidth}{c c X l X}
+\toprule
+\textbf{Sprint} & \textbf{Weeks} & \textbf{Primary Activities} & \textbf{Chapters} & \textbf{Key Deliverables} \\
+\midrule
+1 & 1--2 & Team formation, problem definition, stakeholder analysis & Ch.~1 & Problem statement, stakeholder map, ConOps \\
+2 & 3--4 & Requirements, architecture, competitive analysis & Ch.~2, 3 & SDRD, functional decomposition \\
+3 & 5--6 & Concept generation, trade studies, preliminary design & Ch.~4 & Morph.\ chart, decision matrix, \textbf{PDR} \\
+4 & 7--8 & Detailed design, procurement, prototyping & Ch.~10--19 & BOM, schematics, CAD, orders \\
+5 & 9--10 & Fabrication, subsystem testing, integration begins & Ch.~5, 6, 20 & Subsystem test results, \textbf{CDR} \\
+6 & 11--13 & System integration, V\&V execution, debugging & Ch.~5, 6, 8, 20 & VCRM, test reports, system demos \\
+7 & 14--15 & Final V\&V, documentation, O\&M package & Ch.~7, 9 & O\&M manual, as-built docs \\
+Final & 16 & Final design review, reflection, knowledge transfer & Part~III & \textbf{FDR} presentation \& package \\
+\bottomrule
+\end{tabularx}
+\caption{Sprint-to-chapter mapping for a 16-week MEGN 301 project.}
+\end{table}
+
+
+% ========== LABORATORY SAFETY ==========

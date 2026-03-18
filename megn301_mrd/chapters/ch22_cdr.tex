@@ -1,0 +1,239 @@
+\chapter{Critical Design Review (CDR)}\label{ch:cdr}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~3}: Read this chapter one week before CDR. Use the deliverables checklist (Figure~\ref{fig:cdr_checklist}) to verify completeness. \textbf{Before CDR}: Run the litmus test: ``Could a technician build this from these documents alone?''
+\end{tipbox}
+
+
+\vspace{1em}
+
+The CDR answers: \textbf{``Will this design work?''} It evaluates whether the detailed design is complete, manufacturable, and verifiable. CDR is the gate between design and fabrication; passing CDR authorizes the team to build.
+
+\vspace{1em}
+
+\section{Purpose and Scope}
+CDR confirms (see Figure~\ref{fig:cdr_checklist} for the full checklist) that every component is specified, every interface is defined, every manufacturing step is planned, and every requirement has a path to verification. The design is frozen after CDR; changes require formal change control.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    dbox/.style={rectangle, rounded corners=2pt, draw=vbuild, fill=vbuild!6,
+        text width=4.0cm, minimum height=0.6cm, align=left,
+        font=\tiny\sffamily, line width=0.5pt, inner sep=4pt},
+    check/.style={font=\tiny\sffamily\bfseries, color=AccentTeal},
+    hdr/.style={font=\small\sffamily\bfseries, color=vbuild}
+]
+\node[hdr] at (4.5,6.5) {CDR Deliverables Checklist};
+
+% Column 1
+\node[check] at (-0.3,5.8) {Technical Design};
+\node[dbox] at (2.0,5.3) {$\square$ Complete schematics w/ part numbers};
+\node[dbox] at (2.0,4.6) {$\square$ PCB layout reviewed (if applicable)};
+\node[dbox] at (2.0,3.9) {$\square$ CAD models + eng.\ drawings};
+\node[dbox] at (2.0,3.2) {$\square$ Wiring diagrams w/ wire gauges};
+\node[dbox] at (2.0,2.5) {$\square$ Firmware architecture + pin map};
+
+\node[check] at (-0.3,1.8) {Analysis};
+\node[dbox] at (2.0,1.3) {$\square$ Power budget (actual data, 25\% margin)};
+\node[dbox] at (2.0,0.6) {$\square$ Motor/transmission torque calcs};
+\node[dbox] at (2.0,-0.1) {$\square$ Worst-case circuit analysis};
+
+% Column 2
+\node[check] at (5.2,5.8) {Procurement \& Mfg};
+\node[dbox] at (7.5,5.3) {$\square$ BOM finalized w/ vendor PNs};
+\node[dbox] at (7.5,4.6) {$\square$ Long-lead items ordered};
+\node[dbox] at (7.5,3.9) {$\square$ Manufacturing plan + schedule};
+\node[dbox] at (7.5,3.2) {$\square$ Plan B components identified};
+\node[dbox] at (7.5,2.5) {$\square$ Assembly sequence documented};
+
+\node[check] at (5.2,1.8) {V\&V Updates};
+\node[dbox] at (7.5,1.3) {$\square$ VCRM updated for design changes};
+\node[dbox] at (7.5,0.6) {$\square$ Test procedures reviewed};
+\node[dbox] at (7.5,-0.1) {$\square$ Test equipment confirmed};
+
+% Litmus test
+\node[rectangle, rounded corners=3pt, draw=WarnOrange, fill=WarnOrange!8,
+    text width=9.0cm, minimum height=0.7cm, align=center,
+    font=\scriptsize\sffamily\bfseries, line width=0.8pt] at (4.5,-1.0)
+    {Litmus Test: Could a technician build the prototype from these documents alone?};
+\end{tikzpicture}
+\caption{CDR deliverables checklist. The litmus test: if a competent technician who has never seen this project could build the prototype from your CDR package alone, the package is complete.}\label{fig:cdr_checklist}
+\end{figure}
+
+\section{Deliverables}
+
+\subsection{Finalized Technical Design}
+Complete schematics with all component values, ratings, and part numbers. PCB layout (if applicable) reviewed and ready for fabrication. CAD models of all custom mechanical parts with engineering drawings including dimensions, tolerances, material callouts, and surface finishes. For each fabrication method: specific parameters (e.g., ``FDM, PLA, 0.2\,mm layer, 40\% infill'' or ``CNC 6061-T6 per Order of Operations'').
+
+\subsection{Design Analysis and Verification}
+Analysis results for all A-method requirements: FEA stress/thermal, worst-case circuit analysis, power budget with actual component data (not estimates), link budget for wireless communications, and motor/transmission torque calculations with margin. Every analysis must show: assumption, calculation, result, margin, and verdict.
+
+\subsection{Manufacturing and Procurement}
+Finalized BOM with: actual part numbers, verified vendor availability, confirmed pricing, and realistic lead times. All long-lead items ordered. Manufacturing plan: what is being fabricated (PCBs ordered, 3D prints queued, machining scheduled), what is being purchased, and assembly sequence.
+
+\begin{tipbox}[The Spring Break Procurement Trap]
+If CDR falls before spring break, all procurement orders must be placed at CDR, not ``after break.'' Parts ordered the week before break arrive during break with no one to receive them. International orders (JLCPCB, AliExpress) need 3--4 weeks. McMaster ships next-day.
+\end{tipbox}
+
+\subsection{Updated Test Plan}
+VCRM updated with any new or modified requirements since PDR. All test procedures reviewed and updated based on the finalized design. Test equipment identified and availability confirmed. Test schedule with specific dates and responsible engineers. Subsystem test results from early prototyping (if available).
+
+
+
+\subsection{Software and Firmware}
+If your system includes firmware: source code under version control (Git), state machine diagram, pin mapping table, communication protocol definitions, and build/flash instructions. Code must compile and flash from the documented instructions without ``tribal knowledge.'' Include a hardware abstraction layer (HAL) that isolates sensor-specific code from application logic.
+
+\subsection{Thermal and Structural Analysis}
+For any component operating near its thermal limit: thermal analysis showing junction temperature under worst-case conditions with adequate margin. For structural components: FEA or hand calculations showing stress/deflection under design loads with safety factor $\geq$2.0. Document: assumptions, model, results, margin, and verdict for each analysis.
+
+\subsection{Integration and Test Readiness}
+Integration plan: sequence of subsystem combinations with test gates at each stage. Interface verification plan: which interfaces will be tested at each stage and what constitutes pass/fail. Any subsystem demonstrations already completed (with data). Hardware/software integration strategy: how firmware will be loaded, tested, and version-controlled.
+
+\subsection{Risk Register Update}
+All PDR risks updated with current status. New risks identified during detailed design added. Top-5 risks have active mitigation plans with assigned owners and deadlines.
+
+\subsection{Procurement Status}
+For every BOM item: ordered/received/backordered status. Any substitutions from the PDR BOM documented with engineering justification. Lead time tracking for critical-path items. Budget actual vs.\ planned with variance explanation.
+
+
+\section{Evaluation Criteria}
+
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Criterion} & \textbf{What Reviewers Look For} & \textbf{Ref} \\
+\midrule
+Design completeness & Can this be built from CDR package alone? All parts specified? & Ch.~2--3 \\
+Drawings quality & Fully dimensioned? Toleranced? Material and finish specified? & Ch.~3 \\
+DFM compliance & Polymer parts pass IM checklist? Draft, wall, ribs correct? & Ch.~12 \\
+Analysis evidence & Calculations/simulations show reqs met with margin? & Ch.~2, 4 \\
+FMEA maturity & Updated for detailed design? High-RPN resolved? Safety hazards mitigated? & Ch.~3, 6 \\
+BOM completeness & Every component listed, priced, Plan B for critical parts? Within budget? & Ch.~3 \\
+Requirements currency & Changes since PDR documented? RTM current? & Ch.~2 \\
+Test readiness & Critical procedures written? Equipment identified? & Ch.~4, 5 \\
+\bottomrule
+\end{tabularx}
+\caption{CDR evaluation criteria.}
+\end{table}
+
+\begin{tipbox}[Common CDR Failures]
+\textbf{Incomplete drawings}: CAD exists but engineering drawings with tolerances and manufacturing notes do not. \textbf{BOM gaps}: fasteners, wire, consumables missing; budget surprises. \textbf{No Plan B}: sole-source component goes out of stock with no alternative. \textbf{DFM ignored}: polymer parts have zero draft and non-uniform walls. \textbf{Stale FMEA}: PDR version never updated. \textbf{Late purchase requests}: ordered at CDR deadline instead of immediately after approval.
+\end{tipbox}
+
+\begin{tipbox}[The CDR Litmus Test]
+Could a contract manufacturer build your system from only the CDR documents (BOM, schematics, drawings, assembly instructions) without calling you? If yes, your documentation is complete. If they would need to ask ``what connector goes here?'' or ``what tolerance is this?''; you are not ready.
+\end{tipbox}
+
+\section{CDR Purpose and Timing}
+The Critical Design Review occurs at approximately the 60--70\% completion point, after detailed design is complete but before (or during early) fabrication. At CDR, the team presents the fully detailed design with specific component selections, final CAD models, complete schematics, firmware architecture, and a refined test plan. The purpose is to verify that the detailed design faithfully implements the requirements approved at PDR and that fabrication can proceed with confidence.
+
+\section{CDR Content Requirements}
+CDR builds on PDR with increased detail:
+
+\textbf{Requirements update}: present any requirements changes since PDR, with rationale and stakeholder approval. Track changes formally (additions, deletions, modifications) in the SDRD revision history.
+
+\textbf{Detailed mechanical design}: complete CAD assembly with all parts modeled, interference checks performed, tolerances specified, and manufacturing drawings (2D drawings with dimensions, tolerances, surface finishes, and material callouts). For 3D-printed parts: include orientation, support strategy, and post-processing requirements.
+
+\textbf{Detailed electrical design}: complete schematics (not block diagrams) with all component values, part numbers, and pin assignments. PCB layout (if applicable) with design rule check (DRC) passing. Wire harness drawing with connector pinouts, wire gauges, and cable routing.
+
+\textbf{Firmware/software design}: complete state machine with all states and transitions defined. Control algorithm with tuning parameters. Communication protocol specification. User interface design with screen layouts and button functions.
+
+\textbf{Bill of Materials (BOM)}: every component with part number, supplier, quantity, unit cost, and total cost. The BOM total must be within the project budget. Include lead times and identify any long-lead items that must be ordered immediately.
+
+\textbf{Assembly procedure}: step-by-step instructions for building the system from components. Include required tools, estimated time per step, and quality checkpoints (``verify continuity before proceeding to next step'').
+
+\textbf{Updated test plan}: refined with specific equipment identified, pass/fail criteria quantified, and test procedures written in sufficient detail for another team to execute.
+
+\textbf{Updated risk register}: re-evaluate risks based on detailed design decisions. Have the PDR risks been mitigated? Have new risks emerged?
+
+\textbf{Updated schedule}: revised Gantt chart showing fabrication, assembly, testing, and FDR preparation tasks with realistic durations and dependencies.
+
+\section{CDR Review Criteria}
+\textbf{Design completeness}: can the system be built from the presented documentation without additional design decisions? If a fabricator needs to guess anything, the design is incomplete.
+
+\textbf{Traceability}: does every design element trace to a requirement? Are there requirements without corresponding design elements (unimplemented requirements) or design elements without requirements (gold-plating)?
+
+\textbf{Producibility}: can the design be fabricated with available tools, materials, and skills? Are tolerances achievable with the specified manufacturing processes?
+
+\textbf{Testability}: can every requirement be verified with the specified test equipment and procedures?
+
+CDR outcomes: \textbf{Proceed to fabrication}, \textbf{Proceed with conditions} (resolve specific issues before fabrication of affected subsystems), or \textbf{Return} (significant design flaws requiring redesign).
+
+\section{The CDR-to-Fabrication Transition}
+After CDR approval: (1) place orders for all BOM items, (2) begin fabrication of mechanical parts (3D printing, machining, laser cutting), (3) begin PCB fabrication and component procurement if using custom PCBs, (4) begin firmware development in parallel with hardware fabrication, (5) prepare the test station (calibrate instruments, build test fixtures). The goal is to have all subsystems ready for integration within 2--3 weeks of CDR.
+\section{CDR Presentation Structure}
+CDR builds on PDR but shifts emphasis from ``what we plan to build'' to ``exactly what we will build.'' The presentation should be 25--35 minutes:
+
+\textbf{Requirements update (3 min)}: any changes since PDR, with rationale. Highlight requirements that were added, deleted, or modified based on PDR feedback or design evolution.
+
+\textbf{Detailed design walkthrough (15 min)}: this is the core of CDR. Walk through the design at component level:
+
+\emph{Mechanical}: show fully dimensioned assembly and part drawings. Demonstrate that parts fit together (interference check screenshots). Identify the manufacturing process for each part and verify it is achievable. Call out critical tolerances and explain how they will be verified during fabrication.
+
+\emph{Electrical}: show complete schematics (not block diagrams). Identify every component by part number. Show the PCB layout (if applicable) or the wiring diagram (if hand-wired). Explain the power budget: total current at each voltage rail vs.\ supply capacity.
+
+\emph{Software}: show the complete state machine with all transitions and actions. Show the control algorithm with gains and update rate. Show the user interface layout. Demonstrate any prototype firmware running on the actual MCU.
+
+\textbf{BOM and procurement (3 min)}: present the complete BOM with costs. Identify long-lead items (already ordered or in stock). Confirm total cost is within budget.
+
+\textbf{Assembly plan (3 min)}: the sequence for building the system, including any fixtures, jigs, or special tools required. Identify quality checkpoints where intermediate testing is performed.
+
+\textbf{Updated test plan (3 min)}: the VCRM is now complete. All test procedures are written. Test equipment is identified (owned, borrowed, or to be purchased).
+
+\textbf{Updated risks and schedule (3 min)}: risks re-evaluated in light of the detailed design. Schedule updated with fabrication, assembly, and testing milestones.
+
+\section{CDR Technical Depth Expectations}
+At CDR, the review board expects:
+
+\textbf{Thermal analysis}: if the system generates heat (power electronics, motors, heaters), show a thermal analysis demonstrating that no component exceeds its maximum operating temperature. This can be a simple hand calculation (Chapter~18 in MEGN~300) or a thermal simulation.
+
+\textbf{Structural analysis}: if the system bears loads (mounting brackets, frames, enclosures), show a stress analysis demonstrating that no component exceeds its yield strength with an adequate safety factor ($\geq 2$ for student projects). A hand calculation using beam bending or FEA screenshot is acceptable.
+
+\textbf{Power budget}: tabulate every load on each power rail. Sum the currents. Verify the power supply can provide the total with $\geq 20\%$ margin. Include worst-case scenarios (all motors stalled, all heaters on, WiFi transmitting simultaneously).
+
+\textbf{Timing analysis}: if the system has real-time requirements (control loop, sensor acquisition, communication), show that the MCU can execute all tasks within the available time. List each task's execution time and verify the total fits within the loop period.
+
+\section{CDR Deliverables Checklist}
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item Updated SDRD with change log
+\item Detailed mechanical drawings -- fully dimensioned, toleranced, with material and finish callouts
+\item Complete electrical schematics -- component-level with part numbers and values
+\item PCB layout files or wiring diagram -- with connector pinouts and wire gauge specifications
+\item Firmware architecture document -- state machine, pseudocode for critical algorithms, pin map
+\item Complete BOM -- with part numbers, suppliers, quantities, costs, and lead times
+\item Assembly procedure -- step-by-step with quality checkpoints
+\item Complete VCRM -- all requirements mapped to test methods with written test procedures
+\item Power budget -- all loads tabulated by voltage rail
+\item Thermal and structural analyses (if applicable)
+\item Updated risk register and Gantt chart
+\end{itemize}
+
+\section{Common CDR Deficiencies}
+(1) \textbf{Schematics are block diagrams}: at CDR, every wire must be specified. ``Sensor connects to MCU'' is not a schematic; ``LM35 Vout (pin 2) connects to ESP32 GPIO36 via 100$\Omega$ series resistor with 100\,nF capacitor to ground'' is.
+
+(2) \textbf{BOM is incomplete}: missing quantities, missing part numbers, or costs from an unreliable source. Every part must be sourceable from a real distributor (Digi-Key, Mouser, McMaster) with a current price.
+
+(3) \textbf{No power budget}: the team cannot state the total current draw on each rail. This means they do not know if the power supply is adequate, which is a fundamental design question.
+
+(4) \textbf{Test procedures are vague}: ``test the sensor accuracy'' is not a procedure. ``Apply 50\,\degC{} reference, record 20 readings, compute mean and std dev, compare to requirement SYS-ACC-001'' is.
+
+(5) \textbf{Schedule has no slack}: every task is back-to-back with no buffer for delays. Professional project managers add 20--30\% contingency to each task duration.
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Your CDR BOM lists ``12V DC Motor'' with a link to an Amazon product page. The reviewer rejects this. Why?
+\item A team's power budget shows 2.8\,A total load on a 3.0\,A power supply. The reviewer flags this. Why is 93\% utilization a problem?
+
+\item Your team's schematics show a 3.3\,V regulator powering the ESP32, but the thermal analysis for the regulator was never performed. The ESP32 draws 240\,mA during Wi-Fi transmission. Is this a CDR pass or fail? What analysis should have been done?
+\item Your PCB design uses a QFN-32 package that requires reflow soldering. Your team only has hand-soldering capability. What should you do?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Amazon listings change without notice (price, availability, even the actual product). A proper BOM entry needs: manufacturer name, manufacturer part number, key specifications (voltage, RPM, torque, current), and a stable vendor with a datasheet. Amazon is a marketplace, not a specification source.
+\item 93\% utilization leaves only 0.2\,A margin. Motor inrush alone could draw 6--10$\times$ running current for 50--100\,ms. The supply will current-limit or brown-out, causing MCU resets. Design rule: 20--25\% current margin minimum. This team needs a larger supply or must reduce the load.
+
+\item CDR fail; missing analysis evidence. Required thermal analysis: input voltage (e.g., 5\,V from USB), output 3.3\,V at 240\,mA peak. LDO power dissipation $P = (V_{in} - V_{out}) \times I = (5.0 - 3.3) \times 0.24 = 0.41$\,W. At thermal resistance $\theta_{JA} \approx 150$\,\degC/W for SOT-223, junction temp rise = $0.41 \times 150 = 61.5$\,\degC. At 25\,\degC ambient: $T_J = 86.5$\,\degC; below the 125\,\degC limit but with only 38.5\,\degC margin. At 40\,\degC ambient: $T_J = 101.5$\,\degC; still acceptable but worth documenting. The analysis takes 5 minutes and prevents a field failure.
+\item Options: (a) select a TSSOP or SOIC alternative of the same IC, (b) order a QFN breakout board/adapter, (c) use the JLCPCB assembly service (SMT placement for \$8). Option (a) is best if available. Never plan to hand-solder QFN; it requires a hot air station at minimum and even then has high defect rates.
+\end{enumerate}
+
+

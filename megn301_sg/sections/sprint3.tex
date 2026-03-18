@@ -1,0 +1,139 @@
+\begin{center}
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}\\[4pt]
+{\Large\bfseries\sffamily\color{minesblue} Phase 2: ``Will This Design Work?''}\\[2pt]
+{\small\itshape Sprints 3--4 freeze the design, procure parts, and demonstrate critical subsystems.}\\[4pt]
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}
+\end{center}
+\vspace{0.5em}
+%=============================================================================
+\section{Sprint 3 -- Critical Design Review (CDR)}
+%=============================================================================
+
+\begin{priorities}
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item Submit purchase requests as early as possible---do not wait for the CDR deadline.
+    \item Design polymer parts for injection molding, even though you are prototyping with 3D printing.
+    \item Get every manufactured part reviewed by the appropriate resource \textit{before} fabrication.
+\end{enumerate}
+\end{priorities}
+
+\begin{checklistbox}[Before You Start: Sprint 3 Preparation]
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item Read MRD Chapter~22 (CDR deliverables) and Chapter~12 (Power Architecture).
+    \item Read MRD technical chapters for your project's subsystems (Ch~10--19 as relevant).
+    \item Build a power budget spreadsheet listing every component's voltage, current, and peak draw.
+    \item Identify Plan~B components for every critical part in your BOM.
+    \item Check lead times and place early orders for long-lead or sole-source components.
+    \item Start a wiring diagram and pin mapping table before writing firmware.
+\end{enumerate}
+\end{checklistbox}
+
+\subsection{CDR Report}
+
+\begin{faqbox}[Q: What does ``everything someone would need to build your prototype'' actually mean?]
+Imagine handing your CDR to a competent engineering team that has never met you. Could they purchase the correct components, fabricate every part, assemble the system, and load the software? If not, something is missing. This means complete CAD drawings with dimensions and tolerances, a full bill of materials with part numbers and vendors, wiring diagrams, software architecture descriptions, and assembly instructions.
+\end{faqbox}
+
+\begin{protip}
+\textbf{Build a power budget spreadsheet before anything else.} List every component with its voltage rail, continuous current draw, and peak current draw. Sum the columns and add a 25\% margin. This single spreadsheet will tell you whether your power supply is adequate, what regulator stages you need, and where your thermal hotspots will be. Motor inrush is the number-one power supply problem: a motor rated at 2\,A running may draw 15\,A at startup. Size your supply for inrush, not steady state. See MRD Chapter~12 (Power Architecture \& Circuit Safety); the power budget spreadsheet example and protection components quick-reference table are in that chapter.
+
+\vspace{4pt}
+\textbf{Example power budget (3 rows to get you started):}
+
+\begin{center}\small
+\begin{tabularx}{0.95\textwidth}{l c c c c}
+\toprule
+\textbf{Component} & \textbf{Rail} & \textbf{Continuous} & \textbf{Peak} & \textbf{Notes} \\
+\midrule
+ESP32 DevKit (Wi-Fi active) & 5\,V USB & 240\,mA & 350\,mA & TX bursts \\
+DS18B20 temperature sensor & 3.3\,V & 1.5\,mA & 1.5\,mA & Parasitic mode: 0\,mA \\
+12\,V DC gearmotor + DRV8871 & 12\,V & 2.0\,A & 15\,A & Stall = 15\,A; size fuse here \\
+\midrule
+\textbf{3.3\,V rail total} & & 242\,mA & 352\,mA & Need: 440\,mA supply (25\% margin) \\
+\textbf{12\,V rail total} & & 2.0\,A & 15\,A & Need: 2.5\,A continuous + bulk cap for inrush \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\vspace{2pt}
+\noindent Copy this format into a spreadsheet, add every component in your BOM, and sum each rail. If the peak column exceeds your supply rating, you have a problem to solve \textit{before} you order parts.
+\end{protip}
+
+\begin{warnbox}
+\textbf{Separate your power and signal grounds.} Poor grounding is the most common cause of hard-to-diagnose intermittent failures in student projects---noisy sensor readings, MCU resets when a motor starts, dropped serial communication. Run motor power on dedicated ground wires back to the supply; never share ground paths between motors and sensitive electronics. Use star-point grounding: each subsystem gets its own ground conductor, and they all meet at one common point near the power supply. See MRD Chapter~12; search the index for ``star-point grounding for the complete three-domain strategy.
+\end{warnbox}
+
+\begin{tipbox}
+\textbf{Identify a ``Plan B'' component for every critical item.} For any single-source or sole-vendor component in your BoM, record a backup part number and vendor in a notes column. If your specialty sensor, MOSFET, or pump goes out of stock the week before CDR, you need to order the backup \textit{immediately}---not start a new search. This is especially important for projects with specialty components like the \textit{Sous Vide Supreme} (heating elements) and \textit{Sol-Mate Purification Pal} (solar charge controllers), where lead times can exceed two weeks.
+\end{tipbox}
+
+\subsection{Sensor and Actuator Selection}
+
+\begin{faqbox}[Q: How do I choose the right sensor for my project?]
+Use the six-criteria framework from Chapter~14 of the MRD: (1)~What physical quantity? (2)~What range and accuracy does your requirement specify? (3)~What bandwidth (fastest change)? (4)~What output type does your MCU accept? (5)~What is the operating environment? (6)~Budget? Match these to candidate sensors, then prefer the one with the simplest signal conditioning. A \$5 digital I2C sensor that plugs directly into the ESP32 may be a better choice than a \$2 analog sensor that needs a bridge, amplifier, and anti-alias filter.
+\end{faqbox}
+
+\begin{warnbox}
+\textbf{Every actuator needs a driver circuit.} No motor, solenoid, or heater connects directly to a GPIO pin. Before you order an actuator, verify you also have the driver (H-bridge for DC motors, ESC for BLDC, stepper driver for steppers, MOSFET + flyback diode for solenoids, SSR for AC heaters). If the driver is not in your BoM, add it now. See Chapter~11 (Motors \& Pumps) and Chapter~12 (Power Architecture) for driver selection.
+\end{warnbox}
+
+\begin{tipbox}
+\textbf{Check sensor output compatibility before ordering.} Three things must match: (1)~output voltage range fits your ADC (a 10\,V sensor on a 3.3\,V ESP32 will saturate and may damage the ADC), (2)~output impedance is compatible ($>$100:1 ratio with ADC input impedance), and (3)~response time is fast enough ($\tau_{\text{sensor}} < f_{\text{signal}}/5$). Chapter~14 has the full selection framework and specification tables.
+\end{tipbox}
+
+\subsection{Purchase Requests}
+
+\begin{faqbox}[Q: When should we submit our purchase request?]
+As early as possible. Do not wait until the CDR deadline. Shipping delays are real, and if a component arrives late, your build schedule slips. Identify long-lead-time items (specialty sensors, custom PCBs, specific actuators) early and flag them to your instructor. Have a backup vendor or component in mind for critical items.
+\end{faqbox}
+
+\begin{warnbox}
+Only order from the approved vendor list. Unapproved vendors require a review and may be denied, which costs you time. Check the list before you fall in love with a component that is only available from a vendor not on the list.
+\end{warnbox}
+
+\begin{warnbox}
+\textbf{The Spring Break Shipping Trap.} Spring Break begins March~24---campus shipping/receiving, the machine shop, and all lab facilities are \textbf{closed} that week. If a component fails during your Sprint~4 subsystem demo (around Mar.~10--12) and you need a replacement for the full system demo, you must order it \textit{immediately}---not after break. Plan your procurement so all critical components arrive before March~21. The same logic applies to 3D prints and machined parts: submit them early enough to allow for at least one iteration before campus shuts down.
+\end{warnbox}
+
+\subsection{Manufacturing Design Review}
+
+\begin{faqbox}[Q: Why do polymer components need to be designed for injection molding?]
+Even though your prototype will likely be 3D printed, designing for injection molding teaches you to think about manufacturability at scale. This means uniform wall thickness, draft angles, avoiding undercuts, and proper rib and boss design. The white paper provided on Canvas covers these principles in detail. This is a skill that will serve you in every future design role.
+\end{faqbox}
+
+\begin{faqbox}[Q: Which 3D printing process should I choose?]
+Use \textbf{filament (FDM) printing} for larger structural components where surface finish is less critical. Use \textbf{resin (SLA) printing} for small, detailed parts that require tighter tolerances or smoother surfaces. Refer to Appendix A of the project document for resin printer settings. Get your designs reviewed early---the machine shop assistants, Prof.\ Blood, and the Master TAs are all available to help.
+\end{faqbox}
+
+\begin{protip}
+\textbf{Use heat-set inserts or captive nuts for any structural fastening into 3D-printed parts.} Students frequently try to tap threads directly into FDM prints or rely on superglue for structural joints---both approaches fail under load and vibration, often catastrophically during a live demo. Brass heat-set inserts (installed with a soldering iron) create strong, reusable M3/M4 threads in printed parts for pennies each. Design the appropriately sized pilot hole into your CAD model from the start. This is a small investment that prevents mid-demo disasters.
+\end{protip}
+
+\begin{tipbox}
+Complete your Order of Operations sheet \textit{before} walking into the machine shop. This is required for machined parts and is also just good practice---it forces you to think through the fabrication sequence, which often reveals design issues before you waste material.
+\end{tipbox}
+
+\begin{protip}
+\textbf{Choose your resin strategically to save budget.} The campus resin printers support two materials at very different price points: Elegoo ABS-Like at \$15/kg and Siraya Tech Blu Nylon-Like at \$38/kg (see Appendix~A of the project document for settings). Use the cheaper ABS-like resin for basic structural enclosures, brackets, and cosmetic parts. Reserve the Nylon-like resin only for parts requiring high toughness, wear resistance, or repeated flexure---gears, snap-fit clips, or living hinges. A single strategic resin choice can save \$20--40 of your project budget.
+\end{protip}
+
+\begin{tipbox}
+\textbf{Document every electrical connection and every software flow \textit{now}, not later.} Your CDR should include a wiring diagram showing every component, wire color, gauge, connector part number, and pinout, plus a programming flowchart showing your main loop, state machine transitions, sensor reads, actuator control logic, and error handling. These diagrams are the electrical and software equivalents of your CAD drawings---without them, no one (including your future self at 10~PM during Sprint~5) can debug your system. See MRD Chapter~6 (Subsystem Integration) for interface documentation standards and the N$^2$ diagram.
+\end{tipbox}
+
+\begin{protip}
+\textbf{Decide early: dev boards or custom PCB?} Use development boards (Arduino, ESP32 DevKit, sensor breakouts) when your circuit is straightforward, form factor is not critical, the timeline is tight, or the design is still evolving. Use a custom PCB when a specific enclosure size is required, noise-sensitive analog signals demand a ground plane, or you need clean cable routing and high reliability. A well-wired dev board that meets requirements is superior to a custom PCB that delays the project. If you do go custom, the total timeline from design start to working board is 4--6 weeks (design, order from JLCPCB/PCBWay, ship, solder, debug), so your design must be frozen at CDR. See MRD Chapter~18 (PCB Design Fundamentals); the JLCPCB specs quick-reference table and component placement strategy are especially useful.
+\end{protip}
+
+\begin{warnbox}
+\textbf{ESP32 GPIO gotchas that will cost you a day of debugging.} Three critical rules: (1)~\textbf{GPIO 6--11} are off-limits (internal flash), (2)~\textbf{GPIO 34--39} are input-only with no pull-ups, and (3)~\textbf{ADC2 is disabled when Wi-Fi is active} (use ADC1 channels only). Safe GPIOs for general use: 4, 13, 14, 16--19, 21--23, 25--27, 32, 33. \textbf{Print the complete GPIO pin map table from MRD Chapter~19 (Microcontrollers \& the ESP32) and tape it to your workbench.} The MRD chapter also covers boot-sensitive pins, power modes, battery sizing, communication protocols, and firmware best practices.
+\end{warnbox}
+
+\begin{faqbox}[Q: How do I know if my CDR package is ready?]
+Apply the \textbf{CDR Litmus Test}: ``If I handed this CDR package to a competent technician who has never seen this project, could they build the prototype from these documents alone?'' If the BOM is complete, the drawings are dimensioned, the wiring diagram is unambiguous, and the assembly sequence is clear---your CDR is ready. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added. CDR answers ``\textit{Will} this design work?''---it is the point of no return where you commit resources to procurement and fabrication.
+\end{faqbox}
+
+\begin{tipbox}
+\textbf{Save a ``CDR baseline'' snapshot of all your documents.} After CDR, you will compare your as-designed BOM, budget, and drawings against the as-built reality at FDR. Create a frozen copy of your CDR package (BOM, CAD, wiring diagrams, firmware version, budget) before you start building. This makes the as-designed vs.\ as-built comparison in your final report straightforward instead of a painful reconstruction exercise.
+\end{tipbox}
+
+%=============================================================================

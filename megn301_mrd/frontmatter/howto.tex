@@ -1,0 +1,118 @@
+\chapter*{How to Use This Document}
+\addcontentsline{toc}{chapter}{How to Use This Document}
+
+This reference document accompanies the MEGN~301 lecture modules and is organized to follow the complete design-build lifecycle of an engineering project.
+
+\textbf{Part~I: The Design-Build Process} covers systems engineering from start to finish. Nine chapters follow the natural project timeline, from defining the problem through end-of-life retirement. Use these chapters in order as your project progresses through design reviews:
+
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Chapter~1} (Problem Definition), \textbf{Chapter~2} (Value Proposition), and \textbf{Chapter~3} (Requirements) support your work before and at \textbf{PDR}.
+\item \textbf{Chapter~4} (Concept Generation) supports the transition from PDR to \textbf{CDR}.
+\item \textbf{Chapter~5} (V\&V Planning) and \textbf{Chapter~6} (Integration) support your work between CDR and \textbf{FDR}.
+\item \textbf{Chapter~7} (Operations \& Maintenance), \textbf{Chapter~8} (Post-Build Testing), and \textbf{Chapter~9} (End of Life) support system handoff and your FDR deliverables.
+\end{itemize}
+
+\textbf{Part~II: Technical Reference} provides detailed design guidance for common electromechanical subsystems. These chapters are reference material; consult them when your project involves circuit analysis, sensor/actuator selection, connectors, power supplies, motors, pumps, protection circuits, gear trains, injection-molded parts, printed circuit boards, or systematic debugging. Chapter~13 (Electronics Fundamentals) provides the foundational circuit theory and safety practices; Chapter~14 (Sensors \& Actuators) covers transduction principles and selection; Chapter~20 (Debugging) teaches the bottom-up methodology for finding and fixing problems.
+
+Every chapter includes practice questions with worked answers. Use them for self-study and exam preparation.
+
+\textbf{Part~III: Major Project Milestones} provides detailed guidance for the three formal design reviews, PDR, CDR, and FDR, with deliverable checklists, evaluation criteria, and common failure patterns. These chapters explain what each review evaluates, what evidence you must present, and how the three milestones form a coherent narrative arc across the project.
+
+\subsection*{The Running Case Study: GreenShield Frost Protection System}
+Throughout Part~I, teal-bordered \textsf{GS} boxes follow a single design, the GreenShield automated greenhouse frost protection system, from problem definition through operations. Watch for these boxes to see how each artifact builds on the last.
+
+
+\begin{warningbox}[GreenShield is an Example, Not a Template]
+The GreenShield system illustrates \emph{how} to move from problem statement to requirements, how to conduct a trade study, and how to write a test plan. It is \textbf{not} a prescription for your project. Your problem, stakeholders, requirements, and architecture will be different. Use GreenShield to understand the process, not to copy components or design decisions.
+\end{warningbox}
+
+
+\subsection*{The Big Picture: How Sprints Map to the Engineering V-Model}
+
+The diagram below maps the MEGN~301 sprint sequence onto the classic systems engineering V-model. The left side of the V (definition and design) and the right side (verification and validation) are mirror images: every requirement written in Sprint~1 must have a corresponding test executed in Sprints~5--7. Keeping this traceability in mind from the start makes the later sprints dramatically smoother.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    defblock/.style={
+        rectangle, rounded corners=4pt, draw=vdefine, fill=vdefine!6,
+        text width=3.8cm, minimum height=1.15cm, align=center,
+        font=\footnotesize\bfseries, line width=0.9pt
+    },
+    verblock/.style={
+        rectangle, rounded corners=4pt, draw=vverify, fill=vverify!6,
+        text width=3.8cm, minimum height=1.15cm, align=center,
+        font=\footnotesize\bfseries, line width=0.9pt
+    },
+    botblock/.style={
+        rectangle, rounded corners=4pt, draw=vbuild, fill=vbuild!6,
+        text width=3.8cm, minimum height=1.15cm, align=center,
+        font=\footnotesize\bfseries, line width=0.9pt
+    },trace/.style={
+        densely dashed, MinesBlue!40, line width=0.7pt, <->,
+        shorten <=3pt, shorten >=3pt
+    },
+    tracelabel/.style={
+        font=\scriptsize\itshape, text=MinesBlue!55, fill=white,
+        inner sep=2pt, rounded corners=1pt
+    },]
+% --- LEFT ARM (Define & Design) ---
+\node[defblock] (L1) at (0, 0)      {Customer Needs,\\SDRD \& Test Plan};
+\node[defblock] (L2) at (1.5, -3.0) {Reverse Engineering,\\FMEA \& PDR};
+\node[defblock] (L3) at (3.0, -6.0) {CDR \&\\Manufacturing Review};
+% --- BOTTOM VERTEX (Build & Integrate) ---
+\node[botblock] (B)  at (6.75, -8.4)  {Critical Subsystem\\Demonstrations};
+% --- RIGHT ARM (Verify & Validate) ---
+\node[verblock] (R3) at (10.8, -6.0)  {Complete System\\Demonstration};
+\node[verblock] (R2) at (12.0, -3.0)  {External Team\\Testing};
+\node[verblock] (R1) at (13.5, 0)     {Refinement \&\\Final Report};
+% Sprint labels
+\node[slabel=vdefine, left=6pt of L1]  {Sprint 1};
+\node[slabel=vdefine, left=6pt of L2]  {Sprint 2};
+\node[slabel=vdefine, left=6pt of L3]  {Sprint 3};
+\node[slabel=vbuild,  below=5pt of B]  {Sprint 4};
+\node[slabel=vverify, right=6pt of R3] {Sprint 5};
+\node[slabel=vverify, right=6pt of R2] {Sprint 6};
+\node[slabel=vverify, right=6pt of R1] {Sprint 7 + Final};
+% Flow arrows
+\draw[flow=vdefine] (L1.south) -- (L2.north);
+\draw[flow=vdefine] (L2.south) -- (L3.north);
+\draw[flow=vbuild]  (L3.south) -- (B.north west);
+\draw[flow=vbuild]  (B.north east) -- (R3.south);
+\draw[flow=vverify] (R3.north) -- (R2.south);
+\draw[flow=vverify] (R2.north) -- (R1.south);
+% Horizontal traceability arrows
+\draw[trace] (L1.east) -- node[tracelabel, midway]
+    {Reqs \& Test Plan $\longleftrightarrow$ Final Validation} (R1.west);
+\draw[trace] (L2.east) -- node[tracelabel, midway]
+    {Architecture $\longleftrightarrow$ External Testing} (R2.west);
+\draw[trace] (L3.east) -- node[tracelabel, midway]
+    {Design $\longleftrightarrow$ System Demo} (R3.west);
+% Arm labels
+\node[rotate=63, font=\footnotesize\sffamily\bfseries, color=vdefine!50]
+    at (-2.4, -3.0) {DEFINE \& DESIGN};
+\node[rotate=-63, font=\footnotesize\sffamily\bfseries, color=vverify!50]
+    at (15.9, -3.0) {VERIFY \& VALIDATE};
+\node[font=\footnotesize\sffamily\bfseries, color=vbuild!40]
+    at (6.75, -9.8) {BUILD \& INTEGRATE};
+\end{tikzpicture}%
+}% end resizebox
+\caption{The MEGN~301 design project mapped onto the systems engineering V-model. Matched pairs sit at the same level: Sprint~1 requirements define the success criteria verified in the Sprint~7 final report; Sprint~2 architecture decisions are validated through Sprint~6 external testing; Sprint~3 detailed designs are verified by Sprint~5 system demonstrations. Sprint~4 sits at the vertex where design transitions to integration.}\label{fig:vmodel_mrd}
+\end{figure}
+
+
+\begin{checklistbox}[First Week Survival Guide]
+Before your first team meeting, complete the following:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item \textbf{Read Chapters~1--3} of this document (Problem Definition, Value Proposition, Requirements). These three chapters contain everything you need for Sprint~1.
+\item \textbf{Read Chapter~20} (Debugging). You will need this methodology the moment you touch hardware. Do not wait until integration fails.
+\item \textbf{Skim the Student Guide}, Sprint~1 section. It answers the most common first-week questions.
+\item \textbf{Map out the semester calendar.} Identify Career Day, Presidents' Day Break, and Spring Break. Build sprint timelines around these gaps.
+\item \textbf{Do the Chapter~1 practice questions.} They calibrate your understanding of problem definition and stakeholder analysis before your first real deliverable.
+\end{enumerate}
+\end{checklistbox}
+
+
+% ========== WHAT SHOULD I BE READING ==========

@@ -1,0 +1,50 @@
+\chapter*{Why Projects Fail. The Top 20}
+\addcontentsline{toc}{chapter}{Why Projects Fail}
+
+\begin{enumerate}[leftmargin=1.5em]
+\item Problem statement is actually a solution statement.
+\item Missing stakeholders discovered after PDR.
+\item Requirements are vague, untestable, or compound.
+\item Only one concept explored; no design space coverage.
+\item Trade study weights manipulated to get the ``right'' answer.
+\item No competitive analysis; reinventing an existing product.
+\item BOM has no part numbers, no vendors, no prices.
+\item Procurement delayed until after spring break.
+\item Motor sized at stall torque instead of continuous.
+\item Power supply sized for average current, not inrush peak.
+\item I2C pull-up ownership undefined in ICD.
+\item Integration done ``big-bang'' (everything at once).
+\item Testing only at room temperature.
+\item Test procedures that only the author can execute.
+\item VCRM updated only at FDR (should evolve from PDR).
+\item No configuration management; ``which firmware version?''
+\item O\&M manual not written until the night before FDR.
+\item As-built documentation does not match the physical system.
+\item Change log empty despite 8 BOM substitutions.
+\item No lessons learned or honest reflection on what went wrong.
+\end{enumerate}
+
+
+Each of these failures has been observed in actual MEGN~301 projects. They are listed in approximate chronological order; early failures (1--6) cause more damage because they compound through the project lifecycle.
+
+\textbf{The cost of late discovery}: A problem discovered at PDR costs 1 hour to fix (rewrite a requirement). The same problem discovered at CDR costs 1 week (redesign a subsystem). At FDR, it costs the entire grade (the system does not work and there is no time to fix it). This is the ``1-10-100 rule'' of systems engineering: fix problems at the earliest possible stage.
+
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{c X c c}
+\toprule
+\textbf{\#} & \textbf{Failure} & \textbf{Caught At} & \textbf{Fix Cost} \\
+\midrule
+1 & Solution masquerading as problem & PDR & 1 hour \\
+5 & Trade study weights manipulated & PDR & 2 hours \\
+8 & Procurement delayed past spring break & CDR & 2--3 weeks \\
+11 & I2C pull-ups undefined & Integration & 8 hours \\
+12 & Big-bang integration & Integration & 1--2 weeks \\
+17 & O\&M manual not written & FDR & 2 days (rushed) \\
+\bottomrule
+\end{tabularx}
+\caption{Representative fix costs for common project failures.}
+\end{table}
+
+
+
+

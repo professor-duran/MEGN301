@@ -1,0 +1,276 @@
+\chapter{Operations \& Maintenance}\label{ch:oandm}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~3}: Skim the lifecycle cost and serviceability sections; let them influence your CDR design decisions (connectorized modules, access panels, diagnostic LEDs). \textbf{Sprint~7}: Read the full chapter when preparing O\&M deliverables for FDR. Write the quick-start guide, maintenance manual, and spare parts list. \textbf{Related}: FMEA from Chapter~3 (p.\,\pageref{ch:requirements}) feeds directly into maintenance planning. EOL planning continues in Chapter~9 (p.\,\pageref{ch:eol}). FDR deliverables in Chapter~23 (p.\,\pageref{ch:fdr}).
+\end{tipbox}
+
+\vspace{1em}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_system_lifecycle.png}
+\caption{System lifecycle with cost distribution.}\end{figure}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_serviceability.png}
+\caption{Four serviceability principles.}\end{figure}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_maintenance_strategies.png}
+\caption{Maintenance strategies from reactive to RCM.}\end{figure}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_eol_planning.png}
+\caption{End-of-life planning deliverables.}\end{figure}
+
+\section{Lifecycle Thinking}
+Operations and maintenance accounts for 50--70\% of total lifecycle cost — far more than development. 80\% of that cost is locked in by decisions (see Figure~\ref{fig:lifecycle_cost}) made during concept and preliminary design. This means design-for-serviceability, maintainability, and disposability must be considered DURING design.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[>=Stealth]
+% Stacked horizontal bars showing cost committed vs cost incurred
+\def\bw{0.8}
+% Cost Committed bar
+\node[font=\small\sffamily\bfseries,MinesBlue,anchor=east] at (-0.3,1.5) {Cost Committed};
+\fill[MinesBlue!20] (0,1.5-\bw/2) rectangle (1.0,1.5+\bw/2); % concept 10%
+\fill[MinesBlue!35] (1.0,1.5-\bw/2) rectangle (6.5,1.5+\bw/2); % prelim design 65%
+\fill[MinesBlue!50] (6.5,1.5-\bw/2) rectangle (8.5,1.5+\bw/2); % detail design 85%
+\fill[MinesBlue!65] (8.5,1.5-\bw/2) rectangle (9.5,1.5+\bw/2); % build 95%
+\fill[MinesBlue!80] (9.5,1.5-\bw/2) rectangle (10.0,1.5+\bw/2); % operate 100%
+\draw[MinesBlue,line width=0.6pt] (0,1.5-\bw/2) rectangle (10.0,1.5+\bw/2);
+\node[font=\tiny\sffamily,white] at (0.5,1.5) {10\%};
+\node[font=\tiny\sffamily,white] at (3.75,1.5) {65\%};
+\node[font=\tiny\sffamily,white] at (7.5,1.5) {85\%};
+\node[font=\tiny\sffamily,white] at (9.0,1.5) {95\%};
+
+% Cost Incurred bar
+\node[font=\small\sffamily\bfseries,WarnOrange,anchor=east] at (-0.3,0) {Cost Incurred};
+\fill[WarnOrange!15] (0,0-\bw/2) rectangle (0.5,0+\bw/2); % concept 5%
+\fill[WarnOrange!25] (0.5,0-\bw/2) rectangle (1.5,0+\bw/2); % prelim design 15%
+\fill[WarnOrange!40] (1.5,0-\bw/2) rectangle (3.0,0+\bw/2); % detail design 30%
+\fill[WarnOrange!60] (3.0,0-\bw/2) rectangle (5.0,0+\bw/2); % build 50%
+\fill[WarnOrange!80] (5.0,0-\bw/2) rectangle (10.0,0+\bw/2); % operate 100%
+\draw[WarnOrange,line width=0.6pt] (0,0-\bw/2) rectangle (10.0,0+\bw/2);
+\node[font=\tiny\sffamily] at (0.25,0) {5\%};
+\node[font=\tiny\sffamily] at (1.0,0) {15\%};
+\node[font=\tiny\sffamily] at (2.25,0) {30\%};
+\node[font=\tiny\sffamily,white] at (7.5,0) {50--70\%};
+
+% Phase labels
+\node[font=\tiny\sffamily,MinesSilver,below] at (0.5,-0.5) {Concept};
+\node[font=\tiny\sffamily,MinesSilver,below] at (2.5,-0.5) {Prelim Design};
+\node[font=\tiny\sffamily,MinesSilver,below] at (5.0,-0.5) {Detail/Build};
+\node[font=\tiny\sffamily,MinesSilver,below] at (8.0,-0.5) {Operations \& Maintenance};
+
+% Annotation arrow
+\draw[->,line width=0.8pt,diagRed] (3.5,2.3) -- (3.5,1.95);
+\node[font=\tiny\sffamily\bfseries,diagRed,above,text width=3.5cm,align=center] at (3.5,2.3) {65\% of lifecycle cost locked in before detailed design};
+\end{tikzpicture}
+\caption{Lifecycle cost paradox: the majority of cost is \emph{committed} during early design when only a small fraction has been \emph{incurred}. By the time you are building, 85\% of lifecycle cost is already determined by design decisions. This is why O\&M thinking must start at PDR, not at FDR.}\label{fig:lifecycle_cost}
+\end{figure}
+
+\section{Design for Serviceability}
+Four principles: \textbf{Access} (can the technician reach the component? Use access panels, hinged covers, quick-release fasteners), \textbf{Modularity} (can failed modules be swapped? Connectorized, independently testable), \textbf{Diagnostics} (can the fault be identified? Status LEDs, test points, error codes, BIST), \textbf{Standardization} (can common tools and parts be used? Standard fasteners, multi-source components).
+
+\subsection{Reliability Metrics}
+MTBF (Mean Time Between Failures) and MTTR\index{MTTR (Mean Time To Repair)} (Mean Time To Repair) combine to give Availability:
+\[
+A = \frac{\text{MTBF}}{\text{MTBF} + \text{MTTR}}
+\]
+Improving MTTR through better serviceability design is often cheaper than improving MTBF through better components. FMEA identifies failure modes and prioritizes design improvements.
+
+
+\subsection{The Bathtub Curve}
+Component failure rate follows three phases: (1)~\textbf{Infant mortality} (decreasing rate): manufacturing defects fail early. Mitigate with burn-in testing. (2)~\textbf{Useful life} (constant rate): random failures at steady rate; the MTBF region. (3)~\textbf{Wear-out} (increasing rate): fatigue, corrosion, seal degradation. Mitigate with preventive replacement.
+
+For student projects, most failures occur in Phase~1 (build quality). Burn in your system for 48+ hours before final demo.
+
+\subsection{FMECA\index{FMECA}: Failure Modes, Effects, and Criticality Analysis}
+FMECA extends FMEA by adding \textbf{Criticality Analysis}. For MEGN~301, use simplified FMEA with RPN (Risk Priority Number = Severity $\times$ Occurrence $\times$ Detection, each 1--10). Focus design effort on top-5 RPN items.
+
+\subsection{Writing Maintainability Requirements}
+Examples of maintainability requirements:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item ``The system shall allow sensor replacement without disassembling the enclosure.''
+\item ``The system shall provide visual indication (LED) of power, communication, and fault status.''
+\item ``The system shall allow firmware update via USB without opening the enclosure.''
+\item ``All field-replaceable modules shall use tool-free connectors (no soldering).''
+\end{itemize}
+
+\begin{greenshieldbox}[GreenShield: O\&M Requirement Trace]
+\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Req ID} & \textbf{O\&M Requirement} & \textbf{Parent Need} \\
+\midrule
+OM-001 & Sensor replacement w/o enclosure disassembly & Operator cannot solder \\
+OM-002 & Status LEDs for power, comms, fault & Remote monitoring need \\
+OM-003 & Battery replacement $<$5 min & Off-grid solar concept \\
+\bottomrule
+\end{tabularx}
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: \S4.12--4.15 (Transition, Operation, Maintenance, Disposal).
+\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~6.3 Reliability, Maintainability, and Availability.
+\item \textbf{MIL-STD-1629A}: FMECA procedures.
+\end{itemize}
+\end{keyconceptbox}
+
+\section{Artifact Handoff: What Chapter 6 Produces}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Artifact} & \textbf{Description} & \textbf{Used In} \\
+\midrule
+O\&M Manual & Quick-start, operating, maintenance, troubleshooting guides & FDR \\
+FMEA/FMECA & Failure mode analysis with RPN ranking & Design iteration \\
+Spare Parts List & Wear items with vendors and intervals & Handoff package \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Maintenance Planning}
+Four strategies: \textbf{Reactive} (run to failure — cheapest upfront, most expensive long-term), \textbf{Preventive} (scheduled replacement at fixed intervals), \textbf{Predictive} (condition-based monitoring), \textbf{Reliability-Centered} (FMEA-driven strategy per component). For student projects: define a preventive schedule and design for easy field replacement.
+
+Build a maintenance schedule: identify wear items, define replacement intervals, create a spare parts list with vendors and lead times, and establish a calibration schedule.
+
+\section{Documentation, Training, and End-of-Life}
+Four documentation types: Quick-Start Guide (1 page, 10-minute setup), Operating Manual (complete reference by task), Maintenance Manual (step-by-step procedures with photos), Troubleshooting Guide (symptom-based flowcharts).
+
+Training plan: identify audiences (operators, maintainers, trainers), methods (hands-on, written, video), and competency assessment. Knowledge transfer: document design rationale, known limitations, and workarounds.
+
+
+\subsection{Design for Disassembly\index{Design for Disassembly} (DfD)}
+Sustainability begins with designing systems that can be taken apart. Write this as a formal requirement:
+
+\begin{quote}
+\textbf{DfD-REQ-001}: The system shall be fully disassembled into its base material categories (metal, polymer, electronics, hazardous) using only standard hand tools (Phillips screwdriver, hex key set, pliers) in $\leq$5 minutes by a single technician.
+\end{quote}
+
+This is a \textbf{testable requirement}; verify it by demonstration (TAID method ``D'') at FDR. Time the disassembly; if it exceeds 5 minutes, the design fails the requirement. Practical rules: use fasteners instead of adhesives, avoid mixed-material bonding (epoxy on sensors is fast but makes recycling impossible), label material type on each component or enclosure panel, and design snap-fits\index{snap-fit} to be releasable (not permanently locked).
+
+End-of-life: design for disassembly (fasteners not adhesives), single-material design for recyclability, hazardous material handling (batteries, solvents), data sanitization.
+
+
+\section{Operational Concepts}
+Every engineered system has an operational context: who uses it, where, how often, for how long, and under what conditions. The operational concept document (ConOps) describes this context and drives design decisions for reliability, maintainability, and user interface.
+
+\textbf{Duty cycle}: how much of the time is the system operating? A continuously running process monitor (100\% duty cycle) has very different reliability requirements than a laboratory instrument used 2 hours per week (1.2\% duty cycle). High duty cycles demand higher-reliability components and shorter maintenance intervals.
+
+\textbf{Operating environment}: indoor laboratory (controlled temperature, clean, stable power) vs.\ outdoor field installation (temperature extremes, moisture, vibration, unreliable power) vs.\ vehicle-mounted (high vibration, temperature cycling, EMI from engine). The environment determines the required IP rating, vibration qualification, temperature range, and EMC compliance.
+
+\textbf{Operator skill level}: a research instrument operated by a PhD engineer can tolerate a complex interface and manual calibration procedures. A production tool operated by a technician must be intuitive with minimal training. A consumer product must be operable by anyone with no training. Design the interface for the least skilled expected operator.
+
+\section{Reliability Engineering Basics}
+\textbf{Mean Time Between Failures (MTBF)}: the average time a system operates before a failure occurs. For electronic systems, MTBF is predicted from component failure rates using MIL-HDBK-217 or the FIDES methodology. The system MTBF is approximately the reciprocal of the sum of all component failure rates: $\text{MTBF}_{\text{system}} \approx 1/\sum \lambda_i$.
+
+\textbf{Reliability}: the probability that the system operates without failure for a specified time. For exponentially distributed failures: $R(t) = e^{-t/\text{MTBF}}$. For a system with MTBF $= 10{,}000$ hours, the probability of surviving 1000 hours without failure is $R = e^{-1000/10000} = 0.905$ (90.5\%).
+
+\textbf{Availability}: the fraction of time the system is operational: $A = \text{MTBF}/(\text{MTBF} + \text{MTTR})$ where MTTR is the Mean Time To Repair. A system with MTBF $= 10{,}000$ hours and MTTR $= 2$ hours has availability $= 99.98\%$.
+
+\section{Maintainability Design Principles}
+\textbf{Accessibility}: components that require periodic maintenance (filters, batteries, calibration adjustments) must be accessible without disassembling the entire system. Place maintenance items on the exterior or behind easily removed panels.
+
+\textbf{Standardized fasteners}: use the minimum number of fastener types. Ideally, the entire system can be serviced with one screwdriver size. Avoid exotic fastener types (Torx, tri-wing, pentalobe) unless security is a requirement.
+
+\textbf{Modular replacement}: design subsystems as Line Replaceable Units (LRUs) that can be swapped in the field without specialized tools or calibration. A failed sensor module should be replaceable by unplugging a connector, removing two screws, and plugging in a new module. Total repair time target: $< 15$ minutes for any single-point failure.
+
+\textbf{Diagnostic capability}: include built-in self-test (BIST) features that identify the failed subsystem. An LED that blinks a fault code, a serial output that reports sensor status, or a display that shows system health enables rapid diagnosis. Without diagnostics, troubleshooting is trial-and-error, which is slow and risks introducing new problems.
+
+\textbf{Spare parts strategy}: identify the components most likely to fail (wear parts, connectors, fuses) and stock spares. For MEGN~301 projects, include a ``recommended spares'' list in the maintenance manual.
+
+\section{User Documentation}
+A delivered system requires three documents:
+
+\textbf{User manual}: how to operate the system. Step-by-step instructions for startup, normal operation, shutdown, and common adjustments. Written for the end user (non-engineer). Include photographs, not just text.
+
+\textbf{Maintenance manual}: how to maintain and repair the system. Scheduled maintenance procedures (cleaning, calibration, consumable replacement). Troubleshooting guide (symptom $\to$ probable cause $\to$ corrective action). Exploded assembly diagrams showing part numbers and locations.
+
+\textbf{Technical reference}: for the engineer who will eventually modify or upgrade the system. Complete schematics, firmware source code, mechanical drawings, BOM, calibration data, and design rationale. This is essentially the FDR package, archived for future reference.
+
+\section{Preventive Maintenance Scheduling}
+Based on component life data and operating conditions, create a maintenance schedule:
+
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Daily}: visual inspection, check indicator lights, verify normal operation.
+\item \textbf{Weekly}: clean sensors and optical surfaces, check fluid levels, verify calibration against reference.
+\item \textbf{Monthly}: inspect wiring and connectors for damage, exercise manual overrides, backup data and firmware.
+\item \textbf{Annually}: replace batteries, recalibrate all sensors against traceable standards, inspect mechanical wear items (bearings, seals, belts), update firmware to latest version.
+\end{itemize}
+\section{Failure Analysis and Root Cause Investigation}
+When a system fails in operation, a structured failure analysis prevents recurrence:
+
+\textbf{Preserve the evidence}: do not immediately ``fix'' the failure. Photograph the system in its failed state. Record sensor logs, error messages, and environmental conditions at the time of failure. If a component physically failed (burned resistor, cracked solder joint, stripped gear), save the failed part for examination.
+
+\textbf{Fault tree analysis}: work backward from the failure event to identify all possible causes. Draw a tree diagram with the top event (system failure) and branch into causes and sub-causes. For ``motor stopped running'': branches include power supply failure (fuse blown, wire disconnected), motor failure (winding open, bearing seized), driver failure (MOSFET destroyed, control signal absent), and software failure (watchdog reset, state machine stuck).
+
+\textbf{5 Whys}: for each branch of the fault tree, ask ``why?'' repeatedly until the root cause is identified. ``Motor stopped'' $\to$ why? ``Bearing seized'' $\to$ why? ``Lubrication depleted'' $\to$ why? ``No lubrication schedule in maintenance plan'' $\to$ root cause: inadequate maintenance documentation. The corrective action addresses the root cause (add lubrication to the maintenance schedule), not just the symptom (replace the bearing).
+
+\section{Warranty and Service Planning}
+For products intended for deployment beyond the classroom:
+
+\textbf{Warranty period}: how long does the manufacturer (your team) guarantee the product will work? Industry standard for electronic products: 1--3 years. During the warranty period, the manufacturer repairs or replaces the product at no cost.
+
+\textbf{Service model}: who performs maintenance and repair? Three models:
+
+(1) \emph{Return to manufacturer}: the user sends the product back for repair. Longest downtime but ensures repairs are done correctly. Appropriate for complex, high-value products.
+
+(2) \emph{Field service}: a trained technician visits the user's site. Fastest repair but most expensive per incident. Appropriate for critical equipment that cannot be offline.
+
+(3) \emph{User-serviceable}: the user performs routine maintenance and simple repairs using the maintenance manual. Lowest cost but requires adequate documentation and training. The GreenShield model: design for user serviceability with a clear maintenance manual.
+
+\section{Technical Data Package}
+At the end of the project, the team delivers a complete Technical Data Package (TDP) that enables anyone to reproduce, maintain, modify, and eventually retire the system:
+
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item System Design Requirements Document (SDRD), final revision
+\item Mechanical drawings (CAD files, 2D drawings, assembly instructions)
+\item Electrical schematics and PCB layout files
+\item Bill of Materials with supplier links and current pricing
+\item Firmware source code with build instructions and version history
+\item Calibration procedure and data
+\item Test plan, test procedures, and test results (VCRM)
+\item User manual
+\item Maintenance manual with spare parts list
+\item Disassembly and disposal procedure (Chapter~9)
+\item Design rationale document (key decisions with justification)
+\end{itemize}
+
+The TDP is the team's professional legacy. A complete TDP demonstrates engineering maturity; an incomplete one demonstrates technical debt.
+
+\section{Obsolescence Management}
+Electronic components have shorter market lifetimes than the products they go into. An IC available today may be discontinued in 3--5 years. Strategies:
+
+\textbf{Design with widely used, multi-sourced components}: the ESP32 has millions of units in production; it will be available for years. An obscure sensor from a single manufacturer may be discontinued without notice.
+
+\textbf{Document alternatives}: for each critical component, identify at least one alternative that could be substituted with minor redesign. Record these in the BOM notes.
+
+\textbf{Lifetime buy}: if a critical component is announced for end-of-life (EOL), purchase enough stock for the expected remaining production run. This is a common industrial practice but rarely relevant for MEGN~301 projects.
+
+\textbf{Modular design}: isolating the component-specific interface in a replaceable module means that when a component becomes obsolete, only the module needs redesign, not the entire system.
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item A system has MTBF = 2000 hrs and MTTR = 24 hrs. Calculate availability. Propose two design changes to improve availability, one targeting MTBF and one targeting MTTR.
+\item Write a quick-start guide (1 page, numbered steps) for a greenhouse temperature monitoring system.
+\item Your project sponsor asks why you budgeted \$200 for spare parts on a \$2000 project. Justify the expenditure.
+\item Identify all wear items in an electromechanical system with a DC motor, belt drive\index{belt drive}, pressure sensor, and lithium battery. Define replacement intervals for each.
+\item Sketch the bathtub curve\index{bathtub curve} and label all three regions. Your system fails twice in the first week then runs flawlessly for 6 months. What region were the initial failures in, and how should you have prevented them?
+\item Write a simplified FMEA (Severity/Occurrence/Detection, 1--10 each) for a greenhouse frost protection system with at least 5 failure modes. Calculate RPN for each.
+\item Your sponsor asks why you need an O\&M manual for a one-semester student project. Argue why it is still necessary.
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Availability = MTBF/(MTBF+MTTR) = 2000/(2000+24) = 98.8\%. Improving MTBF: use industrial-grade components with higher rated life; add redundancy (dual sensors). Improving MTTR: add diagnostic LEDs and test points for faster fault isolation; use modular, connectorized design so a failed module can be swapped in $<$5 minutes instead of 24 hours.
+\item Quick-start guide: (1) Unbox system. (2) Mount sensor probe inside greenhouse at plant height using provided bracket. (3) Connect sensor cable to controller box (keyed connector). (4) Plug wall adapter into 120\,VAC outlet. (5) Verify green POWER LED is on. (6) Set temperature threshold using the dial on the front panel (default: 3\,\degC{}). (7) Verify amber MONITORING LED blinks once per second. (8) Test: hold ice cube near sensor. Within 30\,s, red HEATER LED should illuminate. Setup complete.
+\item The \$200 spare parts budget is insurance against project failure. Motors wear out, sensors break, PCBs develop faults during testing, and connectors get damaged during repeated assembly/disassembly. Without spares, a single component failure can halt the project for 1--3 weeks (ordering + shipping). At \$200/\$2000 = 10\% of project cost, this is standard engineering practice. Industry typically budgets 5--15\% of project cost for spares and consumables.
+\item Wear items: DC motor brushes (replace at 2000--5000 hrs), belt (inspect at 500 hrs, replace at 1000 hrs or on visible cracking), pressure sensor diaphragm (inspect annually, replace at first sign of drift), lithium battery (capacity degrades; replace when capacity $<$80\% of rated, typically 300--500 charge cycles). Additionally: all O-rings and seals in fluid connections (annual replacement), and any connectors subject to repeated mating cycles.
+\item Bathtub curve: decreasing (infant mortality), constant (useful life), increasing (wear-out). Two failures in week one = infant mortality phase. Prevention: (a) burn-in test for 48+ hours before deployment, (b) inspect all solder joints and connections during assembly, (c) verify all power rails under load before system-level testing. The flawless 6-month period = useful life phase with constant (low) failure rate.
+\item FMEA example (abbreviated): Sensor reads high (S=8, O=3, D=4, RPN=96), Relay stuck closed (S=9, O=2, D=6, RPN=108), MCU brown-out (S=7, O=4, D=5, RPN=140), GSM no signal (S=5, O=3, D=3, RPN=45), Power supply fails open (S=8, O=2, D=7, RPN=112). Action priority: MCU brown-out first (decoupling + supervisor), then power supply (add status LED + fuse), then relay (add thermal fuse), then sensor (add second sensor for comparison).
+\item The O\&M manual is necessary because: (a) it is a primary FDR deliverable, the project is not complete without it; (b) the instructor and future teams need to operate, maintain, and build upon your work; (c) writing the manual forces you to think about failure modes, maintenance procedures, and spare parts, improving the design; (d) in industry, a product without O\&M documentation is undeliverable.
+\end{enumerate}
+
+
+
+% ================================================================

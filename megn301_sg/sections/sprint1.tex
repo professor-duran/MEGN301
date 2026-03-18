@@ -1,0 +1,139 @@
+\begin{center}
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}\\[4pt]
+{\Large\bfseries\sffamily\color{minesblue} Phase 1: ``Should This Design Work?''}\\[2pt]
+{\small\itshape Sprints 1--2 define the problem, write requirements, and select a concept.}\\[4pt]
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}
+\end{center}
+\vspace{0.5em}
+%=============================================================================
+\section{Sprint 1 -- Market Analysis, SDRD, and Test Plan}
+%=============================================================================
+
+\begin{priorities}
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item Write testable, quantified requirements---everything downstream depends on this.
+    \item Draft the test plan \textit{in parallel} with the SDRD, not after.
+    \item Use the market analysis to make at least one concrete design decision.
+\end{enumerate}
+\end{priorities}
+
+\begin{checklistbox}[Before You Start: Sprint 1 Preparation]
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item Read MRD Chapters~1--3 (Problem Definition, Value Proposition, Requirements).
+    \item Read MRD Chapter~20 (Debugging). You will need this methodology before you touch hardware.
+    \item Skim this Student Guide, Sprints~1--3 sections.
+    \item Set up a shared team engineering notebook (Google Docs, Notion, or OneNote).
+    \item Map out the full semester calendar including Career Day, Presidents' Day, and Spring Break.
+    \item Identify the parent commercial product and purchase it (if not already provided).
+    \item Do the MRD Chapter~1 practice questions to calibrate your understanding.
+\end{enumerate}
+\end{checklistbox}
+
+\begin{protip}
+\textbf{Map out the semester calendar now.} Two short weeks hit early: \textbf{Career Day (Feb.~3)} cancels your Tuesday class during Sprint~2, and \textbf{Presidents' Day Break (Feb.~17)} cancels Tuesday during the Sprint~2/3 transition. \textbf{Spring Break (Mar.~24--28)} shuts down campus---including shipping and receiving, the machine shop, and all labs. If a component fails during Sprint~4 demos (Mar.~10--12) and you need a replacement, you must order it \textit{before} break. Build your sprint timelines around these gaps at your very first team meeting. Also note: \textbf{more than 3 unexcused absences results in automatic failure}. Being physically present but not participating (playing games, watching videos, working on other classes) counts as absent.
+\end{protip}
+
+\subsection{Market Analysis}
+
+\begin{faqbox}[Q: Where should I look for competing products?]
+Start with Amazon, specialty retailers, and Kickstarter/Indiegogo for consumer products in your space. Do not limit yourself to exact matches---look for products that solve the same underlying \textit{problem}, even if the form factor is different. For example, if your project is the Smart Canine Nutrition Station, look at automatic pet feeders, smart pet bowls, and pet health monitoring systems.
+\end{faqbox}
+
+\begin{faqbox}[Q: What makes a good pros/cons table?]
+Focus on attributes the \textit{customer} cares about---not just specs. ``Uses a 12-bit ADC'' is an engineering detail; ``accurately portions food within $\pm$5 grams'' is something a pet owner cares about. Good categories include price, ease of setup, reliability (check those 1-star reviews!), power source flexibility, app quality, and compatibility with existing products.
+\end{faqbox}
+
+\begin{warnbox}
+Do not treat the market analysis as a check-the-box exercise. The whole point is to identify a gap or weakness in what is currently available and use that insight to \textit{differentiate} your design. If your market analysis does not change at least one thing about how you think about your project, you probably did not dig deep enough.
+\end{warnbox}
+
+\begin{protip}
+\textbf{Use the Five-Element Problem Statement Framework.} Before you jump to solutions, make sure you can clearly articulate: (1)~\textbf{WHO} experiences the problem, (2)~\textbf{WHAT} is the measurable gap between the current and desired state, (3)~\textbf{WHERE} does the problem occur (physical/operational context), (4)~\textbf{WHY IT MATTERS} (cost, safety, health consequences), and (5)~\textbf{CONSTRAINTS} that limit the solution (budget, schedule, regulations). If your problem statement implies only one possible solution, you have jumped into the solution space too early. A good problem statement lets someone propose a fundamentally different approach. See MRD Chapter~1 (Problem Definition); use the index to find ``five-element framework and ``stakeholder analysis.
+\end{protip}
+
+\subsection{Patent Search}
+
+\begin{faqbox}[Q: I have never read a patent before. What do I actually need to look at?]
+Three things: (1) the \textbf{filing/grant date} (patents expire after 20 years from filing, so anything filed before roughly 2006 is now public domain), (2) the \textbf{abstract} (a quick summary to see if it is relevant), and (3) the \textbf{claims} (usually at the very end---these define exactly what is legally protected). You do \textit{not} need to read the entire patent specification.
+\end{faqbox}
+
+\begin{tipbox}
+Use Google Patents (\url{https://patents.google.com/}) and try multiple search terms. If your first search returns thousands of irrelevant results, narrow it with more specific terminology. Combining a broad term with a functional term often works well, e.g., ``automatic pet feeder dispensing mechanism'' rather than just ``pet feeder.''
+\end{tipbox}
+
+\subsection{Customer Needs (AI Persona Interviews)}
+
+\begin{faqbox}[Q: How do I get useful information out of an AI-generated persona?]
+Treat the AI persona like a real customer interview. Ask open-ended questions first (``Walk me through a typical morning with your dog's feeding routine'') before drilling into specifics. Avoid leading questions like ``Wouldn't it be great if the feeder had an app?'' Instead, ask ``How do you currently keep track of feeding times?'' Let the persona reveal the pain points organically.
+\end{faqbox}
+
+\begin{protip}
+Create three personas that represent \textit{different} user segments, not three variations of the same person. For example, for the Medication Assistant: a caregiver managing multiple patients, an independent elderly person living alone, and a busy parent managing a child's medication. Different personas surface different needs.
+\end{protip}
+
+\begin{warnbox}
+\textbf{GenAI Policy Boundary:} The AI persona interview assignment \textit{requires} you to use Gemini Pro (via your Mines email). However, this is the \textbf{only} approved GenAI use in the course. You may \textit{not} use GenAI to write your SDRD requirements, generate your test plan, compose your FMEA, write your retrospectives, or produce your reports. GenAI is the \textit{subject} of this exercise---it is not your co-author. Any unapproved use of GenAI technologies is an honor code violation.
+\end{warnbox}
+
+\subsection{System Design Requirements Document (SDRD)}
+
+\begin{faqbox}[Q: What is the difference between an objective and a requirement?]
+An \textbf{objective} is qualitative---it describes \textit{what} the system should do or be. A \textbf{requirement} is quantitative---it specifies a measurable threshold that proves the objective is met. For example, Objective: ``The system shall dispense food accurately.'' Requirement: ``The system shall dispense the user-specified amount of food within $\pm$10\% by weight.''
+\end{faqbox}
+
+\begin{faqbox}[Q: How do I know if a requirement is well-written?]
+Apply the ``stranger test'': could someone who has never seen your project read the requirement and know \textit{exactly} what to measure, how to measure it, and what constitutes a pass or fail? If the answer is no, the requirement needs work. Every requirement must be clear, quantifiable, and testable. To illustrate, here is the same requirement at three levels of quality:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.95\textwidth}{>{\bfseries\color{warnred}}c >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Level} & \textbf{Requirement} \\
+\midrule
+\textcolor{warnred}{Bad} & ``The system shall be durable.'' \\
+\textcolor{minesgold!80!black}{Better} & ``The system shall survive a drop.'' \\
+\textcolor{tipgreen}{Best} & ``The system shall maintain full mechanical and electrical functionality after a 1-meter drop onto a concrete surface, verified by executing the full test suite immediately after the drop.'' \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\noindent The ``Bad'' version is untestable. ``Better'' adds a physical event but leaves out the height, surface, and acceptance criteria. ``Best'' specifies everything a tester needs: drop height, surface material, and a concrete pass/fail procedure. Aim for ``Best'' on every requirement.
+\end{faqbox}
+
+\begin{warnbox}
+Vague requirements like ``the system shall be easy to use'' or ``the system shall be reliable'' are the number one source of problems later in the semester. They are impossible to test, which means you cannot demonstrate that your prototype meets them. Rewrite them: ``A first-time user shall be able to complete the setup process in under 5 minutes without external assistance'' is testable.
+\end{warnbox}
+
+\begin{tipbox}
+Write your requirements and your test plan \textit{at the same time}. If you cannot immediately envision how you would test a requirement, it is either too vague or unmeasurable. This back-and-forth process naturally produces better requirements.
+\end{tipbox}
+
+\begin{protip}
+\textbf{Every technical choice must trace to a requirement.} When you select a motor, connector, or PCB trace width in Part~II of the Master Reference Document, look for the Requirements Mapping box at the end of each chapter. It shows exactly how to translate a datasheet parameter into a formal shall-statement. If you cannot write a requirement for a component choice, you have not justified the selection.
+\end{protip}
+
+\begin{protip}
+\textbf{Prioritize requirements using MoSCoW.} Not all requirements are equally critical. Classify each as: \textbf{Must} (system fails without it---becomes a SHALL requirement), \textbf{Should} (important but system works without it---becomes a SHOULD goal), \textbf{Could} (nice-to-have, pursue if budget allows), or \textbf{Won't} (explicitly excluded from this version). This prevents scope creep and helps your team focus on the requirements that matter most when time gets tight. See MRD Chapter~1 (search the index for ``MoSCoW prioritization).
+\end{protip}
+
+\subsection{Test Plan}
+
+\begin{faqbox}[Q: How detailed does the test plan need to be?]
+Detailed enough that a team who has \textit{never seen your project} can execute every test. Remember, in Sprint~6 an external team will be running your test plan. If they have to guess what you meant, you will get ambiguous results. Specify equipment needed, step-by-step procedures, pass/fail criteria, and expected duration for each test.
+\end{faqbox}
+
+\begin{faqbox}[Q: Does every single SDRD requirement need a corresponding test?]
+Yes. If a requirement exists in your SDRD but has no test, then you have no way to verify that requirement is met. Either write a test for it or reconsider whether it should be in the SDRD. There should be a one-to-one (or many-to-one) mapping from tests to requirements.
+\end{faqbox}
+
+\begin{tipbox}
+\textbf{Know the four verification methods (TAID).} Not every requirement is verified by running a physical test. The four methods are: \textbf{Test} (measure performance under controlled conditions), \textbf{Analysis} (verify by calculation, simulation, or modeling), \textbf{Inspection} (verify by visual or dimensional examination), and \textbf{Demonstration} (verify by operating the system through its use cases). Assign a verification method to each requirement when you write it. Most of your requirements will use Test or Demonstration, but some (e.g., material compliance, dimensional tolerances) may be verified by Inspection or Analysis. See MRD Chapter~5 (Verification, Validation \& Test Plans); the TAID methods figure and test procedure template are in the first three pages of that chapter.
+\end{tipbox}
+
+\subsection{Sprint Retrospective}
+
+\begin{faqbox}[Q: What is the point of the retrospective?]
+The retrospective is not busywork---it is a structured opportunity to improve your team's process. Be honest about what went well, what did not, and what you will change. The best teams use retrospectives to catch problems early (e.g., unbalanced workloads, communication gaps, unclear task ownership) before they become crises.
+\end{faqbox}
+
+%=============================================================================

@@ -1,0 +1,59 @@
+\chapter*{The 15 Most Expensive Mistakes in Student Projects}
+\addcontentsline{toc}{chapter}{The 15 Most Expensive Mistakes}
+
+This appendix consolidates the warning boxes scattered throughout the document into a single quick-reference, organized by the project phase where each mistake typically strikes. Use it as a self-assessment checklist at each sprint boundary.
+
+\subsection*{Sprints 1--2: Problem Definition and Requirements}
+
+\begin{enumerate}[leftmargin=1.5em]
+
+\item \textbf{Solution-as-problem statement.} ``We need to build an Arduino-based system'' specifies technology before the problem is understood. Problem statements must be solution-agnostic. (Ch.~1, p.\,\pageref{ch:problem})
+
+\item \textbf{Vague requirements.} ``Shall be fast,'' ``shall be user-friendly,'' ``shall work well.'' Every requirement needs a number, a unit, and a tolerance. (Ch.~3, p.\,\pageref{ch:requirements})
+
+\end{enumerate}
+
+\subsection*{Sprint 3: Detailed Design and CDR}
+
+\begin{enumerate}[leftmargin=1.5em,resume]
+
+\item \textbf{Undersized power supply.} Sizing the supply for steady-state current, not motor inrush (which can be 5--10$\times$ running current). Size for inrush with bulk capacitors and staggered startup. (Ch.~11, p.\,\pageref{ch:motors}; Ch.~12, p.\,\pageref{ch:power})
+
+\item \textbf{Shared ground paths.} Motor return current flows through the sensor ground trace, corrupting ADC readings. Use star-point grounding with separate conductors for signal, power, and safety domains. (Ch.~12, p.\,\pageref{ch:power})
+
+\item \textbf{No flyback diodes on inductive loads.} Switching off a motor, relay, or solenoid without a flyback diode produces voltage spikes that destroy the driver. Every inductive load needs one. (Ch.~12, p.\,\pageref{ch:power})
+
+\item \textbf{Using ESP32 GPIO 6--11.} These are connected to internal flash. Using them crashes the board. Also: GPIO 34--39 are input-only; ADC2 is disabled when Wi-Fi is active. (Ch.~19, p.\,\pageref{ch:mcu})
+
+\item \textbf{Decoupling capacitors 25\,mm from the IC.} They must be within 5\,mm of the power pin. Trace inductance at 25\,mm negates the capacitor's benefit. (Ch.~18, p.\,\pageref{ch:pcb})
+
+\item \textbf{Loading a voltage divider.} The divider output voltage drops when the load resistance is comparable to the divider resistance. Rule: $R_L \geq 10 \times (R_1 \| R_2)$, or use a buffer. (Ch.~13, p.\,\pageref{ch:electronics})
+
+\item \textbf{Ordering parts the week before spring break.} Parts arrive during break with no one to receive them. International orders need 3--4 weeks. Place orders at CDR, not after. (Ch.~22, p.\,\pageref{ch:cdr})
+
+\item \textbf{Split lock washers for vibration resistance.} NASA testing shows they provide no meaningful locking. Use nyloc nuts, Loctite 242, or Nordlock wedge-lock washers. (Ch.~15, p.\,\pageref{ch:fasteners})
+
+\end{enumerate}
+
+\subsection*{Sprints 4--5: Build, Integration, and Debugging}
+
+\begin{enumerate}[leftmargin=1.5em,resume]
+
+\item \textbf{Big-bang integration.} Assembling everything at once and powering on. Use bottom-up: one component at a time, test after each addition. (Ch.~6, p.\,\pageref{ch:integration}; Ch.~20, p.\,\pageref{ch:debug})
+
+\item \textbf{Skipping visual inspection before power-on.} A solder bridge between VCC and an I/O pin destroys the IC at power-on. Five minutes under 10$\times$ magnification prevents hours of replacement. (Ch.~18, p.\,\pageref{ch:pcb})
+
+\item \textbf{No pull-up resistor ownership in the ICD.} Both teams assume the other provides the I2C pull-ups. Neither does. Define pull-up ownership explicitly in every Interface Control Document. (Ch.~6, p.\,\pageref{ch:integration})
+
+\item \textbf{Changing multiple variables while debugging.} Swapping a component AND changing firmware AND rewiring simultaneously. If it starts working, you do not know which change fixed it. Change one thing, test, record. (Ch.~20, p.\,\pageref{ch:debug})
+
+\end{enumerate}
+
+\subsection*{Sprints 5--7: Testing and Verification}
+
+\begin{enumerate}[leftmargin=1.5em,resume]
+
+\item \textbf{Testing only at room temperature.} A requirement of 0--50\,\degC{} demands testing at 0\,\degC{} and 50\,\degC{}, not just 22\,\degC{} on a benchtop. (Ch.~5, p.\,\pageref{ch:vv})
+
+\end{enumerate}
+

@@ -1,0 +1,200 @@
+\chapter{Systematic Debugging and Troubleshooting}\label{ch:debug}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Week~1}: Read the debugging pyramid and five-step protocol now, before you touch hardware. \textbf{Sprint~4}: Reread before subsystem demonstrations. \textbf{Sprint~5--6}: Keep the five-step flowchart (Figure~\ref{fig:debug_flow}) printed at your workbench during integration.
+\end{tipbox}
+
+A working system is never assembled all at once. It is built in layers, verified at each layer, and only combined into the full system after each layer passes. Debugging is not what you do when something goes wrong; it is the disciplined verification process you follow at every stage. Students who skip this process and assemble everything at once (see Figure~\ref{fig:integration_seq} in Chapter~6) (``big-bang integration,'' which Chapter~6 warns against) consistently spend 5--10$\times$ more time debugging than students who follow the bottom-up approach.
+
+\section{Why Bottom-Up Debugging Matters}
+Consider a GreenShield system with five components: temperature sensor, signal conditioning amplifier, ESP32 MCU, SSR heater driver, and a 500\,W cartridge heater. If you wire everything and power on, the fault could be in any of the five components, any of the four interfaces, the power supply, the wiring, or the firmware. That is at least 15 possible failure locations.
+
+Bottom-up debugging reduces the search space at every step. Verify the sensor alone: eliminated. Verify the amplifier with a known input: eliminated. By the time you connect the full chain, the fault is almost certainly at the most recently added interface, not buried inside a previously verified component.
+
+\begin{keyconceptbox}[The Debugging Pyramid]
+\textbf{Level 1: Component.} Test each part in isolation. Does the sensor produce the right voltage? Does the MOSFET switch? Does the firmware blink an LED?
+
+\textbf{Level 2: Interface.} Connect two adjacent components. Does the amplifier correctly amplify the sensor? Does the ADC read the correct voltage?
+
+\textbf{Level 3: Subsystem.} Connect a functional chain (sensor $\to$ amp $\to$ ADC $\to$ MCU display). Does the displayed value match the physical input?
+
+\textbf{Level 4: System.} Connect all subsystems. Does the PID controller read the sensor, compute correctly, and drive the heater to setpoint?
+
+Never advance with failures at the current level. Failures compound exponentially.
+\end{keyconceptbox}
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[>=Stealth]
+% Pyramid layers (bottom = widest = Level 1)
+\fill[MinesBlue!15] (-5.0,0) -- (-3.5,1.5) -- (3.5,1.5) -- (5.0,0) -- cycle;
+\fill[AccentTeal!15] (-3.5,1.5) -- (-2.3,3.0) -- (2.3,3.0) -- (3.5,1.5) -- cycle;
+\fill[WarnOrange!15] (-2.3,3.0) -- (-1.2,4.5) -- (1.2,4.5) -- (2.3,3.0) -- cycle;
+\fill[diagGreen!15] (-1.2,4.5) -- (0,5.7) -- (1.2,4.5) -- cycle;
+
+% Outlines
+\draw[MinesBlue,line width=0.8pt] (-5.0,0) -- (-3.5,1.5) -- (3.5,1.5) -- (5.0,0) -- cycle;
+\draw[AccentTeal,line width=0.8pt] (-3.5,1.5) -- (-2.3,3.0) -- (2.3,3.0) -- (3.5,1.5) -- cycle;
+\draw[WarnOrange,line width=0.8pt] (-2.3,3.0) -- (-1.2,4.5) -- (1.2,4.5) -- (2.3,3.0) -- cycle;
+\draw[diagGreen,line width=0.8pt] (-1.2,4.5) -- (0,5.7) -- (1.2,4.5) -- cycle;
+
+% Level labels inside
+\node[font=\small\sffamily\bfseries,MinesBlue] at (0,0.75) {Level 1: Component Verification};
+\node[font=\small\sffamily\bfseries,AccentTeal] at (0,2.25) {Level 2: Interface Test};
+\node[font=\small\sffamily\bfseries,WarnOrange] at (0,3.75) {Level 3: Subsystem};
+\node[font=\small\sffamily\bfseries,diagGreen] at (0,5.0) {L4: System};
+
+% Right-side annotations
+\node[font=\tiny\sffamily,MinesBlue,text width=3.5cm,align=left,anchor=west] at (5.3,0.75) {Each part alone:\\sensor, MOSFET, LED blink};
+\node[font=\tiny\sffamily,AccentTeal,text width=3.5cm,align=left,anchor=west] at (3.8,2.25) {Two adjacent parts:\\amp + sensor, ADC + MCU};
+\node[font=\tiny\sffamily,WarnOrange,text width=3.2cm,align=left,anchor=west] at (2.6,3.75) {Functional chain:\\sensor $\to$ amp $\to$ display};
+\node[font=\tiny\sffamily,diagGreen,text width=2.5cm,align=left,anchor=west] at (1.5,5.0) {Full system};
+
+% Left-side search space annotation
+\draw[<->,line width=0.7pt,diagRed] (-5.5,0) -- (-5.5,5.7);
+\node[font=\tiny\sffamily\bfseries,diagRed,rotate=90] at (-6.0,2.85) {Increasing fault search space};
+
+% Bottom annotation
+\node[font=\tiny\sffamily\itshape,MinesSilver,text width=8cm,align=center] at (0,-0.5) {Start here. Never skip levels. Fix every failure before moving up.};
+\end{tikzpicture}
+\caption{The debugging pyramid. Start at the base: verify each component in isolation. Only after all components pass, test interfaces between pairs. Then subsystem chains, then the full system. Skipping levels means the fault could be anywhere in the pyramid below, exponentially increasing the search space.}\label{fig:debug_pyramid}
+\end{figure}
+
+\section{Debugging Hardware}
+
+\subsection{Visual Inspection}
+Before applying power, inspect: solder bridges (especially fine-pitch ICs), cold joints (dull, grainy), missing components, wrong orientation (electrolytic caps, diodes, ICs), loose wires, pinched insulation. A 10$\times$ magnifier is essential. The PCB chapter's mandatory inspection applies here for all hardware, not just PCBs.
+
+\subsection{Continuity and Short-Circuit Check}
+Power off. Multimeter continuity mode: verify VCC and GND are not shorted, all ground connections are continuous, and signal connections reach their destinations at both ends.
+
+\subsection{Power-Up Sequence}
+Current-limited bench supply at 50\,mA initially. A healthy circuit draws predictable current; a fault draws zero (open) or excessive (short). Measure every power rail before connecting ICs or modules.
+
+\subsection{Signal Tracing: The Signal Walk}
+Inject a known signal at the input and trace it stage by stage with an oscilloscope. At each node, compare measured vs. expected (from your circuit calculations). The first deviation localizes the fault.
+
+\begin{tipbox}[The Signal Walk Protocol]
+Start at the sensor output. Measure. Move one stage downstream: after the divider, after the amplifier, at the ADC input pin. At each point ask: is the amplitude correct? Is the offset correct? Is the frequency content correct? The first point where measured $\neq$ expected narrows the fault to that stage. Five minutes of walking saves hours of guessing.
+\end{tipbox}
+
+\subsection{Common Hardware Faults}
+\textbf{Open connection}: signal present upstream, absent or floating downstream. Oscilloscope shows 60\,Hz pickup on the floating node. \textbf{Short circuit}: two nodes at the same voltage that should differ; supply current higher than expected. \textbf{Wrong value}: circuit functions but with incorrect gain, cutoff, or bias; compare measured node voltages to calculated values. \textbf{Reversed component}: electrolytic may swell; reversed diode conducts wrong direction; reversed IC draws excessive current. \textbf{Dead IC}: outputs unresponsive; replace with known-good to confirm.
+
+\begin{warningbox}[Change One Thing at a Time]
+If you swap a component AND change a wire AND edit firmware simultaneously, and it starts working, you do not know which change fixed it. One of the others may have introduced a latent fault. Make one change, test, record, then decide the next change.
+\end{warningbox}
+
+\section{Debugging Firmware}
+
+\subsection{Incremental Development}
+Mirror the hardware pyramid: (1) Blink (verify toolchain and MCU function), (2) Serial output (print variables to confirm code execution), (3) Single peripheral (one ADC channel, one GPIO, one I2C device), (4) Peripheral combinations (add one at a time, regression test), (5) Control logic (add PID only after all I/O works).
+
+\subsection{Common Firmware Bugs}
+\textbf{Wrong pin assignment}: GPIO in code $\neq$ physical wiring. Print the pin number; verify against wiring diagram. \textbf{Missing initialization}: ADC reads zero or random values. Verify every peripheral init call. \textbf{Blocking calls}: \texttt{delay()} stops all processing. Use \texttt{millis()}-based timing. \textbf{Integer overflow}: 16-bit counter wraps at 65,535. Use \texttt{uint32\_t} for timestamps. \textbf{I2C bus hang}: failed device holds SDA low. Implement bus recovery (toggle SCL 9$\times$) and timeouts.
+
+\begin{tipbox}[Serial Monitor = Oscilloscope for Code]
+Print everything during development: ADC raw values, engineering units, PID error and output, state transitions, loop execution time. When behavior is unexpected, the serial log tells you exactly which variable went wrong and when. Remove verbose printing only after the system is verified.
+\end{tipbox}
+
+\section{Debugging Integrated Systems}
+
+\subsection{The Integration Test Sequence}
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Power rail verification}: all supply voltages correct under load before connecting active components.
+\item \textbf{Sensor-to-display path}: sensor + conditioning + ADC + MCU only. Known physical input $\to$ correct displayed value.
+\item \textbf{Command-to-actuator path}: disconnect sensor feedback. Fixed command $\to$ correct actuator response.
+\item \textbf{Open-loop dry run}: both paths connected, manual setpoints. Verify sensor reflects actuator effect.
+\item \textbf{Closed-loop commissioning}: enable PID with conservative gains ($K_p$ at 25\% of expected, $K_i = K_d = 0$). Increase gradually.
+\end{enumerate}
+
+\subsection{Common Integration Failures}
+\textbf{Ground loops}: motor return current flows through sensor ground, injecting noise. Fix: star grounding (Chapter~12). \textbf{Brown-out}: actuator inrush current sags the supply, resetting the MCU. Fix: separate rails, bulk capacitors ($>$470\,$\mu$F). \textbf{EMI}: PWM switching noise couples into sensor signals. Fix: snubbers, decoupling, physical separation. \textbf{Timing conflicts}: loop takes longer than control period. Fix: measure loop time; prioritize time-critical tasks. \textbf{Feedback polarity error}: positive feedback instead of negative; system immediately saturates. Fix: verify increasing output drives process variable toward setpoint.
+
+\subsection{The Five-Step Debugging Protocol}
+\textbf{Step 1: Reproduce.} Make the failure happen reliably. A failure you cannot reproduce cannot be systematically fixed.
+
+\textbf{Step 2: Isolate.} Disconnect subsystems one at a time. The last one disconnected is the suspect. Or substitute a known-good signal to bypass suspect components.
+
+\textbf{Step 3: Measure.} Oscilloscope, multimeter, serial monitor at the suspected location. Compare measured vs. expected.
+
+\textbf{Step 4: Hypothesize and test.} Form a specific, testable hypothesis. Design one measurement that confirms or refutes it.
+
+\textbf{Step 5: Fix and regression test.} Fix it. Verify the original failure is resolved. Re-run all previously passing tests to confirm nothing else broke.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    stepbox/.style={rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!8,
+        text width=3.2cm, minimum height=1.1cm, align=center,
+        font=\small\sffamily\bfseries, line width=0.8pt},
+    decision/.style={diamond, draw=WarnOrange, fill=WarnOrange!8, aspect=2.2,
+        text width=2.2cm, align=center, font=\scriptsize\sffamily\bfseries,
+        inner sep=1pt, line width=0.8pt},
+    arr/.style={->, line width=1pt, color=MinesBlue},
+    yeslbl/.style={font=\scriptsize\sffamily, color=AccentTeal},
+    nolbl/.style={font=\scriptsize\sffamily, color=WarnOrange}
+]
+\node[stepbox] (s1) at (0,0) {1. Reproduce\\{\scriptsize Make failure reliable}};
+\node[stepbox] (s2) at (4.2,0) {2. Isolate\\{\scriptsize Disconnect subsystems}};
+\node[stepbox] (s3) at (8.4,0) {3. Measure\\{\scriptsize Scope/DMM at suspect}};
+\node[stepbox] (s4) at (4.2,-2.5) {4. Hypothesize\\{\scriptsize One testable prediction}};
+\node[decision] (d1) at (8.4,-2.5) {Confirmed?};
+\node[stepbox] (s5) at (8.4,-5.0) {5. Fix \& Regress\\{\scriptsize Rerun all passing tests}};
+\node[decision] (d2) at (4.2,-5.0) {Regression\\pass?};
+\node[rectangle, rounded corners=3pt, draw=AccentTeal, fill=AccentTeal!10,
+    text width=2.8cm, minimum height=0.9cm, align=center,
+    font=\small\sffamily\bfseries, line width=0.8pt] (done) at (0,-5.0) {Done\\{\scriptsize Log in debug journal}};
+
+\draw[arr] (s1) -- (s2);
+\draw[arr] (s2) -- (s3);
+\draw[arr] (s3) -- (s4);
+\draw[arr] (s4) -- (d1);
+\draw[arr] (d1) -- node[right,yeslbl]{Yes} (s5);
+\draw[arr] (d1.east) -- ++(1.2,0) node[above,nolbl]{No} |- (s4.east);
+\draw[arr] (s5) -- (d2);
+\draw[arr] (d2) -- node[above,yeslbl]{Yes} (done);
+\draw[arr] (d2.south) -- ++(0,-0.7) -| node[below left,nolbl,pos=0.25]{No} (s3.south);
+\end{tikzpicture}
+\caption{Five-step debugging protocol flowchart. Failed hypothesis returns to step~4; failed regression returns to step~3 because the fix introduced a new fault.}\label{fig:debug_flow}
+\end{figure}
+
+\subsection{Debugging Tools}
+\textbf{Multimeter}: first reach; DC/AC voltage, current, resistance, continuity. Cannot capture transients. \textbf{Oscilloscope}: waveforms, timing, transient events, PWM verification, protocol debugging. Learn triggering. \textbf{Logic analyzer\index{logic analyzer}}: multi-channel digital capture with protocol decode (SPI, I2C, UART). \textbf{Bench supply current limit}: diagnostic tool, not just safety; anomalous current draw reveals faults. \textbf{Serial terminal/logger}: timestamped firmware variable capture for intermittent fault analysis.
+
+\section{Building a Debugging Mindset}
+
+Five principles that distinguish expert debuggers (see also the debugging pyramid in Figure~\ref{fig:debug_pyramid}):
+
+\textbf{1. Expect problems.} No circuit works on the first try. No firmware is bug-free. Plan debugging time in your schedule.
+
+\textbf{2. Trust measurements, not assumptions.} ``It should be 2.5\,V'' is an assumption. ``The multimeter reads 0.3\,V'' is a measurement. When they disagree, the measurement wins.
+
+\textbf{3. Binary search\index{binary search (debugging)}.} Measure at the midpoint of the signal chain. If correct, fault is downstream; if not, upstream. Halves the search with each measurement.
+
+\textbf{4. Rubber duck debugging\index{rubber duck debugging}.} Explain the problem aloud. Articulating forces you to organize your understanding and often reveals the wrong assumption.
+
+\textbf{5. Walk away after 30 minutes.} Fatigue causes fixation. A fresh perspective spots the obvious error that tunnel vision concealed.
+
+\begin{warningbox}[Document Every Debug Session]
+Keep a debug log: date, symptom, tests performed, measurements, hypothesis, fix, result. When the same failure reappears (it will), you have the answer in 30 seconds. The debug log also demonstrates professional practice for your FDR documentation.
+\end{warningbox}
+
+\begin{keyconceptbox}[Requirements Mapping: Debugging and Verification]
+``Each subsystem shall be individually verified with documented test results before integration.'' ``The integration sequence shall follow a bottom-up protocol with entry/exit criteria at each level.'' ``All power rails shall be verified under load before active components are connected.'' ``The debug log shall record all faults, diagnostics, root causes, and corrective actions.''
+\end{keyconceptbox}
+
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item You connect your complete GreenShield system and the heater runs at full power regardless of temperature. Describe your debugging steps starting from the pyramid.
+\item Thermocouple readings are accurate with the motor off but show $\pm$5\,\degC{} noise (25\,kHz spikes) when the motor runs. Root cause and three mitigations?
+\item A teammate says ``I changed the wiring, the firmware, and the op-amp, and now it works.'' Why is this a problem?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Disconnect heater driver from MCU. Check MCU PWM output on oscilloscope: is duty cycle varying? If stuck at 100\%, fault is upstream (firmware or sensor path). Disconnect sensor; substitute known voltage from bench supply: does PWM change? If not, firmware fault (PID saturated, wrong pin, positive feedback). If PWM does vary with bench supply but not with sensor, fault is in the sensor or its conditioning. Isolate one interface at a time.
+\item 25\,kHz matches PWM switching frequency. Motor switching current couples into thermocouple path via ground loop or shared conductor. (1) Star grounding: separate ground wires for TC amplifier and motor driver. (2) Low-pass filter ($f_c \approx 100$\,Hz) at amplifier input. (3) Twisted-pair TC leads routed away from motor wiring.
+\item Three simultaneous changes: cannot identify which one fixed the problem. One of the other changes may have introduced a latent fault. Correct approach: revert all three, apply one at a time, test after each.
+\end{enumerate}
+
+

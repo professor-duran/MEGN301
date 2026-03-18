@@ -1,0 +1,270 @@
+\chapter{Problem Definition \& Stakeholder Engagement}\label{ch:problem}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~1}: Read the full chapter. Sections~1.1--1.3 (problem definition, stakeholder analysis, ConOps) are your primary deliverables. \textbf{Sprint~2}: Return to Section~1.6 (competitive benchmarking) to refine your market analysis for PDR. \textbf{Later sprints}: Reference the stakeholder map when making design trade-offs.
+\end{tipbox}
+
+\vspace{1em}
+
+
+\vspace{1em}
+
+\section{Defining the Problem}
+\subsection{Market Analysis and Competitive Positioning}
+Before defining your problem, understand what already exists. Conduct a \textbf{competitive search} appropriate to your project type:
+
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Commercial product}: Search Amazon, patent databases (Google Patents), and review sites. Document 3--5 competing products with price, features, and limitations. Your problem statement must articulate what gap remains.
+\item \textbf{Research/instrumentation}: Search Google Scholar and IEEE Xplore for prior solutions. Document the state of the art and identify the specific capability gap.
+\item \textbf{Process improvement}: Benchmark current performance metrics against industry standards or competitor processes.
+\end{itemize}
+
+The competitive analysis feeds directly into your problem statement's ``WHY IT MATTERS'' element; you cannot justify a project without knowing what already exists.
+
+\subsection{Customer Discovery and the Entrepreneurial Mindset}
+Engineering value creation begins with deep customer understanding. The KEEN framework emphasizes three C's: \textbf{Curiosity} (investigate the problem space broadly), \textbf{Connections} (link technical knowledge to stakeholder\index{stakeholder analysis} needs and market realities), and \textbf{Creating Value} (design solutions that deliver measurable benefit).
+
+Customer discovery is the practice of testing assumptions about the problem \emph{before} committing to a solution. Talk to at least 5 potential users. Ask open-ended questions: ``Walk me through the last time this problem occurred.'' ``What did you try? Why didn't it work?'' Document answers; they become the foundation of your ConOps\index{Concept of Operations (ConOps)}.
+
+\textbf{Synthesis}: After interviews, group raw needs into clusters: (1) critical needs (mentioned by most personas, high impact) become SHALL requirements; (2) important needs (mentioned by some, moderate impact) become SHOULD goals; (3) nice-to-have needs (mentioned rarely) become COULD features. This maps directly to MoSCoW\index{MoSCoW prioritization} prioritization.
+
+
+\subsubsection{Patent Landscape Search}
+Search Google Patents and USPTO for 2--3 relevant utility patents. Document: patent number, title, assignee, key claims, and a freedom-to-operate assessment (does your concept infringe any active claims?). This is not a legal opinion; it is an engineering awareness exercise that reveals prior art and protected design approaches.
+
+\subsubsection{Standards and Regulatory Landscape}
+Identify applicable standards early: UL\index{UL (Underwriters Laboratories)}/CSA for electrical safety, FCC\index{FCC Part 15} Part 15 for radiated emissions, IP ratings\index{IP rating} for environmental protection, food-contact regulations if applicable. Standards become non-functional requirements. Discovering a regulatory requirement at CDR (instead of PDR\index{PDR (Preliminary Design Review)}) causes expensive redesign.
+
+\subsubsection{AI-Assisted Customer Persona Development}
+AI tools can help you \emph{prepare for} real stakeholder interviews, not replace them. Before meeting real users, describe the problem domain and ask the AI to role-play as different stakeholder types: the primary user, the maintainer, the regulator, the adjacent-system owner. Conduct the same interview questions you would use with real stakeholders. The purpose is to \textbf{sharpen your questions and expose blind spots}, so that your limited time with real people is more productive.
+
+\begin{warningbox}[AI Personas Are Practice, Not Data]
+AI-generated personas are hypothesis generators, not validated needs. An AI ``greenhouse operator'' has never actually lost a crop to frost. Treat AI responses as plausible questions to ask, not as answers to rely on. Your SDRD requirements must trace to real stakeholder input (interviews, observation, published user studies), not to AI conversations. Reviewers will ask where your needs came from; ``I asked ChatGPT'' is not a defensible answer.
+\end{warningbox}
+
+Document each persona interview with: persona description, key quotes, identified needs (stated and unstated), and implications for requirements. Label AI-generated content explicitly in your engineering notebook so you can distinguish it from validated data.
+
+\begin{tipbox}[The Mom Test]
+Never ask ``Would you use this?''; people say yes to be polite. Instead ask about \emph{past behavior}: ``When did you last face this problem? What did you do?'' Past actions predict future behavior far better than hypothetical opinions.
+\end{tipbox}
+
+
+\subsection{Problem vs.\ Solution Thinking}
+Engineers instinctively jump to solutions. The discipline of problem definition requires staying in the \textbf{problem space} (what is wrong, who is affected, what the consequences are) before entering the \textbf{solution space} (technologies, components, architectures).
+
+\textbf{Critical test}: Can someone read your statement and propose a fundamentally different solution? If yes, you are in the problem space. If the statement implies only one approach, you have prematurely entered the solution space.
+
+\begin{warningbox}[Solution Masquerading as a Problem]
+\textbf{Bad}: ``We need to build an Arduino-based temperature monitoring system with a solar panel.'' This specifies technology before the problem is understood. \textbf{Good}: ``Greenhouse operators cannot maintain optimal growing temperatures in unheated hoop houses during Colorado Front Range winters, resulting in \$12,000/season crop losses.'' This is solution-agnostic.
+\end{warningbox}
+
+\subsection{The Five-Element Framework}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_problem_anatomy.png}
+\caption{Five-element problem statement framework with good and bad examples.}\label{fig:prob}
+\end{figure}
+
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{WHO}: Who experiences the problem? Be specific about roles and context.
+\item \textbf{WHAT}: What is the measurable gap between current and desired states?
+\item \textbf{WHERE}: In what physical, operational, or environmental context?
+\item \textbf{WHY IT MATTERS}: What are the consequences of not solving it? (Cost, safety, health.)
+\item \textbf{CONSTRAINTS}: What boundaries limit the solution? (Budget, schedule, technology, regulations.)
+\end{enumerate}
+
+Constraints directly become non-functional requirements. The ``why it matters'' element justifies the project's existence.
+
+\subsection{Scope and Boundaries}
+\textbf{Scope} defines what is inside and outside the project. Without it, scope creep\index{scope creep} expands the project indefinitely. The \textbf{system boundary} distinguishes what you build from what the environment provides. Capture this in a \textbf{context diagram\index{context diagram}}: your system as a single block with all external interfaces (power, data, user, mechanical, environmental) labeled.
+
+\section{Stakeholder Engagement}
+\subsection{Identifying Stakeholders}
+A stakeholder is anyone who affects, is affected by, or has an interest in the project. \textbf{Missing a stakeholder = missing requirements = integration surprises.}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_stakeholder_grid.png}
+\caption{Power/interest grid with engagement strategies and nine-category identification checklist.}\label{fig:stake}
+\end{figure}
+
+\textbf{Nine categories to check}: primary users, beneficiaries, sponsor/funder, maintainers, regulators, integrators (adjacent systems), adversaries, trainers, and disposal handlers. Students consistently miss maintainers, regulators, and adjacent-system owners.
+
+\subsection{The Power/Interest Grid}
+Classify each stakeholder by their power (ability to influence the project) and interest (how much they care). Four quadrants with distinct strategies: \textbf{Manage closely} (high power, high interest, key decision makers), \textbf{Keep satisfied} (high power, low interest), \textbf{Keep informed} (low power, high interest, valuable input), \textbf{Monitor} (low power, low interest).
+
+\subsection{Needs Elicitation Techniques}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_elicitation_methods.png}
+\caption{Six elicitation methods with best-use cases\index{use case}, strengths, and watch-outs.}\label{fig:elic}
+\end{figure}
+
+Use \textbf{2--3 methods}; single-method elicitation misses needs. Strongest combination for engineering projects: \textbf{interviews} (capture stated needs) + \textbf{observation} (capture unstated needs) + \textbf{prototyping} (validate assumptions).
+
+\begin{tipbox}[The Best Question in Engineering]
+End every stakeholder interview with: ``What should I have asked that I didn't?'' This single question catches more missing requirements than any structured technique.
+\end{tipbox}
+
+\subsection{Managing Conflicting Needs}
+Conflicts are normal. Prioritize using \textbf{MoSCoW}: Must (becomes SHALL), Should (becomes SHOULD), Could (if budget allows), Won't (explicitly excluded). When conflicts are irreconcilable, the sponsor or primary user has final authority, but the decision must be documented.
+
+\subsection{Needs vs.\ Wants}
+A \textbf{need} is something without which the system fails its mission, it becomes a SHALL requirement. A \textbf{want} enhances value but the system works without it, it becomes a SHOULD goal pursued only if resources allow. Separate them early.
+
+\section{From Problem to ConOps}
+\subsection{Concept of Operations}
+The ConOps describes how the system will be used from the stakeholder's perspective, written in \textbf{plain language} (no engineering jargon). Contents: system mission, current situation, operational scenarios\index{operational scenario} (normal, degraded, emergency, maintenance), user roles, environmental conditions, external interfaces, and performance expectations.
+
+The ConOps is the document the stakeholder reviews and approves \textbf{before requirements are written}. Misunderstandings caught here cost minutes; caught in requirements, they cost weeks.
+
+\subsection{Use Cases and Operational Scenarios}
+A \textbf{use case} describes a specific user-system interaction to achieve a goal. An \textbf{operational scenario} extends the use case into a realistic narrative with timing, weather, user state, and system state. Scenarios reveal requirements that abstract analysis misses.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_needs_pipeline.png}
+\caption{Five-stage needs-capture pipeline from problem to formal requirements with deliverables.}\label{fig:pipe}
+\end{figure}
+
+
+\begin{greenshieldbox}[GreenShield: ConOps to Requirements Mapping]
+\textbf{System}: GreenShield. Automated Greenhouse Frost Protection System.
+
+\textbf{ConOps excerpt}: ``When nighttime temperature drops below 3\,\degC{}, the system activates supplemental heating and alerts the operator via SMS. In degraded mode (cellular failure), the system continues autonomous heating control using local logic.''
+
+\textbf{Requirements derived}:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item SYS-REQ-001: The system shall monitor air temperature continuously at $\geq$1\,Hz.
+\item SYS-REQ-002: The system shall activate the heater when temperature $\leq$ user-defined setpoint (default 3\,\degC{}).
+\item SYS-REQ-003: The system shall send an SMS alert within 60\,s of heater activation.
+\item SYS-REQ-004: The system shall continue autonomous heating control during communication failure.
+\end{itemize}
+Every ConOps sentence should map to at least one requirement. The cost-of-change curve (Figure~\ref{fig:costchange}) shows why catching errors here, in the requirements phase, is far cheaper than catching them during integration. If it does not, either the ConOps is too vague or requirements are missing.
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: Sec.\ 4.1 (Stakeholder Needs and Requirements Definition), Sec.\ 4.2 (System Requirements Definition).
+\item \textbf{NASA SP-2016-6105 Rev 2}: Ch.\ 4 (System Design Processes), Sec.\ 4.1 (Stakeholder Expectations Definition).
+\item \textbf{IEEE 29148}: Standard for requirements engineering processes.
+\end{itemize}
+In industry, the ConOps is often a formal deliverable reviewed at a System Requirements Review (SRR), which precedes the Preliminary Design Review. The MoSCoW prioritization method maps to what INCOSE calls ``needs prioritization'' within stakeholder requirements definition.
+\end{keyconceptbox}
+
+\section{Artifact Handoff: What Chapter 1 Produces}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Artifact} & \textbf{Description} & \textbf{Forward Reference} \\
+\midrule
+Problem Statement & Five-element statement (who/what/where/why/constraints) & Ch.~2 (p.\,\pageref{ch:value}) \\
+Stakeholder Map & Power/interest grid with engagement strategies & Ch.~2, Ch.~4 (validation) \\
+Concept of Operations & Plain-language usage scenarios (normal, degraded, emergency) & Ch.~2, Ch.~6 (O\&M) \\
+Competitive Analysis & 3--5 competing solutions with gap identification & Ch.~3 (concept generation) \\
+Context Diagram & System boundary with external interfaces labeled & Ch.~2 (interface requirements) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\begin{greenshieldbox}[GreenShield: ConOps to Requirements Mapping]
+\textbf{System}: GreenShield. Automated Greenhouse Frost Protection System.
+
+\textbf{ConOps excerpt}: ``When nighttime temperature drops below 3\,\degC{}, the system activates supplemental heating and alerts the operator via SMS. In degraded mode (cellular failure), the system continues autonomous control using local logic.''
+
+\textbf{Requirements derived}:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item SYS-REQ-001: The system shall monitor air temperature continuously at $\geq$1\,Hz.
+\item SYS-REQ-002: The system shall activate the heater when temperature $\leq$ setpoint (default 3\,\degC{}).
+\item SYS-REQ-003: The system shall send an SMS alert within 60\,s of heater activation.
+\item SYS-REQ-004: The system shall continue autonomous heating control during communication failure.
+\end{itemize}
+Every ConOps sentence should map to at least one requirement. Unmapped sentences indicate vague ConOps or missing requirements.
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: \S4.1 Stakeholder Needs Definition, \S4.2 System Requirements Definition.
+\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~4.1 Stakeholder Expectations Definition.
+\item \textbf{IEEE 29148}: Requirements engineering processes.
+\end{itemize}
+\end{keyconceptbox}
+
+\section{Stakeholder Analysis Techniques}
+\subsection{Stakeholder Identification}
+Begin by casting a wide net: who is affected by this product? Beyond the obvious end user, consider: the person who purchases it (may differ from the user), the person who installs and maintains it, the person who disposes of it, regulatory bodies that must approve it, adjacent systems that interact with it, and communities affected by its production and use.
+
+For the GreenShield project, stakeholders typically include: the primary user (the person benefiting from the product's function), the course instructor (who evaluates it against educational objectives), the lab technician (who must store and maintain the prototype), future student teams (who may build on your work), and the environment (affected by material choices and energy consumption).
+
+\subsection{Stakeholder Interviews}
+Structured interviews are the most reliable method for understanding stakeholder needs. Prepare 5--8 open-ended questions before the interview:
+
+\emph{``What is the biggest frustration you experience with [current process]?''}
+
+\emph{``Walk me through a typical day where this problem arises.''}
+
+\emph{``If you could change one thing about [existing solution], what would it be?''}
+
+\emph{``What would a perfect solution look like to you?''}
+
+\emph{``How much would you be willing to pay for that solution?''}
+
+Record the responses verbatim; do not paraphrase during the interview. Identify themes across multiple interviews: if three out of five stakeholders mention the same pain point, it is likely a real and significant need.
+
+\subsection{Needs vs.\ Wants vs.\ Constraints}
+\textbf{Needs}: requirements that must be met for the product to be useful. ``The device must measure temperature.''
+
+\textbf{Wants}: features that are desired but not essential. ``It would be nice if it displayed the data on a phone app.''
+
+\textbf{Constraints}: limitations imposed by physics, regulations, budget, or the environment. ``It must run on 12\,V battery power because there is no AC outlet at the installation site.''
+
+Distinguishing these three categories during stakeholder analysis prevents over-engineering (spending resources on wants at the expense of needs) and scope creep (adding features that were never required).
+
+\section{Problem Statement Formulation}
+A well-written problem statement is the foundation of the entire project. It must be:
+
+\textbf{Specific}: ``Students in MEGN~300 lose 20 minutes per lab session troubleshooting DAQ wiring because the current breadboard setup has unreliable connections.'' Not: ``The lab setup is bad.''
+
+\textbf{Measurable}: include quantified impact. ``The current process wastes \$50{,}000/year in rework costs'' or ``15\% of student groups fail to complete the lab in the allotted time.''
+
+\textbf{Solution-agnostic}: describe the problem, not a solution. ``The building's HVAC system cannot maintain comfortable temperature in Room~201'' (problem). Not: ``Room~201 needs a space heater'' (solution).
+
+\section{Competitive Benchmarking}
+Before designing a new product, study what already exists. For each competing product, document:
+
+\textbf{Features}: what does it do? What are its specifications?
+
+\textbf{Price}: what does it cost (purchase, installation, operation)?
+
+\textbf{Strengths}: where does it excel?
+
+\textbf{Weaknesses}: where does it fall short? (These are your opportunities.)
+
+\textbf{Market position}: who buys it? Why?
+
+Organize this information in a competitive comparison matrix. The matrix reveals the gap your product must fill: the unmet need at the intersection of user desire and competitor weakness.
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Rewrite this solution-as-problem into a proper five-element problem statement: ``We need to design a solar-powered weather station using a Raspberry Pi.''
+\item List all stakeholders for a MEGN 301 design project that designs an automated pet feeder for elderly users. Use the nine-category checklist.
+\item You interview a greenhouse operator who says ``I need a temperature display.'' Through observation, you notice she checks the display, then walks to the heater and turns it on manually. What is her \emph{actual} need? How does this change the requirements?
+\item Classify these stakeholders on a power/interest grid\index{power/interest grid} for a campus parking management system: (a) university president, (b) daily commuter student, (c) campus police, (d) city traffic department, (e) disability services office.
+\item Write a 1-paragraph ConOps for an automated frost protection system for a small greenhouse, including at least two operational scenarios (normal and degraded mode).
+
+\item \textbf{Market analysis}: existing pet feeders on Amazon range \$30--\$150. Strengths: app connectivity, portion control. Weaknesses: require Wi-Fi (elderly users may lack technical skill), small hoppers (2--3 day capacity), no medication dispensing. Gap: a system designed specifically for elderly users with large-print controls, cellular connectivity (no Wi-Fi setup), and caregiver alerting.
+
+\item \textbf{Customer discovery approach}: interview 3--5 elderly pet owners and 2--3 caregivers. Key questions: ``Show me how you feed your pet today.'' ``What happens when you travel or are hospitalized?'' ``How comfortable are you with smartphone apps?'' Expected insights: manual feeding is a daily routine that provides companionship (do not eliminate it entirely); missed feedings happen during health crises, not routine days; caregivers need alerts, not control.
+
+\item A sponsor wants the system under \$500, the user wants a touchscreen display, and the maintainer wants modular components. These conflict. How do you resolve this using the MoSCoW framework?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item ``Small-farm operators [WHO] lack access to real-time, site-specific weather data [WHAT] at remote agricultural locations without grid power [WHERE], leading to crop management decisions based on regional forecasts that miss micro-climate variations by up to 5\,$^{\circ}$ C [WHY], within a \$300 budget using only renewable power sources [CONSTRAINTS].''
+\item Primary users: elderly pet owner (operator). Beneficiaries: the pet; family members who worry remotely. Sponsor: the pet owner or their family. Maintainers: family member or home-care aide who refills food and troubleshoots. Regulators: food-safety standards for pet food storage; electrical safety (UL). Integrators: home Wi-Fi network; smartphone (if app-connected). Adversaries: the pet (may try to defeat the mechanism). Trainers: whoever teaches the elderly user. Disposal: recycling or trash service.
+\item Her actual need is automated frost protection, not a temperature display. The display is her current workaround for a lack of automation. The real requirement is: ``The system shall activate the supplemental heater when temperature drops below a user-defined setpoint.'' The display becomes a secondary want, not the primary need. This changes the architecture from a passive monitor to an active control system.
+\item (a) University president: high power, low interest $\to$ Keep Satisfied. (b) Commuter student: low power, high interest $\to$ Keep Informed. (c) Campus police: high power, high interest $\to$ Manage Closely (they enforce parking rules). (d) City traffic department: moderate power, low interest $\to$ Keep Satisfied (jurisdiction over surrounding roads). (e) Disability services: moderate power, high interest $\to$ Manage Closely (ADA compliance is non-negotiable).
+\item ``The frost protection system monitors greenhouse air temperature continuously. During normal operation, when temperature drops below the user-defined threshold (default 3\,$^{\circ}$ C), the system automatically activates the supplemental heater and sends an alert to the operator's phone. The operator can acknowledge the alert, adjust the setpoint, or override the system remotely. In degraded mode (communication failure), the system continues autonomous control using local logic, activating the heater based on its last-known setpoint and logging events locally until communication is restored. The operator discovers the communication failure on their next manual check or when they notice the absence of the daily status report.''
+\item MoSCoW: \textbf{Must}: system cost under \$500 (sponsor constraint; non-negotiable). Modular components for field replacement (maintainer need; essential for long-term usability). \textbf{Should}: visual status display (user need; but a low-cost LCD or LED indicators at \$5 may satisfy the need without a \$50 touchscreen). \textbf{Could}: touchscreen interface (user want; only if budget allows after must-haves). \textbf{Won't}: full-color graphical touchscreen in v1.0. Resolution: the display is a legitimate need but the \emph{touchscreen} is a want. Propose a 2-line LCD (\$3) for v1.0 with a touchscreen upgrade path for v2.0 if the sponsor increases budget.
+\end{enumerate}
+
+% ================================================================

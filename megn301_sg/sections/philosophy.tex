@@ -1,0 +1,168 @@
+\section{General Project Philosophy}
+%=============================================================================
+
+\begin{faqbox}[Q: What is the single most important thing to understand about this project?]
+You are designing and building a \textbf{non-destructive add-on} to an existing commercial product. Everything flows from this constraint: your system must interface cleanly with the parent product, add real value to the end user, and be removable without leaving a trace. Think of yourself as an aftermarket accessory company, not a product redesign firm.
+\end{faqbox}
+
+\begin{faqbox}[Q: How should our team be thinking about ``success'' in this course?]
+Success is not just a working prototype. It is the combination of (1) a clearly defined problem, (2) a rigorous requirements document that a stranger could use to evaluate your system, (3) a traceable design process with evidence of iteration, and (4) honest reflection on what worked and what did not. A prototype that meets 80\% of well-written requirements with clear documentation of why the other 20\% fell short will outperform a ``working'' prototype with vague requirements every time.
+\end{faqbox}
+
+\begin{tipbox}
+Start a shared team engineering notebook (digital is fine---Google Docs, Notion, or OneNote all work) on Day 1. Log every decision, test result, and design change with a date and the team member responsible. This notebook will be invaluable when writing your final report and will save you hours of trying to reconstruct your design history at the end of the semester.
+\end{tipbox}
+
+\subsection{The Habits of Successful Teams}
+
+The difference between teams that finish strong and teams that scramble is rarely technical skill. It is process discipline. Here is what high-performing teams in this course consistently do:
+
+\textbf{Single source of truth.} The BOM lives in one spreadsheet, not five. The wiring diagram is one file, not a photo on someone's phone. When two versions exist, neither is trusted. Pick one shared location (Google Drive folder with a clear naming convention) and enforce it.
+
+\textbf{15-minute standups.} At the start of every work session, each member answers three questions: (1) what did I finish since last time? (2) what am I working on today? (3) what is blocking me? This takes 3 minutes per person and surfaces problems before they fester.
+
+\textbf{Task ownership with deadlines.} ``Someone should order the motors'' means nobody orders the motors. Every task has one name and one date. A shared task board (Trello, Notion, even a whiteboard photo) makes ownership visible.
+
+\textbf{Pre-mortem before each review.} Two days before PDR/CDR/FDR, the team imagines: ``It is Thursday evening and our review just failed. What went wrong?'' Then fix those things. This 20-minute exercise catches more problems than any checklist.
+
+\textbf{Design review rehearsal.} Run through the presentation once, out loud, with a timer, at least 24 hours before the real review. Identify slides that take too long, claims without evidence, and questions you cannot answer. Fix them.
+
+\textbf{Documentation in real time.} The team that documents as they go writes a better final report in 10 hours. The team that reconstructs from memory writes a worse report in 40 hours. Photograph every assembly step, save every oscilloscope screenshot, and commit every firmware change with a meaningful message.
+
+\subsection{Where to Find Deeper Technical Guidance}
+
+This guide tells you what to watch out for. The \textit{MEGN 301 Master Reference Document} (MRD) tells you \textit{how things work} in depth. It is organized in three parts: Part~I follows the design-build lifecycle (Chapters~1--9: problem definition through end-of-life), Part~II provides technical reference material for electromechanical subsystems (connectors, power supplies, motors, power architecture, electronics fundamentals, sensor/actuator selection, fasteners, bearings, power transmission, injection molding, PCB design, microcontrollers, and systematic debugging), and Part~III covers the three formal design reviews (PDR, CDR, FDR) with deliverable checklists and evaluation criteria. The front matter includes a sprint-to-chapter mapping table, a ``What Should I Be Reading Right Now?'' triage guide with page numbers, the V-Model diagram, a First Week Survival Guide checklist, and a Laboratory Safety chapter. The back matter includes a comprehensive index. Use both documents together: this guide for the quick-hit tips and warnings, and the MRD for the deeper ``why'' and ``how.''
+
+\begin{protip}
+\textbf{Use the MRD's navigation aids.} The ``What Should I Be Reading Right Now?'' triage table on the first page includes page numbers for every entry. The comprehensive index at the back of the MRD lets you find any topic by keyword. Quick-reference tables in each technical chapter summarize common component selections and design values.
+\end{protip}
+
+\begin{protip}
+\textbf{Understand the three questions that gate your project.} The three design reviews form a narrative arc, and each asks a progressively deeper question:
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item \textbf{PDR} (Sprints 1--2): ``\textit{Should} this design work?'' Is the problem clear, are the requirements sound, and is the selected concept feasible?
+    \item \textbf{CDR} (Sprint~3): ``\textit{Will} this design work?'' Is the design complete enough to build? Every component specified, every interface defined?
+    \item \textbf{FDR} (Sprints 5--7 + Final): ``\textit{How well did} it work?'' What are the test results? What worked, what did not, and what comes next?
+\end{enumerate}
+If you keep these three questions in mind from the start, you will always know what your deliverables are trying to demonstrate. Part~III of the Master Reference Document provides detailed deliverable checklists, evaluation criteria tables, and common failure patterns for each review.
+\end{protip}
+
+\begin{tipbox}
+\textbf{You are maturing the same documents all semester---not starting over.} Your SDRD, RTM, FMEA, BOM, VCRM, CAD models, and wiring diagrams all evolve from initial versions at PDR through detailed versions at CDR to final as-built versions at FDR. Keep every artifact under version control and update them continuously rather than treating each sprint's deliverables as isolated assignments.
+\end{tipbox}
+
+\begin{protip}
+\textbf{Maintain a Requirements Traceability Matrix (RTM) from Day 1.} The Master Reference Document introduces the RTM in Chapter~3---a simple table that links every requirement to its parent need, its verification method, and its current status. Open it at every team meeting and update it after every design decision. By the time you reach external testing in Sprint~6, a well-maintained RTM will let you immediately see which requirements are verified, which are still open, and which need attention. Teams that skip this step spend hours reconstructing traceability for the final report.
+\end{protip}
+
+\subsection{The Big Picture: How Sprints Map to the Engineering V-Model}
+
+Students often ask how the individual sprints connect to each other. The diagram below maps our sprint sequence onto the classic systems engineering V-model. The key insight is that the left side of the V (definition and design) and the right side (verification and validation) are \textit{mirror images}: every requirement you write in Sprint~1 must have a corresponding test executed in Sprints~5--6. If you keep this traceability in mind from the start, the later sprints become dramatically smoother.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    %. Node styles ---
+    defblock/.style={
+        rectangle, rounded corners=4pt, draw=vdefine, fill=vdefine!6,
+        text width=3.8cm, minimum height=1.15cm, align=center,
+        font=\footnotesize\bfseries, line width=0.9pt
+    },
+    verblock/.style={
+        rectangle, rounded corners=4pt, draw=vverify, fill=vverify!6,
+        text width=3.8cm, minimum height=1.15cm, align=center,
+        font=\footnotesize\bfseries, line width=0.9pt
+    },
+    botblock/.style={
+        rectangle, rounded corners=4pt, draw=vbuild, fill=vbuild!6,
+        text width=3.8cm, minimum height=1.15cm, align=center,
+        font=\footnotesize\bfseries, line width=0.9pt
+    },
+    slabel/.style={
+        font=\scriptsize\sffamily\bfseries, color=#1,
+        inner sep=2pt, fill=white, rounded corners=1pt
+    },
+    trace/.style={
+        densely dashed, minesblue!40, line width=0.7pt, <->,
+        shorten <=3pt, shorten >=3pt
+    },
+    tracelabel/.style={
+        font=\scriptsize\itshape, text=minesblue!55, fill=white,
+        inner sep=2pt, rounded corners=1pt
+    },
+    flow/.style={
+        ->, line width=1.2pt, color=#1, shorten <=1pt, shorten >=1pt
+    }
+]
+
+% === Symmetric V — labels on outer edges to keep arrow paths clear ===
+
+% --- LEFT ARM (Define & Design) ---
+\node[defblock] (L1) at (0, 0)      {Customer Needs,\\SDRD \& Test Plan};
+\node[defblock] (L2) at (1.5, -3.0) {Reverse Engineering,\\FMEA \& PDR};
+\node[defblock] (L3) at (3.0, -6.0) {CDR \&\\Manufacturing Review};
+
+% --- BOTTOM VERTEX (Build & Integrate) ---
+\node[botblock] (B)  at (6.75, -8.4)  {Critical Subsystem\\Demonstrations};
+
+% --- RIGHT ARM (Verify & Validate) ---
+\node[verblock] (R3) at (10.8, -6.0)  {Complete System\\Demonstration};
+\node[verblock] (R2) at (12.0, -3.0)  {External Team\\Testing};
+\node[verblock] (R1) at (13.5, 0)     {Refinement \&\\Final Report};
+
+%. Sprint labels: LEFT side for left arm, RIGHT side for right arm ---
+\node[slabel=vdefine, left=6pt of L1]  {Sprint 1};
+\node[slabel=vdefine, left=6pt of L2]  {Sprint 2};
+\node[slabel=vdefine, left=6pt of L3]  {Sprint 3};
+\node[slabel=vbuild,  below=5pt of B]  {Sprint 4};
+\node[slabel=vverify, right=6pt of R3] {Sprint 5};
+\node[slabel=vverify, right=6pt of R2] {Sprint 6};
+\node[slabel=vverify, right=6pt of R1] {Sprint 7 + Final};
+
+%. Flow arrows (clean vertical paths — no labels in the way) ---
+\draw[flow=vdefine] (L1.south) -- (L2.north);
+\draw[flow=vdefine] (L2.south) -- (L3.north);
+\draw[flow=vbuild]  (L3.south) -- (B.north west);
+\draw[flow=vbuild]  (B.north east) -- (R3.south);
+\draw[flow=vverify] (R3.north) -- (R2.south);
+\draw[flow=vverify] (R2.north) -- (R1.south);
+
+%. Horizontal traceability arrows (same y-level matched pairs) ---
+\draw[trace] (L1.east) -- node[tracelabel, midway] 
+    {Reqs \& Test Plan $\longleftrightarrow$ Final Validation} (R1.west);
+
+\draw[trace] (L2.east) -- node[tracelabel, midway] 
+    {Architecture $\longleftrightarrow$ External Testing} (R2.west);
+
+\draw[trace] (L3.east) -- node[tracelabel, midway] 
+    {Design $\longleftrightarrow$ System Demo} (R3.west);
+
+%. Arm labels — pushed well outside the V to avoid crossing arrows ---
+\node[rotate=63, font=\footnotesize\sffamily\bfseries, color=vdefine!50]
+    at (-2.4, -3.0) {DEFINE \& DESIGN};
+\node[rotate=-63, font=\footnotesize\sffamily\bfseries, color=vverify!50]
+    at (15.9, -3.0) {VERIFY \& VALIDATE};
+
+%. Bottom label ---
+\node[font=\footnotesize\sffamily\bfseries, color=vbuild!40]
+    at (6.75, -9.8) {BUILD \& INTEGRATE};
+
+\end{tikzpicture}%
+}% end resizebox
+\caption{The MEGN 301 design project mapped onto the systems engineering V-model. Matched pairs sit at the same level: Sprint~1 requirements define the success criteria verified in the Sprint~7 final report; Sprint~2 architecture decisions are validated through Sprint~6 external testing; Sprint~3 detailed designs are verified by Sprint~5 system demonstrations. Sprint~4 sits at the vertex where design transitions to integration.}
+\label{fig:vmodel}
+\end{figure}
+
+%=============================================================================
+%=============================================================================
+\vspace{0.5em}
+\begin{center}
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}\\[4pt]
+{\Large\bfseries\sffamily\color{minesblue} Phase 1: ``Should This Design Work?''}\\[2pt]
+{\small\itshape Sprints 1--2 define the problem, write requirements, and select a concept.}\\[4pt]
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}
+\end{center}
+\vspace{0.5em}
+%=============================================================================
