@@ -5,9 +5,8 @@ on:
     branches: [ main ]
     paths:
       - '**.tex'
-      - '**.sty'
-      - '**.ist'
-      - 'megn301_mrd/master_figs/**'
+      - 'mrd/**'
+      - 'student_guide/**'
       - '.github/workflows/build-pdfs.yml'
   workflow_dispatch:
 
@@ -21,50 +20,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build MRD - Pass 1
+      - name: Build Master Reference Document
         uses: xu-cheng/latex-action@v3
         with:
+          working_directory: mrd
           root_file: main.tex
-          working_directory: megn301_mrd
-          args: -pdf -interaction=nonstopmode -file-line-error
+          args: -pdf -f -interaction=nonstopmode -file-line-error
 
-      - name: Build MRD - makeindex
+      - name: Build Student Guide
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: student_guide
+          root_file: MEGN301_Student_Guide.tex
+          args: -pdf -f -interaction=nonstopmode -file-line-error
+
+      - name: Copy PDFs to repo root
         run: |
-          cd megn301_mrd
-          makeindex main.idx -s indexstyle.ist || true
-
-      - name: Build MRD - Pass 2
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: main.tex
-          working_directory: megn301_mrd
-          args: -pdf -interaction=nonstopmode -file-line-error
-
-      - name: Build MRD - Final pass
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: main.tex
-          working_directory: megn301_mrd
-          args: -pdf -interaction=nonstopmode -file-line-error
-
-      - name: Build Student Guide - Pass 1
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: main.tex
-          working_directory: megn301_sg
-          args: -pdf -interaction=nonstopmode -file-line-error
-
-      - name: Build Student Guide - Pass 2
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: main.tex
-          working_directory: megn301_sg
-          args: -pdf -interaction=nonstopmode -file-line-error
-
-      - name: Copy PDFs to root
-        run: |
-          cp megn301_mrd/main.pdf megn301_master_reference.pdf
-          cp megn301_sg/main.pdf MEGN301_Student_Guide.pdf
+          cp mrd/main.pdf megn301_master_reference.pdf
+          cp student_guide/MEGN301_Student_Guide.pdf MEGN301_Student_Guide.pdf
 
       - name: Commit PDFs
         run: |

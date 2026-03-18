@@ -1,0 +1,101 @@
+%% ================================================================
+%% MEGN 301 Mechanical Integration & Design
+%% Master Reference Document - Main Build File
+%% ================================================================
+%%
+%% Each chapter is stored in its own .tex file under chapters/.
+%% Front matter and appendices are under frontmatter/ and appendices/.
+%%
+%% To compile:
+%%   pdflatex main.tex
+%%   makeindex main.idx -s indexstyle.ist
+%%   pdflatex main.tex
+%%   pdflatex main.tex
+%%
+%% Or with latexmk:
+%%   latexmk -pdf main.tex
+%%
+%% Fast single-chapter build (uncomment one line):
+%%   \includeonly{chapters/ch12_power_architecture}
+%%
+%% ================================================================
+
+\input{preamble}
+
+\begin{document}
+
+% ========== TITLE PAGE ==========
+\input{frontmatter/titlepage}
+
+% ========== TABLE OF CONTENTS ==========
+\frontmatter
+\tableofcontents
+\newpage
+
+% ========== FRONT MATTER ==========
+\input{frontmatter/howto}
+\input{frontmatter/reading_guide}
+\input{frontmatter/safety}
+
+% ========== MAIN MATTER ==========
+\mainmatter
+
+% ================================================================
+% PART I: THE DESIGN-BUILD PROCESS
+% ================================================================
+\input{chapters/part_the_design_build_process}
+
+\include{chapters/ch01_problem_definition}
+\include{chapters/ch02_value_proposition}
+\include{chapters/ch03_requirements}
+\include{chapters/ch04_concept_generation}
+\include{chapters/ch05_verification}
+\include{chapters/ch06_integration}
+\include{chapters/ch07_operations}
+\include{chapters/ch08_post_build_testing}
+\include{chapters/ch09_end_of_life}
+
+% ================================================================
+% PART II: TECHNICAL REFERENCE
+% ================================================================
+\input{chapters/part_technical_reference}
+
+\include{chapters/ch10_connectors}
+\include{chapters/ch11_motors_pumps}
+\include{chapters/ch12_power_architecture}
+\include{chapters/ch13_electronics}
+\include{chapters/ch14_sensors}
+\include{chapters/ch15_fasteners}
+\include{chapters/ch16_transmission}
+\include{chapters/ch17_injection_molding}
+\include{chapters/ch18_pcb_design}
+\include{chapters/ch19_microcontrollers}
+\include{chapters/ch20_debugging}
+
+% ================================================================
+% PART III: MAJOR PROJECT MILESTONES
+% ================================================================
+\input{chapters/part_major_project_milestones}
+
+\include{chapters/ch21_pdr}
+\include{chapters/ch22_cdr}
+\include{chapters/ch23_fdr}
+
+% ================================================================
+% BACK MATTER
+% ================================================================
+\backmatter
+
+\input{appendices/se_parallels}
+\input{appendices/glossary}
+\input{appendices/exam_reference}
+\input{appendices/why_projects_fail}
+\input{appendices/abet}
+\input{appendices/greenshield_complete}
+\input{appendices/quick_reference_tables}
+\input{appendices/fifteen_mistakes}
+\input{appendices/references}
+
+\printindex
+
+\end{document}
