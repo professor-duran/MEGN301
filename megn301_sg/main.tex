@@ -1,0 +1,98 @@
+% main.tex — MEGN 301 Student Guide (driver file)
+% Colorado School of Mines, Department of Mechanical Engineering
+% Adam Duran, Spring 2026
+%
+% COMPILATION:
+%   pdflatex main
+%   pdflatex main
+%
+% DIRECTORY STRUCTURE:
+%   main.tex              ← this file
+%   megn301.sty           ← shared style package (colors, boxes, TikZ)
+%   sections/             ← individual section files
+%
+\documentclass[11pt,letterpaper]{article}
+
+% ── Page geometry ───────────────────────────────────────────────────
+\usepackage[margin=1in, headheight=24pt]{geometry}
+
+% ── Shared MEGN 301 style (article mode) ───────────────────────────
+\usepackage[article]{megn301}
+
+% ── Article-specific packages ──────────────────────────────────────
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage[utf8]{inputenc}
+
+% ── Header/Footer ──────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{MinesBlue}{\textbf{MEGN 301 -- Mechanical Integration and Design}}}
+\fancyhead[R]{\textcolor{MinesBlue}{Spring 2026}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{MinesBlue}\leaders\hrule height \headrulewidth\hfill}}
+
+% ── Section formatting ─────────────────────────────────────────────
+\titleformat{\section}
+    {\Large\bfseries\color{MinesBlue}}
+    {\thesection}{1em}{}[\vspace{-4pt}\textcolor{diagYellow}{\rule{\textwidth}{1.5pt}}]
+
+\titleformat{\subsection}
+    {\large\bfseries\color{MinesBlue}}
+    {\thesubsection}{0.75em}{}
+
+% ════════════════════════════════════════════════════════════════════
+\begin{document}
+% ════════════════════════════════════════════════════════════════════
+
+% ── Title ───────────────────────────────────────────────────────────
+\begin{center}
+    \vspace*{0.5cm}
+    {\Huge\bfseries\sffamily\textcolor{MinesBlue}{MEGN 301}}\\[0.3cm]
+    {\Huge\bfseries\sffamily\textcolor{MinesBlue}{Mechanical Integration \& Design}}\\[1cm]
+    {\huge\sffamily\textcolor{MinesBlue}{Student Guide}}\\[0.6cm]
+    {\Large\sffamily Sprint-by-Sprint Tips, Warnings, and Quick References}\\[1.5cm]
+    {\large\sffamily\textcolor{MinesSilver}{Colorado School of Mines}}\\[0.2cm]
+    {\large\sffamily\textcolor{MinesSilver}{Department of Mechanical Engineering}}\\[1cm]
+    {\Large\sffamily\textbf{Adam Duran}}\\[0.2cm]
+    {\normalsize\sffamily Assistant Teaching Professor}\\[0.2cm]
+    {\normalsize\sffamily\textcolor{MinesSilver}{PE \,$\cdot$\, PMP}}\\[1cm]
+    {\normalsize\sffamily\textcolor{MinesSilver}{Spring 2026}}\\[0.5cm]
+    \textcolor{MinesBlue}{\rule{0.6\textwidth}{1pt}}\\[0.3cm]
+    {\small\sffamily This guide provides sprint-by-sprint tips, common pitfalls, and quick references to accompany the \textit{MEGN 301 Master Reference Document}. Read both together.}
+\end{center}
+\vspace{1cm}
+
+\begin{protip}
+\textbf{How to use this guide.} At the start of each sprint, read the corresponding section (5--10 minutes). Check the ``Top Priorities'' box, scan the warnings, and note any MRD chapters to review. At the end of each sprint, use the checklist to verify your deliverables are complete.
+\end{protip}
+
+\tableofcontents
+\newpage
+
+% ── Sections ────────────────────────────────────────────────────────
+\input{sections/philosophy}
+\input{sections/sprint1}
+\input{sections/sprint2}
+\input{sections/sprint3}
+\input{sections/sprint4}
+\input{sections/sprint5}
+\input{sections/sprint6}
+\input{sections/sprint7}
+\input{sections/presentation}
+\input{sections/final_report}
+\input{sections/tips}
+\input{sections/sprint_checklist}
+\input{sections/formulas}
+
+% ── Closing ─────────────────────────────────────────────────────────
+\vspace{1cm}
+\begin{center}
+\textcolor{MinesBlue}{\rule{0.4\textwidth}{1pt}}\\[6pt]
+\textit{Good luck this semester. Design with intention, document with discipline, and learn from every iteration.}\\[6pt]
+\textcolor{MinesBlue}{\rule{0.4\textwidth}{1pt}}
+\end{center}
+
+\end{document}

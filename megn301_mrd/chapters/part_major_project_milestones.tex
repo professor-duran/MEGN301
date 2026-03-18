@@ -1,0 +1,77 @@
+\part{Major Project Milestones}
+
+This part provides a comprehensive guide to the three formal design reviews that gate your project's progression. Each chapter covers one review with deliverables, evaluation criteria, and common failure patterns.
+
+
+The review sequence maps to the V-Model (see Figure~\ref{fig:vmodel_mrd} in the front matter):
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{PDR} (Sprints 1--3): left side of the V; problem definition, requirements, architecture, concept selection.
+\item \textbf{CDR} (Sprints 4--5): bottom of the V; detailed design, analysis, manufacturing planning.
+\item \textbf{FDR} (Sprint 7 + Final): right side of the V; verification, validation, documentation.
+\end{itemize}
+
+Each review has a distinct character:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{PDR asks ``Should this design work?''}; feasibility, viability, desirability.
+\item \textbf{CDR asks ``Will this design work?''}; completeness, manufacturability, testability.
+\item \textbf{FDR asks ``How well did it work?''}; evidence, honesty, documentation.
+\end{itemize}
+
+A strong PDR enables a strong CDR enables a strong FDR. Rushing or skipping an early review creates compounding problems at every subsequent gate.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,evidence/.style={font=\tiny\sffamily, color=MinesSilver, text width=3.2cm, align=center},
+    arr/.style={->, line width=1.5pt, color=MinesSilver}
+]
+% Three review blocks
+\node[review=vdefine] (pdr) at (0,0) {PDR\\[4pt]{\normalsize ``Should it\\work?''}};
+\node[review=vbuild] (cdr) at (5.5,0) {CDR\\[4pt]{\normalsize ``Will it\\work?''}};
+\node[review=vverify] (fdr) at (11.0,0) {FDR\\[4pt]{\normalsize ``How well\\did it work?''}};
+
+% Evidence below
+\node[evidence] at (0,-1.8) {Problem, requirements,\\concept, trade study,\\stakeholder validation};
+\node[evidence] at (5.5,-1.8) {Complete BOM,\\schematics, CAD,\\manufacturing plan};
+\node[evidence] at (11.0,-1.8) {VCRM, test data,\\as-built docs,\\O\&M manual};
+
+% Sprint labels above
+\node[font=\tiny\sffamily\bfseries,vdefine] at (0,1.4) {Sprints 1--3};
+\node[font=\tiny\sffamily\bfseries,vbuild] at (5.5,1.4) {Sprints 4--5};
+\node[font=\tiny\sffamily\bfseries,vverify] at (11.0,1.4) {Sprints 6--7 + Final};
+
+% Arrows with gate labels
+\draw[arr] (pdr.east) -- node[above,font=\tiny\sffamily\bfseries,MinesSilver]{Build Gate} (cdr.west);
+\draw[arr] (cdr.east) -- node[above,font=\tiny\sffamily\bfseries,MinesSilver]{Delivery Gate} (fdr.west);
+
+% Narrative arc
+\draw[densely dashed, AccentTeal, line width=0.7pt, rounded corners=8pt]
+    (-2.0,-2.6) rectangle (13.0,1.8);
+\node[font=\tiny\sffamily\bfseries,AccentTeal,fill=white,inner sep=2pt] at (5.5,1.8) {Narrative Arc: Each review builds on the previous};
+\end{tikzpicture}
+\caption{The three design reviews form a gated progression. PDR evaluates whether the concept should work (feasibility). CDR evaluates whether the design will work (completeness). FDR evaluates how well it worked (evidence). Each gate must be passed before proceeding; a weak PDR cascades into a weak CDR and a weak FDR.}\label{fig:review_progression}
+\end{figure}
+
+
+\begin{table}[htbp]\centering\small
+\caption{The Complete Artifact Progression}
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Artifact} & \textbf{At PDR} & \textbf{At CDR} & \textbf{At FDR} \\
+\midrule
+Problem Statement & Finalized & Unchanged & Unchanged \\
+Stakeholder Map & Complete & Updated if needed & Final \\
+ConOps & Approved & Unchanged & Unchanged \\
+SDRD & Baselined (v1.0) & Updated (v2.0) & Final (v3.0) \\
+Functional Decomp.\ & Complete & Unchanged & Unchanged \\
+Trade Studies & Completed & Referenced & Archived \\
+BOM & Preliminary & Finalized with orders & As-built \\
+Schematics/Drawings & Preliminary & Finalized & As-built redlines \\
+VCRM (Figure~\ref{fig:vcrm_evolution}) & All Planned & Partial results & Complete \\
+Test Procedures & Drafted & Reviewed/updated & Executed \\
+Integration Plan & Preliminary & Detailed & Completed \\
+O\&M Manual & Not started & Outline & Complete \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+

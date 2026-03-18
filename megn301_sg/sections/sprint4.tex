@@ -1,0 +1,64 @@
+\section{Sprint 4 -- Critical Subsystem Demonstrations}
+%=============================================================================
+
+\begin{priorities}
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item Get your demo proposal approved \textit{before} this sprint begins.
+    \item Choose the two highest-risk subsystems, not the easiest ones.
+    \item Record a narrated video and verify the link works in incognito mode.
+\end{enumerate}
+\end{priorities}
+
+\begin{faqbox}[Q: How do I choose which two subsystems to demonstrate?]
+Pick the two subsystems that represent the highest technical risk in your design. These are the parts you are least certain will work, or the parts that, if they fail, would require the biggest redesign. The purpose of this sprint is to retire risk early. Demonstrating something you are already confident about wastes this opportunity.
+\end{faqbox}
+
+\begin{faqbox}[Q: What if my demo does not fully meet the proposed goals?]
+That is okay---this is expected to happen sometimes, and it is why the demo report asks you to document what modifications are needed. The important thing is to (1) clearly state what worked and what did not, (2) provide specific performance data (not just ``it kind of worked''), and (3) outline a concrete plan to address the gaps before the full system demo.
+\end{faqbox}
+
+\begin{warnbox}
+Get your demo proposal approved by your instructor \textit{before} Sprint 4 begins. If you wait, you risk demonstrating something your instructor considers too easy or not aligned with your project's critical path, and you will have to redo it.
+\end{warnbox}
+
+\begin{protip}
+When you record your demonstration video, narrate what you are doing and what the expected vs.\ actual results are. A silent video of a blinking LED tells the viewer nothing. Also, verify your video link is accessible by opening it in an incognito/private browser window. Unviewable links may receive a zero.
+\end{protip}
+
+\begin{warnbox}
+\textbf{Never ``big-bang'' integrate.} Assembling every component at once and powering on is the fastest route to an undebuggable system. Instead, use the bottom-up debugging methodology from Chapter~20 of the Master Reference Document: verify each component individually, then add \textbf{one new element at a time} and test after each addition. When something breaks, the last thing you added (or its interface) is the prime suspect. For most electromechanical projects, a good integration sequence is: (1)~power supply first (everything depends on it), (2)~controller (the central hub), (3)~sensors (simplest interfaces), (4)~actuators (highest power, most failure modes), (5)~communication (can be tested last since it is not needed for core function). MRD Chapter~20 covers the debugging pyramid (Figure~1 of that chapter), signal walk technique, and the five-step protocol flowchart.
+\end{warnbox}
+
+\begin{checklistbox}[Debugging Checklist (Sprints 4--5)]
+When something does not work, follow this sequence before calling for help:
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item \textbf{Reproduce}: can you make the failure happen reliably?
+    \item \textbf{Visual inspection}: solder bridges, loose wires, wrong pin, reversed component?
+    \item \textbf{Power check}: are all voltage rails correct under load? (Multimeter, not assumption.)
+    \item \textbf{Continuity check}: is VCC shorted to GND? Are signal paths continuous end-to-end?
+    \item \textbf{Isolate}: disconnect subsystems one at a time. Does removing one fix the problem?
+    \item \textbf{Signal walk}: inject known input, measure at each stage with oscilloscope. First deviation localizes fault.
+    \item \textbf{One change at a time}: change one thing, test, record. Never change multiple variables simultaneously.
+    \item \textbf{Log everything}: date, symptom, measurements, hypothesis, fix, result.
+\end{enumerate}
+See MRD Chapter~20 for the complete five-step protocol and the debugging pyramid.
+\end{checklistbox}
+
+\begin{tipbox} (1)~Visual inspection under $\geq$10$\times$ magnification (loupe or USB microscope) for solder bridges on fine-pitch ICs, cold joints, tombstoned 0603 passives, and wrong-orientation parts. A teammate must co-sign the inspection before power is applied. (2)~Continuity check with a multimeter---confirm no shorts between VCC and GND. (3)~Current-limited power: set your bench supply to 50\,mA limit and apply voltage. (4)~Measure every power rail with a multimeter. (5)~Smoke test: increase current to operating level, monitor for 60 seconds. (6)~Load firmware and test basic I/O. Skipping this sequence and plugging a freshly soldered board straight into your system is how you destroy both the board and the system in one step. See MRD Chapter~18; the ``10$\times$ Visual Inspection Before Power-On box has the full protocol.
+\end{tipbox}
+
+\begin{tipbox}
+\textbf{Run multiple trials, not just one.} A subsystem that works once under ideal bench conditions may fail intermittently under real operating conditions. For each demonstration goal, run at least 3 trials (5 is better). Report the mean, standard deviation, and range of your measurements---for example, for a temperature sensor demo, report: ``Mean error = $0.32\,^{\circ}\text{C}$, $\sigma = 0.04\,^{\circ}\text{C}$, range $0.26$--$0.41\,^{\circ}\text{C}$, $n = 5$ trials at each of three test points,'' not just ``it read the right temperature.'' Test at boundary conditions, not just room temperature on a benchtop. A result of ``PASS with 36\% margin'' is far more convincing---and useful---than a bare ``PASS.''
+\end{tipbox}
+
+%=============================================================================
+%=============================================================================
+\vspace{0.5em}
+\begin{center}
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}\\[4pt]
+{\Large\bfseries\sffamily\color{minesblue} Phase 3: ``How Well Did It Work?''}\\[2pt]
+{\small\itshape Sprints 5--7 execute V\&V, collect evidence, and deliver the final package.}\\[4pt]
+\textcolor{minesblue}{\rule{0.6\textwidth}{1pt}}
+\end{center}
+\vspace{0.5em}
+%=============================================================================

@@ -1,0 +1,83 @@
+name: Build LaTeX PDFs
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**.tex'
+      - '**.sty'
+      - '**.ist'
+      - 'megn301_mrd/master_figs/**'
+      - '.github/workflows/build-pdfs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build MRD - Pass 1
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: megn301_mrd
+          args: -pdf -interaction=nonstopmode -file-line-error
+          extra_system_packages: texlive-science
+
+      - name: Build MRD - makeindex
+        run: |
+          cd megn301_mrd
+          makeindex main.idx -s indexstyle.ist || true
+
+      - name: Build MRD - Pass 2
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: megn301_mrd
+          args: -pdf -interaction=nonstopmode -file-line-error
+          extra_system_packages: texlive-science
+
+      - name: Build MRD - Final pass
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: megn301_mrd
+          args: -pdf -interaction=nonstopmode -file-line-error
+          extra_system_packages: texlive-science
+
+      - name: Build Student Guide - Pass 1
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: megn301_sg
+          args: -pdf -interaction=nonstopmode -file-line-error
+          extra_system_packages: texlive-science
+
+      - name: Build Student Guide - Pass 2
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: megn301_sg
+          args: -pdf -interaction=nonstopmode -file-line-error
+          extra_system_packages: texlive-science
+
+      - name: Copy PDFs to root
+        run: |
+          cp megn301_mrd/main.pdf megn301_master_reference.pdf
+          cp megn301_sg/main.pdf MEGN301_Student_Guide.pdf
+
+      - name: Commit PDFs
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -f megn301_master_reference.pdf MEGN301_Student_Guide.pdf
+          git diff --staged --quiet || {
+            git commit -m "Auto-build PDFs [skip ci]"
+            git pull --rebase origin main
+            git push
+          }

@@ -1,0 +1,161 @@
+\chapter{Principles of Sensors and Actuators}\label{ch:sensors}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~2--3}: Read when selecting sensors and actuators for your design. The six-criteria selection framework and the common sensor types quick-reference table are your starting points. \textbf{Sprint~4}: Return to the actuator driver section before wiring motors, solenoids, or heaters.
+\end{tipbox}
+
+
+\vspace{1em}
+
+This chapter covers the physical principles of transduction: how sensors convert physical quantities into electrical signals and how actuators convert electrical commands into physical action. Understanding these principles allows you to select the right component for a given requirement, predict its limitations, and design the signal conditioning or driver circuit that bridges it to your controller.
+
+\vspace{1em}
+
+\section{Transduction: Converting Between Physical Domains}
+A \textbf{transducer} converts energy from one domain to another. A \textbf{sensor} (input transducer) converts a physical quantity (temperature, pressure, strain, displacement, flow, light, acceleration) into an electrical signal. An \textbf{actuator} (output transducer) converts an electrical command into physical action (force, torque, displacement, heat, flow). The choice of transduction mechanism determines sensitivity, range, linearity, bandwidth, and failure modes.
+
+\section{Sensor Classification by Transduction Mechanism}
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,ex/.style={font=\tiny\sffamily, text width=2.2cm, align=center, color=MinesSilver},
+    root/.style={rectangle, rounded corners=4pt, draw=MinesBlue, fill=MinesBlue!15,
+        text width=3.0cm, minimum height=0.9cm, align=center,
+        font=\small\sffamily\bfseries, line width=1pt},
+    arr/.style={-, line width=0.6pt, color=MinesSilver}
+]
+% Root
+\node[root] (r) at (6,5) {Transduction\\Mechanisms};
+
+% Six mechanisms
+\node[cat=AccentTeal] (res) at (0,3) {Resistive};
+\node[cat=AccentTeal] (cap) at (2.5,3) {Capacitive};
+\node[cat=MinesBlue] (ind) at (5,3) {Inductive};
+\node[cat=MinesBlue] (pie) at (7.5,3) {Piezoelectric};
+\node[cat=vbuild] (the) at (10,3) {Thermoelectric};
+\node[cat=vbuild] (opt) at (12.5,3) {Optical};
+
+% Examples
+\node[ex] at (0,2.0) {Strain gauge\\RTD\\Thermistor\\Potentiometer};
+\node[ex] at (2.5,2.0) {MEMS accel.\\Humidity\\Touchscreen};
+\node[ex] at (5,2.0) {LVDT\\Tachometer\\Eddy current};
+\node[ex] at (7.5,2.0) {Force sensor\\Accel. (quartz)\\Ultrasonic};
+\node[ex] at (10,2.0) {Thermocouple\\($\mu$V/\degC{})};
+\node[ex] at (12.5,2.0) {Photodiode\\Encoder\\Pyrometer};
+
+% Connection lines
+\foreach \n in {res,cap,ind,pie,the,opt} {
+    \draw[arr] (r.south) -- (\n.north);
+}
+
+% Output type annotation
+\draw[densely dashed,WarnOrange,line width=0.5pt] (-1,1.2) -- (13.5,1.2);
+\node[font=\tiny\sffamily\bfseries,WarnOrange,fill=white,inner sep=2pt] at (6.5,1.2) {Self-generating (no excitation needed)};
+\draw[->,WarnOrange!60,line width=0.4pt] (7.5,1.0) -- (7.5,1.5);
+\draw[->,WarnOrange!60,line width=0.4pt] (10,1.0) -- (10,1.5);
+\node[font=\tiny\sffamily,WarnOrange!80] at (2.5,0.8) {Modulating (needs excitation)};
+\draw[->,WarnOrange!40,line width=0.4pt] (0,0.95) -- (0,1.5);
+\draw[->,WarnOrange!40,line width=0.4pt] (2.5,0.95) -- (2.5,1.5);
+\draw[->,WarnOrange!40,line width=0.4pt] (5,0.95) -- (5,1.5);
+\end{tikzpicture}
+\caption{Sensor classification by transduction mechanism with examples and output type. Self-generating sensors (piezoelectric, thermoelectric) produce signal energy from the measurand without external excitation. Modulating sensors (resistive, capacitive, inductive) require an excitation source whose output the measurand modifies.}\label{fig:sensor_class}
+\end{figure}
+
+\textbf{Resistive}: the measurand changes resistance. Examples: strain gauges (piezoresistive effect), RTDs (temperature coefficient of platinum), thermistors (semiconductor oxide), potentiometers (wiper position). Output is measured with a Wheatstone bridge or voltage divider.
+
+\textbf{Capacitive}: the measurand changes capacitance by varying plate area, gap, or dielectric. Examples: MEMS accelerometers (proof mass changes gap), humidity sensors (dielectric absorbs moisture), touchscreens (finger changes fringe capacitance). Measured with oscillator circuits or capacitance-to-digital converters.
+
+\textbf{Inductive/Electromagnetic}: the measurand changes inductance or generates voltage via Faraday's law. Examples: LVDTs (displacement changes transformer coupling), tachometers (rotation generates AC voltage), eddy current proximity sensors.
+
+\textbf{Piezoelectric}: mechanical stress generates charge (Seebeck effect in reverse). Examples: dynamic force/pressure sensors (quartz, PZT), accelerometers, ultrasonic transducers. Critical limitation: piezoelectric sensors measure only \emph{dynamic} quantities; charge leaks for static loads.
+
+\textbf{Thermoelectric}: temperature difference at a junction of dissimilar metals generates voltage (Seebeck effect). The thermocouple produces $\sim$10--60\,$\mu$V/\degC{} depending on type, requiring amplification and cold-junction compensation.
+
+\textbf{Optical/Photoelectric}: light intensity, wavelength, or interference pattern encodes the measurand. Examples: photodiodes (light to current), fiber-optic sensors (strain changes transmission), pyrometers (infrared radiation indicates temperature without contact), encoders (slotted disc produces digital pulses).
+
+\section{Sensor Output Types}
+Figure~\ref{fig:sensor_class} above classifies sensors by their transduction mechanism. A complementary classification distinguishes sensors by their output type:
+\textbf{Analog output}: continuous voltage or current proportional to measurand (thermocouples, pressure transducers, 4--20\,mA loop sensors). Requires ADC for digital processing. \textbf{Digital output}: digital word or pulse train directly readable by MCU (encoders, I2C/SPI sensors like BME280, DS18B20). \textbf{Self-generating}: produces energy from measurand without excitation (thermocouples, piezoelectric). \textbf{Modulating}: requires external excitation; measurand modifies the excitation (strain gauges need bridge voltage, RTDs need current source, LVDTs need AC drive).
+
+\section{Key Sensor Specifications}
+When selecting a sensor, evaluate these against your system requirements:
+
+\textbf{Range}: min/max measurable values. Operating beyond range produces saturated or damaged output. \textbf{Sensitivity}: $S = \Delta V_{\text{out}}/\Delta x$ (mV/\degC{}, mV/V per microstrain, etc.). Higher sensitivity means better SNR. \textbf{Resolution}: smallest detectable change, limited by noise or quantization. \textbf{Accuracy}: closeness to true value ($\pm$\% FS or $\pm$ absolute units). \textbf{Linearity}: deviation from straight-line input-output relationship ($\pm$\% FS). \textbf{Response time / Bandwidth}: how fast the sensor tracks changes; must exceed $5\times$ the signal frequency. \textbf{Repeatability}: consistency of successive readings under identical conditions. \textbf{Hysteresis}: output difference for same input on increasing vs. decreasing sweeps. \textbf{Output impedance}: affects loading when connected to measurement circuits.
+
+\begin{keyconceptbox}[Sensor Selection Decision Framework]
+(1) What physical quantity? (2) What range and accuracy does the requirement specify? (3) What bandwidth (fastest change to capture)? (4) What output type does your DAQ/MCU accept? (5) What is the operating environment (temperature, moisture, vibration)? (6) Budget? Match these six criteria to candidate sensors, then prefer the simplest signal conditioning path.
+\end{keyconceptbox}
+
+\section{Common Sensor Types for MEGN 301 Projects}
+
+\subsection{Temperature}
+\textbf{Thermocouples} (Type K, J, T): self-generating, wide range, fast response, rugged. $\mu$V-level output requires amplification. \textbf{RTDs} (Pt100): excellent accuracy ($\pm$0.1\,\degC{}), highly linear, stable. Slower, requires bridge excitation. \textbf{Thermistors} (NTC): very high sensitivity (10$\times$ TC), small, but highly nonlinear and limited range. \textbf{Digital ICs} (DS18B20, TMP36): convenient one-wire or analog output; limited accuracy ($\pm$0.5\,\degC{}).
+
+\subsection{Strain, Force, and Pressure}
+\textbf{Foil strain gauges}: $\sim$2\,mV/V at full scale, require Wheatstone bridge and instrumentation amplifier. \textbf{Load cells}: factory-calibrated strain gauge assemblies for direct force/weight measurement. \textbf{Piezoelectric}: dynamic force only, very high bandwidth ($>$100\,kHz). \textbf{Piezoresistive pressure sensors}: strain gauges on silicon diaphragm; available in gauge, differential, and absolute configurations.
+
+\subsection{Motion and Position}
+\textbf{Potentiometers}: simple analog position, mechanical wear limits life. \textbf{Encoders}: incremental (pulse count for position, frequency for speed) or absolute (unique code per angle). \textbf{MEMS accelerometers} (ADXL345, MPU6050): digital I2C/SPI output for acceleration, tilt, vibration. \textbf{Ultrasonic} (HC-SR04): 2\,cm--4\,m non-contact range, $\pm$3\,mm.
+
+\subsection{Flow}
+\textbf{Differential pressure} (orifice plate, Venturi, Pitot): pressure drop proportional to $v^2$. \textbf{Turbine}: rotor frequency proportional to flow. \textbf{Ultrasonic transit-time}: non-invasive clamp-on. \textbf{Electromagnetic}: Faraday's law, no moving parts, requires conductive fluid.
+
+\section{Actuator Principles}
+
+\subsection{Electromagnetic Actuators}
+\textbf{DC motors} (brushed, BLDC): torque proportional to current, speed proportional to voltage minus back-EMF. Controlled via PWM + H-bridge (Chapter~12). \textbf{Stepper motors}: discrete steps (typically 1.8\degC{}/step), open-loop positioning, no encoder required. \textbf{Servo motors}: integrated motor + feedback + controller; accept position/velocity commands. \textbf{Solenoids}: linear on/off force from energized coil; fast ($<$10\,ms), inductive (flyback diode mandatory per Chapter~12).
+
+\subsection{Thermal Actuators}
+\textbf{Resistive heaters}: $P = I^2R$, controlled via PWM through SSR or MOSFET. \textbf{Peltier devices}: semiconductor heat pump; can heat or cool depending on current direction; low efficiency.
+
+\subsection{Fluid Actuators}
+\textbf{Pumps}: positive-displacement (gear, peristaltic) for precise metering; centrifugal for high flow. \textbf{Valves}: solenoid for on/off; proportional valves for variable flow. \textbf{Cylinders}: hydraulic (high force, 100--350\,bar) or pneumatic (lower force, 4--8\,bar).
+
+\begin{warningbox}[Every Actuator Needs a Driver]
+No motor, solenoid, or heater connects directly to a microcontroller GPIO pin. Motors need H-bridges or ESCs. Solenoids need MOSFETs with flyback diodes. Heaters need SSRs or MOSFETs with current limiting. Chapter~11 (Power Supplies, Motors \& Pumps) covers selection; Chapter~12 (Power Architecture) covers driver circuits and protection.
+\end{warningbox}
+
+\begin{keyconceptbox}[Requirements Mapping: Sensors and Actuators]
+``The temperature sensor shall measure 0--200\,\degC{} with $\pm$1.0\,\degC{} accuracy and response time $<$2.0\,s.'' ``The drive motor shall produce $\geq$0.5\,N$\cdot$m continuous torque at 500\,RPM with $\pm$5\% speed regulation.'' ``The flow sensor shall measure 0--10\,L/min with $\pm$3\% FS accuracy and a pulse output compatible with the ESP32 GPIO.'' Every sensor and actuator specification traces to a testable system requirement.
+\end{keyconceptbox}
+
+\begin{quickrefbox}[Quick Reference: Common Sensor Types]
+\begin{table}[H]\centering\small
+\begin{tabularx}{\textwidth}{l l c c X}
+\toprule
+\textbf{Measurand} & \textbf{Sensor} & \textbf{Output} & \textbf{Range} & \textbf{Example Parts} \\
+\midrule
+Temperature & DS18B20 & 1-Wire digital & $-55$--125\,\degC{} & Waterproof probe, $\pm$0.5\,\degC{} \\
+Temperature & BME280 & I2C/SPI & $-40$--85\,\degC{} & Also humidity + pressure \\
+Temperature & Type K TC & Analog (mV) & $-200$--1250\,\degC{} & Use MAX31855 amplifier \\
+Proximity & HC-SR04 & Pulse (echo) & 2--400\,cm & Ultrasonic; 3\,mm resolution \\
+Proximity & VL53L0X & I2C & 3--200\,cm & ToF laser; 1\,mm resolution \\
+Force/Weight & HX711 + load cell & I2C-like & 0--200\,kg & 24-bit ADC built-in \\
+Accel/Gyro & MPU-6050 & I2C & $\pm$16\,g / $\pm$2000\,\degC{}/s & 6-axis IMU \\
+Current & ACS712 & Analog & $\pm$5/20/30\,A & Hall-effect, isolated \\
+Pressure & BMP390 & I2C/SPI & 300--1250\,hPa & Barometric; $\pm$0.5\,hPa \\
+Flow & YF-S201 & Pulse & 1--30\,L/min & Hall-effect turbine \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\end{quickrefbox}
+
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item You need to measure temperature inside a running engine (range 200--800\,\degC{}, accuracy $\pm$2\,\degC{}, response $<$1\,s). Which sensor type and why? What signal conditioning?
+\item Explain why a piezoelectric force sensor cannot measure the static weight of an object, even though it easily detects the impact when the object is dropped.
+\item A stepper motor has 200 steps/rev driven at 400 pulses/s. What is the shaft speed in RPM?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Type K thermocouple. Range covers 200--800\,\degC{} (RTDs max at $\sim$850\,\degC{} but cost more). Type K accuracy is $\pm$2.2\,\degC{} or 0.75\%. Exposed-junction bead: $\tau < 0.5$\,s in moving gas. Signal conditioning: thermocouple amplifier with cold-junction compensation (AD8495 analog or MAX31855 digital).
+\item Piezoelectric sensors generate charge from stress ($Q = d \times F$). For static loads, charge is generated at application but leaks away through crystal insulation resistance and amplifier input impedance ($\tau = R \times C$, typically seconds). After $5\tau$, output decays to zero. Dynamic forces continuously generate new charge, maintaining output.
+\item $400 / 200 = 2$\,rev/s $= 120$\,RPM.
+\end{enumerate}
+
+
+% ══════════════════════════════════════════════════════════════════════
+
+
+

@@ -1,0 +1,39 @@
+\chapter*{Laboratory Safety and Equipment Care}
+\addcontentsline{toc}{chapter}{Laboratory Safety and Equipment Care}
+
+This chapter establishes mandatory safety practices for all MEGN~301 lab and project work. Electrical and mechanical hazards are present any time you are building, testing, or demonstrating your projects. The practices below are not suggestions; they are requirements.
+
+\section*{Electrical Hazards}
+The danger of electrical shock depends on current through the body, not voltage alone, but higher voltage drives more current through the body's resistance ($\sim$1\,k$\Omega$ hand-to-hand, wet skin). Thresholds: 1\,mA is perceptible, 10--20\,mA causes involuntary muscle contraction (``can't let go''), 75--100\,mA across the heart is potentially fatal.
+
+\textbf{Safe voltage thresholds} (IEC~61010): below 30\,VDC or 25\,VAC RMS is generally safe for dry skin contact. Between 30\,V and 48\,V, use insulated tools and the one-hand rule (keep one hand in your pocket to prevent hand-to-hand current paths across the heart). Above 48\,V, including all AC mains: de-energize and lock out before touching.
+
+\section*{Benchtop Power Supply}
+Always set current limiting to the minimum expected value before enabling the output. Increase slowly while monitoring. When using multiple channels, verify isolation between channels before connecting them in series. After powering down, discharge large capacitors before touching the circuit.
+
+\section*{Multimeter Safety}
+\begin{warningbox}[Current-Mode Dead-Short Trap]
+If the multimeter is left in current mode (probes in the current jacks) and connected in parallel across a voltage source, the meter becomes a short circuit. This blows the internal fuse or damages the meter and circuit. After every current measurement, move the red probe back to the voltage jack. Always measure resistance and continuity on de-energized circuits only.
+\end{warningbox}
+
+\section*{Oscilloscope Ground Clip}
+The oscilloscope probe's ground clip connects directly to earth ground through the power cord. Clipping it to any node other than circuit ground creates a short circuit through the earth path, which can destroy components and trip breakers. The ground clip must always connect to circuit ground. For floating measurements, use channel math (Ch1 $-$ Ch2) or a differential probe.
+
+\section*{ESD Protection}
+CMOS components (ESP32, op-amps, all modern ICs) are sensitive to electrostatic discharge. A human body can accumulate 3,000--25,000\,V. Wear a grounded wrist strap when handling bare ICs and PCBs, store components in anti-static bags, and touch a grounded surface before picking up components.
+
+\section*{Lithium Battery Safety}
+Lithium-ion and lithium-polymer cells present fire and explosion risks if mishandled. Mandatory: never short-circuit a cell, never charge above rated voltage (typically 4.2\,V/cell), never discharge below minimum (typically 3.0\,V/cell), always use a battery management system (BMS), and never puncture, crush, or overheat cells. If a cell is swelling, hissing, or smoking: clear the area, place in a fire-safe container (metal bucket with sand), and notify lab staff. Lithium fires require a Class~D extinguisher or dry sand, not water.
+
+\section*{Mechanical Hazards}
+Rotating machinery (motors, gears, belts) can entangle hair, clothing, and fingers. Tie back long hair, remove dangling jewelry, and keep hands clear of moving parts during operation. Spring-loaded mechanisms and pressurized fluid systems store energy that can release unexpectedly. Wear safety glasses when cutting, drilling, soldering, or working with pressurized systems.
+
+\section*{Soldering Safety}
+Soldering irons operate at 300--400\,\degC{}. Always return the iron to its stand when not actively soldering. Work in a ventilated area or use a fume extractor; solder flux fumes are irritating and potentially harmful with prolonged exposure. Lead-free solder is standard; if using leaded solder, wash hands thoroughly afterward and never eat or drink at the soldering bench.
+
+\section*{Fire Safety}
+Electronics fires most commonly result from overcurrent through undersized wire, short circuits without fuse protection, or lithium battery failure. Prevention: fuse every power rail at or below the wire's rated current, inspect solder joints for bridges before powering up, and keep a CO$_2$ or dry chemical fire extinguisher (Class~C rated for electrical fires) accessible in the workspace. Know the location of the nearest fire extinguisher and emergency exit before beginning any lab work.
+
+\mainmatter
+
+

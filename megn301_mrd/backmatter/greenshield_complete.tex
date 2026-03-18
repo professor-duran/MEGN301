@@ -1,0 +1,53 @@
+\chapter*{GreenShield: Complete Worked Example}
+\addcontentsline{toc}{chapter}{GreenShield: Complete Worked Example}
+
+This appendix traces the GreenShield Automated Greenhouse Frost Protection System through every phase of the design-build process, consolidating the chapter-by-chapter \textsf{GS} boxes into a single narrative.
+
+\section*{Phase 1: Problem Definition (Chapter 1)}
+\textbf{Problem}: Small-farm greenhouse operators [WHO] cannot maintain above-freezing temperatures in unheated hoop houses during Colorado Front Range winters [WHERE], resulting in crop losses averaging \$12,000/season [WHY], within a \$500 budget using existing 120\,VAC infrastructure [CONSTRAINTS].
+
+\textbf{Stakeholders}: Primary user (operator), beneficiary (crops/farm revenue), sponsor (operator/farm), maintainer (operator or farm hand), regulator (NEC electrical code, county building code), integrator (existing greenhouse structure), trainer (operator's spouse or employee).
+
+\textbf{ConOps}: System monitors air temperature continuously. When temperature drops below a user-adjustable setpoint (default 3\,\degC{}), it activates a supplemental heater and sends an SMS alert. In degraded mode (communication failure), it continues autonomous operation. The operator can adjust setpoint and check status remotely.
+
+\section*{Phase 2: Requirements \& Architecture (Chapter 2)}
+\textbf{Key Requirements}:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item SYS-REQ-001: Monitor temp at $\geq$1\,Hz, accuracy $\pm$0.5\,\degC{}, range $-20$ to $+60$\,\degC{}. [T]
+\item SYS-REQ-002: Activate heater when temp $\leq$ user setpoint. Hysteresis: 2\,\degC{}. [T]
+\item SYS-REQ-003: SMS alert within 60\,s of heater activation. [T]
+\item SYS-REQ-004: Autonomous mode on comm failure. [D]
+\item SYS-REQ-005: Operate on 120\,VAC, $<$50\,W standby. [T]
+\item SYS-REQ-006: Enclosure IP44 minimum (splash-resistant). [I]
+\item SYS-REQ-007: All field connections tool-free (connectors, not solder). [I]
+\end{enumerate}
+
+\textbf{Architecture}: Five subsystems. Sensor (DS18B20), Controller (ESP32), Actuator (relay + ceramic heater), Communication (SIM800L GSM), Power (12\,V adapter + buck converters).
+
+\section*{Phase 3: Concept Generation \& Selection (Chapter 3)}
+Three concepts evaluated via weighted decision matrix. Concept~1 (Grid-Connected, Wi-Fi) selected: lowest cost (\$85), simplest integration, meets all requirements. Off-Grid Solar concept deferred to v2.0.
+
+\textbf{Risk register}: top risk = MCU brown-out during relay switching (RPN 12). Mitigation: 470\,$\mu$F decoupling, separate relay power trace.
+
+\textbf{FMEA top item}: relay stuck closed (RPN 108). Mitigation: thermal fuse on heater as independent safety cutoff.
+
+\section*{Phase 4: V\&V Planning (Chapter 4)}
+VCRM established at PDR with 7 requirements, all methods assigned. Three test procedures drafted: TP-001 (temperature accuracy), TP-002 (heater activation threshold), TP-003 (SMS alert timing).
+
+Test environment: ME department environmental chamber for boundary testing (0\,\degC{} and 50\,\degC{}). Ice bath as backup for 0\,\degC{} test point.
+
+\section*{Phase 5: Integration \& Debug (Chapter 5)}
+Integration sequence: (1) Power subsystem alone (verify 5\,V and 3.3\,V rails). (2) Add sensor (verify I2C communication). (3) Add relay (verify GPIO control without brown-out). (4) Add GSM module (verify SMS send). (5) System-level 48-hour burn-in.
+
+Integration failure encountered: I2C communication intermittent. Root cause: missing 4.7\,k$\Omega$ pull-up resistors; neither the sensor breakout nor the ESP32 DevKit provided them. ICD updated to specify pull-up ownership on the controller side.
+
+\section*{Phase 6: Operations \& Maintenance (Chapter 6)}
+\textbf{Wear items}: relay contacts (rated 100,000 cycles; at 10 cycles/night $\times$ 150 nights/year = 67 years), DS18B20 sensor (no wear items but verify annually against reference thermometer), SIM800L antenna connector (inspect annually for corrosion).
+
+\textbf{O\&M manual}: Quick-start (1 page), operating manual (4 pages), maintenance schedule (1 page), troubleshooting flowchart (1 page), spare parts list with McMaster/DigiKey part numbers.
+
+\section*{Final Results (FDR)}
+VCRM: 6 PASS, 1 PARTIAL PASS (SYS-REQ-001 accuracy was $\pm$0.6\,\degC{} at 0\,\degC{} boundary; missed by 0.1\,\degC{}). Root cause: DS18B20 factory calibration drift at low temperatures. Corrective action: polynomial correction applied in firmware, re-test showed $\pm$0.4\,\degC{} across full range. Updated status: PASS.
+
+Total cost: \$92 (\$8 under budget). Build time: 6 weeks. Lessons learned: (1) always define pull-up ownership in ICDs; (2) test at temperature boundaries early, not at FDR; (3) the 470\,$\mu$F capacitor fix for brown-out should have been in the original design, not discovered during integration.
+

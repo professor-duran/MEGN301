@@ -1,0 +1,78 @@
+\chapter*{Exam Quick-Reference Cheat Sheet}
+\addcontentsline{toc}{chapter}{Exam Quick-Reference}
+
+\begin{multicols}{2}
+\small
+\textbf{Requirements}
+\begin{itemize}[nosep,leftmargin=1em]
+\item SHALL = mandatory; SHOULD = goal
+\item One shall per requirement
+\item Quantitative, testable, implementation-free
+\item TAID: Test, Analysis, Inspection, Demonstration
+\end{itemize}
+
+\textbf{V\&V}
+\begin{itemize}[nosep,leftmargin=1em]
+\item Verification: built right (meets specs)
+\item Validation: right system (meets needs)
+\item VCRM tracks every req to its test status
+\item PASS/FAIL/PARTIAL. Always with data
+\end{itemize}
+
+\textbf{Motors}
+\begin{itemize}[nosep,leftmargin=1em]
+\item $\tau = K_t \times I$; $V_{back} = K_e \times \omega$
+\item Stall current = $V/R_{winding}$ (6--10$\times$ rated)
+\item Design at 50--75\% of continuous torque
+\item Every motor needs a matched driver
+\end{itemize}
+
+\textbf{Power}
+\begin{itemize}[nosep,leftmargin=1em]
+\item LDO: low noise, $V_{out} < V_{in}$, $\eta$ = ratio
+\item Buck: efficient step-down, EMI risk
+\item Boost: step-up from low voltage
+\item 20\% current margin minimum
+\end{itemize}
+
+\textbf{Fasteners}
+\begin{itemize}[nosep,leftmargin=1em]
+\item $T = K \cdot F \cdot d$ (torque-preload)
+\item Thread engagement: 1.5$d$ steel, 2$d$ aluminum
+\item Always specify grade in BOM
+\item Nyloc or Loctite for vibration; not split washers
+\end{itemize}
+
+\textbf{Bearings}
+\begin{itemize}[nosep,leftmargin=1em]
+\item Default: deep groove ball (6000 series)
+\item $L_{10} = (C/P)^3 \times 10^6/(60n)$
+\item 2RS = sealed. Never hammer.
+\item Press fit inner ring; sliding fit outer ring
+\end{itemize}
+
+\textbf{Transmission}
+\begin{itemize}[nosep,leftmargin=1em]
+\item $GR = N_2/N_1 = \omega_1/\omega_2 = \tau_2/\tau_1$
+\item $P = \tau \times \omega$; $\eta_{total} = \eta_1 \times \eta_2 \times ...$
+\item Self-locking: lead screws, worm gears
+\item Student defaults: GT2 belt, T8 lead screw
+\end{itemize}
+
+\textbf{Injection Molding DFM}
+\begin{itemize}[nosep,leftmargin=1em]
+\item Uniform wall $\pm$10\%; draft $\geq$\ang{1}
+\item Rib = 60\% wall; boss OD = 2$\times$ hole ID
+\item Inside radius $\geq$ 0.5$\times$ wall
+\item Living hinge: PP only, 0.25--0.5\,mm
+\end{itemize}
+
+\textbf{PCB Layout}
+\begin{itemize}[nosep,leftmargin=1em]
+\item 100\,nF decoupling within 5\,mm of every IC
+\item Ground pour on bottom layer
+\item Print 1:1 and place real components
+\item 10\,mil trace = 0.3\,A; 100\,mil = 3.0\,A
+\end{itemize}
+\end{multicols}
+

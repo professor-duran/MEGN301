@@ -1,0 +1,395 @@
+\chapter{Writing Requirements \& Defining Architecture}\label{ch:requirements}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~1}: Read Sections~3.1--3.3 (SDRD, requirements writing, quality checklist). These are your primary Sprint~1 deliverables. \textbf{Sprint~2}: Read Sections~3.4--3.6 (functional decomposition, trade studies, FMEA) before PDR. \textbf{Sprint~3}: Return to Section~3.5 (interface definition) when writing ICDs for CDR.
+\end{tipbox}
+
+\vspace{1em}
+
+Requirements are the single most important deliverable in the design process. Getting requirements right costs minutes; fixing wrong requirements costs weeks. The cost-of-change curve illustrates why.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[>=Stealth]
+% Axes
+\draw[->,line width=1pt,MinesBlue] (0,0) -- (12.5,0);
+\node[font=\small\sffamily,MinesBlue] at (6.5,-1.0) {Project Phase};
+\draw[->,line width=1pt,MinesBlue] (0,0) -- (0,5.5) node[above,font=\small\sffamily,rotate=90,anchor=south]{Relative Cost of Change};
+% Phase labels
+\foreach \x/\lbl in {1.5/Requirements, 3.5/Architecture, 5.5/Design, 7.5/Build, 9.5/Integration, 11.5/Field} {
+    \draw[MinesSilver] (\x,-0.1) -- (\x,0.1);
+    \node[below,font=\scriptsize\sffamily,text width=1.4cm,align=center] at (\x,-0.15) {\lbl};
+}
+% Cost curve (exponential-ish)
+\draw[line width=2pt,WarnOrange,smooth] plot coordinates {(1.5,0.15) (3.5,0.35) (5.5,0.8) (7.5,1.8) (9.5,3.5) (11.5,5.0)};
+% Cost labels
+\node[font=\scriptsize\sffamily,WarnOrange,above] at (1.5,0.15) {1$\times$};
+\node[font=\scriptsize\sffamily,WarnOrange,above] at (3.5,0.35) {3$\times$};
+\node[font=\scriptsize\sffamily,WarnOrange,above right] at (5.5,0.8) {5--10$\times$};
+\node[font=\scriptsize\sffamily,WarnOrange,above right] at (7.5,1.8) {15--40$\times$};
+\node[font=\scriptsize\sffamily,WarnOrange,above right] at (9.5,3.5) {60--100$\times$};
+\node[font=\scriptsize\sffamily,WarnOrange,above right] at (11.5,5.0) {200$\times$+};
+% Annotation
+\draw[densely dashed,AccentTeal,line width=0.8pt] (3.0,0) -- (3.0,4.8);
+\node[font=\scriptsize\sffamily,AccentTeal,fill=white,inner sep=2pt,text width=3.5cm,align=center] at (3.0,5.1) {PDR Baseline:\\Last cheap chance to fix requirements};
+\draw[densely dashed,diagRed,line width=0.8pt] (7.0,0) -- (7.0,4.8);
+\node[font=\scriptsize\sffamily,diagRed,fill=white,inner sep=2pt,text width=2.5cm,align=center] at (7.0,5.1) {CDR Freeze:\\Changes now expensive};
+\end{tikzpicture}
+\caption{Cost of change increases exponentially with project phase. A requirement error caught during requirements writing costs 1$\times$; the same error caught during integration costs 60--100$\times$. This is why the quality checklist below matters.}\label{fig:costchange}
+\end{figure}
+
+\vspace{1em}
+
+\section{Writing Requirements}
+\subsection{The System Design Requirements Document (SDRD)}
+The SDRD is the single authoritative document that captures all system-level requirements, their rationale, traceability, and verification methods. Standard structure:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item \textbf{Introduction}: system overview, scope, applicable documents.
+\item \textbf{System Description}: ConOps summary, system boundary, external interfaces.
+\item \textbf{Requirements}: organized by functional, performance, and non-functional categories. Each includes: unique ID, shall-statement, rationale, parent traceability, verification method (T/A/I/D).
+\item \textbf{Traceability Matrix}: forward (need $\to$ requirement) and backward (requirement $\to$ need).
+\item \textbf{Verification Plan Summary}: method assignments and planned test phases.
+\end{enumerate}
+The SDRD is a living document; baselined at PDR and updated under change control through CDR and FDR\index{FDR (Final Design Review)}.
+
+
+\subsection{What Is a Requirement?}
+A requirement is a formal statement of a capability or constraint the system must satisfy. It uses the word \textbf{shall} to indicate mandatory compliance. ``The system \emph{shall} measure ambient temperature'' is a requirement. ``Should'' and ``will'' are non-binding.
+
+A well-formed requirement has: (1) a unique ID (SYS-REQ-042) for traceability, (2) a single shall-statement with one testable condition, (3) measurable acceptance criteria with units and tolerance, (4) a rationale explaining why it exists, and (5) a verification method (Test, Analysis, Inspection, or Demonstration).
+
+\begin{warningbox}[Common Failures]
+\textbf{Vague}: ``shall be fast.'' \textbf{Compound}: ``shall measure AND display.'' \textbf{Untestable}: ``shall be user-friendly.'' \textbf{Gold-plated}: ``shall use an Arduino'' (specifies implementation, not need). Each failure produces downstream rework.
+\end{warningbox}
+
+\subsection{Requirement Types}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Functional}: What the system shall \emph{do}. Actions: sense, compute, transmit, actuate, display. ``The system shall measure ambient temperature.''
+\item \textbf{Performance}: How \emph{well} it does it. Quantitative criteria. ``\ldots with accuracy of $\pm 0.5$\,$^{\circ}$ C over $-20$ to $+60$\,$^{\circ}$ C at $\geq$1\,Hz.'' A functional requirement without a paired performance requirement is incomplete.
+\item \textbf{Non-Functional (NFR)}: Constraints on \emph{how} it is built. Environmental (``operate at $-20$ to $+60$\,$^{\circ}$ C''), regulatory (``comply with FCC Part 15''), material (``RoHS\index{RoHS Directive}-compliant''), reliability (``$\geq$1000 hrs MTBF\index{MTBF (Mean Time Between Failures)}''), interface (``CAN 2.0B'').
+\end{itemize}
+
+\subsection{Requirements Hierarchy and Traceability}
+Requirements decompose top-down: stakeholder needs $\to$ system requirements $\to$ subsystem requirements $\to$ component specifications. Each level adds detail. Every child requirement traces to a parent (backward traceability). Every parent is decomposed into children (forward traceability). An orphan requirement has no justification; an undecomposed requirement has no implementation.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_req_hierarchy.png}
+\caption{Requirements hierarchy from stakeholder needs through system, subsystem, and component levels with traceability and three requirement types.}\label{fig:hier}
+\end{figure}
+
+
+\subsection{The Requirements Quality Checklist}
+Before baselining any requirement, verify it passes all seven tests:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item \textbf{Necessary}: does it trace to a stakeholder need? (No gold-plating.)
+\item \textbf{Unambiguous}: can it be interpreted only one way?
+\item \textbf{Complete}: does it include all conditions (range, tolerance, units)?
+\item \textbf{Consistent}: does it conflict with any other requirement?
+\item \textbf{Verifiable}: can you write a test procedure for it right now?
+\item \textbf{Traceable}: does it have a unique ID and parent link?
+\item \textbf{Implementation-free}: does it specify WHAT, not HOW?
+\end{enumerate}
+A requirement that fails any test must be rewritten before PDR.
+
+\subsection{Writing Good Requirements: Five Rules}
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{One shall per requirement}: compound requirements are untestable.
+\item \textbf{Quantitative criteria}: numbers, units, tolerance. ``Fast'' is not a requirement.
+\item \textbf{Testable as written}: if you cannot envision a test procedure, rewrite.
+\item \textbf{Implementation-free}: state WHAT, not HOW. ``$\geq$12 analog inputs'' not ``use Arduino Mega.''
+\item \textbf{Include rationale}: WHY does this requirement exist? Prevents zombie requirements.
+\end{enumerate}
+
+\section{Defining Architecture}
+\subsection{Functional Decomposition\index{functional decomposition}}
+Define WHAT the system must do (functions) before deciding HOW (physical components). Break the mission into primary functions, sub-functions, and leaf functions. Each leaf maps to a physical component. Use verb-noun naming: Sense Temperature, Process Data, Provide Power.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_functional_decomp.png}
+\caption{Functional decomposition: functions defined before physical allocation. Functions are stable; implementations change.}\label{fig:func}
+\end{figure}
+
+
+\subsection{From Functions to Architecture Blocks}
+Functional decomposition produces a tree of functions (verb-noun). Architecture allocation maps each leaf function to a physical module. This mapping is one-to-many (one function may require multiple modules) and many-to-one (one module may implement multiple functions). Document this in an \textbf{allocation matrix}: rows = functions, columns = physical modules, cells = primary/supporting role.
+
+The allocation matrix reveals integration complexity: modules that implement many functions are high-risk single points of failure.
+
+
+\subsection{Interface Definition}
+Once functions map to modules, define interfaces between them with Interface Control Documents\index{Interface Control Document (ICD)} (ICDs): what crosses the boundary (signals, power, data), in what format (protocols, voltage levels), with what constraints (bandwidth, latency).
+
+
+\begin{keyconceptbox}[Start Your FMEA\index{FMEA (Failure Mode and Effects Analysis)} During Architecture: Not at FDR]
+Failure Mode and Effects Analysis (FMEA) is most valuable \emph{before} hardware is ordered. As you allocate functions to physical modules (this chapter), immediately ask: ``What happens if this module fails?'' Chapter~3 (p.\,\pageref{ch:requirements}) provides the full FMEA framework and a worked GreenShield example. Performing FMEA during architecture (Chapters~2--3) enables you to design out critical failure modes. Waiting until O\&M (Chapter~7, p.\,\pageref{ch:oandm}) turns FMEA into an autopsy on a failed project.
+\end{keyconceptbox}
+
+\subsection{Architecture Patterns}
+\textbf{Centralized}: one controller. Simple but single point of failure. \textbf{Distributed}: multiple controllers on a bus (CAN, I$^2$C). More robust, enables parallel development. \textbf{Hierarchical}: layered control. Choose based on reliability, complexity, and team structure.
+
+
+\subsection{Requirements--Architecture Iteration}
+Requirements and architecture co-evolve. Initial requirements drive a candidate architecture. That architecture reveals implementation constraints (weight, power, thermal) that feed back as new requirements or modified performance targets. This iteration is normal and healthy, but must be \textbf{documented}. Each iteration produces a revised SDRD version with change rationale.
+
+Convergence test: when two consecutive iterations change fewer than 5\% of requirements, the design is stable enough to baseline at PDR.
+
+\section{Environmental and Regulatory Constraints}
+Every system operates in an environment that imposes constraints. Systematically address:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Temperature}: operating range, storage range, thermal shock.
+\item \textbf{Moisture/IP rating}: splash (IPX4), rain (IPX5), submersion (IPX7/8).
+\item \textbf{Vibration/shock}: transport, operational, handling drop.
+\item \textbf{EMC}: FCC Part 15 Class B (residential), IEC 61000 (EU).
+\item \textbf{Safety}: UL/CSA/CE marking, OSHA regulations, university lab safety policies.
+\item \textbf{Materials}: RoHS compliance, California Prop 65, food-contact (FDA 21 CFR).
+\end{itemize}
+
+
+\section{Environmental and Regulatory Constraints}
+Every system operates in an environment that imposes constraints. Systematically address:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Temperature}: operating range, storage range, thermal shock.
+\item \textbf{Moisture/IP}: splash (IPX4), rain (IPX5), submersion (IPX7/8).
+\item \textbf{Vibration/shock}: transport, operational, handling drop height.
+\item \textbf{EMC}: FCC Part 15 Class B (residential), IEC 61000 (EU).
+\item \textbf{Safety}: UL/CSA/CE marking, OSHA, university lab safety policies.
+\item \textbf{Materials}: RoHS compliance, California Prop 65, food-contact (FDA 21~CFR).
+\end{itemize}
+
+\section{Trade Studies and Decision Making}
+\subsection{The Trade Study\index{trade study} Process}
+\begin{enumerate}[leftmargin=1.5em]
+\item Define the decision and evaluation criteria (derived from requirements). Weight criteria (sum to 1.0).
+\item Identify 3--5 viable candidates. No straw-men.
+\item Rate each option against each criterion using data, not preference.
+\item Score (raw $\times$ weight), sum, select. Check sensitivity: if $\pm$0.05 weight change flips the winner, investigate further.
+\item Document everything: matrix, data sources, weight rationale, dissenting opinions.
+\end{enumerate}
+
+\subsection{Pugh Matrix vs.\ Weighted Decision Matrix\index{decision matrix}}
+\textbf{Pugh (screening)}: rate options as $+$, S, $-$ against a datum. Fast. No weights. Eliminates clearly inferior options. \textbf{Weighted matrix (selection)}: numerical ratings $\times$ weights. Rigorous, quantitative, traceable. Best practice: Pugh to screen $\to$ weighted matrix to select.
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_decision_matrix.png}
+\caption{Weighted decision matrix example: motor selection with six criteria, three options.}\label{fig:matrix}
+\end{figure}
+
+
+\subsection{Worked Example: MCU Trade Study}
+\textbf{Decision}: Select an MCU platform for a battery-powered environmental sensor node.
+
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l c c c c}
+\toprule
+\textbf{Criterion (Weight)} & \textbf{ESP32\index{ESP32}} & \textbf{STM32L4} & \textbf{ATmega328P} \\
+\midrule
+Power consumption (0.25) & 3 (0.75) & 5 (1.25) & 4 (1.00) \\
+Analog channels (0.20) & 5 (1.00) & 4 (0.80) & 4 (0.80) \\
+Cost (0.20) & 5 (1.00) & 3 (0.60) & 5 (1.00) \\
+Flash/RAM (0.15) & 5 (0.75) & 5 (0.75) & 2 (0.30) \\
+Ecosystem (0.10) & 5 (0.50) & 3 (0.30) & 5 (0.50) \\
+Wi-Fi/BLE (0.10) & 5 (0.50) & 1 (0.10) & 1 (0.10) \\
+\midrule
+\textbf{Total} & \textbf{4.50} & \textbf{3.80} & \textbf{3.70} \\
+\bottomrule
+\end{tabularx}
+\caption{MCU trade study for battery-powered sensor node.}
+\end{table}
+
+\textbf{Sensitivity check}: If ``Power consumption'' weight increases from 0.25 to 0.30 (taking 0.05 from Wi-Fi), STM32L4 total rises to 4.05 and ESP32 drops to 4.40; winner unchanged. Selection is robust.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[>=Stealth]
+% Axes
+\draw[->,line width=0.8pt,MinesBlue] (0,0) -- (11,0) node[below,font=\scriptsize\sffamily]{Power Consumption Weight};
+\draw[->,line width=0.8pt,MinesBlue] (0,0) -- (0,5.2) node[above,font=\scriptsize\sffamily,rotate=90,anchor=south]{Weighted Total Score};
+% Tick marks
+\foreach \x/\lbl in {1/0.10, 3/0.20, 5/0.30, 7/0.40, 9/0.50} {
+    \draw ({\x},-0.1) -- ({\x},0.1);
+    \node[below,font=\tiny\sffamily] at ({\x},-0.15) {\lbl};
+}
+% ESP32 line (decreasing: high power = lower score as weight increases)
+\draw[line width=1.8pt,AccentTeal,smooth] plot coordinates {(1,4.9) (3,4.6) (5,4.3) (7,4.0) (9,3.7)};
+\node[font=\scriptsize\sffamily\bfseries,AccentTeal,right] at (9.1,3.5) {ESP32};
+% STM32L4 line (increasing: low power = higher score)
+\draw[line width=1.8pt,vdefine,smooth] plot coordinates {(1,3.4) (3,3.7) (5,4.0) (7,4.3) (9,4.6)};
+\node[font=\scriptsize\sffamily\bfseries,vdefine,right] at (9.1,4.6) {STM32L4};
+% ATmega line (middle, slight increase)
+\draw[line width=1.2pt,MinesSilver,smooth,densely dashed] plot coordinates {(1,3.5) (3,3.6) (5,3.7) (7,3.8) (9,3.9)};
+\node[font=\scriptsize\sffamily,MinesSilver,right] at (9.1,4.1) {ATmega};
+% Current weight marker
+\draw[densely dotted,WarnOrange,line width=0.8pt] (4,0) -- (4,5.0);
+\node[font=\tiny\sffamily\bfseries,WarnOrange,fill=white,inner sep=1pt] at (4,5.0) {Current: 0.25};
+% Crossover point
+\fill[diagRed] (6.2,4.15) circle (2.5pt);
+\node[font=\tiny\sffamily,diagRed,above,inner sep=2pt,yshift=2pt] at (6.2,4.15) {Crossover at $\sim$0.35};
+% Robustness annotation
+\draw[<->,line width=0.7pt,AccentTeal] (4,4.35) -- node[right,font=\tiny\sffamily,AccentTeal,fill=white,inner sep=1pt]{Margin} (4,3.85);
+\end{tikzpicture}
+\caption{Sensitivity analysis for the MCU trade study. The ESP32 remains the winner until the ``Power consumption'' weight exceeds $\sim$0.35 (40\% above the assigned value). This large margin to crossover confirms the selection is robust. When the margin is small ($<$0.05), prototype both finalists.}\label{fig:sensitivity}
+\end{figure}
+
+\textbf{Decision}: ESP32. Despite higher power draw, the built-in Wi-Fi eliminates a separate module (\$8 saved, one fewer interface, one fewer failure mode). For battery life, use deep sleep\index{deep sleep (ESP32)} aggressively (Section~12.4).
+
+\section{Requirements-to-Architecture Flow}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_design_flow.png}
+\caption{Five-stage design flow: stakeholder needs $\to$ requirements $\to$ functional decomposition $\to$ trade studies $\to$ architecture.}\label{fig:flow}
+\end{figure}
+
+The five stages produce specific deliverables: ConOps, requirements document, functional tree, trade study reports, and architecture document (block diagrams + BOM + ICDs). V\&V results feed backward through the chain when failures occur.
+
+
+\begin{greenshieldbox}[GreenShield: Functional Decomposition]
+\textbf{Top-level function}: Protect greenhouse crops from frost damage.
+
+Decomposition:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Sense Environment} $\to$ Measure Air Temp, Measure Soil Temp, Detect Heater Status
+\item \textbf{Process Data} $\to$ Compare to Setpoint, Apply Hysteresis, Log Data
+\item \textbf{Control Actuator} $\to$ Activate/Deactivate Heater Relay
+\item \textbf{Communicate Status} $\to$ Send SMS Alert, Display Local Status, Receive Remote Commands
+\item \textbf{Provide Power} $\to$ Regulate Supply Voltage, Manage Battery, Protect Circuits
+\end{itemize}
+Each leaf function maps to a physical component. ``Measure Air Temp'' $\to$ DS18B20 sensor. ``Regulate Supply Voltage'' $\to$ 5\,V buck converter\index{buck converter}.
+
+\textbf{Worked Example. GreenShield Architecture}: Grouping functions into subsystems yields: Sensor subsystem (DS18B20 + soil probe), Controller subsystem (ESP32), Actuator subsystem (relay\index{relay} + heater), Communications subsystem (SIM800L GSM module), and Power subsystem (12\,V adapter + 5\,V buck + 3.3\,V LDO\index{LDO (Low Dropout Regulator)}).
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: Sec.\ 4.2 (System Requirements Definition), Sec.\ 4.3 (Architecture Definition).
+\item \textbf{NASA SP-2016-6105 Rev 2}: Ch.\ 4.2 (Technical Requirements Definition), Ch.\ 4.3 (Logical Decomposition).
+\item \textbf{IEEE 1233}: Guide for developing system requirements specifications.
+\end{itemize}
+\end{keyconceptbox}
+
+\section{Artifact Handoff: What Chapter 2 Produces}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Artifact} & \textbf{Description} & \textbf{Forward Reference} \\
+\midrule
+SDRD & System requirements with traceability and V\&V assignments & Ch.~3--6, PDR baseline \\
+Functional Decomposition & Function tree from mission to leaf functions & Ch.~3 (concept generation) \\
+Allocation Matrix & Functions mapped to physical modules & Ch.~5 (integration) \\
+Trade Study Reports & Weighted decision matrices with sensitivity analysis & Ch.~3, PDR \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\begin{greenshieldbox}[GreenShield: Functional Decomposition]
+\textbf{Top-level function}: Protect greenhouse crops from frost damage.
+
+Decomposition:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Sense Environment} $\to$ Measure Air Temp, Measure Soil Temp, Detect Heater Status
+\item \textbf{Process Data} $\to$ Compare to Setpoint, Apply Hysteresis, Log Data
+\item \textbf{Control Actuator} $\to$ Activate Heater Relay, Deactivate Heater Relay
+\item \textbf{Communicate Status} $\to$ Send SMS Alert, Display Local Status, Receive Remote Commands
+\item \textbf{Provide Power} $\to$ Regulate Supply Voltage, Manage Battery, Protect Circuits
+\end{itemize}
+Each leaf maps to a physical component. ``Measure Air Temp'' $\to$ DS18B20 sensor. ``Regulate Supply Voltage'' $\to$ 5\,V buck converter.
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: \S4.2 System Requirements Definition, \S4.3 Architecture Definition.
+\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~4.2 Technical Requirements, Ch.~4.3 Logical Decomposition.
+\item \textbf{IEEE 1233}: Guide for developing system requirements specifications.
+\end{itemize}
+\end{keyconceptbox}
+
+\section{Writing Good Requirements: Advanced Techniques}
+\subsection{The SHALL/SHOULD/MAY Hierarchy}
+\textbf{SHALL}: mandatory requirement. The system must satisfy it. Non-compliance is a deficiency that must be resolved. ``The system shall operate on 12\,V DC $\pm$10\%.''
+
+\textbf{SHOULD}: desired but not mandatory. Non-compliance is noted but does not block acceptance. ``The enclosure should be splash-resistant to IP44.''
+
+\textbf{MAY}: optional. Implemented if time and budget permit. ``The system may include a wireless data logging mode.''
+
+Every requirement must use one of these three verbs. Avoid ``will,'' ``can,'' ``is,'' and other ambiguous verbs that obscure whether the requirement is mandatory.
+
+\subsection{Requirement Attributes}
+Each requirement in the SDRD should have the following attributes:
+
+\textbf{ID}: unique identifier (SYS-001, MECH-003, SW-012). The prefix indicates the domain; the number is sequential.
+
+\textbf{Text}: the ``shall'' statement, precisely worded.
+
+\textbf{Rationale}: why this requirement exists. Traces to a stakeholder need, a safety standard, a physics constraint, or a design decision.
+
+\textbf{Verification method}: how compliance will be demonstrated (Test, Analysis, Inspection, or Demonstration).
+
+\textbf{Priority}: critical (must have for MVP), important (should have), or desirable (nice to have).
+
+\textbf{Parent}: the higher-level requirement from which this one is derived. System requirements derive from stakeholder needs; subsystem requirements derive from system requirements.
+
+\subsection{Deriving Subsystem Requirements}
+System-level requirements must be decomposed into subsystem requirements that individual team members can design to:
+
+System: ``The system shall maintain temperature at $50 \pm 1$\,\degC{}.''
+
+Derived sensor: ``The temperature sensor shall have accuracy $\leq \pm 0.3$\,\degC{} over $20$--$80$\,\degC{}.''
+
+Derived controller: ``The PID controller shall reduce steady-state error to $< 0.5$\,\degC{}.''
+
+Derived actuator: ``The heater shall provide $\geq 50$\,W of thermal power.''
+
+Derived power: ``The power supply shall deliver $\geq 5$\,A at 12\,V.''
+
+Each derived requirement traces to the parent and, through the parent, to the stakeholder need. This traceability chain is essential for justifying every design decision and for verifying that the complete system meets user expectations.
+
+\section{Architecture: Making the Right Decisions}
+\subsection{Functional vs.\ Physical Architecture}
+The \textbf{functional architecture} describes what the system does, decomposed into functions (sense, process, actuate, communicate, power). It is independent of how those functions are implemented.
+
+The \textbf{physical architecture} maps functions to physical components. ``Sense temperature'' $\to$ Type~K thermocouple + INA128 amplifier + ESP32 ADC\index{ADC (analog-to-digital converter)}. ``Actuate heater'' $\to$ SSR + 200\,W ceramic heater. The physical architecture makes the design concrete and testable.
+
+\subsection{Interface Control Documents (ICD)}
+An ICD defines the physical, electrical, and data interfaces between two subsystems. For each interface:
+
+\textbf{Mechanical}: mating features, bolt pattern, gasket requirements, alignment tolerances.
+
+\textbf{Electrical}: signal names, voltage levels, current requirements, connector type and pinout, cable length and shielding.
+
+\textbf{Data}: protocol (I2C\index{I2C}, SPI, UART\index{UART}, WiFi), data format, message rate, error handling.
+
+ICDs are contracts between subsystem teams. Once agreed upon, either side can design and build their subsystem independently, confident that they will connect correctly at integration. Without ICDs, integration is chaos.
+
+\subsection{Architecture Tradeoff Analysis}
+When multiple architectures are feasible, use a tradeoff matrix (Pugh matrix\index{Pugh matrix}) to evaluate them systematically:
+
+(1) List the evaluation criteria (cost, complexity, reliability, performance, schedule risk).
+
+(2) Weight each criterion by importance (1--5 scale).
+
+(3) Score each architecture against each criterion (1--5 scale).
+
+(4) Multiply weights $\times$ scores and sum.
+
+(5) The highest total score is the recommended architecture, but examine the scores for any criterion where the recommended option is significantly worse than an alternative (potential deal-breaker).
+
+Document the tradeoff analysis in the PDR package. The review board wants to see that the architecture was chosen through engineering analysis, not by default or by the loudest team member's preference.
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Rewrite this bad requirement as a well-formed shall-statement: ``The system should be fast and accurate.''
+\item A system requirement states ``shall measure temperature to $\pm$0.5\,$^{\circ}$ C.'' Decompose this into three subsystem requirements for the sensor, ADC, and display subsystems.
+\item Your project has a requirement: ``shall use an Arduino Mega 2560.'' Is this a valid requirement? Why or why not? Rewrite it properly.
+\item Explain the difference between forward and backward traceability. Why do you need both?
+\item Create a weighted decision matrix comparing three MCU options for a battery-powered sensor node. Define at least five criteria with weights.
+\item Why should you perform functional decomposition BEFORE selecting physical components?
+\item A trade study produces scores of 3.80 vs.\ 3.75. What should you do before accepting the winner?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Two requirements: ``SYS-REQ-001: The system shall respond to user input within 200\,ms of activation.'' ``SYS-REQ-002: The system shall measure ambient temperature with accuracy of $\pm$0.5\,$^{\circ}$ C.''
+\item (a) ``The sensor shall output a signal proportional to temperature with linearity $\leq \pm$0.2\,$^{\circ}$ C over $-20$ to $+60$\,$^{\circ}$ C.'' (b) ``The ADC shall digitize the sensor signal with resolution $\leq$0.1\,$^{\circ}$ C and total error $\leq \pm$0.15\,$^{\circ}$ C.'' (c) ``The display shall present the temperature value with update rate $\geq$1\,Hz and display resolution of 0.1\,$^{\circ}$ C.'' Note: $\sqrt{0.2^2+0.15^2+\text{display}}$ $<$ 0.5\,$^{\circ}$ C RSS.
+\item Not valid; it specifies implementation (HOW) rather than need (WHAT). Rewrite: ``SYS-REQ-XXX: The controller shall provide $\geq$12 analog input channels, $\geq$4 serial interfaces, and $\geq$256\,KB flash memory. Rationale: sensor count and communication needs.''
+\item Forward: parent $\to$ children. Checks completeness, every requirement is decomposed. Backward: child $\to$ parent. Checks justification, every spec traces to a need. Without forward, requirements go unimplemented. Without backward, unnecessary work gets done.
+\item Criteria might include: power consumption (0.25), analog channels (0.20), cost (0.20), flash/RAM (0.15), ecosystem/library support (0.10), package size (0.10). Options: STM32L4, ESP32, ATmega328P.
+\item Functions are stable across implementations. Decomposing functionally separates the problem space from the solution space, enabling objective trade studies. Jumping to hardware locks the design before alternatives are explored.
+\item Sensitivity analysis: vary each weight by $\pm$0.05 and check if the winner changes. A 0.05 margin is very tight. Investigate the criteria where the options diverge most. Consider prototyping both finalists.
+\end{enumerate}
+

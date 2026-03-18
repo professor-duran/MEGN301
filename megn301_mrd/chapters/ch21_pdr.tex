@@ -1,0 +1,237 @@
+\chapter{Preliminary Design Review (PDR)}\label{ch:pdr}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~2}: Read this chapter in full one week before your PDR presentation. Use the deliverables checklist (Figure~\ref{fig:pdr_checklist}) to audit your package. \textbf{Before PDR}: Run the litmus test: ``Could a different team arrive at the same concept selection?''
+\end{tipbox}
+
+
+\vspace{1em}
+
+The PDR (first gate in Figure~\ref{fig:review_progression}) answers one question: \textbf{``Should this design work?''} It evaluates whether the team has correctly identified the problem, written verifiable requirements, explored the solution space, and selected a concept that is technically feasible, economically viable, and schedule-achievable.
+
+\vspace{1em}
+
+\section{Purpose and Scope}
+PDR is the first formal gate. It confirms that the team has done enough front-end work to justify moving into detailed design and procurement. A team that passes PDR has \emph{earned} the right to spend project funds. A team that fails PDR is redirected before wasting money on a flawed concept.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    dbox/.style={rectangle, rounded corners=2pt, draw=vdefine, fill=vdefine!6,
+        text width=4.0cm, minimum height=0.6cm, align=left,
+        font=\tiny\sffamily, line width=0.5pt, inner sep=4pt},
+    check/.style={font=\tiny\sffamily\bfseries, color=AccentTeal},
+    hdr/.style={font=\small\sffamily\bfseries, color=vdefine}
+]
+% Header
+\node[hdr] at (4.5,6.5) {PDR Deliverables Checklist};
+
+% Column 1
+\node[check] at (-0.3,5.8) {Problem \& Stakeholders};
+\node[dbox] (d1) at (2.0,5.3) {$\square$ Five-element problem statement};
+\node[dbox] (d2) at (2.0,4.6) {$\square$ Stakeholder map (power/interest)};
+\node[dbox] (d3) at (2.0,3.9) {$\square$ ConOps (normal + degraded)};
+\node[dbox] (d4) at (2.0,3.2) {$\square$ Competitive analysis (3--5 products)};
+\node[dbox] (d5) at (2.0,2.5) {$\square$ Context diagram};
+
+\node[check] at (-0.3,1.8) {Requirements};
+\node[dbox] (d6) at (2.0,1.3) {$\square$ SDRD v1.0 baselined};
+\node[dbox] (d7) at (2.0,0.6) {$\square$ Traceability (fwd + bwd)};
+\node[dbox] (d8) at (2.0,-0.1) {$\square$ All reqs pass quality checklist};
+
+% Column 2
+\node[check] at (5.2,5.8) {Concept Selection};
+\node[dbox] (d9) at (7.5,5.3) {$\square$ Morphological chart};
+\node[dbox] (d10) at (7.5,4.6) {$\square$ $\geq$3 concepts sketched};
+\node[dbox] (d11) at (7.5,3.9) {$\square$ Pugh screening matrix};
+\node[dbox] (d12) at (7.5,3.2) {$\square$ Weighted decision matrix};
+\node[dbox] (d13) at (7.5,2.5) {$\square$ Sensitivity analysis};
+
+\node[check] at (5.2,1.8) {Risk \& Test Plan};
+\node[dbox] (d14) at (7.5,1.3) {$\square$ Risk register ($\geq$5 risks)};
+\node[dbox] (d15) at (7.5,0.6) {$\square$ VCRM with methods assigned};
+\node[dbox] (d16) at (7.5,-0.1) {$\square$ $\geq$3 test procedures drafted};
+
+% Litmus test box at bottom
+\node[rectangle, rounded corners=3pt, draw=WarnOrange, fill=WarnOrange!8,
+    text width=9.0cm, minimum height=0.7cm, align=center,
+    font=\scriptsize\sffamily\bfseries, line width=0.8pt] at (4.5,-1.0)
+    {Litmus Test: Could a different team arrive at the same concept selection?};
+\end{tikzpicture}
+\caption{PDR deliverables checklist. Every item must be complete before the review. The litmus test at the bottom is the ultimate self-check: if a different engineering team reading only your PDR package would independently reach the same concept selection, your PDR is defensible.}\label{fig:pdr_checklist}
+\end{figure}
+
+\section{Deliverables}
+
+\subsection{Problem Definition and Background Research}
+Complete five-element problem statement, stakeholder map with engagement strategies, ConOps with at least two operational scenarios (normal and degraded), competitive analysis (3--5 existing solutions with identified gap), and context diagram showing system boundary and external interfaces.
+
+\subsection{System Requirements and Traceability}
+SDRD (v1.0) with all system-level requirements. Each requirement has: unique ID, shall-statement, measurable acceptance criteria, rationale, verification method (T/A/I/D), and parent traceability to a stakeholder need. Forward and backward traceability demonstrated. No orphan requirements. No undecomposed parents.
+
+\subsection{Concept Development and Selection}
+Evidence of divergent thinking (see the full checklist in Figure~\ref{fig:pdr_checklist}): morphological chart with $\geq$4 functions and $\geq$3 options each. Three or more distinct concepts developed to sketch/block-diagram level. Pugh screening matrix showing systematic elimination. Weighted decision matrix for final selection with sensitivity analysis. The selected concept must be clearly justified by the data, not by team preference.
+
+\subsection{Risk and Feasibility}
+Risk register with $\geq$5 identified risks, each rated by probability and impact. Mitigation strategy for every high/medium risk. Feasibility assessment against four lenses: technical, economic, schedule, and operational. Any feasibility failure requires resolution before PDR.
+
+\subsection{Initial Test Plan}
+VCRM with all requirements listed and verification methods assigned. At least three test procedures drafted in full (all 10 sections). Equipment and facility needs identified. Test schedule aligned with integration timeline.
+
+
+
+\subsection{Concept Development and Selection: Detail}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Reverse engineering analysis}: Documented disassembly and analysis of the COTS product, including component inventory, interface inventory, and constraints on the add-on system. Photographs of each disassembly step. Block diagram showing subsystem connections.
+\item \textbf{Concept generation evidence}: Morphological chart built from functional decomposition with $\geq$3 options per function. Evidence that divergent techniques (brainstorming, SCAMPER, bio-inspired) were used. Sketches of at least 3 distinct concepts.
+\item \textbf{Concept screening}: Pugh matrix showing qualitative evaluation against a datum.
+\item \textbf{Trade study}: Weighted decision matrix with criteria from requirements, documented weight rationale, data-backed ratings, sensitivity analysis, and clear recommendation.
+\item \textbf{Preliminary architecture}: Block diagram of selected concept showing subsystems, interfaces, and allocated functions.
+\end{itemize}
+
+\subsection{Budget and Schedule}
+A preliminary budget showing: component costs (from actual vendor quotes, not estimates), fabrication costs (3D printing, PCB, machining), procurement shipping, and a 15--20\% contingency. A project schedule (Gantt chart or sprint plan) with milestones, dependencies, and critical path identified. Demonstrate that the selected concept can be designed, built, and tested within the remaining project timeline.
+
+\subsection{Team Organization}
+Role assignments with clear ownership: who is responsible for each subsystem, who leads integration, who owns V\&V, who manages procurement. A communication plan: meeting cadence, documentation repository, change control process.
+
+
+\section{Evaluation Criteria}
+
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Criterion} & \textbf{What Reviewers Look For} & \textbf{Ref} \\
+\midrule
+Problem clarity & Solution-agnostic? All five elements present? & Ch.~1 \\
+Stakeholder completeness & All nine categories checked? Power/interest grid populated? & Ch.~1 \\
+Requirements quality & One SHALL per req? Quantitative? Testable? Implementation-free? & Ch.~2 \\
+Traceability & Every req traces to a need? Every need has a req? & Ch.~2 \\
+Concept breadth & $\geq$20 concepts before screening? Morph chart complete? & Ch.~3 \\
+Selection rigor & Trade study criteria from reqs? Sensitivity analysis done? & Ch.~3 \\
+Risk identification & High-severity failures flagged? Red-zone risks have mitigation? & Ch.~3 \\
+Test plan completeness & Every req has TAID method and test description? & Ch.~4 \\
+\bottomrule
+\end{tabularx}
+\caption{PDR evaluation criteria.}
+\end{table}
+
+\begin{tipbox}[Common PDR Failures]
+(1) Problem statement is actually a solution statement. (2) Requirements are vague or untestable (``shall be reliable''). (3) Only one concept explored; no evidence of design space exploration. (4) Trade study weights clearly biased to get the ``right'' answer. (5) No risk register or feasibility assessment. (6) BOM is a wish list with no prices, lead times, or vendors.
+\end{tipbox}
+
+\begin{tipbox}[The PDR Litmus Test]
+Could a different team, given only your PDR documents, understand the problem, agree with your concept selection, and begin detailed design without asking you questions? If yes, you pass. If they would need to ask ``what did you mean by\ldots''; you are not ready.
+\end{tipbox}
+
+\section{PDR Purpose and Timing}
+The Preliminary Design Review occurs at approximately the 30--40\% completion point of the design process. At PDR, the team presents a proposed design concept that has been analyzed but not yet built. The purpose is to obtain stakeholder approval to proceed from conceptual design to detailed design and fabrication. PDR is a gate: if the design concept is flawed, it is far cheaper to redirect now than after fabrication.
+
+\section{PDR Content Requirements}
+A complete PDR presentation addresses nine areas:
+
+\textbf{Problem statement and stakeholder needs}: restate the problem being solved and the evidence that it is a real, significant problem. Include stakeholder interview summaries or survey data.
+
+\textbf{Value proposition}: present the feasibility, desirability, viability, and sustainability assessment (Chapter~2). The review board needs confidence that the project is worth pursuing.
+
+\textbf{Requirements (SDRD)}: present the complete System Design Requirements Document with all ``shall'' statements, rationale, and verification methods. Every requirement must be traceable to a stakeholder need.
+
+\textbf{System architecture}: present the functional decomposition, block diagram, interface definitions, and key design decisions. Explain \emph{why} this architecture was chosen over alternatives.
+
+\textbf{Concept of operations (ConOps)}: describe how the system will be used in practice. Walk through a typical use scenario from power-on to shutdown. Include user interactions, failure modes, and recovery procedures.
+
+\textbf{Preliminary design}: present the mechanical layout (CAD models, assembly drawings), electrical schematic (block level, key components identified), and software architecture (state machine, data flow, control algorithm). The design must be detailed enough to estimate feasibility but need not include final component selections or detailed drawings.
+
+\textbf{Risk assessment}: identify the top 5--10 technical risks, their likelihood and impact, and the mitigation strategies. The highest-risk element should have a prototype or analysis demonstrating feasibility (a ``risk-reduction prototype'').
+
+\textbf{Test plan}: present the verification approach for each requirement (Chapter~4). The VCRM should be drafted, with test methods identified for all critical requirements.
+
+\textbf{Project plan}: present the schedule (Gantt chart), budget (BOM estimate), and task assignments for the remaining work. The schedule must be realistic given the team's capacity and the remaining time.
+
+\section{PDR Review Criteria}
+The review board evaluates PDR on four criteria:
+
+\textbf{Completeness}: are all nine content areas addressed? Missing sections indicate incomplete systems engineering.
+
+\textbf{Feasibility}: is the proposed design technically achievable within the project constraints? Are the highest risks identified and mitigated?
+
+\textbf{Requirements quality}: are the requirements testable, unambiguous, and traceable? Are there gaps or contradictions?
+
+\textbf{Readiness to proceed}: is the team prepared to begin detailed design and fabrication? Do they have the skills, tools, and materials?
+
+PDR outcomes: \textbf{Proceed} (design is sound, proceed to detailed design), \textbf{Proceed with conditions} (minor issues to resolve before fabrication begins), or \textbf{Return} (major issues require redesign; re-present at a follow-up review).
+
+\section{Common PDR Failures}
+(1) \textbf{No real stakeholder engagement}: the problem is assumed, not validated. The review board cannot assess desirability without evidence.
+
+(2) \textbf{Requirements are vague}: ``the system shall be fast'' is not testable. ``The system shall respond within 2\,s'' is.
+
+(3) \textbf{Architecture is a component list, not a design}: listing ``ESP32, motor, pump, sensor'' is not architecture. Architecture defines how these components interact, what signals flow between them, and what each subsystem's responsibility is.
+
+(4) \textbf{No risk mitigation}: listing risks without mitigation strategies is acknowledging problems without solving them.
+
+(5) \textbf{Unrealistic schedule}: compressing 15 weeks of work into 8 weeks by assuming everything goes right is not planning; it is wishful thinking.
+\section{The PDR Presentation: Structure and Delivery}
+A PDR presentation typically runs 20--30 minutes plus 10--15 minutes for questions. Structure the presentation to tell a coherent story:
+
+\textbf{Opening (2 min)}: state the problem, the user, and the impact. Make the review board care about the problem before presenting the solution. Use a compelling statistic, user quote, or scenario.
+
+\textbf{Context (3 min)}: competitive landscape, existing solutions, and why they are inadequate. This establishes the gap your product fills.
+
+\textbf{Value proposition (3 min)}: the four-dimension assessment (Chapter~2). Demonstrate that the project is feasible, desirable, viable, and sustainable. This is the ``should we build this?'' argument.
+
+\textbf{Requirements (5 min)}: present the SDRD. Focus on the top 10 requirements that define the product's core performance. Show traceability from stakeholder needs to shall-statements. The full SDRD is in the appendix; do not read every requirement aloud.
+
+\textbf{Architecture and design concept (8 min)}: the heart of the presentation. Show the system block diagram, the mechanical concept (CAD renderings), the electrical concept (block-level schematic), and the software concept (state machine). For each, explain the key design decisions and why this approach was chosen.
+
+\textbf{Risk and mitigation (3 min)}: the top 5 risks with mitigation plans. If you have a risk-reduction prototype (e.g., a proof-of-concept for the most uncertain technical element), demonstrate or show results.
+
+\textbf{Plan forward (3 min)}: Gantt chart, budget, and team responsibilities. Show that the remaining work is planned, resourced, and scheduled realistically.
+
+\subsection{Handling Questions}
+Questions from the review board are not attacks; they are the board's way of stress-testing your design thinking. For each question: (1) restate it to confirm understanding, (2) answer directly with data if available, (3) if you do not know, say so honestly and commit to a follow-up date, (4) do not argue; if the board identifies a real concern, acknowledge it and describe how you will address it.
+
+\section{PDR Deliverables Checklist}
+The following documents must be submitted with the PDR presentation:
+
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item System Design Requirements Document (SDRD) -- complete, numbered, with verification methods
+\item System architecture document -- block diagram, interface definitions, functional decomposition
+\item Concept drawings -- CAD renderings or detailed sketches of the mechanical design
+\item Electrical block diagram -- all subsystems, power flow, signal flow, communication buses
+\item Software architecture -- state machine diagram, data flow, user interface mockup
+\item Risk register -- top 10 risks with probability, impact, and mitigation
+\item Preliminary test plan -- VCRM draft with test methods for all critical requirements
+\item Project plan -- Gantt chart, BOM estimate, budget summary, team assignments
+\item Value proposition summary -- feasibility, desirability, viability, sustainability assessment
+\end{itemize}
+
+\section{Scoring Rubric}
+PDR is typically graded on:
+
+\textbf{Technical depth (40\%)}: quality of requirements, soundness of architecture, appropriateness of design decisions. Are the requirements testable? Is the architecture implementable? Do the design choices reflect engineering analysis, not guesswork?
+
+\textbf{Completeness (25\%)}: are all required deliverables present and substantive? Missing sections receive zero credit. Placeholder sections (``TBD'') receive partial credit only if accompanied by a plan and date for completion.
+
+\textbf{Communication (20\%)}: clarity of the presentation, quality of visual aids, ability to answer questions. Can the review board understand the design without reading the appendix?
+
+\textbf{Project management (15\%)}: realism of the schedule, adequacy of the budget, clarity of team roles. Does the team have a credible plan for completing the project?
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Your team's trade study shows scores of 3.81 vs.\ 3.80 between two concepts. The reviewer challenges your selection. How do you respond?
+\item A team presents a PDR with 15 requirements, all verified by ``Test.'' The reviewer asks why none are verified by Analysis, Inspection, or Demonstration. What is wrong?
+
+\item A team passes PDR but then struggles through CDR because their requirements were actually solutions in disguise (``shall use an Arduino Mega''). How should the PDR reviewer have caught this, and what specific requirement quality test would have flagged it?
+\item Your competitive analysis found no existing product that solves your problem. Does this make your project more or less risky? Explain.
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item A 0.01 margin is within noise. Perform sensitivity analysis: vary each weight by $\pm$0.05 and check if the winner changes. If it does, the selection is not robust. Consider prototyping both finalists or identifying the single criterion that differentiates them and gathering better data on that criterion.
+\item Assigning ``Test'' to everything suggests the team did not think carefully about methods. Physical presence/labeling should be Inspection. Thermal or structural margin should be Analysis. User-observable behavior should be Demonstration. Over-reliance on Test also inflates the test schedule.
+
+\item The PDR reviewer should apply the ``implementation-free'' test from the requirements quality checklist: does this requirement specify WHAT (a capability) or HOW (a specific component)? ``Shall use Arduino Mega'' specifies HOW. The correct requirement: ``The controller shall provide $\geq$12 analog inputs, $\geq$4 serial interfaces, $\geq$256\,KB flash, and support Wi-Fi connectivity.'' This is testable, implementation-free, and allows the trade study to objectively select the best platform.
+\item More risky: either the problem is not real (no one else thinks it needs solving), the problem is too hard (others tried and failed), or your search was inadequate. Investigate which explanation applies. If the problem is real and unsolved, the project has high value but also high technical risk.
+\end{enumerate}
+
+

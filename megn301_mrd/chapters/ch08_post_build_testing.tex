@@ -1,0 +1,203 @@
+\chapter{Post-Build Testing, Verification \& Validation}\label{ch:postbuild}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~5}: Read the full chapter when executing system-level V\&V. Focus on the test execution workflow, non-conformance reports, and root cause analysis. \textbf{Sprint~6}: Use the external testing sections to prepare your handoff package. \textbf{Sprint~7}: Return to the documentation sections when compiling FDR evidence. \textbf{Related}: test planning in Chapter~5 (p.\,\pageref{ch:vv}); debugging methodology in Chapter~20 (p.\,\pageref{ch:debug}).
+\end{tipbox}
+
+\section{Why Testing Is a Separate Engineering Activity}
+Building the system is not the end of the engineering process; it is the beginning of a critical phase that determines whether the system actually works. Testing reveals the gap between what you designed and what you built. Verification asks: ``did we build the product right?'' (does it meet its specifications). Validation asks: ``did we build the right product?'' (does it satisfy the user's actual needs). Both must be answered affirmatively before the system is ready for deployment.
+
+In MEGN~301, this chapter addresses what happens after your GreenShield prototype is assembled and powered on for the first time. The activities described here occur between subsystem integration (Chapter~5) and the Final Design Review (FDR), and they produce the evidence that the FDR review board needs to assess your project's success.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,decision/.style={diamond, draw=WarnOrange, fill=WarnOrange!8, aspect=2.0,
+        text width=1.6cm, align=center, font=\tiny\sffamily\bfseries,
+        inner sep=1pt, line width=0.7pt},
+    arr/.style={->, line width=0.9pt, color=MinesBlue},
+    lbl/.style={font=\tiny\sffamily, fill=white, inner sep=1pt}
+]
+\node[phase=MinesBlue] (plan) at (0,0) {Prepare\\{\tiny Setup, calibrate,\\preconditions}};
+\node[phase=AccentTeal] (exec) at (3.5,0) {Execute Test\\{\tiny Follow procedure,\\record data}};
+\node[decision] (d1) at (7.0,0) {PASS?};
+\node[phase=diagGreen] (pass) at (10.5,0.8) {Document\\PASS\\{\tiny Update VCRM}};
+\node[phase=WarnOrange] (fail) at (10.5,-0.8) {Document\\FAIL\\{\tiny Write NCR}};
+\node[phase=diagRed] (rca) at (10.5,-2.5) {Root Cause\\Analysis\\{\tiny 5 Whys / Fault tree}};
+\node[phase=vdefine] (fix) at (7.0,-2.5) {Corrective\\Action\\{\tiny Fix \& retest}};
+
+\draw[arr] (plan) -- (exec);
+\draw[arr] (exec) -- (d1);
+\draw[arr] (d1) -- node[above,lbl]{Yes} (pass);
+\draw[arr] (d1) -- node[below,lbl]{No} (fail);
+\draw[arr] (fail) -- (rca);
+\draw[arr] (rca) -- (fix);
+\draw[arr] (fix) -- node[left,lbl]{Retest} (exec);
+
+% Annotation
+\node[font=\tiny\sffamily\itshape,MinesSilver,below=0.3cm of plan,text width=2.4cm,align=center] {Ch.~5: Test\\planning};
+\node[font=\tiny\sffamily\itshape,MinesSilver,below right=0.1cm and -0.3cm of fix,text width=2.0cm,align=center] {Ch.~20: Debugging\\methodology};
+\end{tikzpicture}
+\caption{Post-build test execution workflow. Each requirement follows this cycle: prepare the test setup, execute the procedure, evaluate the result, and either document a PASS (updating the VCRM) or a FAIL (triggering root cause analysis and corrective action before retesting). Non-conformance reports (NCRs) document every failure and its resolution.}\label{fig:test_workflow}
+\end{figure}
+
+\section{Test Planning and Documentation}
+\subsection{The Test Plan}
+A test plan is a document (see the execution workflow in Figure~\ref{fig:test_workflow}) that specifies what will be tested, how, by whom, with what equipment, and what constitutes pass/fail. It should be written during the design phase (Chapter~4) and refined during integration. Key elements:
+
+\textbf{Test ID}: unique identifier (e.g., TVR-007 for Test/Verification/Requirement 007).
+
+\textbf{Requirement traced}: the specific ``shall'' statement being verified (from the SDRD).
+
+\textbf{Test method}: one of four categories from systems engineering: Test (T), Analysis (A), Inspection (I), or Demonstration (D).
+
+\textbf{Test procedure}: step-by-step instructions that another engineer could follow to reproduce the test. Include setup, equipment list, input conditions, measurement points, and acceptance criteria.
+
+\textbf{Pass/fail criteria}: quantitative thresholds derived directly from the requirement. ``The motor shall produce at least 0.5\,N$\cdot$m of torque at 500\,RPM'' becomes ``PASS if measured torque $\geq 0.5$\,N$\cdot$m at $500 \pm 10$\,RPM; FAIL otherwise.''
+
+\textbf{Test data record}: a template for recording the raw data, environmental conditions, equipment serial numbers, and tester's name. This is the evidence file for the FDR.
+
+\subsection{Verification Cross-Reference Matrix (VCRM)}
+The VCRM is a table that maps every requirement in the SDRD to its corresponding test. It answers: ``for each requirement, how do we know it is met?'' A gap in the VCRM (a requirement with no corresponding test) means that requirement is unverified; it could be met or not, and nobody knows. An incomplete VCRM is one of the most common deficiencies found at FDR.
+
+\begin{greenshieldbox}[GreenShield Template: VCRM Format]
+\begin{tabularx}{\textwidth}{l l l l l}
+\toprule
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Method} & \textbf{Test ID} & \textbf{Status} \\
+\midrule
+SYS-001 & Shall operate on 12\,V DC & T & TVR-001 & PASS \\
+SYS-002 & Shall weigh $<$2\,kg & I & TVR-002 & PASS \\
+SYS-003 & Shall maintain 50$\pm$1\,\degC{} & T & TVR-003 & FAIL (see NCR-01) \\
+\bottomrule
+\end{tabularx}
+Any FAIL result must be documented in a Non-Conformance Report (NCR) with root cause analysis and corrective action plan.
+\end{greenshieldbox}
+
+\section{Functional Testing}
+Functional testing verifies that each function specified in the requirements is operational. It is the most basic level of testing: does the system do what it is supposed to do?
+
+\textbf{Power-on self-test (POST)}: verify the system initializes correctly. Check: power LED illuminates, MCU boots (serial output or indicator), all sensors report plausible values (not NaN, not railed), all actuators respond to a brief test command (motor spins for 0.5\,s, LED blinks, valve clicks). The POST should be the first thing you run after integration, and it should be automated in firmware.
+
+\textbf{Input-output verification}: for each sensor, apply a known input and verify the output is within the calibrated range. For each actuator, command a known output and verify the physical response. This confirms that the wiring, signal conditioning, firmware, and calibration are all correct.
+
+\textbf{Nominal operation test}: run the system through its normal operating sequence (the ``happy path''). For a temperature controller: set the target, wait for the system to reach setpoint, verify stability, change the setpoint, verify the transition. Document the results with time-stamped data and photographs.
+
+\section{Performance Testing}
+Performance testing measures how well the system performs its functions. It goes beyond ``does it work?'' to ``how well does it work?''
+
+\textbf{Accuracy testing}: compare the system's output to a calibrated reference across the operating range. For a temperature controller: measure the actual temperature with a calibrated reference thermometer at 5--10 setpoints spanning the range. Plot the error (system reading minus reference) vs.\ setpoint. The maximum error must be within the accuracy specification.
+
+\textbf{Repeatability testing}: repeat the same measurement or operation 10--20 times under identical conditions. Compute the standard deviation. The repeatability must be within the specification. If the system meets the accuracy spec on average but has high scatter (poor repeatability), it is unreliable even if individual tests happen to pass.
+
+\textbf{Response time testing}: measure the time from a step input (setpoint change, disturbance) to the output reaching the specified percentage of its final value (typically 90\% or 95\%). Compare to the response time specification. For control systems: measure rise time, settling time, and overshoot from the step response data.
+
+\textbf{Boundary and stress testing}: operate the system at the extremes of its specified range. Test at the maximum and minimum input, the maximum and minimum power supply voltage ($\pm$10\% typical), the maximum and minimum ambient temperature, and the maximum load. Verify that the system still meets all specifications at these extremes. Systems that pass nominal testing but fail at boundaries have insufficient design margin.
+
+\section{Environmental and Robustness Testing}
+\textbf{Vibration and shock}: for portable or vehicle-mounted systems, shake or drop the system and verify continued operation. Even a brief vibration test (hand-shake the enclosure while monitoring sensor outputs) reveals loose connections, poorly secured components, and resonant structural elements.
+
+\textbf{Thermal cycling}: if the system will operate in varying temperatures, cycle it between the temperature extremes 5--10 times and verify operation at each extreme. Thermal cycling stresses solder joints, connector contacts, and adhesive bonds.
+
+\textbf{EMI susceptibility}: operate the system near a running motor, a switching power supply, or a cell phone transmitting. Monitor sensor outputs for noise, glitches, or erroneous readings. If the system is sensitive to EMI, improve shielding and grounding before deployment.
+
+\textbf{Water and dust exposure}: if the system will operate outdoors or in industrial environments, test resistance to splash (IP rating). Even a brief spray test reveals unsealed enclosure joints, exposed connectors, and inadequate conformal coating.
+
+\section{Validation: Does It Solve the Problem?}
+Verification confirms the system meets its specifications. Validation confirms the specifications themselves are correct: that meeting them actually solves the user's problem. Validation is harder because it requires engagement with real users in realistic conditions.
+
+\textbf{User acceptance testing (UAT)}: give the system to a representative user (not a team member) and observe them operating it. Note: where they hesitate, what they do wrong, what they find confusing, and whether the outcome meets their expectations. The user's experience often reveals requirements that were missed or misinterpreted.
+
+\textbf{Field trial}: operate the system in its intended environment for an extended period (days to weeks). Monitor for degradation, unexpected failure modes, environmental effects, and user feedback. The field trial often reveals issues that laboratory testing cannot: intermittent failures, long-term drift, user workflow conflicts, and environmental exposures not anticipated in the test plan.
+
+\textbf{Stakeholder review}: present the test results to all stakeholders (user, sponsor, advisor, safety officer) and obtain explicit acceptance. The FDR serves this function in MEGN~301.
+
+\section{Non-Conformance and Corrective Action}
+When a test fails, the response follows a structured process:
+
+(1) \textbf{Document the failure}: what was tested, what was expected, what was observed, and what the deviation is. This is the Non-Conformance Report (NCR).
+
+(2) \textbf{Root cause analysis}: why did it fail? Use the ``5 Whys'' technique: ask ``why'' iteratively until the root cause (not just the symptom) is identified. ``The motor stalled'' $\to$ why? ``Insufficient torque'' $\to$ why? ``Current limited by the MOSFET driver'' $\to$ why? ``Gate voltage only 3.3\,V, MOSFET needs 5\,V for full enhancement'' $\to$ root cause: wrong MOSFET selected for 3.3\,V logic.
+
+(3) \textbf{Corrective action}: fix the root cause, not just the symptom. Replace the MOSFET with a logic-level type, not just increase the motor voltage.
+
+(4) \textbf{Retest}: after the corrective action, retest the specific requirement that failed. Also retest any related requirements that could have been affected by the change (regression testing\index{regression test}).
+
+(5) \textbf{Close the NCR}: document the corrective action taken, the retest results, and the final disposition (PASS after rework, or Accept-as-is with justification, or Reject/Redesign).
+
+\section{Test Report and FDR Evidence Package}
+The test report is the primary evidence document for the FDR. It should include:
+
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item Test plan (what was supposed to be tested)
+\item VCRM with status of each requirement (PASS/FAIL/UNTESTED)
+\item Raw test data with timestamps, equipment used, and environmental conditions
+\item Photographs and videos of key tests
+\item Analysis of any failed tests (NCRs with root cause and corrective action)
+\item Summary statistics (number of requirements, number verified, number of failures, number of open NCRs)
+\item Conclusion: overall system readiness assessment
+\end{itemize}
+
+\begin{warningbox}[Test What You Ship, Ship What You Test]
+The system presented at FDR must be the same system that was tested. Any modification made after testing (even a ``minor'' firmware update or a ``quick'' wiring fix) invalidates the test results for any requirement that could be affected by the change. If you make changes after testing, retest the affected requirements and update the test report.
+\end{warningbox}
+
+\section{Test Equipment for MEGN 301}
+The following equipment is available in the MEGN~301 lab and should be used for post-build testing:
+
+\textbf{Digital multimeter\index{multimeter} (DMM)}: measures DC/AC voltage, current, and resistance. Use for: verifying power supply voltages, checking continuity\index{continuity check} of wiring, measuring motor current draw, and validating sensor output ranges. Accuracy: $\pm$0.5\% for DC voltage, adequate for most checks.
+
+\textbf{Oscilloscope}: visualizes time-varying signals. Use for: verifying PWM frequency and duty cycle, checking for noise on sensor signals, measuring signal rise times, debugging communication buses (UART, I2C, SPI), and observing motor drive waveforms. The oscilloscope reveals problems invisible to the DMM: ringing, noise spikes, ground bounce, and timing errors.
+
+\textbf{Function generator}: produces known waveforms (sine, square, triangle) for input to the system. Use for: testing filter frequency response, verifying amplifier gain and bandwidth, and simulating sensor signals during software development (before the real sensor is available).
+
+\textbf{Power supply (bench)}: provides adjustable, current-limited DC voltage. Use for: powering the system during testing (before batteries are connected), varying the supply voltage to test robustness ($\pm$10\% supply variation), and current-limiting to prevent damage during initial power-on.
+
+\textbf{Reference instruments}: calibrated thermometer, precision weights, calibrated pressure source, or other reference standards appropriate to the measurand. Use for: accuracy verification tests.
+
+\section{Automated Testing}
+For systems with many requirements or repetitive test procedures, automate the testing through firmware:
+
+\textbf{Built-in self-test (BIST)}: firmware routine that exercises each subsystem and reports pass/fail. Run BIST after every firmware update and before every demonstration. The BIST results are logged with timestamp and can be included in the FDR evidence package.
+
+\textbf{Automated data collection}: for accuracy and repeatability tests, program the MCU to automatically cycle through setpoints, record measurements, and compute statistics. This eliminates operator variability and produces consistent, timestamped data.
+
+\textbf{Regression testing}: after any design change (firmware update, component substitution, wiring modification), re-run the full automated test suite to verify that the change did not break previously passing requirements. This is called regression testing and is standard practice in software engineering.
+
+\section{Statistical Analysis of Test Results}
+Test results must be analyzed statistically to determine whether requirements are met:
+
+\textbf{Accuracy}: compute the mean error (bias) and the standard deviation (scatter) across the calibration range. The total accuracy (95\% confidence) is: $|$bias$| + 2s$. This must be within the accuracy requirement.
+
+\textbf{Repeatability}: compute the standard deviation of $N$ repeated measurements at the same condition. The repeatability (95\%) is $2s$. Compare to the repeatability requirement.
+
+\textbf{Response time}: from $N$ step-response tests, compute the mean and standard deviation of the settling time. Report as mean $\pm 2s$. The upper bound (mean $+ 2s$) must be within the response time requirement to ensure 95\% of responses meet the spec.
+
+\textbf{Pass/fail decision}: a requirement is ``PASS'' only if the measured performance meets the specification with the stated confidence level. If the measured value is right at the specification limit (e.g., accuracy $= 1.0$\,\degC{} against a $\leq 1.0$\,\degC{} requirement), consider whether measurement uncertainty could place the true performance above the limit. A result that passes only because of favorable measurement noise is not truly passing.
+
+\section{Common Testing Mistakes}
+(1) \textbf{Testing in ideal conditions only}: the lab is 22\,\degC{}, the power supply is clean, there is no vibration. The real environment may be different. Test at the specified environmental extremes.
+
+(2) \textbf{Confirming instead of testing}: the tester expects a pass and interprets ambiguous results as passing. Use blind testing (the tester does not know which condition is being measured) or automated testing to eliminate bias.
+
+(3) \textbf{Insufficient sample size}: one successful test does not prove the requirement is met. Perform $\geq 10$ repetitions for statistical validity.
+
+(4) \textbf{Not documenting failures}: a test that fails and is ``fixed'' without documentation is a lost learning opportunity and an audit risk. Every failure must be documented in an NCR.
+
+(5) \textbf{Testing the demo, not the requirement}: the team demonstrates that the system ``works'' but does not verify the specific quantitative requirements. ``It controls temperature'' is not evidence that ``it controls temperature to $\pm$1\,\degC{}.''
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Your system has 25 requirements in the SDRD. You have completed testing on 20 of them (18 PASS, 2 FAIL). What is your verification coverage? What should you present at FDR regarding the 5 untested requirements?
+\item A test reveals that your temperature controller maintains $50 \pm 2.5$\,\degC{} against a requirement of $50 \pm 1$\,\degC{}. Write an NCR: document the non-conformance, propose a root cause, and suggest a corrective action.
+\item Explain the difference between verification and validation using the GreenShield project as an example. Give one specific test for each.
+\item Your system passes all laboratory tests but fails during the first outdoor field trial due to direct sunlight heating the enclosure above the operating temperature limit. What type of testing should have been included in the test plan to catch this?
+\item Design a power-on self-test (POST) sequence for a system with: one temperature sensor, one motor, one pump, one LCD display, and an ESP32 microcontroller. List each check and the expected result.
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Verification coverage $= 20/25 = 80\%$. At FDR: present the 18 PASS results, the 2 FAIL results with NCRs and corrective action status, and a plan for completing the 5 untested requirements (schedule, resources needed). The FDR board may conditionally accept the design with a requirement to complete the remaining tests by a specified date.
+\item NCR: Requirement SYS-TEMP-001 specifies $50 \pm 1$\,\degC{}. Measured: $50 \pm 2.5$\,\degC{} over 30 minutes. Deviation: $1.5\times$ the allowable tolerance. Root cause: PID integral gain too low, allowing slow oscillation. Corrective action: increase $K_i$ from 0.3 to 0.8 and add derivative action ($K_d = 2$). Retest after tuning.
+\item Verification: ``The system shall maintain temperature within $\pm$1\,\degC{} of setpoint.'' Test: measure the temperature with a calibrated reference at the setpoint for 30 minutes. This verifies the specification is met. Validation: ``The system shall keep the user's beverage at a comfortable drinking temperature.'' Test: give the system to 5 users with their beverages. Observe whether they find the temperature satisfactory. This validates that the specification itself is correct (maybe $\pm$1\,\degC{} at 50\,\degC{} is not what users actually want; they might prefer 60\,\degC{}).
+\item Environmental testing: specifically, solar radiation (thermal loading) testing. The test plan should have included a test with a heat lamp simulating solar heating to characterize the enclosure temperature rise under direct sunlight. Additionally, the requirements should have specified the environmental conditions (max ambient + solar load), and the thermal design should have included sun shielding or ventilation.
+\item POST sequence: (1) LCD: display ``POST\ldots'' (visual confirmation display works). (2) Temperature sensor: read value; PASS if 10--40\,\degC{} (plausible room temperature); FAIL if $<$0 or $>$50 or NaN. (3) Motor: energize for 0.5\,s at 20\% PWM; PASS if current draw detected ($>$50\,mA); FAIL if zero current (open circuit) or $>$2\,A (short). (4) Pump: energize for 0.5\,s; PASS if current draw in expected range. (5) ESP32 WiFi: scan for networks; PASS if $\geq$1 network found. (6) Display results: ``POST PASS'' (all green) or list failures in red.
+\end{enumerate}
+% ================================================================

@@ -1,0 +1,28 @@
+\section{Sprint 7 -- Prototype Refinement and Retesting}
+%=============================================================================
+
+\begin{priorities}
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
+    \item Fix every issue identified in external testing, prioritized by impact on core requirements.
+    \item Re-test every fix before the final presentation.
+    \item Begin drafting the final report and presentation---do not treat this sprint as a break.
+\end{enumerate}
+\end{priorities}
+
+\begin{faqbox}[Q: There are no formal submissions for Sprint~7. What should I be doing?]
+Three things: (1) address every issue identified during external team testing, (2) prepare your Final Design Oral Presentation, and (3) begin drafting your Final Design Report. This sprint is your buffer---use it wisely. Teams that treat Sprint~7 as a vacation week invariably produce weaker final deliverables.
+\end{faqbox}
+
+\begin{tipbox}
+Prioritize fixes by impact. If external testing revealed that a core requirement failed, fix that first. Cosmetic issues and nice-to-haves come last. Make sure any fixes are re-tested before the final presentation. After each re-test, update your VCRM with the new results---this ensures the final VCRM is complete and current when you submit it as part of the FDR package.
+\end{tipbox}
+
+\begin{warnbox}
+\textbf{Regression-test after every fix.} Any change to your system---firmware update, component swap, wiring modification---may break something that previously worked. After implementing each fix, re-run all tests affected by that change. A fix to the motor driver firmware might shift the EMI spectrum and corrupt your sensor ADC readings. Without regression testing, you may fix one problem and silently introduce three others. Use your VCRM to track which requirements need re-verification after each change.
+\end{warnbox}
+
+\begin{protip}
+As you refine your prototype and prepare final deliverables, explicitly trace your results back to the course learning outcomes. Can you articulate which design decisions demonstrate your ability to define requirements, analyze trade-offs, manage risk, and verify performance? This traceability matters for course assessment, and it is exactly the kind of reflective practice that will distinguish you in Capstone, senior design, and industry.
+\end{protip}
+
+%=============================================================================

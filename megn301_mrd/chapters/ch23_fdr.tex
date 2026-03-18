@@ -1,0 +1,186 @@
+\chapter{Final Design Review (FDR)}\label{ch:fdr}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~7}: Read this chapter two weeks before FDR. The deliverables checklist (Figure~\ref{fig:fdr_checklist}) is your final audit tool. \textbf{Before FDR}: Run the litmus test: ``Could someone operate, maintain, and retire this system using only your documentation?''
+\end{tipbox}
+
+
+\vspace{1em}
+
+The FDR answers: \textbf{``How well did it work?''} It evaluates the completed system against its original requirements, documents what was built versus what was designed, captures lessons learned\index{lessons learned}, and delivers the operations and maintenance package.
+
+\vspace{1em}
+
+\section{Purpose and Scope}
+FDR is the capstone review (see Figure~\ref{fig:fdr_checklist} for the full checklist). It demonstrates that the system meets (or acknowledges deviation from) every requirement, provides complete as-built documentation, and delivers everything the stakeholder needs to operate and maintain the system independently.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    dbox/.style={rectangle, rounded corners=2pt, draw=vverify, fill=vverify!6,
+        text width=4.0cm, minimum height=0.6cm, align=left,
+        font=\tiny\sffamily, line width=0.5pt, inner sep=4pt},
+    check/.style={font=\tiny\sffamily\bfseries, color=AccentTeal},
+    hdr/.style={font=\small\sffamily\bfseries, color=vverify}
+]
+\node[hdr] at (4.5,7.2) {FDR Deliverables Checklist};
+
+% Column 1
+\node[check] at (-0.3,6.5) {V\&V Evidence};
+\node[dbox] at (2.0,6.0) {$\square$ VCRM 100\% complete};
+\node[dbox] at (2.0,5.3) {$\square$ Test data for every requirement};
+\node[dbox] at (2.0,4.6) {$\square$ Root cause for any FAIL/PARTIAL};
+\node[dbox] at (2.0,3.9) {$\square$ Stakeholder validation evidence};
+
+\node[check] at (-0.3,3.2) {As-Built Documentation};
+\node[dbox] at (2.0,2.7) {$\square$ As-built BOM (actual, not planned)};
+\node[dbox] at (2.0,2.0) {$\square$ As-built schematics + CAD};
+\node[dbox] at (2.0,1.3) {$\square$ As-designed vs.\ as-built table};
+\node[dbox] at (2.0,0.6) {$\square$ Firmware with version tag};
+
+% Column 2
+\node[check] at (5.2,6.5) {O\&M Package};
+\node[dbox] at (7.5,6.0) {$\square$ Quick-start guide (1 page)};
+\node[dbox] at (7.5,5.3) {$\square$ Operating manual};
+\node[dbox] at (7.5,4.6) {$\square$ Maintenance manual + schedule};
+\node[dbox] at (7.5,3.9) {$\square$ Troubleshooting guide};
+\node[dbox] at (7.5,3.2) {$\square$ Spare parts list};
+
+\node[check] at (5.2,2.5) {Process \& Reflection};
+\node[dbox] at (7.5,2.0) {$\square$ Decision log + change log};
+\node[dbox] at (7.5,1.3) {$\square$ Risk register (final status)};
+\node[dbox] at (7.5,0.6) {$\square$ Lessons learned (specific, not generic)};
+
+% Litmus test
+\node[rectangle, rounded corners=3pt, draw=WarnOrange, fill=WarnOrange!8,
+    text width=9.0cm, minimum height=0.7cm, align=center,
+    font=\scriptsize\sffamily\bfseries, line width=0.8pt] at (4.5,-0.3)
+    {Litmus Test: Could someone operate, maintain, and eventually retire this system using only your FDR package?};
+\end{tikzpicture}
+\caption{FDR deliverables checklist. The litmus test: if someone could operate, maintain, troubleshoot, and eventually retire the system using only your FDR documentation, your package is complete.}\label{fig:fdr_checklist}
+\end{figure}
+
+\section{Deliverables}
+
+\subsection{System Verification and Validation Results}
+Complete VCRM with every requirement showing PASS, FAIL (with Discrepancy Report), or WAIVED (with stakeholder-signed waiver and risk acceptance). For every test: actual measured data (not just ``pass''), number of repetitions, measurement uncertainty, and test conditions. For any FAIL: root cause analysis, attempted corrective actions, and current status. Validation evidence: stakeholder demonstration that the system solves the original problem in realistic operating conditions.
+
+\subsection{Final Design Documentation}
+As-built BOM (what was actually used, not what was planned). As-built schematics reflecting any changes made during integration. As-built CAD models and drawings reflecting any modifications. Firmware source code with version tag and build instructions. All design files archived in a team repository with README.
+
+\subsection{As-Designed vs.\ As-Built Comparison}
+A table comparing the CDR design intent with the actual implementation. Every deviation must be documented with: what changed, why it changed, what impact the change had on requirements, and whether the change was approved under change control. This comparison is the audit trail that demonstrates design discipline.
+
+\subsection{Design Process Documentation}
+Decision log: key decisions made during the project with rationale and alternatives considered. Change log: all changes after CDR baseline with approval records. Risk register: final status of all identified risks (mitigated, accepted, or realized). Lessons learned: what worked, what did not, and what the team would do differently.
+
+\subsection{Operations and Maintenance Materials}
+Quick-Start Guide (1 page, 10-minute setup), Operating Manual (complete reference), Maintenance Manual (procedures with photos), Troubleshooting Guide (symptom-based flowcharts), spare parts list with vendors and lead times, and training materials.
+
+
+\subsection{External Team Testing Results}
+Results from having another team execute at least one of your test procedures. Document: which procedure was tested, what ambiguities the external team identified, what procedure updates resulted, and whether the external team achieved the same results. This is one of the most valuable FDR deliverables; it proves your documentation is truly reproducible.
+
+\subsection{Demonstration Video}
+A 3--5 minute video showing the system operating in its intended environment (or a representative simulation). The video should demonstrate: power-on sequence, normal operation, at least one sensor reading verified against a reference, actuator response to a trigger condition, and communication/alerting function. This video serves as permanent evidence of system functionality.
+
+
+\subsection{As-Designed vs.\ As-Built Comparison: Template}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X X l}
+\toprule
+\textbf{Item} & \textbf{As-Designed (CDR)} & \textbf{As-Built (FDR)} & \textbf{Approved?} \\
+\midrule
+MCU & ESP32-WROOM-32 & ESP32-WROOM-32 & N/A (same) \\
+Temp sensor & DS18B20 & BME280 & CR-003, approved \\
+Enclosure material & ABS (injection mold) & PETG (3D print) & CR-007, approved \\
+Relay & SRD-05VDC & SRD-12VDC & CR-009, \textbf{not approved} \\
+\bottomrule
+\end{tabularx}
+\caption{As-designed vs.\ as-built comparison template.}
+\end{table}
+
+Every deviation must have a Change Request (CR) number, engineering justification, impact assessment on requirements, and approval status. The unapproved relay change (12\,V coil on a 5\,V rail) is a design error that must be resolved.
+
+\subsection{Lessons Learned: Beyond ``Start Earlier''}
+Good lessons learned are specific, actionable, and traceable to evidence:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Bad}: ``We should have communicated better.'' (Vague, no action.)
+\item \textbf{Good}: ``I2C pull-up ownership was undefined in the ICD, causing 8 hours of debugging. Action: every ICD must explicitly state which side provides pull-ups, termination, and bias voltages.'' (Specific problem, specific fix.)
+\item \textbf{Bad}: ``We should have started procurement earlier.'' (Generic.)
+\item \textbf{Good}: ``We ordered the GSM module from AliExpress 3 weeks before CDR. It arrived 2 weeks late due to customs delay. Action: use McMaster-Carr (next-day) or DigiKey (3-day) for critical-path components; international vendors only for non-critical items with 4-week buffer.'' (Specific, actionable.)
+\end{itemize}
+
+\subsection{Reflection and Future Work}
+Honest assessment: did the system solve the original problem? What requirements were not met and why? What would a v2.0 address? What skills did the team develop? This section demonstrates engineering maturity; the ability to critically evaluate your own work.
+
+\section{Evaluation Criteria}
+
+\begin{tipbox}[Common FDR Failures]
+(1) VCRM shows ``PASS'' for requirements that were never actually tested. (2) No measured data; just assertions. (3) As-built documentation does not match the physical system. (4) O\&M manual is missing or is just a copy of the design report. (5) No lessons learned or reflection.
+\end{tipbox}
+
+\begin{tipbox}[The FDR Litmus Test]
+Could a new team, given only your FDR package, operate, maintain, troubleshoot, and eventually improve your system without ever talking to you? If yes, your knowledge transfer is complete. If they would need to call you for ``that one trick to get it to boot''; you have not finished.
+\end{tipbox}
+
+
+\subsection{Budget Final Accounting}
+Final cost accounting: planned vs.\ actual for every BOM category. Total project cost including labor hours (if tracked). Cost drivers identified: what was more expensive than expected and why. This is valuable data for future project planning.
+
+\subsection{Schedule Performance}
+Planned vs.\ actual milestone dates. Critical path analysis: was the critical path what you expected? Where did schedule slip occur and why? Sprint velocity analysis: did productivity improve over the project? This retrospective drives continuous improvement.
+
+
+\section{Evaluation Criteria}
+
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Criterion} & \textbf{What Reviewers Look For} & \textbf{Ref} \\
+\midrule
+VCRM completeness & Every req has final status with evidence? No unaddressed items? & Ch.~4 \\
+Test rigor & Measured values reported (not just PASS/FAIL)? Repeated trials? Boundary tests? & Ch.~4 \\
+Failure honesty & Failures documented with root cause? Waivers justified? No hidden defects? & Ch.~4 \\
+As-built accuracy & Documents match what was actually built? BOM, drawings, wiring current? & Ch.~5 \\
+O\&M readiness & Quick-start usable? Spare parts identified? Maintenance plan actionable? & Ch.~6 \\
+Design evolution & Journey from PDR $\to$ CDR $\to$ FDR documented with rationale? & All \\
+Lessons learned & Specific and actionable? Demonstrate growth in engineering judgment? &; \\
+Budget accounting & As-designed vs.\ as-built cost? Variances explained? & Ch.~3 \\
+\bottomrule
+\end{tabularx}
+\caption{FDR evaluation criteria.}
+\end{table}
+
+\begin{tipbox}[Common FDR Failures]
+\textbf{VCRM with gaps}: requirements never tested, no explanation. \textbf{PASS without evidence}: ``all requirements met'' but no measured values or data. \textbf{Hidden failures}: known defects not reported. \textbf{Stale documentation}: as-built system has changes not reflected in drawings. \textbf{No O\&M materials}: system cannot be operated by anyone except the build team. \textbf{Generic lessons learned}: ``we learned to start earlier'' without specific, actionable insights.
+\end{tipbox}
+
+\section{The Complete Review Progression}
+The three reviews form a narrative: PDR asks ``Should it work?'' (problem + concept), CDR asks ``Will it work?'' (design completeness), FDR asks ``How well did it work?'' (evidence + documentation). Each review builds on the previous. A strong PDR enables a strong CDR enables a strong FDR. Skipping or rushing an early review creates compounding problems downstream.
+
+\section{Lessons Learned Documentation}
+The Lessons Learned report is the most valuable deliverable for future teams. Document:
+
+\textbf{What went well}: successful design decisions, effective tools and processes, good team practices. Be specific: ``using Git for firmware version control prevented two integration disasters.''
+
+\textbf{What went wrong}: failures, delays, surprises. Analyze root causes. ``The PCB arrived with a footprint error because we did not verify the footprint library against the datasheet. Mitigation for future teams: always print the PCB layout at 1:1 scale and physically verify component fit before ordering.''
+
+\textbf{What we would do differently}: with hindsight, what would you change? ``We should have started PID tuning 2 weeks earlier. The first tuning attempt took 3 sessions; we budgeted one.''
+
+\textbf{Recommendations for the next team}: specific, actionable advice. ``The INA128 oscillates when driving more than 10\,cm of cable. Add a 100\,$\Omega$ series resistor at the output.'' ``The 3D-printed enclosure warps if printed without a brim. Use a 5\,mm brim on all parts.''
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Your VCRM at FDR shows 18 PASS, 2 FAIL, and 1 PARTIAL PASS out of 21 requirements. How do you present this to the stakeholder?
+\item A team's FDR as-built BOM has 8 components that differ from the CDR BOM, but the change log is empty. What does this indicate?
+\item Your stakeholder says ``the system works great but I wish the display were bigger.'' Is this a verification failure or a validation failure? Explain.
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item Present the complete VCRM transparently. For the 18 PASS: evidence summaries. For the 2 FAIL: root cause analysis, corrective actions attempted, and recommendation (fix, waive, or defer). For the PARTIAL PASS: which criteria passed, which failed, risk assessment, and recommendation. The stakeholder decides on open items.
+\item No change control was exercised. The team made ad-hoc substitutions during build without documenting why, assessing impact, or seeking approval. This is a process failure that undermines confidence in the entire build. Any undocumented change could have invalidated a test result.
+\item Validation failure. The system met all written requirements (verification passed). But the stakeholder's actual need for readability was not captured as a requirement (e.g., ``display shall be readable at 2\,m distance''). The requirements were incomplete; a Chapter~1 failure that propagated to FDR.
+\end{enumerate}
+
+

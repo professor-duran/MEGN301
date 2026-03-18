@@ -1,0 +1,326 @@
+\chapter{Verification, Validation \& Test Plans}\label{ch:vv}
+
+\vspace{1em}
+
+\begin{tipbox}[When to Read This Chapter]
+\textbf{Sprint~1}: Read Sections~5.1--5.3 (V\&V concepts, TAID methods, test procedure template) while writing your SDRD. Draft test plans in parallel with requirements. \textbf{Sprint~3}: Return to the VCRM section when updating for CDR. \textbf{Sprints~5--7}: Use the boundary testing and statistical sections during V\&V execution. \textbf{Related}: When tests fail, see Chapter~20 (Debugging, p.\,\pageref{ch:debug}). For test execution details, see Chapter~8 (p.\,\pageref{ch:postbuild}).
+\end{tipbox}
+
+\vspace{1em}
+
+\section{Verification vs.\ Validation}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_vv_comparison.png}
+\caption{Verification (meets requirements) vs.\ validation (meets needs); two different questions.}\label{fig:vv}
+\end{figure}
+
+\textbf{Verification}\index{Verification} asks: ``Did we build the system RIGHT?'' It compares the implemented system against the written specification. Done by the engineering team using Test, Analysis, Inspection, or Demonstration (TAID\index{TAID (Test, Analysis, Inspection, Demonstration)}). Each requirement receives an individual PASS/FAIL verdict.
+
+\textbf{Validation}\index{Validation} asks: ``Did we build the RIGHT system?'' It compares the delivered system against the stakeholder's actual operational need. Done with the stakeholder through user testing, field trials, or acceptance testing.
+
+\begin{warningbox}[A Verified System Can Fail Validation]
+All requirements met perfectly, but the wrong requirements were written. This is why requirements quality matters; verification confirms specs; validation confirms the problem is actually solved. You need both.
+\end{warningbox}
+
+\section{Four Verification Methods: TAID}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_taid_methods.png}
+\caption{Test, Analysis, Inspection, and Demonstration with usage percentages and selection guidance.}\label{fig:taid}
+\end{figure}
+
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Test (T, $\sim$60\% of reqs)}: Stimulate the system and measure the response against quantitative criteria. Most rigorous. Preferred whenever feasible.
+\item \textbf{Analysis (A, $\sim$20\%)}: Mathematical models, simulation, or calculation. Used when testing is impractical (FEA, thermal sim, worst-case analysis). Must document assumptions.
+\item \textbf{Inspection (I, $\sim$10\%)}: Visual/physical examination; presence, labeling, workmanship, material certificates.
+\item \textbf{Demonstration (D, $\sim$10\%)}: Operate under defined conditions and observe qualitative behavior. No measurement. Used when quantitative testing is not needed.
+\end{itemize}
+
+\begin{tipbox}[Assign the Method When You Write the Requirement]
+If you cannot identify a verification method, the requirement is untestable and must be rewritten. The method check is the single best quality gate for requirements.
+\end{tipbox}
+
+\section{Writing Test Plans}
+\subsection{What Makes a Good Test Plan}
+The gold standard: another engineer with no project knowledge can reproduce your results exactly. Five qualities: \textbf{Traceable} (maps to requirement IDs), \textbf{Reproducible} (specific enough for independent replication), \textbf{Binary} (quantitative pass/fail, no judgment calls), \textbf{Complete} (all sections filled), \textbf{Executed as written} (no ad-hoc deviations).
+
+\subsection{Test Procedure Structure}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_test_plan_template.png}
+\caption{Complete test procedure template with all 10 required sections.}\label{fig:tp}
+\end{figure}
+
+Every test procedure contains: (1) Purpose; requirement IDs verified; (2) Test setup; equipment with model numbers and calibration; (3) Preconditions; system state before starting; (4) Procedure steps; numbered, single-action, imperative voice, with expected results; (5) Pass/fail criteria; quantitative thresholds from requirements; (6) Data recording; format, resolution, blank table; (7) Safety precautions; (8) Results and verdict; (9) Signatures; (10) Attachments.
+
+\subsection{Writing Good Procedure Steps}
+Each step is a single action with an expected result. Use specific values (``Set reference bath to 25.0 $\pm$ 0.1\,$^{\circ}$ C''), not vague instructions (``check temperature''). Include wait times for stabilization. Imperative voice: ``Set\ldots'' ``Record\ldots'' ``Verify\ldots''
+
+\section{Handling Results}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_results_disposition.png}
+\caption{Three verification outcomes: PASS, FAIL, PARTIAL PASS with disposition workflows.}\label{fig:disp}
+\end{figure}
+
+\subsection{PASS}
+All criteria met. Record results in RTM, mark requirement VERIFIED, archive raw data. Include actual measurement values, not just ``PASS.''
+
+\subsection{FAIL}
+One or more criteria not met. Root cause analysis in order: (1) Is the test procedure wrong? (2) Is the implementation wrong? (3) Is the requirement wrong? Open a Discrepancy Report (DR), assign corrective action, track to resolution, re-test after correction.
+
+\subsection{PARTIAL PASS}
+Some criteria met, some not. Document which passed and which failed with data. Three resolution paths: \textbf{Fix} (redesign + re-test), \textbf{Waive} (stakeholder formally accepts the deviation with documented risk), or \textbf{Defer} (postpone with a plan and deadline). A waiver transfers risk to the stakeholder.
+
+\subsection{Root Cause Analysis}
+Three possible root causes, investigated in order: (1) the test is wrong (procedure error, calibration issue); (2) the implementation is wrong (most common); (3) the requirement is wrong (overly conservative or based on incorrect assumptions). Changing a requirement requires formal change control. Never silently.
+
+\section{The VCRM\index{VCRM (Verification Cross-Reference Matrix)}}
+The Verification Cross-Reference Matrix links every requirement to its method, procedure, and status. Maintain from day one. At FDR, it tells the complete story. Example columns: Req ID, Text, Type, Method, Test Proc ID, Status, Notes.
+
+
+\subsection{VCRM Evolution Over Time}
+The VCRM is not a static document; it evolves at each project milestone:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{At PDR}: all requirements listed, methods assigned, status = ``Planned'' for all.
+\item \textbf{At CDR}: some subsystem-level tests executed, status updated. Analysis-method requirements may show results from design calculations.
+\item \textbf{At FDR}: all requirements have a final status. The VCRM is the single-page executive summary of your entire V\&V campaign.
+\end{itemize}
+
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,arr/.style={->, line width=1.2pt, color=MinesSilver}
+]
+\node[milestone=vdefine] (pdr) at (0,0) {
+    \textbf{7 requirements}\\[2pt]
+    Methods: assigned\\
+    Procedures: drafted\\
+    Status: \textcolor{MinesSilver}{all Planned}\\
+    Results: none yet
+};
+\node[mlabel=vdefine, above=3pt of pdr] {PDR};
+
+\node[milestone=vbuild] (cdr) at (6.5,0) {
+    \textbf{7 requirements}\\[2pt]
+    Methods: confirmed\\
+    Procedures: reviewed\\
+    Status: \textcolor{AccentTeal}{2 Verified}\\
+    \phantom{Status:} \textcolor{MinesSilver}{5 Planned}\\
+    Results: analysis data
+};
+\node[mlabel=vbuild, above=3pt of cdr] {CDR};
+
+\node[milestone=vverify] (fdr) at (13,0) {
+    \textbf{7 requirements}\\[2pt]
+    Methods: executed\\
+    Procedures: completed\\
+    Status: \textcolor{AccentTeal}{6 PASS}\\
+    \phantom{Status:} \textcolor{diagYellow}{1 PARTIAL}\\
+    Results: full test data
+};
+\node[mlabel=vverify, above=3pt of fdr] {FDR};
+
+\draw[arr] (pdr.east) -- node[above,font=\tiny\sffamily,MinesSilver,fill=white,inner sep=2pt,yshift=4pt]{Build \& test subsystems} (cdr.west);
+\draw[arr] (cdr.east) -- node[above,font=\tiny\sffamily,MinesSilver,fill=white,inner sep=2pt,yshift=4pt]{System V\&V campaign} (fdr.west);
+\end{tikzpicture}%
+}% end resizebox
+\caption{VCRM evolution across milestones. At PDR, all requirements are planned. At CDR, subsystem-level analysis and early tests fill in results. At FDR, every requirement has a final verdict with supporting data.}\label{fig:vcrm_evolution}
+\end{figure}
+
+\subsection{End-to-End Traceability Example}
+\textbf{Stakeholder need}: ``I need to know when the greenhouse is too cold.'' $\to$ \textbf{System requirement}: SYS-REQ-003: ``The system shall send an SMS alert within 60\,s of heater activation.'' $\to$ \textbf{Verification method}: Test. $\to$ \textbf{Test procedure}: TP-003: Trigger heater activation, start stopwatch, verify SMS received within 60\,s, record actual time for 3 trials. $\to$ \textbf{Result}: Trial 1: 12\,s, Trial 2: 14\,s, Trial 3: 11\,s. Mean = 12.3\,s. Verdict: PASS (12.3 $<$ 60). $\to$ \textbf{VCRM entry}: SYS-REQ-003 | Test | TP-003 | PASS | 12.3\,s mean.
+
+This chain, need $\to$ requirement $\to$ method $\to$ procedure $\to$ result $\to$ VCRM, is what ``requirements-driven design'' means in practice.
+
+\section{V\&V and the V-Model}
+The V-Model maps development phases (left side) to verification phases (right side): stakeholder needs $\leftrightarrow$ validation, system requirements $\leftrightarrow$ system testing, subsystem requirements $\leftrightarrow$ integration testing, component specs $\leftrightarrow$ unit testing. Implementation is at the bottom. Test planning happens on the LEFT side; design tests while writing requirements.
+
+
+\section{Statistical Confidence and Test Rigor}
+\subsection{Developmental Testing vs.\ Production Qualification}
+How many times must you run a test? For \textbf{developmental testing} (MEGN~301): 3 repetitions minimum per test point. Report mean and range. For \textbf{production qualification} (industry): sample sizes from statistical requirements; typically $n \geq 30$ for parametric statistics, or MIL-STD-1916 sampling plans.
+
+\subsection{Practical Implications for Student Projects}
+Run each test 3 times, report all three values plus the mean, flag any result where the spread exceeds 20\% of the mean. Report measurement uncertainty: if your instrument resolution is 0.1\,\degC{} and your requirement is $\pm$0.5\,\degC{}, you have adequate measurement capability. If your instrument resolution is 0.5\,\degC{}, you cannot meaningfully verify a $\pm$0.5\,\degC{} requirement.
+
+
+\subsection{The Test Environment Matters}
+Test conditions that differ from operational conditions produce invalid results. Document and control: ambient temperature, humidity, power supply source (bench supply vs.\ battery vs.\ wall adapter; each behaves differently), electromagnetic environment (lab bench vs.\ field), and mechanical mounting (loose on bench vs.\ installed in enclosure). Any deviation from the intended operating environment must be noted in the test report with an assessment of impact.
+
+\subsection{Measurement Uncertainty}
+Every measurement has uncertainty. Your instrument's resolution, accuracy, and calibration status all contribute. Rule of thumb: the measurement system should be $\geq$4$\times$ more accurate than the requirement tolerance. If your requirement is $\pm$0.5\,\degC{}, your measurement system must be accurate to $\pm$0.125\,\degC{} or better. Document measurement uncertainty in every test report.
+
+\section{Edge Case and Boundary Testing}
+Requirements specify ranges (``0 to 50\,\degC{},'' ``0 to 100\% RH''). Test at: the \textbf{nominal} operating point, \textbf{both boundary values}, and at least one point \textbf{outside} the boundary to verify graceful degradation (not catastrophic failure).
+
+\begin{tipbox}[The Room-Temperature Trap]
+Testing only at room temperature ($\sim$22\,\degC{}) is the most common V\&V shortcut. If your requirement says 0--50\,\degC{}, you \emph{must} test at 0\,\degC{} and 50\,\degC{}. Use the ME department environmental chamber or an ice bath + heat gun. A system that works at 22\,\degC{} but fails at 0\,\degC{} does not meet the requirement.
+\end{tipbox}
+
+\section{Minimum Viable V\&V for MEGN 301}
+The minimum V\&V package for student projects:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item A VCRM with every requirement assigned a method and status.
+\item A written test procedure (all 10 sections) for every T-method requirement.
+\item Test results with actual measured data (not just ``pass'').
+\item For FAIL or PARTIAL PASS: root cause analysis and corrective action.
+\item Peer review: another team executes at least one procedure. If they cannot reproduce results, the procedure is inadequate.
+\end{enumerate}
+
+\section{External Team Testing}
+Having another team execute your test procedures verifies reproducibility and uncovers ambiguities. \textbf{Preparing}: provide the procedure, equipment list, and safety briefing. Do NOT explain verbally; the document must stand alone. Observe without intervening (unless safety). Collect written feedback on every unclear step.
+
+\begin{greenshieldbox}[GreenShield: VCRM Fragment at Three Milestones]
+\small
+\begin{tabularx}{\textwidth}{l l c c c}
+\toprule
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Method} & \textbf{At PDR} & \textbf{At CDR} \\
+\midrule
+SYS-REQ-001 & Temp meas.\ at $\geq$1\,Hz & T & Planned & In Progress \\
+SYS-REQ-002 & Heater at $\leq$setpoint & T & Planned & PASS \\
+SYS-REQ-003 & SMS within 60\,s & T & Planned & Planned \\
+SYS-REQ-004 & Autonomous mode on failure & D & Planned & Planned \\
+SYS-REQ-005 & Accuracy $\pm$0.5\,\degC{} & T & Planned & PARTIAL \\
+\bottomrule
+\end{tabularx}
+
+At \textbf{FDR}: all rows should show PASS, FAIL with Discrepancy Report, or waived with stakeholder approval. SYS-REQ-005 PARTIAL PASS (0.6\,\degC{} error at 0\,\degC{} boundary) requires resolution.
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: Sec.\ 4.10 (Verification), Sec.\ 4.11 (Validation).
+\item \textbf{NASA SP-2016-6105 Rev 2}: Ch.\ 5.3 (Verification), Ch.\ 5.4 (Validation).
+\item \textbf{IEEE 1012}: Standard for System, Software, and Hardware V\&V.
+\end{itemize}
+\end{keyconceptbox}
+
+\section{Artifact Handoff: What Chapter 4 Produces}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X l}
+\toprule
+\textbf{Artifact} & \textbf{Description} & \textbf{Forward Reference} \\
+\midrule
+VCRM & Cross-reference matrix linking reqs to test status & CDR, FDR deliverables \\
+Test Procedures & Reproducible procedures for every T-method requirement & Ch.~5 (integration test) \\
+Test Reports & Results with data, verdict, and any DRs & FDR documentation \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\section{Statistical Confidence and Test Rigor}
+How many times must you run a test? For \textbf{developmental testing} (MEGN~301): 3 repetitions minimum per test point. Report mean and range. For \textbf{production qualification}: sample sizes from statistical requirements ($n \geq 30$ for parametric statistics, or MIL-STD-1916 sampling plans).
+
+For MEGN~301: run each test 3 times, report all three values plus the mean, flag any result where spread exceeds 20\% of mean.
+
+\section{Edge Case and Boundary Testing}
+Requirements specify ranges (``0 to 50\,\degC{}'', ``0 to 100\%\ RH''). Test at: the \textbf{nominal} operating point, \textbf{both boundary values}, and at least one point \textbf{outside} the boundary to verify graceful degradation.
+
+\begin{tipbox}[The Room-Temperature Trap]
+Testing only at 22\,\degC{} is the most common V\&V shortcut in student projects. If your requirement says 0--50\,\degC{}, you must test at 0\,\degC{} and 50\,\degC{}. Use the ME department environmental chamber or an ice bath + heat gun.
+\end{tipbox}
+
+\section{Minimum Viable V\&V for MEGN 301}
+The minimum V\&V package:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item A VCRM with every requirement assigned a method and status.
+\item Written test procedures (all 10 sections) for every T-method requirement.
+\item Test results with actual measured data (not just ``pass'').
+\item For FAIL or PARTIAL PASS: root cause analysis and corrective action plan.
+\item Peer review: another team executes at least one of your procedures.
+\end{enumerate}
+
+\section{External Team Testing}
+Having another team execute your test procedures verifies reproducibility and uncovers ambiguities the authoring team is blind to.
+
+\textbf{Preparation}: (1) Provide the procedure, equipment list, and safety briefing. (2) Do NOT explain verbally; the document must stand alone. (3) Observe without intervening (unless safety). (4) Collect written feedback on unclear steps.
+
+\begin{greenshieldbox}[GreenShield: VCRM at Three Milestones]
+\small
+\begin{tabularx}{\textwidth}{l l c c c}
+\toprule
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Method} & \textbf{CDR} & \textbf{FDR} \\
+\midrule
+SYS-001 & Temp at $\geq$1\,Hz & T & In Progress & PASS \\
+SYS-002 & Heater at $\leq$ setpoint & T & PASS & PASS \\
+SYS-003 & SMS within 60\,s & T & Planned & PASS \\
+SYS-004 & Autonomous on comm fail & D & Planned & PASS \\
+SYS-005 & Accuracy $\pm$0.5\,\degC{} & T & PARTIAL & PASS \\
+\bottomrule
+\end{tabularx}
+\end{greenshieldbox}
+
+\begin{keyconceptbox}[Industry SE Parallels]
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{INCOSE SEH 4th ed.}: \S4.10 Verification, \S4.11 Validation.
+\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~5.3 Verification, Ch.~5.4 Validation.
+\item \textbf{IEEE 1012}: System, Software, and Hardware V\&V.
+\end{itemize}
+\end{keyconceptbox}
+
+\section{Test Method Selection: T-A-I-D}
+Every requirement must be verified by one of four methods:
+
+\textbf{Test (T)}: direct measurement of the parameter under controlled conditions. Most rigorous; provides quantitative evidence. Use for: performance requirements (accuracy, speed, power consumption), safety requirements (overcurrent protection, thermal shutdown), and environmental requirements (temperature range, vibration).
+
+\textbf{Analysis (A)}: mathematical or computational evaluation. Use when testing is impractical (structural stress analysis before building, thermal simulation of extreme conditions, reliability prediction from component data). Analysis is only as good as the model; document all assumptions.
+
+\textbf{Inspection (I)}: visual or dimensional examination. Use for: physical characteristics (weight, dimensions, color, marking), material identification (marked per specification), and workmanship (solder quality, wire routing, labeling).
+
+\textbf{Demonstration (D)}: qualitative exercise of the system's functions without quantitative measurement. Use for: user interface verification (the display shows the correct information), operational procedures (the system starts up correctly), and safety demonstrations (the emergency stop works).
+
+\textbf{Selection guideline}: use Test whenever feasible. Use Analysis when testing is impossible or prohibitively expensive. Use Inspection for attributes that can be directly observed. Use Demonstration for qualitative or pass/fail functions.
+
+\section{Designing for Testability}
+Design decisions made early in the project determine whether the system can be effectively tested:
+
+\textbf{Test points}: include physical access points for measuring voltages, currents, and signals at key locations in the circuit. A test header (pin row connected to critical signals) allows an oscilloscope\index{oscilloscope} to be quickly attached during debugging and formal testing.
+
+\textbf{Calibration access}: if the system requires calibration (sensor offset, gain adjustment, PID tuning), provide a software interface (serial command, button sequence, or configuration file) for entering calibration parameters without modifying firmware.
+
+\textbf{Diagnostic modes}: firmware that can output raw sensor values, intermediate calculations, and actuator commands to a serial port enables rapid diagnosis of integration problems. Include a ``debug'' mode that bypasses the normal user interface and shows engineering-level data.
+
+\textbf{Stimulus injection}: the ability to inject known test signals (simulated sensor readings, forced actuator commands) enables testing individual subsystems without the full system connected. In firmware, a ``simulation'' mode that replaces real sensor data with predefined test values is invaluable.
+
+\section{Writing Test Procedures}
+A test procedure must be detailed enough that someone who did not design the system can execute the test and obtain the same result. Each procedure includes:
+
+\textbf{Objective}: what requirement is being verified, and what will be measured.
+
+\textbf{Equipment}: list every instrument by type and calibration status (e.g., ``Fluke 87V DMM, Cal.\ due 2026-06-15'').
+
+\textbf{Setup}: how to configure the system and instruments, including specific settings (DAQ range, sample rate, trigger mode).
+
+\textbf{Procedure}: numbered steps. Each step is a single action: ``Set the power supply to 12.0\,V, current limit 2.0\,A.'' ``Record the temperature sensor reading in Table~1.'' ``Wait 60\,s for the system to reach steady state.''
+
+\textbf{Data recording}: a pre-formatted table or form for recording results, including spaces for the tester's name, date, environmental conditions, and equipment serial numbers.
+
+\textbf{Acceptance criteria}: the quantitative pass/fail threshold. ``PASS if the measured temperature is within $\pm$1.0\,\degC{} of the reference at all 5 setpoints. FAIL if any setpoint deviation exceeds 1.0\,\degC{}.''
+
+\textbf{Safety}: any hazards and required precautions. ``High voltage present when cover is removed. Do not touch exposed terminals.''
+
+\section{Practice Questions}
+\begin{enumerate}[leftmargin=1.5em]
+\item Explain how a system can pass all verification tests but fail validation. Give a concrete example.
+\item Classify each requirement by verification method (T/A/I/D): (a) ``Shall withstand 50\,N load without permanent deformation.'' (b) ``Shall display the company logo on the front panel.'' (c) ``Shall complete a power-on sequence within 10 seconds.'' (d) ``Shall have a thermal margin of $\geq$20\,$^{\circ}$ C at max power under worst-case ambient.''
+\item Write a complete test procedure (all 9 sections) for verifying: ``SYS-REQ-007: The system shall measure ambient temperature with accuracy of $\pm$0.5\,$^{\circ}$ C over 0 to 50\,$^{\circ}$ C.''
+\item A test result shows 0.6\,$^{\circ}$ C error against a requirement of $\pm$0.5\,$^{\circ}$ C. What is the verdict? Describe the three possible root causes and the investigation sequence.
+\item Your VCRM shows 18 PASS, 2 FAIL, and 1 PARTIAL PASS out of 21 requirements at FDR. What do you present to the stakeholder?
+\end{enumerate}
+
+\subsection{Answers}
+\begin{enumerate}[leftmargin=1.5em]
+\item A greenhouse monitoring system meets all temperature accuracy, data rate, and communication requirements (verified). But the stakeholder discovers the display is unreadable in direct sunlight; a need that was never captured as a requirement. The system was built right (verification), but it was not the right system (validation failed). This is a requirements-capture failure.
+\item (a) Test; apply 50\,N load and measure deformation. (b) Inspection; visually confirm logo presence and placement. (c) Demonstration; power on and time the sequence. (d) Analysis; thermal simulation under worst-case conditions.
+\item Purpose: verifies SYS-REQ-007. Setup: NIST-traceable temperature bath ($\pm$0.05\,$^{\circ}$ C), calibrated reference thermometer, DUT powered and warmed 30 min. Preconditions: DUT firmware v2.1, ambient 23$\pm$3\,$^{\circ}$ C. Steps: (1) Set bath to 0.0\,$^{\circ}$ C, wait 10 min, record DUT and reference. (2) Repeat at 10, 20, 30, 40, 50\,$^{\circ}$ C. Pass/fail: $|$DUT $-$ reference$|$ $\leq$ 0.5\,$^{\circ}$ C at every point. Data: table with columns for setpoint, reference, DUT, error. Safety: bath uses water, standard lab PPE. Signatures: tester, witness, date.
+\item Verdict: FAIL (0.6 $>$ 0.5). Investigation: (1) Check test: was the reference bath stable? Was the reference thermometer calibrated? Repeat with verified equipment. (2) Check implementation: sensor calibration coefficients, ADC linearity, thermal coupling. (3) Check requirement: was $\pm$0.5\,$^{\circ}$ C justified? If the application can tolerate $\pm$1.0\,$^{\circ}$ C, a requirements change (with stakeholder approval) may be appropriate. Open a DR regardless.
+\item Present the VCRM showing all 21 requirements with status. For the 18 PASS items, show evidence summaries. For the 2 FAIL items, present root cause analysis, corrective actions, and re-test plan with timeline. For the PARTIAL PASS, present which criteria passed, which failed, risk assessment, and recommendation (fix, waive, or defer). The stakeholder decides on the partial pass and accepts or rejects the open items.
+\end{enumerate}
+
+
+\subsection{Answers (continued)}
+\begin{enumerate}[leftmargin=1.5em, start=6]
+\item \textbf{External testing value}: When your team writes and executes its own test procedures, you unconsciously fill in gaps with tacit knowledge (``oh, you need to wait 30 seconds after power-on before reading the sensor'', but the procedure does not say that). An external team has no tacit knowledge. Every ambiguity, missing step, and unclear criterion is exposed. The external team's feedback is a direct measure of your documentation quality.
+
+\item \textbf{Boundary testing strategy}: For a requirement ``0--50\,\degC{} $\pm$0.5\,\degC{}'': test at 0\,\degC{} (boundary), 25\,\degC{} (nominal), and 50\,\degC{} (boundary). Also test at $-5$\,\degC{} and 55\,\degC{} to verify graceful degradation (system should report out-of-range, not crash or give false readings). For humidity requirement ``0--100\% RH'': test at 0\% (desiccant chamber), 50\% (ambient), and 95\% (humidity chamber; 100\% causes condensation that is a separate failure mode). Report all data points, not just pass/fail.
+\end{enumerate}
+

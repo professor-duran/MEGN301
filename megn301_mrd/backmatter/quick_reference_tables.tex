@@ -1,0 +1,77 @@
+\chapter*{Quick Reference Tables}
+\addcontentsline{toc}{chapter}{Quick Reference Tables}
+
+These tables consolidate the most commonly needed design values. For full context, see the referenced chapters.
+
+\section*{Fastener Grades and Proof Loads}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l c c c l}
+\toprule
+\textbf{Grade/Class} & \textbf{Tensile (MPa)} & \textbf{Proof (MPa)} & \textbf{Marking} & \textbf{Typical Use} \\
+\midrule
+SAE Gr.~2 / ISO 4.6 & 400 & 225 & None / ``4.6'' & General purpose \\
+SAE Gr.~5 / ISO 8.8 & 830 / 800 & 585 / 640 & 3 lines / ``8.8'' & Structural \\
+SAE Gr.~8 / ISO 10.9 & 1035 / 1040 & 895 / 940 & 6 lines / ``10.9'' & High strength \\
+ISO 12.9 & 1220 & 1100 & ``12.9'' & Socket head caps \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{Thread Engagement by Material}
+Steel: 1.5$d$ min.\ \ Aluminum: 2.0$d$.\ \ Cast iron: 2.0$d$.\ \ Plastic: 2.5$d$ (consider threaded insert).
+
+\section*{PCB Trace Width vs.\ Current (1-oz External Copper, IPC-2221)}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{c c c c c c}
+\toprule
+\textbf{Trace (mil)} & 10 & 20 & 50 & 100 & 200 \\
+\midrule
+\textbf{Safe Current (A)} & 0.3 & 0.7 & 1.5 & 3.0 & 6.0 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{Wire Gauge Reference (Chassis Wiring, Single Conductor)}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{c c c X}
+\toprule
+\textbf{AWG} & \textbf{Dia.\ (mm)} & \textbf{Max (A)} & \textbf{Common Use} \\
+\midrule
+30 & 0.25 & 0.5 & Wire-wrap, breadboard jumpers \\
+26 & 0.40 & 1.3 & Ribbon cable, signal wiring \\
+22 & 0.64 & 3.0 & General hookup, sensor cables \\
+18 & 1.02 & 7.0 & Motor power, relay wiring \\
+14 & 1.63 & 15 & High-current bus, battery cables \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{Injection Molding DFM Rules}
+\begin{table}[htbp]\centering\small
+\begin{tabularx}{\textwidth}{l X}
+\toprule
+\textbf{Parameter} & \textbf{Rule} \\
+\midrule
+Wall thickness (ABS/PC) & 1.5--3.5\,mm, uniform $\pm$10\% \\
+Wall thickness (PP) & 0.8--3.0\,mm \\
+Draft angle & \ang{1}--\ang{2} per side; add \ang{1} per 0.001\,in texture depth \\
+Ribs & 50--70\% of wall thickness, height $\leq 3\times$ wall \\
+Bosses & OD = 2.0--2.5$\times$ hole ID; connect to walls with ribs \\
+Inside radii & $\geq 0.5\times$ wall; outside = inside + wall \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{IP Rating Quick Reference}
+IP20: finger-safe, no water.\ \ IP54: dust-protected, splash-resistant.\ \ IP65: dust-tight, water jets.\ \ IP67: dust-tight, 1\,m submersion 30\,min.\ \ IP68: continuous submersion per spec.
+
+\section*{Key Formulas}
+\begin{align*}
+\text{Bearing life:} \quad L_{10} &= (C/P)^p \times 10^6 / (60n) \text{ hours} \quad [p=3\text{ ball}, 10/3\text{ roller}] \\
+\text{Bolt torque:} \quad T &= K \cdot F \cdot d \quad [K{=}0.20\text{ dry}, 0.15\text{ lube}, 0.12\text{ anti-seize}] \\
+\text{Motor torque:} \quad \tau &= K_t \times I \quad \text{Back-EMF: } V_e = K_e \times \omega \\
+\text{Gear ratio:} \quad GR &= N_2/N_1 = \omega_1/\omega_2 = \tau_2/\tau_1 \\
+\text{Clamp force:} \quad F_{clamp} &= P_{cavity} \times A_{projected} \\
+\text{Availability:} \quad A &= \text{MTBF} / (\text{MTBF} + \text{MTTR})
+\end{align*}
+
