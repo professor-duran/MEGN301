@@ -32,6 +32,7 @@ Integration always takes longer than expected. Plan for integration to consume 3
 Verify components individually $\to$ integrate into subsystems $\to$ test each subsystem $\to$ combine into system $\to$ system test. At each stage, add ONE new element and test. If something breaks, the new element or its interface is the suspect. \textbf{Never big-bang} (assemble everything at once).
 
 \begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
     >=Stealth,gate/.style={rectangle, draw=WarnOrange, fill=WarnOrange!15,
         text width=1.2cm, minimum height=0.6cm, align=center,
@@ -63,7 +64,7 @@ Verify components individually $\to$ integrate into subsystems $\to$ test each s
 % Never big-bang annotation
 \draw[densely dashed,diagRed,line width=0.8pt] (0,-1.6) -- (14.4,-1.6);
 \node[font=\tiny\sffamily\bfseries,diagRed,fill=white,inner sep=2pt] at (7.2,-1.6) {NEVER skip gates (big-bang integration)};
-\end{tikzpicture}
+\end{tikzpicture}}%
 \caption{Bottom-up integration sequence with test gates. Each gate requires all tests at the current level to pass before advancing. Skipping gates (big-bang integration) multiplies debugging time by 5--10$\times$.}\label{fig:integration_seq}
 \end{figure}
 
@@ -91,7 +92,7 @@ The N\textsuperscript{2} diagram maps interfaces between subsystems. Modules on 
 
 \begin{greenshieldbox}[GreenShield: N\textsuperscript{2} Diagram (5$\times$5)]
 \small
-\begin{tabularx}{\textwidth}{l|c|c|c|c|c}
+\begin{tabularx}{\linewidth}{l|c|c|c|c|c}
  & \textbf{Sensor} & \textbf{MCU} & \textbf{Relay} & \textbf{Comms} & \textbf{PSU} \\
 \hline
 \textbf{Sensor} & --- & Temp (I2C) & & & \\

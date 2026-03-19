@@ -84,7 +84,7 @@ Electrical connectors are classified by \emph{what} they connect:
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{master_figs/fig1_connector_taxonomy.png}
-\caption{Electrical connector taxonomy by connection type with five termination methods~[1],~[2].}
+\caption{Electrical connector taxonomy by connection type with five termination methods.}
 \label{fig:connector_taxonomy}
 \end{figure}
 
@@ -166,7 +166,7 @@ A specially shaped contact pin (often an ``eye-of-needle'' or ``action pin'' geo
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{master_figs/fig2_termination_matrix.png}
-\caption{Termination tradeoff matrix; mechanism, strengths, limitations, and best applications~[1],~[2].}
+\caption{Termination tradeoff matrix; mechanism, strengths, limitations, and best applications.}
 \label{fig:termination_matrix}
 \end{figure}
 
@@ -190,7 +190,7 @@ The connector's current rating sets the \emph{minimum} wire gauge you can use. S
 
 \subsubsection{Voltage Rating}
 
-The maximum working voltage (VAC or VDC). This is determined by creepage (surface distance) and clearance (air gap) distances between adjacent contacts, as specified by IEC~61984~[2]. 
+The maximum working voltage (VAC or VDC). This is determined by creepage (surface distance) and clearance (air gap) distances between adjacent contacts, as specified by IEC~61984. 
 
 \textbf{Important}: Always specify the \emph{rated working voltage}, not the dielectric withstand (breakdown) voltage. Working voltage includes safety margin; breakdown voltage does not.
 
@@ -206,7 +206,7 @@ Contact resistance increases with mating cycles and in corrosive environments. A
 
 \subsubsection{IP Rating (Ingress Protection)}
 
-Defined by IEC~60529~[3], the IP code uses two digits:
+Defined by IEC~60529, the IP code uses two digits:
 \begin{itemize}[nosep,leftmargin=1.5em]
   \item \textbf{First digit (0--6)}: Protection against solid objects, from ``no protection'' (0) to ``dust-tight'' (6).
   \item \textbf{Second digit (0--9K)}: Protection against liquids, from ``no protection'' (0) to ``high-pressure, high-temperature washdown'' (9K).
@@ -295,7 +295,7 @@ Figure~\ref{fig:fretting_progression} illustrates the four-stage progression of 
 
 \textbf{Mitigations}:
 \begin{itemize}[nosep,leftmargin=1.5em]
-  \item Specify appropriate IP rating per IEC~60529~[3].
+  \item Specify appropriate IP rating per IEC~60529.
   \item Use sealed connectors with O-ring face seals and wire seals for any outdoor, vehicle, or washdown application.
   \item Apply conformal coating on exposed PCB connections.
 \end{itemize}
@@ -609,7 +609,7 @@ The connector determines wire gauge, tube OD, termination tooling, and housing e
 
   \item \textbf{Design for Assembly\index{Design for Assembly (DFA)} (DFA).} Provide wrench clearance around fittings. Group fluid connections for leak-test access. Use consistent connector families within a subsystem to reduce tool count and spare parts inventory.
 
-  \item \textbf{For fluid systems}: Verify thread standard with a gauge before assembly. Use manufacturer torque specifications. Pressure-test every joint before commissioning; hydrostatic test at $1.5\times$ working pressure per ASME B31.3~[8].
+  \item \textbf{For fluid systems}: Verify thread standard with a gauge before assembly. Use manufacturer torque specifications. Pressure-test every joint before commissioning; hydrostatic test at $1.5\times$ working pressure per ASME B31.3.
 
   \item \textbf{For electrical systems}: Pull-test a sample of crimps per IPC/WHMA-A-620. Verify contact resistance with a milliohm meter. Document every connector in your wire harness schedule.
 
@@ -630,12 +630,12 @@ The connector determines wire gauge, tube OD, termination tooling, and housing e
   \endhead
   IEC 61984~[2] & IEC & Electrical connector safety requirements, testing, and performance criteria \\
   IEC 60529~[3] & IEC & IP ingress protection rating system (IP67, IP68, IP69K) \\
-  MIL-DTL-38999~[4] & U.S.\ DoD & Military circular connectors for high-performance, harsh-environment applications \\
+  MIL-DTL-38999 & U.S.\ DoD & Military circular connectors for high-performance, harsh-environment applications \\
   UL 486A-486B & UL & Safety certification for wire connectors: crimp, solder, and IDC terminations \\
-  SAE J514~[5] & SAE & JIC 37$^{\circ}$\ flare hydraulic tube fittings; dimensions and performance requirements \\
-  ASME B1.20.1~[6] & ASME & NPT tapered pipe thread form, dimensions, and tolerances \\
-  ISO 228 / ISO 7-1~[7] & ISO & BSP parallel (BSPP) and tapered (BSPT) pipe thread standards \\
-  ASME B31.3~[8] & ASME & Process piping code; materials, fabrication, inspection, and testing \\
+  SAE J514 & SAE & JIC 37$^{\circ}$\ flare hydraulic tube fittings; dimensions and performance requirements \\
+  ASME B1.20.1 & ASME & NPT tapered pipe thread form, dimensions, and tolerances \\
+  ISO 228 / ISO 7-1 & ISO & BSP parallel (BSPP) and tapered (BSPT) pipe thread standards \\
+  ASME B31.3 & ASME & Process piping code; materials, fabrication, inspection, and testing \\
   \bottomrule
 \end{longtable}
 
@@ -712,7 +712,7 @@ Every connector in your BOM must trace to a requirement. If you cannot write a s
 
 \begin{quickrefbox}[Quick Reference: Common Connector Families]
 \begin{table}[H]\centering\small
-\begin{tabularx}{\textwidth}{l c c c X}
+\begin{tabularx}{\linewidth}{l c c c X}
 \toprule
 \textbf{Family} & \textbf{Current} & \textbf{Voltage} & \textbf{Pitch} & \textbf{Typical Use} \\
 \midrule

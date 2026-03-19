@@ -21,7 +21,7 @@ A printed circuit board is a layered sandwich of insulating substrate (FR-4 fibe
 FR-4 substrate, 1.6\,mm standard thickness, 1\,oz (35\,$\mu$m) copper, 6\,mil minimum trace/space, 0.3\,mm minimum drill. Surface finishes: HASL (cheapest, good for THT), ENIG (flat pads, good for SMD), OSP (organic, short shelf life).
 
 \begin{warningbox}[Trace Width for Current]
-A 10-mil trace on 1-oz external copper safely carries only 0.3\,A. Power traces must be sized for actual current: 10\,mil\,=\,0.3\,A, 20\,mil\,=\,0.7\,A, 50\,mil\,=\,1.5\,A, 100\,mil\,=\,3.0\,A, 200\,mil\,=\,6.0\,A. Use the IPC-2221\index{IPC-2221} calculator for exact values. Signal traces can use minimums; power traces must be sized for current.
+A 10-mil trace on 1-oz external copper safely carries only 0.3\,A. Power traces must be sized for actual current: 10\,mil\,=\,0.3\,A, 20\,mil\,=\,0.7\,A, 50\,mil\,=\,1.5\,A, 100\,mil\,=\,3.0\,A, 200\,mil\,=\,6.0\,A (per IPC-2221B\index{IPC-2221}, Section~6.2). Use the IPC-2221 calculator for exact values. Signal traces can use minimums; power traces must be sized for current.
 \end{warningbox}
 
 \subsection{Component Packages}
@@ -48,7 +48,7 @@ Recommended EDA tool: \textbf{KiCad\index{KiCad} 8} (free, open-source, fully ca
 \section{Schematic Capture Best Practices}
 
 \subsection{Schematic Organization}
-A professional schematic is a \emph{communication document}, not just a wiring diagram. Follow these rules from IPC-2612 [20]:
+A professional schematic is a \emph{communication document}, not just a wiring diagram. Follow these rules from IPC-2612:
 \begin{enumerate}[nosep,leftmargin=1.5em]
 \item \textbf{One functional block per sheet}: power supply on Sheet~1, MCU + peripherals on Sheet~2, motor drivers on Sheet~3, connectors on Sheet~4. Title each sheet.
 \item \textbf{Signal flow left to right}: inputs on the left, outputs on the right. Power flows top (VCC) to bottom (GND).
@@ -258,7 +258,7 @@ The lookup table above gives conservative approximations. For exact trace width 
 \subsection{Clearance and Creepage}
 \textbf{Clearance}: the shortest distance through air between two conductors. For circuits under 50\,V: minimum 0.25\,mm (10\,mil). For 50--300\,V: minimum 1.5\,mm.
 
-\textbf{Creepage}: the shortest distance along a surface between two conductors. Creepage must be larger than clearance because surface contamination (dust, flux residue, moisture) reduces the breakdown voltage. For circuits under 50\,V: minimum 0.5\,mm. For mains-connected circuits: consult IPC-2221 or the relevant safety standard.
+\textbf{Creepage}: the shortest distance along a surface between two conductors. Creepage must be larger than clearance because surface contamination (dust, flux residue, moisture) reduces the breakdown voltage. For circuits under 50\,V: minimum 0.5\,mm. For mains-connected circuits: consult IPC-2221B Section~6.3 or the relevant safety standard.
 
 \subsection{Via Design}\index{via (PCB)}
 Vias connect traces between layers. For signal vias: 0.3\,mm drill, 0.6\,mm pad. For power vias: 0.4\,mm drill, 0.8\,mm pad, or use multiple vias in parallel for high current. Thermal vias under power components (voltage regulators, MOSFETs) connect the component pad to internal or bottom copper planes for heat dissipation. Use a grid of 4--9 vias with 0.3\,mm drill directly under the thermal pad.
@@ -304,7 +304,7 @@ This inspection is a \textbf{gate}: no power is applied until a second team memb
 
 \begin{quickrefbox}[Quick Reference: PCB Specifications for JLCPCB/PCBWay Student Orders]
 \begin{table}[H]\centering\small
-\begin{tabularx}{\textwidth}{l X}
+\begin{tabularx}{\linewidth}{l X}
 \toprule
 \textbf{Parameter} & \textbf{Typical Student Project Values} \\
 \midrule
