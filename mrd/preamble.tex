@@ -60,11 +60,12 @@
 \widowpenalty=10000
 \clubpenalty=10000
 \raggedbottom
+\emergencystretch=3em  % prevent text overruns by allowing extra inter-word stretch
 
 % ── Chapter/Section Formatting ──────────────────────────────────────
 \titleformat{\chapter}[display]
     {\normalfont\huge\bfseries\sffamily\color{MinesBlue}}
-    {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+    {\chaptertitlename\ \thechapter}{20pt}{\LARGE}
     [\vspace{-0.5em}\textcolor{MinesBlue}{\rule{\textwidth}{1pt}}]
 \titleformat{\section}
     {\Large\bfseries\sffamily\color{MinesBlue}}{\thesection}{1em}{}
