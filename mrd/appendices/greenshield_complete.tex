@@ -48,7 +48,7 @@ Integration failure encountered: I2C communication intermittent. Root cause: mis
 \textbf{O\&M manual}: Quick-start (1 page), operating manual (4 pages), maintenance schedule (1 page), troubleshooting flowchart (1 page), spare parts list with McMaster/DigiKey part numbers.
 
 \section*{Final Results (FDR)}
-VCRM: 6 PASS, 1 PARTIAL PASS (SYS-REQ-001 accuracy was $\pm$0.6\,\degC{} at 0\,\degC{} boundary; missed by 0.1\,\degC{}). Root cause: DS18B20 factory calibration drift at low temperatures. Corrective action: polynomial correction applied in firmware, re-test showed $\pm$0.4\,\degC{} across full range. Updated status: PASS.
+VCRM: 6 PASS, 1 PARTIAL PASS (SYS-REQ-001 accuracy was $\pm$0.6\,\degC{} at 0\,\degC{} boundary; missed by 0.1\,\degC{}). Root cause: DS18B20 factory calibration drift at low temperatures. Corrective action: polynomial correction applied in firmware, retest showed $\pm$0.4\,\degC{} across full range. Updated status: PASS.
 
 Total cost: \$92 (\$8 under budget). Build time: 6 weeks. Lessons learned: (1) always define pull-up ownership in ICDs; (2) test at temperature boundaries early, not at FDR; (3) the 470\,$\mu$F capacitor fix for brown-out should have been in the original design, not discovered during integration.
 

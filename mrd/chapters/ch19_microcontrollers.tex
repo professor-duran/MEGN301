@@ -196,7 +196,7 @@ A microcontroller (MCU) is a complete computer on a single chip: processor (CPU)
 
 \textbf{ADC}: the ESP32's internal ADC is 12-bit with significant nonlinearity and noise ($\pm$50\,LSB at 12-bit). For precision measurement: use an external ADC (ADS1115: 16-bit, I2C, \$3) or the NI~DAQ. The internal ADC is adequate for: battery voltage monitoring, potentiometer reading, and coarse sensor measurement where $\pm$5\% accuracy suffices.
 
-\textbf{Communication interfaces}: UART (serial: 3 ports), SPI (high-speed: 2 ports), I2C (moderate speed: 1 port, expandable). WiFi (802.11b/g/n) and Bluetooth (Classic + BLE) are built-in, enabling wireless data logging, remote monitoring, and over-the-air firmware updates.
+\textbf{Communication interfaces}: UART (serial: 3 ports), SPI (high-speed: 2 ports), I2C (moderate speed: 1 port, expandable). Wi-Fi (802.11b/g/n) and Bluetooth (Classic + BLE) are built-in, enabling wireless data logging, remote monitoring, and over-the-air firmware updates.
 
 \section{ESP32 Pin Planning}
 Before writing code, create a pin assignment table mapping every signal to a specific GPIO pin. Constraints to observe:
@@ -207,7 +207,7 @@ GPIO 34--39: input only (no output capability). Use for analog inputs or digital
 
 GPIO 6--11: connected to the internal flash. Do not use.
 
-ADC2 (GPIO 0, 2, 4, 12--15, 25--27): cannot be used for ADC while WiFi is active. Use ADC1 (GPIO 32--39) for analog inputs in WiFi-enabled projects.
+ADC2 (GPIO 0, 2, 4, 12--15, 25--27): cannot be used for ADC while Wi-Fi is active. Use ADC1 (GPIO 32--39) for analog inputs in Wi-Fi-enabled projects.
 
 \section{Firmware Architecture for Control Systems}
 \subsection{Superloop Architecture}
@@ -223,7 +223,7 @@ void loop() {
 }
 \end{verbatim}
 
-The superloop is adequate for single-rate systems with modest complexity. It fails when: (1) the loop takes longer than the control period (timing violation), (2) different tasks need different rates (sensor at 100\,Hz, display at 10\,Hz, logging at 1\,Hz), or (3) blocking operations (WiFi, SD card write) stall the control loop.
+The superloop is adequate for single-rate systems with modest complexity. It fails when: (1) the loop takes longer than the control period (timing violation), (2) different tasks need different rates (sensor at 100\,Hz, display at 10\,Hz, logging at 1\,Hz), or (3) blocking operations (Wi-Fi, SD card write) stall the control loop.
 
 \subsection{Task-Based Architecture (FreeRTOS)}
 The ESP32 includes FreeRTOS, a real-time operating system that runs multiple tasks concurrently with priority-based scheduling. Each task has its own stack and runs as if it were the only program. The RTOS scheduler switches between tasks automatically:
@@ -232,16 +232,16 @@ High priority: control loop (reads sensor, computes PID, writes actuator). Runs 
 
 Medium priority: data logging (writes to SD card). Runs every 1\,s; may be interrupted by the control task.
 
-Low priority: display update and WiFi communication. Runs when higher-priority tasks are idle.
+Low priority: display update and Wi-Fi communication. Runs when higher-priority tasks are idle.
 
 This ensures the control loop always meets its timing deadline, even when lower-priority tasks are slow.
 
 \section{Common ESP32 Pitfalls in MEGN 301}
-(1) \textbf{Watchdog timer resets}: the ESP32's watchdog timer resets the system if the main loop (or a FreeRTOS task) does not yield within $\sim$3\,s. Long operations (SD card initialization, WiFi connection) trigger the watchdog. Solution: call \texttt{yield()} or \texttt{vTaskDelay(1)} inside long operations.
+(1) \textbf{Watchdog timer resets}: the ESP32's watchdog timer resets the system if the main loop (or a FreeRTOS task) does not yield within $\sim$3\,s. Long operations (SD card initialization, Wi-Fi connection) trigger the watchdog. Solution: call \texttt{yield()} or \texttt{vTaskDelay(1)} inside long operations.
 
-(2) \textbf{Power supply noise}: the ESP32's WiFi transmitter draws 120--240\,mA current pulses that cause voltage sag on weak supplies. Symptoms: random resets, ADC reading spikes, WiFi disconnections. Solution: use a dedicated 5\,V supply with $\geq$1\,A capacity and place a 470\,$\mu$F capacitor at the ESP32's 3.3\,V input.
+(2) \textbf{Power supply noise}: the ESP32's Wi-Fi transmitter draws 120--240\,mA current pulses that cause voltage sag on weak supplies. Symptoms: random resets, ADC reading spikes, Wi-Fi disconnections. Solution: use a dedicated 5\,V supply with $\geq$1\,A capacity and place a 470\,$\mu$F capacitor at the ESP32's 3.3\,V input.
 
-(3) \textbf{GPIO conflicts}: accidentally configuring a strapping pin as output, or using an ADC2 pin while WiFi is active. Symptoms: boot failure, garbage ADC readings. Solution: always check the pin assignment table and the ESP32 datasheet before committing to a pin map.
+(3) \textbf{GPIO conflicts}: accidentally configuring a strapping pin as output, or using an ADC2 pin while Wi-Fi is active. Symptoms: boot failure, garbage ADC readings. Solution: always check the pin assignment table and the ESP32 datasheet before committing to a pin map.
 
 (4) \textbf{Floating inputs}: unconnected GPIO pins read random noise. If your code checks a button on an unconnected pin, it sees phantom presses. Solution: enable internal pull-up or pull-down resistors on all input pins, or connect external pull-ups/pull-downs.
 \begin{keyconceptbox}[Requirements Mapping: Microcontroller Selection]
@@ -249,7 +249,7 @@ This ensures the control loop always meets its timing deadline, even when lower-
 
 The ESP32 ADC has 12-bit resolution on a 0--3.3\,V range (LSB $= 0.8$\,mV) with $\pm$50\,LSB noise ($\pm$40\,mV). For a temperature sensor producing 10\,mV/\degC{}: resolution is $0.8/10 = 0.08$\,\degC{} but noise floor is $40/10 = 4$\,\degC{}. This becomes: ``SYS-ADC-001: The temperature measurement subsystem shall achieve $\pm$0.5\,\degC{} accuracy. \emph{Note: The ESP32 internal ADC cannot meet this requirement. An external ADS1115 (16-bit, $\pm$0.01$\%$ accuracy) shall be used.}''
 
-The ESP32's WiFi transmitter draws 240\,mA peak, causing $\sim$200\,mV sag on a weak 3.3\,V supply. This becomes: ``SYS-PWR-003: The 3.3\,V rail shall maintain $\pm$5\% regulation under WiFi transmit load. \emph{Verification: Test: measure 3.3\,V rail with oscilloscope during WiFi scan.}''
+The ESP32's Wi-Fi transmitter draws 240\,mA peak, causing $\sim$200\,mV sag on a weak 3.3\,V supply. This becomes: ``SYS-PWR-003: The 3.3\,V rail shall maintain $\pm$5\% regulation under Wi-Fi transmit load. \emph{Verification: Test: measure 3.3\,V rail with oscilloscope during Wi-Fi scan.}''
 \end{keyconceptbox}
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]
