@@ -39,23 +39,23 @@ The diagram below maps the MEGN~301 sprint sequence onto the classic systems eng
     defblock/.style={
         rectangle, rounded corners=4pt, draw=vdefine, fill=vdefine!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
-        font=\footnotesize\bfseries, line width=0.9pt
+        font=\small\bfseries, line width=0.9pt
     },
     verblock/.style={
         rectangle, rounded corners=4pt, draw=vverify, fill=vverify!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
-        font=\footnotesize\bfseries, line width=0.9pt
+        font=\small\bfseries, line width=0.9pt
     },
     botblock/.style={
         rectangle, rounded corners=4pt, draw=vbuild, fill=vbuild!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
-        font=\footnotesize\bfseries, line width=0.9pt
+        font=\small\bfseries, line width=0.9pt
     },trace/.style={
         densely dashed, MinesBlue!40, line width=0.7pt, <->,
         shorten <=3pt, shorten >=3pt
     },
     tracelabel/.style={
-        font=\scriptsize\itshape, text=MinesBlue!55, fill=white,
+        font=\footnotesize\itshape, text=MinesBlue!55, fill=white,
         inner sep=2pt, rounded corners=1pt
     },]
 % --- LEFT ARM (Define & Design) ---
@@ -91,11 +91,11 @@ The diagram below maps the MEGN~301 sprint sequence onto the classic systems eng
 \draw[trace] (L3.east) -- node[tracelabel, midway]
     {Design $\longleftrightarrow$ System Demo} (R3.west);
 % Arm labels
-\node[rotate=63, font=\footnotesize\sffamily\bfseries, color=vdefine!50]
+\node[rotate=63, font=\normalsize\sffamily\bfseries, color=vdefine!50]
     at (-2.4, -3.0) {DEFINE \& DESIGN};
-\node[rotate=-63, font=\footnotesize\sffamily\bfseries, color=vverify!50]
+\node[rotate=-63, font=\normalsize\sffamily\bfseries, color=vverify!50]
     at (15.9, -3.0) {VERIFY \& VALIDATE};
-\node[font=\footnotesize\sffamily\bfseries, color=vbuild!40]
+\node[font=\normalsize\sffamily\bfseries, color=vbuild!40]
     at (6.75, -9.8) {BUILD \& INTEGRATE};
 \end{tikzpicture}%
 }% end resizebox
