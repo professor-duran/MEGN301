@@ -11,7 +11,7 @@
 
 \begin{priorities}
 \begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
-    \item Submit purchase requests as early as possible---do not wait for the CDR deadline.
+    \item Submit purchase requests as early as possible; do not wait for the CDR deadline.
     \item Design polymer parts for injection molding, even though you are prototyping with 3D printing.
     \item Get every manufactured part reviewed by the appropriate resource \textit{before} fabrication.
 \end{enumerate}
@@ -59,11 +59,11 @@ DS18B20 temperature sensor & 3.3\,V & 1.5\,mA & 1.5\,mA & Parasitic mode: 0\,mA 
 \end{protip}
 
 \begin{warnbox}
-\textbf{Separate your power and signal grounds.} Poor grounding is the most common cause of hard-to-diagnose intermittent failures in student projects---noisy sensor readings, MCU resets when a motor starts, dropped serial communication. Run motor power on dedicated ground wires back to the supply; never share ground paths between motors and sensitive electronics. Use star-point grounding: each subsystem gets its own ground conductor, and they all meet at one common point near the power supply. See MRD Chapter~12; search the index for ``star-point grounding for the complete three-domain strategy.
+\textbf{Separate your power and signal grounds.} Poor grounding is the most common cause of hard-to-diagnose intermittent failures in student projects: noisy sensor readings, MCU resets when a motor starts, dropped serial communication. Run motor power on dedicated ground wires back to the supply; never share ground paths between motors and sensitive electronics. Use star-point grounding: each subsystem gets its own ground conductor, and they all meet at one common point near the power supply. See MRD Chapter~12; search the index for ``star-point grounding'' for the complete three-domain strategy.
 \end{warnbox}
 
 \begin{tipbox}
-\textbf{Identify a ``Plan B'' component for every critical item.} For any single-source or sole-vendor component in your BoM, record a backup part number and vendor in a notes column. If your specialty sensor, MOSFET, or pump goes out of stock the week before CDR, you need to order the backup \textit{immediately}---not start a new search. This is especially important for projects with specialty components like the \textit{Sous Vide Supreme} (heating elements) and \textit{Sol-Mate Purification Pal} (solar charge controllers), where lead times can exceed two weeks.
+\textbf{Identify a ``Plan B'' component for every critical item.} For any single-source or sole-vendor component in your BoM, record a backup part number and vendor in a notes column. If your specialty sensor, MOSFET, or pump goes out of stock the week before CDR, you need to order the backup \textit{immediately}, not start a new search. This is especially important for projects with specialty components like the \textit{Sous Vide Supreme} (heating elements) and \textit{Sol-Mate Purification Pal} (solar charge controllers), where lead times can exceed two weeks.
 \end{tipbox}
 
 \subsection{Sensor and Actuator Selection}
@@ -91,7 +91,7 @@ Only order from the approved vendor list. Unapproved vendors require a review an
 \end{warnbox}
 
 \begin{warnbox}
-\textbf{The Spring Break Shipping Trap.} Spring Break begins March~24---campus shipping/receiving, the machine shop, and all lab facilities are \textbf{closed} that week. If a component fails during your Sprint~4 subsystem demo (around Mar.~10--12) and you need a replacement for the full system demo, you must order it \textit{immediately}---not after break. Plan your procurement so all critical components arrive before March~21. The same logic applies to 3D prints and machined parts: submit them early enough to allow for at least one iteration before campus shuts down.
+\textbf{The Spring Break Shipping Trap.} Spring Break begins March~24. Campus shipping/receiving, the machine shop, and all lab facilities are \textbf{closed} that week. If a component fails during your Sprint~4 subsystem demo (around Mar.~10--12) and you need a replacement for the full system demo, you must order it \textit{immediately}, not after break. Plan your procurement so all critical components arrive before March~21. The same logic applies to 3D prints and machined parts: submit them early enough to allow for at least one iteration before campus shuts down.
 \end{warnbox}
 
 \subsection{Manufacturing Design Review}
@@ -101,23 +101,23 @@ Even though your prototype will likely be 3D printed, designing for injection mo
 \end{faqbox}
 
 \begin{faqbox}[Q: Which 3D printing process should I choose?]
-Use \textbf{filament (FDM) printing} for larger structural components where surface finish is less critical. Use \textbf{resin (SLA) printing} for small, detailed parts that require tighter tolerances or smoother surfaces. Refer to Appendix A of the project document for resin printer settings. Get your designs reviewed early---the machine shop assistants, Prof.\ Blood, and the Master TAs are all available to help.
+Use \textbf{filament (FDM) printing} for larger structural components where surface finish is less critical. Use \textbf{resin (SLA) printing} for small, detailed parts that require tighter tolerances or smoother surfaces. Refer to Appendix A of the project document for resin printer settings. Get your designs reviewed early; the machine shop assistants, Prof.\ Blood, and the Master TAs are all available to help.
 \end{faqbox}
 
 \begin{protip}
-\textbf{Use heat-set inserts or captive nuts for any structural fastening into 3D-printed parts.} Students frequently try to tap threads directly into FDM prints or rely on superglue for structural joints---both approaches fail under load and vibration, often catastrophically during a live demo. Brass heat-set inserts (installed with a soldering iron) create strong, reusable M3/M4 threads in printed parts for pennies each. Design the appropriately sized pilot hole into your CAD model from the start. This is a small investment that prevents mid-demo disasters.
+\textbf{Use heat-set inserts or captive nuts for any structural fastening into 3D-printed parts.} Students frequently try to tap threads directly into FDM prints or rely on superglue for structural joints. Both approaches fail under load and vibration, often catastrophically during a live demo. Brass heat-set inserts (installed with a soldering iron) create strong, reusable M3/M4 threads in printed parts for pennies each. Design the appropriately sized pilot hole into your CAD model from the start. This is a small investment that prevents mid-demo disasters.
 \end{protip}
 
 \begin{tipbox}
-Complete your Order of Operations sheet \textit{before} walking into the machine shop. This is required for machined parts and is also just good practice---it forces you to think through the fabrication sequence, which often reveals design issues before you waste material.
+Complete your Order of Operations sheet \textit{before} walking into the machine shop. This is required for machined parts and is also just good practice; it forces you to think through the fabrication sequence, which often reveals design issues before you waste material.
 \end{tipbox}
 
 \begin{protip}
-\textbf{Choose your resin strategically to save budget.} The campus resin printers support two materials at very different price points: Elegoo ABS-Like at \$15/kg and Siraya Tech Blu Nylon-Like at \$38/kg (see Appendix~A of the project document for settings). Use the cheaper ABS-like resin for basic structural enclosures, brackets, and cosmetic parts. Reserve the Nylon-like resin only for parts requiring high toughness, wear resistance, or repeated flexure---gears, snap-fit clips, or living hinges. A single strategic resin choice can save \$20--40 of your project budget.
+\textbf{Choose your resin strategically to save budget.} The campus resin printers support two materials at very different price points: Elegoo ABS-Like at \$15/kg and Siraya Tech Blu Nylon-Like at \$38/kg (see Appendix~A of the project document for settings). Use the cheaper ABS-like resin for basic structural enclosures, brackets, and cosmetic parts. Reserve the Nylon-like resin only for parts requiring high toughness, wear resistance, or repeated flexure (gears, snap-fit clips, or living hinges). A single strategic resin choice can save \$20--40 of your project budget.
 \end{protip}
 
 \begin{tipbox}
-\textbf{Document every electrical connection and every software flow \textit{now}, not later.} Your CDR should include a wiring diagram showing every component, wire color, gauge, connector part number, and pinout, plus a programming flowchart showing your main loop, state machine transitions, sensor reads, actuator control logic, and error handling. These diagrams are the electrical and software equivalents of your CAD drawings---without them, no one (including your future self at 10~PM during Sprint~5) can debug your system. See MRD Chapter~6 (Subsystem Integration) for interface documentation standards and the N$^2$ diagram.
+\textbf{Document every electrical connection and every software flow \textit{now}, not later.} Your CDR should include a wiring diagram showing every component, wire color, gauge, connector part number, and pinout, plus a programming flowchart showing your main loop, state machine transitions, sensor reads, actuator control logic, and error handling. These diagrams are the electrical and software equivalents of your CAD drawings. Without them, no one (including your future self at 10~PM during Sprint~5) can debug your system. See MRD Chapter~6 (Subsystem Integration) for interface documentation standards and the N$^2$ diagram.
 \end{tipbox}
 
 \begin{protip}
@@ -129,7 +129,7 @@ Complete your Order of Operations sheet \textit{before} walking into the machine
 \end{warnbox}
 
 \begin{faqbox}[Q: How do I know if my CDR package is ready?]
-Apply the \textbf{CDR Litmus Test}: ``If I handed this CDR package to a competent technician who has never seen this project, could they build the prototype from these documents alone?'' If the BOM is complete, the drawings are dimensioned, the wiring diagram is unambiguous, and the assembly sequence is clear---your CDR is ready. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added. CDR answers ``\textit{Will} this design work?''---it is the point of no return where you commit resources to procurement and fabrication.
+Apply the \textbf{CDR Litmus Test}: ``If I handed this CDR package to a competent technician who has never seen this project, could they build the prototype from these documents alone?'' If the BOM is complete, the drawings are dimensioned, the wiring diagram is unambiguous, and the assembly sequence is clear, your CDR is ready. If the answer requires ``well, they would also need to know that\ldots,'' that missing information must be added. CDR answers ``\textit{Will} this design work?'' It is the point of no return where you commit resources to procurement and fabrication.
 \end{faqbox}
 
 \begin{tipbox}

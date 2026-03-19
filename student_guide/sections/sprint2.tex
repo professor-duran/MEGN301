@@ -3,7 +3,7 @@
 
 \begin{priorities}
 \begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
-    \item Thoroughly reverse engineer the COTS product---especially its electrical interfaces.
+    \item Thoroughly reverse engineer the COTS product, especially its electrical interfaces.
     \item Complete an honest FMEA; do not downplay severity to look ``clean.''
     \item Weight your decision matrix criteria \textit{before} scoring alternatives.
 \end{enumerate}
@@ -20,7 +20,7 @@
 \end{checklistbox}
 
 \begin{protip}
-\textbf{Start with functional decomposition before jumping to components.} Before picking sensors, microcontrollers, or actuators, list the \textit{functions} your system must perform using verb-noun pairs: Sense Temperature, Dispense Food, Filter Air, etc. Then break each function into sub-functions. This separates \textit{what} the system must do from \textit{how} it does it, and it directly feeds your trade study. A morphological chart---listing functions as rows and 3--5 implementation options as columns---is the most powerful way to systematically generate meaningfully different design concepts. See MRD Chapters~3--4 (Requirements \& Concept Generation); follow the teal GreenShield boxes for worked examples.
+\textbf{Start with functional decomposition before jumping to components.} Before picking sensors, microcontrollers, or actuators, list the \textit{functions} your system must perform using verb-noun pairs: Sense Temperature, Dispense Food, Filter Air, etc. Then break each function into sub-functions. This separates \textit{what} the system must do from \textit{how} it does it, and it directly feeds your trade study. A morphological chart (listing functions as rows and 3--5 implementation options as columns) is the most powerful way to systematically generate meaningfully different design concepts. See MRD Chapters~3--4 (Requirements \& Concept Generation); follow the teal GreenShield boxes for worked examples.
 \end{protip}
 
 \subsection{Reverse Engineering}
@@ -44,7 +44,7 @@ Explicitly document the \textbf{connectors and power draw} of the COTS product d
 \end{tipbox}
 
 \begin{faqbox}[Q: How do I identify failure modes I have not thought of yet?]
-Systematically walk through every component and every interface in your system and ask: ``What happens if this breaks, jams, shorts, overheats, receives the wrong input, or loses power?'' Also consider misuse scenarios---what if the user does something unexpected? The USCSB ExxonMobil video assigned in this sprint is an excellent example of how overlooked failure modes cascade into catastrophic outcomes.
+Systematically walk through every component and every interface in your system and ask: ``What happens if this breaks, jams, shorts, overheats, receives the wrong input, or loses power?'' Also consider misuse scenarios: what if the user does something unexpected? The USCSB ExxonMobil video assigned in this sprint is an excellent example of how overlooked failure modes cascade into catastrophic outcomes.
 \end{faqbox}
 
 \begin{warnbox}
@@ -52,7 +52,7 @@ Do not assign uniformly low severity or occurrence ratings to make your FMEA loo
 \end{warnbox}
 
 \begin{tipbox}
-\textbf{Score the FMEA using three independent scales.} Each failure mode gets rated on Severity (how bad if it happens, 1--10), Occurrence (how likely, 1--10), and Detection (how likely the failure goes unnoticed, 1--10). Multiply them to get the Risk Priority Number: $\text{RPN} = S \times O \times D$. Failure modes with RPN $\geq 100$ generally need corrective action in your design. A high-severity, low-occurrence, hard-to-detect failure (e.g., temperature sensor reading high so frost is not detected---$S=9, O=3, D=5, \text{RPN}=135$) demands more attention than an obvious, low-impact failure. Prioritize your design resources based on RPN, not gut feeling.
+\textbf{Score the FMEA using three independent scales.} Each failure mode gets rated on Severity (how bad if it happens, 1--10), Occurrence (how likely, 1--10), and Detection (how likely the failure goes unnoticed, 1--10). Multiply them to get the Risk Priority Number: $\text{RPN} = S \times O \times D$. Failure modes with RPN $\geq 100$ generally need corrective action in your design. A high-severity, low-occurrence, hard-to-detect failure (e.g., temperature sensor reading high so frost is not detected ($S=9, O=3, D=5, \text{RPN}=135$), demands more attention than an obvious, low-impact failure. Prioritize your design resources based on RPN, not gut feeling.
 \end{tipbox}
 
 \begin{protip}
@@ -70,11 +70,11 @@ When building your decision matrix, weight the criteria \textit{before} scoring 
 \end{tipbox}
 
 \begin{protip}
-\textbf{Run a sensitivity analysis on your decision matrix.} After scoring, vary each weight by $\pm$0.05 and check whether the winning concept changes. For instance, if Concept~A beats Concept~B by only 0.05 points, and shifting the ``cost'' weight by 10\% makes Concept~B the winner, your decision is not robust---you need better data on that criterion or should prototype both options. A margin of less than 5\% between the top two concepts demands additional investigation, not a hasty commitment. Also ensure every candidate is a legitimate contender: including a deliberately weak ``straw man'' option to make your preferred concept win is a common pitfall that instructors spot immediately.
+\textbf{Run a sensitivity analysis on your decision matrix.} After scoring, vary each weight by $\pm$0.05 and check whether the winning concept changes. For instance, if Concept~A beats Concept~B by only 0.05 points, and shifting the ``cost'' weight by 10\% makes Concept~B the winner, your decision is not robust; you need better data on that criterion or should prototype both options. A margin of less than 5\% between the top two concepts demands additional investigation, not a hasty commitment. Also ensure every candidate is a legitimate contender: including a deliberately weak ``straw man'' option to make your preferred concept win is a common pitfall that instructors spot immediately.
 \end{protip}
 
 \begin{faqbox}[Q: How do I know if my PDR package is ready?]
-Apply the \textbf{PDR Litmus Test}: ``If a different engineering team read only our PDR package, could they independently arrive at the same concept selection and understand why it is the best choice?'' If the answer is yes, your PDR is defensible. If the answer requires ``well, they would also need to know that\ldots''---that missing information must be added to the package. Remember, PDR answers the question ``\textit{Should} this design work?'' Your deliverables must demonstrate that the problem is well-defined, the requirements are sound, and the selected concept is feasible.
+Apply the \textbf{PDR Litmus Test}: ``If a different engineering team read only our PDR package, could they independently arrive at the same concept selection and understand why it is the best choice?'' If the answer is yes, your PDR is defensible. If the answer requires ``well, they would also need to know that\ldots,'' that missing information must be added to the package. Remember, PDR answers the question ``\textit{Should} this design work?'' Your deliverables must demonstrate that the problem is well-defined, the requirements are sound, and the selected concept is feasible.
 \end{faqbox}
 
 %=============================================================================

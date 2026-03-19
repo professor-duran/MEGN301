@@ -249,7 +249,7 @@ This ensures the control loop always meets its timing deadline, even when lower-
 
 The ESP32 ADC has 12-bit resolution on a 0--3.3\,V range (LSB $= 0.8$\,mV) with $\pm$50\,LSB noise ($\pm$40\,mV). For a temperature sensor producing 10\,mV/\degC{}: resolution is $0.8/10 = 0.08$\,\degC{} but noise floor is $40/10 = 4$\,\degC{}. This becomes: ``SYS-ADC-001: The temperature measurement subsystem shall achieve $\pm$0.5\,\degC{} accuracy. \emph{Note: The ESP32 internal ADC cannot meet this requirement. An external ADS1115 (16-bit, $\pm$0.01$\%$ accuracy) shall be used.}''
 
-The ESP32's WiFi transmitter draws 240\,mA peak, causing $\sim$200\,mV sag on a weak 3.3\,V supply. This becomes: ``SYS-PWR-003: The 3.3\,V rail shall maintain $\pm$5\% regulation under WiFi transmit load. \emph{Verification: Test --- measure 3.3\,V rail with oscilloscope during WiFi scan.}''
+The ESP32's WiFi transmitter draws 240\,mA peak, causing $\sim$200\,mV sag on a weak 3.3\,V supply. This becomes: ``SYS-PWR-003: The 3.3\,V rail shall maintain $\pm$5\% regulation under WiFi transmit load. \emph{Verification: Test: measure 3.3\,V rail with oscilloscope during WiFi scan.}''
 \end{keyconceptbox}
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]

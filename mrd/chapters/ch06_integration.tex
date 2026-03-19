@@ -72,7 +72,12 @@ Verify components individually $\to$ integrate into subsystems $\to$ test each s
 The V-Model maps integration from bottom-up: \textbf{Component verification} (each part works alone), \textbf{Subsystem integration} (components within a subsystem work together), \textbf{System integration} (subsystems work together), \textbf{System verification} (system meets all requirements), \textbf{Validation} (system meets stakeholder needs). Each stage has specific entry and exit criteria. Never advance with open failures.
 
 \subsection{Integration Sequence Planning}
-The order of integration matters. Rules: (1) Integrate power first; nothing works without power. (2) Add the lowest-risk subsystem next. (3) Add the highest-risk subsystem last (so problems are isolated to one new element). (4) Never add two new elements simultaneously (if something breaks, you cannot isolate the cause).
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_integration_plan.png}
+\caption{Integration sequence plan\index{integration planning}: power-first, risk-ordered subsystem build-up with test gates.}\label{fig:integration_plan}\end{figure}
+
+The order of integration matters (Figure~\ref{fig:integration_plan}). Rules: (1) Integrate power first; nothing works without power. (2) Add the lowest-risk subsystem next. (3) Add the highest-risk subsystem last (so problems are isolated to one new element). (4) Never add two new elements simultaneously (if something breaks, you cannot isolate the cause).
 
 \subsection{Test Gates}
 Each integration stage has entry and exit criteria. Entry: all components from the previous stage verified. Exit: all tests at the current stage PASS. Never advance with open failures.
@@ -132,9 +137,14 @@ Integration Test Results & Subsystem and system-level data & FDR \\
 \end{table}
 
 \section{Interface Management}
-80\% of integration failures occur at interfaces. Six types: electrical (voltage, protocols, grounding), mechanical (mounting, tolerances, alignment), thermal (heat flow, contact resistance), software (APIs, data formats, timing), fluid (fittings, pressure, seals), and human (displays, controls, ergonomics).
 
-Write Interface Control Documents (ICDs) DURING architecture — not during integration. The ICD defines what crosses each boundary, in what format, with what constraints. Every interface needs a single owner.
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_interface_types.png}
+\caption{The six interface types\index{interface types}: electrical, mechanical, thermal, software, fluid, and human.}\label{fig:interface_types}\end{figure}
+
+80\% of integration failures occur at interfaces (Figure~\ref{fig:interface_types}). Six types: electrical (voltage, protocols, grounding), mechanical (mounting, tolerances, alignment), thermal (heat flow, contact resistance), software (APIs, data formats, timing), fluid (fittings, pressure, seals), and human (displays, controls, ergonomics).
+
+Write Interface Control Documents (ICDs) DURING architecture, not during integration. The ICD defines what crosses each boundary, in what format, with what constraints. Every interface needs a single owner.
 
 
 \subsection{Interface Control Documents (ICDs)}
@@ -229,6 +239,13 @@ Before connecting two subsystems, verify each interface independently using loop
 \textbf{Power rail verification}: before connecting any subsystem to the power bus, measure the voltage and verify it is within the subsystem's input range. A 5\,V subsystem connected to a 12\,V rail is instantly destroyed.
 
 \section{Integration Sequence for a Typical GreenShield Project}
+
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_handoff_package.png}
+\caption{Integration handoff package\index{handoff package}: documentation artifacts that transfer from design to integration.}\label{fig:handoff_package}\end{figure}
+
+The integration handoff package (Figure~\ref{fig:handoff_package}) ensures documentation transfers cleanly from design to build.
+
 Week 10: \textbf{Power system integration.} Connect the power supply to the distribution board. Verify all voltage rails. Connect the MCU and verify it boots. This is the ``backbone'' that everything else depends on.
 
 Week 11: \textbf{Sensor integration.} Connect each sensor one at a time. For each: verify the raw ADC reading is plausible, apply the calibration equation, verify the engineering-unit output matches a reference measurement. If a sensor produces garbage data: check wiring, check the analog input mode (differential vs.\ RSE), check the ADC channel assignment in firmware.
