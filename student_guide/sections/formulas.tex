@@ -17,7 +17,7 @@
 \begin{checklistbox}[Design Rules to Memorize]
 \begin{itemize}[leftmargin=*, itemsep=2pt, topsep=0pt]
     \item \textbf{Current margin}: size wires and traces at $\geq$125\% of max continuous current
-    \item \textbf{Torque margin}: select motors with $\geq$150\% of required peak torque (continuous rated)
+    \item \textbf{Torque margin}: select a motor whose continuous rated torque is $\geq$1.5$\times$ the calculated load torque
     \item \textbf{Decoupling}: 100\,nF ceramic $\leq$5\,mm from every IC power pin
     \item \textbf{Star-point grounding}: separate signal, power, and safety ground conductors
     \item \textbf{Flyback diodes}: mandatory on every inductive load (motor, relay, solenoid)
@@ -34,40 +34,40 @@
     >=Stealth,
     tsbox/.style={rectangle, rounded corners=3pt, draw=minesblue, fill=minesblue!6,
         text width=3.0cm, minimum height=0.9cm, align=center,
-        font=\scriptsize\sffamily\bfseries, line width=0.7pt},
-    toollbl/.style={font=\tiny\sffamily\itshape, color=tipgreen},
+        font=\footnotesize\sffamily\bfseries, line width=0.7pt},
+    toollbl/.style={font=\scriptsize\sffamily\itshape, color=tipgreen},
     qdec/.style={diamond, draw=warnred, fill=warnred!6, aspect=2.2,
-        text width=1.8cm, align=center, font=\tiny\sffamily\bfseries,
+        text width=1.8cm, align=center, font=\scriptsize\sffamily\bfseries,
         inner sep=1pt, line width=0.6pt},
     arr/.style={->, line width=0.8pt, color=minesblue},
-    yeslbl/.style={font=\tiny\sffamily, color=tipgreen},
-    nolbl/.style={font=\tiny\sffamily, color=warnred}
+    yeslbl/.style={font=\scriptsize\sffamily, color=tipgreen},
+    nolbl/.style={font=\scriptsize\sffamily, color=warnred}
 ]
 % Title
 \node[font=\normalsize\sffamily\bfseries,minesblue] at (5,5.5) {Troubleshooting First Response};
 
 % Row 1
-\node[tsbox] (s1) at (0,4) {Power OK?\\{\tiny All rails correct?}};
+\node[tsbox] (s1) at (0,4) {Power OK?\\{\scriptsize All rails correct?}};
 \node[toollbl,below=1pt of s1] {Multimeter};
 \node[qdec] (d1) at (3.2,4) {Yes?};
 
 % Row 2
-\node[tsbox] (s2) at (6.0,4) {Signals present?\\{\tiny PWM, I2C, UART}};
+\node[tsbox] (s2) at (6.0,4) {Signals present?\\{\scriptsize PWM, I2C, UART}};
 \node[toollbl,below=1pt of s2] {Oscilloscope};
 \node[qdec] (d2) at (9.2,4) {Yes?};
 
 % Row 3
-\node[tsbox] (s3) at (6.0,1.5) {Firmware running?\\{\tiny Serial output?}};
+\node[tsbox] (s3) at (6.0,1.5) {Firmware running?\\{\scriptsize Serial output?}};
 \node[toollbl,below=1pt of s3] {Serial monitor};
 \node[qdec] (d3) at (9.2,1.5) {Yes?};
 
 % Fix boxes
-\node[tsbox,draw=warnred,fill=warnred!6] (f1) at (0,1.5) {Fix power first\\{\tiny Fuse, wiring,\\polarity, supply}};
-\node[tsbox,draw=warnred,fill=warnred!6] (f2) at (12.2,4) {Fix signal path\\{\tiny Pin assignment,\\driver, wiring}};
-\node[tsbox,draw=warnred,fill=warnred!6] (f3) at (12.2,1.5) {Fix firmware\\{\tiny Pin config, init,\\timing, state}};
+\node[tsbox,draw=warnred,fill=warnred!6] (f1) at (0,1.5) {Fix power first\\{\scriptsize Fuse, wiring,\\polarity, supply}};
+\node[tsbox,draw=warnred,fill=warnred!6] (f2) at (12.2,4) {Fix signal path\\{\scriptsize Pin assignment,\\driver, wiring}};
+\node[tsbox,draw=warnred,fill=warnred!6] (f3) at (12.2,1.5) {Fix firmware\\{\scriptsize Pin config, init,\\timing, state}};
 
 % OK box
-\node[tsbox,draw=tipgreen,fill=tipgreen!8] (ok) at (6.0,-0.8) {Interface fault\\{\tiny Isolate: disconnect\\subsystems one by one}};
+\node[tsbox,draw=tipgreen,fill=tipgreen!8] (ok) at (6.0,-0.8) {Interface fault\\{\scriptsize Isolate: disconnect\\subsystems one by one}};
 \node[toollbl,below=1pt of ok] {Logic analyzer};
 
 % Arrows

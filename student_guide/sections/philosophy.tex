@@ -19,7 +19,7 @@ The difference between teams that finish strong and teams that scramble is rarel
 
 \textbf{Single source of truth.} The BOM lives in one spreadsheet, not five. The wiring diagram is one file, not a photo on someone's phone. When two versions exist, neither is trusted. Pick one shared location (Google Drive folder with a clear naming convention) and enforce it.
 
-\textbf{15-minute standups.} At the start of every work session, each member answers three questions: (1) what did I finish since last time? (2) what am I working on today? (3) what is blocking me? This takes 3 minutes per person and surfaces problems before they fester.
+\textbf{15-minute standups.} At the start of every work session, each member answers three questions: (1) what did I finish since last time? (2) what am I working on today? (3) what is blocking me? This takes 3 minutes per person and surfaces problems before they fester. Because the class meets only on Tuesdays and Thursdays, adapt this to a rhythm that works for your team: for example, an asynchronous check-in (a short Slack or Teams post) on Monday, Wednesday, and Friday, with a brief in-person sync on class days.
 
 \textbf{Task ownership with deadlines.} ``Someone should order the motors'' means nobody orders the motors. Every task has one name and one date. A shared task board (Trello, Notion, even a whiteboard photo) makes ownership visible.
 
@@ -68,20 +68,20 @@ Students often ask how the individual sprints connect to each other. The diagram
     defblock/.style={
         rectangle, rounded corners=4pt, draw=vdefine, fill=vdefine!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
-        font=\footnotesize\bfseries, line width=0.9pt
+        font=\small\bfseries, line width=0.9pt
     },
     verblock/.style={
         rectangle, rounded corners=4pt, draw=vverify, fill=vverify!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
-        font=\footnotesize\bfseries, line width=0.9pt
+        font=\small\bfseries, line width=0.9pt
     },
     botblock/.style={
         rectangle, rounded corners=4pt, draw=vbuild, fill=vbuild!6,
         text width=3.8cm, minimum height=1.15cm, align=center,
-        font=\footnotesize\bfseries, line width=0.9pt
+        font=\small\bfseries, line width=0.9pt
     },
     slabel/.style={
-        font=\scriptsize\sffamily\bfseries, color=#1,
+        font=\footnotesize\sffamily\bfseries, color=#1,
         inner sep=2pt, fill=white, rounded corners=1pt
     },
     trace/.style={
@@ -89,7 +89,7 @@ Students often ask how the individual sprints connect to each other. The diagram
         shorten <=3pt, shorten >=3pt
     },
     tracelabel/.style={
-        font=\scriptsize\itshape, text=minesblue!55, fill=white,
+        font=\footnotesize\itshape, text=minesblue!55, fill=white,
         inner sep=2pt, rounded corners=1pt
     },
     flow/.style={
@@ -140,13 +140,13 @@ Students often ask how the individual sprints connect to each other. The diagram
     {Design $\longleftrightarrow$ System Demo} (R3.west);
 
 %. Arm labels — pushed well outside the V to avoid crossing arrows ---
-\node[rotate=63, font=\footnotesize\sffamily\bfseries, color=vdefine!50]
+\node[rotate=63, font=\normalsize\sffamily\bfseries, color=vdefine!50]
     at (-2.4, -3.0) {DEFINE \& DESIGN};
-\node[rotate=-63, font=\footnotesize\sffamily\bfseries, color=vverify!50]
+\node[rotate=-63, font=\normalsize\sffamily\bfseries, color=vverify!50]
     at (15.9, -3.0) {VERIFY \& VALIDATE};
 
 %. Bottom label ---
-\node[font=\footnotesize\sffamily\bfseries, color=vbuild!40]
+\node[font=\normalsize\sffamily\bfseries, color=vbuild!40]
     at (6.75, -9.8) {BUILD \& INTEGRATE};
 
 \end{tikzpicture}%
