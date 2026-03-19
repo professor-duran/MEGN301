@@ -103,7 +103,7 @@ Power Mode Plan & Active/sleep duty cycle for battery sizing & CDR (power budget
 \subsection{Common Integration Patterns}
 \begin{itemize}[leftmargin=1.5em]
 \item \textbf{Sensor polling loop}: read all sensors in \texttt{loop()}, average 3--5 readings, apply calibration, publish to cloud/display. Use \texttt{millis()}-based timing, never \texttt{delay()}.
-\item \textbf{Actuator control}: state machine with IDLE, HEATING, COOLING, FAULT states. Transitions triggered by sensor thresholds with hysteresis (e.g., turn on at 3\,\degC{}, turn off at 5\,\degC{} to prevent relay chatter).
+\item \textbf{Actuator control}: state machine with IDLE, HEATING, COOLING, FAULT states\index{PID controller}. Transitions triggered by sensor thresholds with hysteresis (e.g., turn on at 3\,\degC{}, turn off at 5\,\degC{} to prevent relay chatter).
 \item \textbf{Data logging}: write sensor data to SPIFFS/LittleFS with timestamps. Upload batch to cloud on Wi-Fi schedule. Buffer locally if Wi-Fi is unavailable.
 \item \textbf{OTA updates}: enable ArduinoOTA for wireless firmware updates during development. Disable in production firmware for security.
 \end{itemize}

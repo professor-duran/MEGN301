@@ -41,7 +41,7 @@ Requirements are the single most important deliverable in the design process. Ge
 
 \section{Writing Requirements}
 \subsection{The System Design Requirements Document (SDRD)}
-The SDRD is the single authoritative document that captures all system-level requirements, their rationale, traceability, and verification methods. Standard structure:
+The SDRD\index{SDRD (System Design Requirements Document)} is the single authoritative document that captures all system-level requirements, their rationale, traceability, and verification methods. Standard structure:
 \begin{enumerate}[nosep,leftmargin=1.5em]
 \item \textbf{Introduction}: system overview, scope, applicable documents.
 \item \textbf{System Description}: ConOps summary, system boundary, external interfaces.
@@ -131,17 +131,6 @@ Failure Mode and Effects Analysis (FMEA) is most valuable \emph{before} hardware
 Requirements and architecture co-evolve. Initial requirements drive a candidate architecture. That architecture reveals implementation constraints (weight, power, thermal) that feed back as new requirements or modified performance targets. This iteration is normal and healthy, but must be \textbf{documented}. Each iteration produces a revised SDRD version with change rationale.
 
 Convergence test: when two consecutive iterations change fewer than 5\% of requirements, the design is stable enough to baseline at PDR.
-
-\section{Environmental and Regulatory Constraints}
-Every system operates in an environment that imposes constraints. Systematically address:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{Temperature}: operating range, storage range, thermal shock.
-\item \textbf{Moisture/IP rating}: splash (IPX4), rain (IPX5), submersion (IPX7/8).
-\item \textbf{Vibration/shock}: transport, operational, handling drop.
-\item \textbf{EMC}: FCC Part 15 Class B (residential), IEC 61000 (EU).
-\item \textbf{Safety}: UL/CSA/CE marking, OSHA regulations, university lab safety policies.
-\item \textbf{Materials}: RoHS compliance, California Prop 65, food-contact (FDA 21 CFR).
-\end{itemize}
 
 
 \section{Environmental and Regulatory Constraints}
@@ -252,7 +241,7 @@ Decomposition:
 \end{itemize}
 Each leaf function maps to a physical component. ``Measure Air Temp'' $\to$ DS18B20 sensor. ``Regulate Supply Voltage'' $\to$ 5\,V buck converter\index{buck converter}.
 
-\textbf{Worked Example. GreenShield Architecture}: Grouping functions into subsystems yields: Sensor subsystem (DS18B20 + soil probe), Controller subsystem (ESP32), Actuator subsystem (relay\index{relay} + heater), Communications subsystem (SIM800L GSM module), and Power subsystem (12\,V adapter + 5\,V buck + 3.3\,V LDO\index{LDO (Low Dropout Regulator)}).
+\textbf{Worked Example. GreenShield Architecture}: Grouping functions into subsystems yields: Sensor subsystem (DS18B20 + soil probe), Controller subsystem (ESP32), Actuator subsystem (relay\index{relay} + heater), Communications subsystem (SIM7000G LTE-M module), and Power subsystem (12\,V adapter + 5\,V buck + 3.3\,V LDO\index{LDO (Low Dropout Regulator)}).
 \end{greenshieldbox}
 
 \begin{keyconceptbox}[Industry SE Parallels]
