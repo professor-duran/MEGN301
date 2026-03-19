@@ -64,10 +64,10 @@ Each step is a single action with an expected result. Use specific values (``Set
 All criteria met. Record results in RTM, mark requirement VERIFIED, archive raw data. Include actual measurement values, not just ``PASS.''
 
 \subsection{FAIL}
-One or more criteria not met. Root cause analysis in order: (1) Is the test procedure wrong? (2) Is the implementation wrong? (3) Is the requirement wrong? Open a Discrepancy Report (DR), assign corrective action, track to resolution, re-test after correction.
+One or more criteria not met. Root cause analysis in order: (1) Is the test procedure wrong? (2) Is the implementation wrong? (3) Is the requirement wrong? Open a Discrepancy Report (DR), assign corrective action, track to resolution, retest after correction.
 
 \subsection{PARTIAL PASS}
-Some criteria met, some not. Document which passed and which failed with data. Three resolution paths: \textbf{Fix} (redesign + re-test), \textbf{Waive} (stakeholder formally accepts the deviation with documented risk), or \textbf{Defer} (postpone with a plan and deadline). A waiver transfers risk to the stakeholder.
+Some criteria met, some not. Document which passed and which failed with data. Three resolution paths: \textbf{Fix} (redesign + retest), \textbf{Waive} (stakeholder formally accepts the deviation with documented risk), or \textbf{Defer} (postpone with a plan and deadline). A waiver transfers risk to the stakeholder.
 
 \subsection{Root Cause Analysis}
 Three possible root causes, investigated in order: (1) the test is wrong (procedure error, calibration issue); (2) the implementation is wrong (most common); (3) the requirement is wrong (overly conservative or based on incorrect assumptions). Changing a requirement requires formal change control. Never silently.
@@ -286,7 +286,7 @@ A test procedure must be detailed enough that someone who did not design the sys
 \item (a) Test; apply 50\,N load and measure deformation. (b) Inspection; visually confirm logo presence and placement. (c) Demonstration; power on and time the sequence. (d) Analysis; thermal simulation under worst-case conditions.
 \item Purpose: verifies SYS-REQ-007. Setup: NIST-traceable temperature bath ($\pm$0.05\,$^{\circ}$ C), calibrated reference thermometer, DUT powered and warmed 30 min. Preconditions: DUT firmware v2.1, ambient 23$\pm$3\,$^{\circ}$ C. Steps: (1) Set bath to 0.0\,$^{\circ}$ C, wait 10 min, record DUT and reference. (2) Repeat at 10, 20, 30, 40, 50\,$^{\circ}$ C. Pass/fail: $|$DUT $-$ reference$|$ $\leq$ 0.5\,$^{\circ}$ C at every point. Data: table with columns for setpoint, reference, DUT, error. Safety: bath uses water, standard lab PPE. Signatures: tester, witness, date.
 \item Verdict: FAIL (0.6 $>$ 0.5). Investigation: (1) Check test: was the reference bath stable? Was the reference thermometer calibrated? Repeat with verified equipment. (2) Check implementation: sensor calibration coefficients, ADC linearity, thermal coupling. (3) Check requirement: was $\pm$0.5\,$^{\circ}$ C justified? If the application can tolerate $\pm$1.0\,$^{\circ}$ C, a requirements change (with stakeholder approval) may be appropriate. Open a DR regardless.
-\item Present the VCRM showing all 21 requirements with status. For the 18 PASS items, show evidence summaries. For the 2 FAIL items, present root cause analysis, corrective actions, and re-test plan with timeline. For the PARTIAL PASS, present which criteria passed, which failed, risk assessment, and recommendation (fix, waive, or defer). The stakeholder decides on the partial pass and accepts or rejects the open items.
+\item Present the VCRM showing all 21 requirements with status. For the 18 PASS items, show evidence summaries. For the 2 FAIL items, present root cause analysis, corrective actions, and retest plan with timeline. For the PARTIAL PASS, present which criteria passed, which failed, risk assessment, and recommendation (fix, waive, or defer). The stakeholder decides on the partial pass and accepts or rejects the open items.
 \end{enumerate}
 
 
