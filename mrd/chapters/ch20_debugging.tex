@@ -98,6 +98,10 @@ Print everything during development: ADC raw values, engineering units, PID erro
 
 \section{Debugging Integrated Systems}
 
+\begin{figure}[htbp]\centering
+\includegraphics[width=\textwidth]{master_figs/fig_fault_isolation.png}
+\caption{Fault isolation strategy\index{fault isolation}: systematic disconnection to identify the failing subsystem or interface.}\label{fig:fault_isolation}\end{figure}
+
 \subsection{The Integration Test Sequence}
 \begin{enumerate}[leftmargin=1.5em]
 \item \textbf{Power rail verification}: all supply voltages correct under load before connecting active components.
@@ -113,7 +117,7 @@ Print everything during development: ADC raw values, engineering units, PID erro
 \subsection{The Five-Step Debugging Protocol}
 \textbf{Step 1: Reproduce.} Make the failure happen reliably. A failure you cannot reproduce cannot be systematically fixed.
 
-\textbf{Step 2: Isolate.} Disconnect subsystems one at a time. The last one disconnected is the suspect. Or substitute a known-good signal to bypass suspect components.
+\textbf{Step 2: Isolate.} Using the fault isolation strategy (Figure~\ref{fig:fault_isolation}), disconnect subsystems one at a time. The last one disconnected is the suspect. Or substitute a known-good signal to bypass suspect components.
 
 \textbf{Step 3: Measure.} Oscilloscope, multimeter, serial monitor at the suspected location. Compare measured vs. expected.
 

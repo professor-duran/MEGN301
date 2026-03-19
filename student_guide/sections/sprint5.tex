@@ -13,7 +13,7 @@
 \begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=0pt]
     \item Demonstrate end-to-end functionality from the user's perspective.
     \item Update the BoM with actual costs and a labor estimate.
-    \item Finalize the test plan so it is ready for the external team---this is your last chance to fix ambiguities.
+    \item Finalize the test plan so it is ready for the external team; this is your last chance to fix ambiguities.
 \end{enumerate}
 \end{priorities}
 
@@ -22,11 +22,11 @@ Show that your system works \textit{end-to-end} as a user would experience it. S
 \end{faqbox}
 
 \begin{faqbox}[Q: My design has changed a lot since the CDR. Is that a problem?]
-Not at all---design iteration is expected and encouraged. What matters is that you \textit{document} the changes: what changed, when it changed, and why. Part A of the Complete System Demo Report specifically asks for this. A well-documented design evolution shows engineering maturity.
+Not at all; design iteration is expected and encouraged. What matters is that you \textit{document} the changes: what changed, when it changed, and why. Part A of the Complete System Demo Report specifically asks for this. A well-documented design evolution shows engineering maturity.
 \end{faqbox}
 
 \begin{protip}
-\textbf{When debugging integration failures, follow the five-step protocol from Chapter~20 of the MRD.} (1)~\textbf{Reproduce}: make the failure happen reliably and note the exact conditions. A failure you cannot reproduce is a failure you cannot fix. (2)~\textbf{Isolate}: disconnect modules one at a time until the failure stops---the last module disconnected is the prime suspect. (3)~\textbf{Characterize}: measure signals at the interface with an oscilloscope or multimeter and compare to your ICD specifications. (4)~\textbf{Root-cause}: determine whether the problem is hardware, software, or an interface specification error. (5)~\textbf{Fix and regression-test}: implement the fix, verify it resolves the original failure, then \textit{re-run all previously passed tests} to confirm the fix did not break anything else. \textbf{Change ONE variable at a time.} If you swap firmware and a component simultaneously, you will not know which change fixed it---and the other may have introduced a new latent defect.
+\textbf{When debugging integration failures, follow the five-step protocol from Chapter~20 of the MRD.} (1)~\textbf{Reproduce}: make the failure happen reliably and note the exact conditions. A failure you cannot reproduce is a failure you cannot fix. (2)~\textbf{Isolate}: disconnect modules one at a time until the failure stops; the last module disconnected is the prime suspect. (3)~\textbf{Characterize}: measure signals at the interface with an oscilloscope or multimeter and compare to your ICD specifications. (4)~\textbf{Root-cause}: determine whether the problem is hardware, software, or an interface specification error. (5)~\textbf{Fix and regression-test}: implement the fix, verify it resolves the original failure, then \textit{re-run all previously passed tests} to confirm the fix did not break anything else. \textbf{Change ONE variable at a time.} If you swap firmware and a component simultaneously, you will not know which change fixed it, and the other may have introduced a new latent defect.
 \end{protip}
 
 \begin{tipbox}
@@ -48,7 +48,7 @@ Use this sprint to finalize your test plan for the external team. Read through e
 \end{checklistbox}
 
 \begin{warnbox}
-Do not forget to update your Bill of Materials (Part B) with actual costs, including any components you ended up not using or had to reorder. Also include a labor estimate---this is easy to overlook but is required.
+Do not forget to update your Bill of Materials (Part B) with actual costs, including any components you ended up not using or had to reorder. Also include a labor estimate; this is easy to overlook but is required.
 \end{warnbox}
 
 \begin{protip}
@@ -56,7 +56,7 @@ Do not forget to update your Bill of Materials (Part B) with actual costs, inclu
 \end{protip}
 
 \begin{tipbox}
-\textbf{When a test fails, investigate root causes in order.} Three possible sources, checked in this sequence: (1)~Is the \textit{test} wrong? (procedure error, miscalibrated equipment, incorrect setup), (2)~Is the \textit{implementation} wrong? (the most common cause---a component, connection, or code issue), (3)~Is the \textit{requirement} wrong? (overly conservative or based on flawed assumptions). Only consider changing a requirement after ruling out the first two, and any requirement change must be formally documented with rationale. Never silently adjust a requirement to make a failed test ``pass.''
+\textbf{When a test fails, investigate root causes in order.} Three possible sources, checked in this sequence: (1)~Is the \textit{test} wrong? (procedure error, miscalibrated equipment, incorrect setup), (2)~Is the \textit{implementation} wrong? (the most common cause (a component, connection, or code issue)), (3)~Is the \textit{requirement} wrong? (overly conservative or based on flawed assumptions). Only consider changing a requirement after ruling out the first two, and any requirement change must be formally documented with rationale. Never silently adjust a requirement to make a failed test ``pass.''
 \end{tipbox}
 
 %=============================================================================
