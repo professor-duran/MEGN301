@@ -23,7 +23,7 @@ This appendix traces the GreenShield Automated Greenhouse Frost Protection Syste
 \item SYS-REQ-007: All field connections tool-free (connectors, not solder). [I]
 \end{enumerate}
 
-\textbf{Architecture}: Five subsystems. Sensor (DS18B20), Controller (ESP32), Actuator (relay + ceramic heater), Communication (SIM800L GSM), Power (12\,V adapter + buck converters).
+\textbf{Architecture}: Five subsystems. Sensor (DS18B20), Controller (ESP32), Actuator (relay + ceramic heater), Communication (SIM7000G LTE-M), Power (12\,V adapter + buck converters).
 
 \section*{Phase 3: Concept Generation \& Selection (Chapter 3)}
 Three concepts evaluated via weighted decision matrix. Concept~1 (Grid-Connected, Wi-Fi) selected: lowest cost (\$85), simplest integration, meets all requirements. Off-Grid Solar concept deferred to v2.0.
@@ -38,12 +38,12 @@ VCRM established at PDR with 7 requirements, all methods assigned. Three test pr
 Test environment: ME department environmental chamber for boundary testing (0\,\degC{} and 50\,\degC{}). Ice bath as backup for 0\,\degC{} test point.
 
 \section*{Phase 5: Integration \& Debug (Chapter 5)}
-Integration sequence: (1) Power subsystem alone (verify 5\,V and 3.3\,V rails). (2) Add sensor (verify I2C communication). (3) Add relay (verify GPIO control without brown-out). (4) Add GSM module (verify SMS send). (5) System-level 48-hour burn-in.
+Integration sequence: (1) Power subsystem alone (verify 5\,V and 3.3\,V rails). (2) Add sensor (verify I2C communication). (3) Add relay (verify GPIO control without brown-out). (4) Add cellular module (verify SMS send). (5) System-level 48-hour burn-in.
 
 Integration failure encountered: I2C communication intermittent. Root cause: missing 4.7\,k$\Omega$ pull-up resistors; neither the sensor breakout nor the ESP32 DevKit provided them. ICD updated to specify pull-up ownership on the controller side.
 
 \section*{Phase 6: Operations \& Maintenance (Chapter 6)}
-\textbf{Wear items}: relay contacts (rated 100,000 cycles; at 10 cycles/night $\times$ 150 nights/year = 67 years), DS18B20 sensor (no wear items but verify annually against reference thermometer), SIM800L antenna connector (inspect annually for corrosion).
+\textbf{Wear items}: relay contacts (rated 100,000 cycles; at 10 cycles/night $\times$ 150 nights/year = 67 years), DS18B20 sensor (no wear items but verify annually against reference thermometer), SIM7000G antenna connector (inspect annually for corrosion).
 
 \textbf{O\&M manual}: Quick-start (1 page), operating manual (4 pages), maintenance schedule (1 page), troubleshooting flowchart (1 page), spare parts list with McMaster/DigiKey part numbers.
 

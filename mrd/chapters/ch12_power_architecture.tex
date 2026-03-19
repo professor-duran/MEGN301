@@ -139,7 +139,7 @@ The power budget is a spreadsheet with one row per component and the following c
 ESP32 (active) & 3.3V & 80 & 240 & 10 & 8.0 \\
 ESP32 (deep sleep) & 3.3V & 0.01 & --- & 90 & 0.009 \\
 DS18B20 sensor & 3.3V & 1.5 & 1.5 & 100 & 1.5 \\
-SIM800L (TX) & 4.0V & 200 & 2000 & 1 & 2.0 \\
+SIM7000G (TX) & 4.0V & 200 & 2000 & 1 & 2.0 \\
 Relay coil & 12V & 80 & 80 & 5 & 4.0 \\
 \midrule
 \multicolumn{4}{l}{\textbf{3.3V rail total}} & & \textbf{9.5} \\
@@ -150,7 +150,7 @@ Relay coil & 12V & 80 & 80 & 5 & 4.0 \\
 \caption{GreenShield power budget example.}
 \end{table}
 
-The peak column sizes your regulators and fuses. The average column sizes your battery. Add 25\% margin to both. If the SIM800L's 2\,A peak on the 4\,V rail shares a regulator with the ESP32, that regulator must handle 2.24\,A peak; a common sizing mistake.
+The peak column sizes your regulators and fuses. The average column sizes your battery. Add 25\% margin to both. If the SIM7000G's 2\,A peak on the 4\,V rail shares a regulator with the ESP32, that regulator must handle 2.24\,A peak; a common sizing mistake.
 
 \section{Protection Circuits}
 \label{sec:protection}
@@ -191,7 +191,7 @@ An SCR (thyristor) fires when voltage exceeds a threshold, shorting the supply t
 Every power rail must have current limiting. A short circuit without protection delivers the full energy of the supply into the fault.
 
 \subsubsection{Fuses (One-Shot)}
-A fusible element melts at its rated current. \textbf{Fast-blow} for sensitive electronics; \textbf{slow-blow} (time-delay) for motor circuits where inrush exceeds steady-state. The fuse must blow \emph{before} the wire or component is damaged. Must be accessible for replacement.
+A fusible element melts at its rated current.\index{inrush current} \textbf{Fast-blow} for sensitive electronics; \textbf{slow-blow} (time-delay) for motor circuits where inrush exceeds steady-state. The fuse must blow \emph{before} the wire or component is damaged. Must be accessible for replacement.
 
 \subsubsection{PTC Resettable Fuses}
 Polymer PTC (positive temperature coefficient) devices. Resistance increases dramatically at the trip point, limiting current. Self-resets when cooled. Slower than traditional fuses. Best for USB ports and sensor circuits where the fault is intermittent.

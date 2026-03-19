@@ -130,7 +130,7 @@ The VCRM is not a static document; it evolves at each project milestone:
 
 This chain, need $\to$ requirement $\to$ method $\to$ procedure $\to$ result $\to$ VCRM, is what ``requirements-driven design'' means in practice.
 
-\section{V\&V and the V-Model}
+\section{V\&V and the V-Model}\index{V-model}
 The V-Model maps development phases (left side) to verification phases (right side): stakeholder needs $\leftrightarrow$ validation, system requirements $\leftrightarrow$ system testing, subsystem requirements $\leftrightarrow$ integration testing, component specs $\leftrightarrow$ unit testing. Implementation is at the bottom. Test planning happens on the LEFT side; design tests while writing requirements.
 
 
@@ -148,7 +148,7 @@ Test conditions that differ from operational conditions produce invalid results.
 \subsection{Measurement Uncertainty}
 Every measurement has uncertainty. Your instrument's resolution, accuracy, and calibration status all contribute. Rule of thumb: the measurement system should be $\geq$4$\times$ more accurate than the requirement tolerance. If your requirement is $\pm$0.5\,\degC{}, your measurement system must be accurate to $\pm$0.125\,\degC{} or better. Document measurement uncertainty in every test report.
 
-\section{Edge Case and Boundary Testing}
+\section{Edge Case and Boundary Testing}\index{boundary testing}
 Requirements specify ranges (``0 to 50\,\degC{},'' ``0 to 100\% RH''). Test at: the \textbf{nominal} operating point, \textbf{both boundary values}, and at least one point \textbf{outside} the boundary to verify graceful degradation (not catastrophic failure).
 
 \begin{tipbox}[The Room-Temperature Trap]
@@ -206,33 +206,6 @@ Test Reports & Results with data, verdict, and any DRs & FDR documentation \\
 \end{tabularx}
 \end{table}
 
-
-\section{Statistical Confidence and Test Rigor}
-How many times must you run a test? For \textbf{developmental testing} (MEGN~301): 3 repetitions minimum per test point. Report mean and range. For \textbf{production qualification}: sample sizes from statistical requirements ($n \geq 30$ for parametric statistics, or MIL-STD-1916 sampling plans).
-
-For MEGN~301: run each test 3 times, report all three values plus the mean, flag any result where spread exceeds 20\% of mean.
-
-\section{Edge Case and Boundary Testing}
-Requirements specify ranges (``0 to 50\,\degC{}'', ``0 to 100\%\ RH''). Test at: the \textbf{nominal} operating point, \textbf{both boundary values}, and at least one point \textbf{outside} the boundary to verify graceful degradation.
-
-\begin{tipbox}[The Room-Temperature Trap]
-Testing only at 22\,\degC{} is the most common V\&V shortcut in student projects. If your requirement says 0--50\,\degC{}, you must test at 0\,\degC{} and 50\,\degC{}. Use the ME department environmental chamber or an ice bath + heat gun.
-\end{tipbox}
-
-\section{Minimum Viable V\&V for MEGN 301}
-The minimum V\&V package:
-\begin{enumerate}[nosep,leftmargin=1.5em]
-\item A VCRM with every requirement assigned a method and status.
-\item Written test procedures (all 10 sections) for every T-method requirement.
-\item Test results with actual measured data (not just ``pass'').
-\item For FAIL or PARTIAL PASS: root cause analysis and corrective action plan.
-\item Peer review: another team executes at least one of your procedures.
-\end{enumerate}
-
-\section{External Team Testing}
-Having another team execute your test procedures verifies reproducibility and uncovers ambiguities the authoring team is blind to.
-
-\textbf{Preparation}: (1) Provide the procedure, equipment list, and safety briefing. (2) Do NOT explain verbally; the document must stand alone. (3) Observe without intervening (unless safety). (4) Collect written feedback on unclear steps.
 
 \begin{greenshieldbox}[GreenShield: VCRM at Three Milestones]
 \small

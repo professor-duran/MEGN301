@@ -74,7 +74,7 @@ Four principles: \textbf{Access} (can the technician reach the component? Use ac
 \subsection{Reliability Metrics}
 MTBF (Mean Time Between Failures) and MTTR\index{MTTR (Mean Time To Repair)} (Mean Time To Repair) combine to give Availability:
 \[
-A = \frac{\text{MTBF}}{\text{MTBF} + \text{MTTR}}
+A = \frac{\text{MTBF}}{\text{MTBF} + \text{MTTR}}.
 \]
 Improving MTTR through better serviceability design is often cheaper than improving MTBF through better components. FMEA identifies failure modes and prioritizes design improvements.
 
@@ -267,7 +267,7 @@ Electronic components have shorter market lifetimes than the products they go in
 \item The \$200 spare parts budget is insurance against project failure. Motors wear out, sensors break, PCBs develop faults during testing, and connectors get damaged during repeated assembly/disassembly. Without spares, a single component failure can halt the project for 1--3 weeks (ordering + shipping). At \$200/\$2000 = 10\% of project cost, this is standard engineering practice. Industry typically budgets 5--15\% of project cost for spares and consumables.
 \item Wear items: DC motor brushes (replace at 2000--5000 hrs), belt (inspect at 500 hrs, replace at 1000 hrs or on visible cracking), pressure sensor diaphragm (inspect annually, replace at first sign of drift), lithium battery (capacity degrades; replace when capacity $<$80\% of rated, typically 300--500 charge cycles). Additionally: all O-rings and seals in fluid connections (annual replacement), and any connectors subject to repeated mating cycles.
 \item Bathtub curve: decreasing (infant mortality), constant (useful life), increasing (wear-out). Two failures in week one = infant mortality phase. Prevention: (a) burn-in test for 48+ hours before deployment, (b) inspect all solder joints and connections during assembly, (c) verify all power rails under load before system-level testing. The flawless 6-month period = useful life phase with constant (low) failure rate.
-\item FMEA example (abbreviated): Sensor reads high (S=8, O=3, D=4, RPN=96), Relay stuck closed (S=9, O=2, D=6, RPN=108), MCU brown-out (S=7, O=4, D=5, RPN=140), GSM no signal (S=5, O=3, D=3, RPN=45), Power supply fails open (S=8, O=2, D=7, RPN=112). Action priority: MCU brown-out first (decoupling + supervisor), then power supply (add status LED + fuse), then relay (add thermal fuse), then sensor (add second sensor for comparison).
+\item FMEA example (abbreviated): Sensor reads high (S=8, O=3, D=4, RPN=96), Relay stuck closed (S=9, O=2, D=6, RPN=108), MCU brown-out (S=7, O=4, D=5, RPN=140), Cellular no signal (S=5, O=3, D=3, RPN=45), Power supply fails open (S=8, O=2, D=7, RPN=112). Action priority: MCU brown-out first (decoupling + supervisor), then power supply (add status LED + fuse), then relay (add thermal fuse), then sensor (add second sensor for comparison).
 \item The O\&M manual is necessary because: (a) it is a primary FDR deliverable, the project is not complete without it; (b) the instructor and future teams need to operate, maintain, and build upon your work; (c) writing the manual forces you to think about failure modes, maintenance procedures, and spare parts, improving the design; (d) in industry, a product without O\&M documentation is undeliverable.
 \end{enumerate}
 

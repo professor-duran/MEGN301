@@ -57,7 +57,7 @@ A professional schematic is a \emph{communication document}, not just a wiring d
 \item \textbf{Consistent reference designators}: R for resistors, C for capacitors, U for ICs, J for connectors, D for diodes, Q for transistors, L for inductors.
 \end{enumerate}
 
-\subsection{Component Selection and Footprint Verification}
+\subsection{Component Selection and Footprint Verification}\index{footprint verification}
 The most expensive PCB mistake is a wrong footprint. For every component:
 \begin{enumerate}[nosep,leftmargin=1.5em]
 \item Download the \textbf{manufacturer's datasheet} (not a distributor summary page).
@@ -98,7 +98,7 @@ Clearance to edge & 0.3\,mm & 0.5\,mm & Prevents copper exposure at board edge \
 \subsection{Decoupling Capacitors}
 The critical layout rules are summarized in Figure~\ref{fig:pcb_layout_rules}. Place a 100\,nF ceramic capacitor within 5\,mm of every IC power pin, connected with the shortest possible traces. Add one 10\,$\mu$F bulk capacitor per power rail. Via directly to ground plane for the ground side. This is not optional; without decoupling, MCUs reset and ADCs produce garbage data.
 
-\subsection{Ground Plane}
+\subsection{Ground Plane}\index{ground plane}
 On a 2-layer board, fill the bottom layer with a ground copper pour. This provides a low-impedance return path for all signals and dramatically reduces noise. Connect the pour to GND with abundant vias. Avoid splitting the ground plane; a split forces return current to detour.
 
 \subsection{Component Placement and Routing}
@@ -260,7 +260,7 @@ The lookup table above gives conservative approximations. For exact trace width 
 
 \textbf{Creepage}: the shortest distance along a surface between two conductors. Creepage must be larger than clearance because surface contamination (dust, flux residue, moisture) reduces the breakdown voltage. For circuits under 50\,V: minimum 0.5\,mm. For mains-connected circuits: consult IPC-2221 or the relevant safety standard.
 
-\subsection{Via Design}
+\subsection{Via Design}\index{via (PCB)}
 Vias connect traces between layers. For signal vias: 0.3\,mm drill, 0.6\,mm pad. For power vias: 0.4\,mm drill, 0.8\,mm pad, or use multiple vias in parallel for high current. Thermal vias under power components (voltage regulators, MOSFETs) connect the component pad to internal or bottom copper planes for heat dissipation. Use a grid of 4--9 vias with 0.3\,mm drill directly under the thermal pad.
 
 \section{Component Placement Strategy}

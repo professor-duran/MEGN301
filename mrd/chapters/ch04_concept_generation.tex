@@ -90,7 +90,7 @@ Rate each concept against a datum (baseline concept) as better ($+$), same ($S$)
 \textbf{Rules}: at least 3 concepts plus the datum. Criteria from requirements only. If two concepts score similarly, do not eliminate either.
 
 \subsection{Stage 2: Weighted Decision Matrix}
-Rate surviving concepts 1--5 against weighted criteria (weights sum to 1.0). Calculate weighted score per option. Check sensitivity (see Figure~\ref{fig:sensitivity} for a graphical example): vary each weight $\pm$0.05; if the winner changes, the selection is fragile.
+Rate surviving concepts 1--5 against weighted criteria\index{sensitivity analysis} (weights sum to 1.0). Calculate weighted score per option. Check sensitivity (see Figure~\ref{fig:sensitivity} for a graphical example): vary each weight $\pm$0.05; if the winner changes, the selection is fragile.
 
 \textbf{Common traps}: Straw-man alternatives (including clearly inferior options to make the favorite ``win''; every candidate must be legitimate). Anchoring on a favorite (assign ratings independently before group discussion). Criteria not from requirements (if a criterion does not trace to a requirement, remove it). Post-hoc weight adjustment (lock weights before scoring).
 
@@ -162,7 +162,7 @@ For each component or function:
 Temp sensor & Reads high & Heater never activates; crop loss & 8 & 3 & 4 & 96 \\
 Relay & Stuck closed & Heater runs continuously; fire risk & 9 & 2 & 6 & 108 \\
 MCU & Brown-out reset & System offline during freeze event & 7 & 4 & 5 & 140 \\
-GSM module & No signal & Alert not sent; operator unaware & 5 & 3 & 3 & 45 \\
+cellular module & No signal & Alert not sent; operator unaware & 5 & 3 & 3 & 45 \\
 Power supply & Fails open & Complete system loss & 8 & 2 & 7 & 112 \\
 \bottomrule
 \end{tabularx}
@@ -268,7 +268,7 @@ Orders placed the week before spring break often arrive \emph{during} break when
 Sense Temp & DS18B20 digital & BME280 (T/H/P) & Thermocouple + amp \\
 Control Logic & ESP32 (Wi-Fi) & Arduino Nano & RPi Zero \\
 Heat Actuator & Ceramic heater + relay & Heat lamp + relay & Heated water loop \\
-Communication & SMS via SIM800L & Wi-Fi + cloud & LoRa to base station \\
+Communication & SMS via SIM7000G & Wi-Fi + cloud & LoRa to base station \\
 Power Source & 120 VAC wall adapter & 12V solar + battery & PoE \\
 \bottomrule
 \end{tabularx}
