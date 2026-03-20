@@ -22,7 +22,19 @@ Prioritize fixes by impact. If external testing revealed that a core requirement
 \end{warnbox}
 
 \begin{protip}
-As you refine your prototype and prepare final deliverables, explicitly trace your results back to the course learning outcomes. Can you articulate which design decisions demonstrate your ability to define requirements, analyze trade-offs, manage risk, and verify performance? This traceability matters for course assessment, and it is exactly the kind of reflective practice that will distinguish you in Capstone, senior design, and industry.
+\textbf{Use a triage matrix to prioritize fixes.} Not all external testing failures are equal. Sort them into three tiers: (1)~\textbf{Must-fix}: a core ``Must'' requirement failed, or a safety issue was found---drop everything and address these first. (2)~\textbf{Should-fix}: a ``Should'' requirement failed or a procedure ambiguity caused incorrect test execution---fix if time permits. (3)~\textbf{Document-only}: cosmetic issues, minor documentation gaps, or failures you cannot address without new parts---document honestly in the final report with a root-cause explanation and a proposed fix for the next design iteration. This triage prevents the common Sprint~7 trap of spending all your time on a low-impact issue while a critical failure goes unaddressed.
+\end{protip}
+
+\begin{tipbox}
+\textbf{Divide and conquer the final deliverables.} Sprint~7 feeds directly into the Final Presentation (10 min + 5 min Q\&A) and the Final Report, which together are worth \textbf{25\% of your course grade}---the single largest grading component. Assign clear ownership: one or two members lead prototype fixes and retesting, while the others begin drafting report sections and building presentation slides. Regroup daily to sync progress. Do not let the entire team focus on hardware fixes while the report deadline approaches.
+\end{tipbox}
+
+\begin{warnbox}
+\textbf{Update your VCRM and FMEA before writing the report.} Your Verification Cross-Reference Matrix must reflect the final state of every requirement: Verified, Failed (with root cause), or Waived (with rationale). Your FMEA should be updated with post-testing RPN scores. These two artifacts are the backbone of your ``Design Requirements, Revisions, and Final Performance'' and ``Hazards Discussion'' report sections. If they are not current, you will waste hours reconstructing results from memory.
+\end{warnbox}
+
+\begin{protip}
+As you refine your prototype and prepare final deliverables, explicitly trace your results back to the course learning outcomes. Can you articulate which design decisions demonstrate your ability to define requirements, analyze trade-offs, manage risk, and verify performance? This traceability matters for course assessment, and it is exactly the kind of reflective practice that will distinguish you in senior design and industry.
 \end{protip}
 
 %=============================================================================
