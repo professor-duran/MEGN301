@@ -387,7 +387,7 @@ If your requirement says ``0.5\,m/s'' but the motor cannot produce the required 
 
   \item Why must you include flyback diodes when driving a motor with an H-bridge? What happens without them?
 
-  \item A power supply is rated at 10\,A at 25\,$^{\circ}$C. If your enclosure reaches 50\,$^{\circ}$C, can you still draw 10\,A? Explain.
+  \item A power supply is rated at 10\,A at 25\,\degC{}. If your enclosure reaches 50\,\degC{}, can you still draw 10\,A? Explain.
 
   \item What is the primary advantage of a peristaltic pump over a gear pump for biomedical applications?
 \end{enumerate}
@@ -419,7 +419,7 @@ If your requirement says ``0.5\,m/s'' but the motor cannot produce the required 
 
   \item A motor is an inductive load. When current is suddenly switched off, the collapsing magnetic field generates a voltage spike (back-EMF) that can be many times the supply voltage. Without flyback diodes, this spike destroys the H-bridge transistors. Flyback diodes clamp the spike by providing a current path for the decaying magnetic energy.
 
-  \item No. Every power supply has a thermal derating curve. At 50\,$^{\circ}$C, the supply has less thermal headroom to dissipate heat. A typical derating might reduce capacity to 70--80\% of the 25\,$^{\circ}$C rating, meaning 7\,--8\,A. Always check the datasheet derating curve.
+  \item No. Every power supply has a thermal derating curve. At 50\,\degC{}, the supply has less thermal headroom to dissipate heat. A typical derating might reduce capacity to 70--80\% of the 25\,\degC{} rating, meaning 7\,--8\,A. Always check the datasheet derating curve.
 
   \item The fluid in a peristaltic pump only contacts the inside of a disposable tube; no seals, rotors, or metal surfaces touch the fluid. This eliminates contamination risk and allows easy sterilization by swapping the tube. A gear pump has fluid contact with gears, housing, and shaft seals, making sterilization far more difficult.
 

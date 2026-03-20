@@ -39,7 +39,7 @@ The mold has two halves: the \textbf{cavity} (A-side, stationary, forms the outs
   \end{equation}
   Typical cavity pressures: 2--5~tons/in$^2$. A part with 10~in$^2$ projected area needs 20--50 tons of clamp force.
 
-  \item \textbf{Injection}: The screw pushes molten plastic into the cavity at 10,000--30,000~psi. Fill time: 0.5--5~seconds. A \textbf{pack-and-hold} phase follows to compensate for volumetric shrinkage as the plastic cools. Without adequate packing, parts have sink marks\index{sink mark} and are undersized. Melt temperatures range from 200\,$^{\circ}$C (PE) to 350\,$^{\circ}$C (PC, nylon).
+  \item \textbf{Injection}: The screw pushes molten plastic into the cavity at 10,000--30,000~psi. Fill time: 0.5--5~seconds. A \textbf{pack-and-hold} phase follows to compensate for volumetric shrinkage as the plastic cools. Without adequate packing, parts have sink marks\index{sink mark} and are undersized. Melt temperatures range from 200\,\degC{} (PE) to 350\,\degC{} (PC, nylon).
 
   \item \textbf{Cooling}: Plastic solidifies in the mold. This is the \textbf{longest phase}: 50--80\% of total cycle time. Cooling water flowing through channels in the mold steel extracts heat. \textbf{Uniform cooling = uniform shrinkage = minimal warpage.} Mold temperatures: 40--120\,\degC{} depending on material. Cooling time scales with the \emph{square} of wall thickness; doubling wall thickness quadruples cooling time.
 
@@ -60,8 +60,8 @@ Typical total cycle: 15--60~seconds. Every additional second of cycle time incre
   \toprule
   \textbf{Material} & \textbf{Trade Names} & \textbf{Key Properties} & \textbf{Shrink} & \textbf{Common Uses} \\
   \midrule
-  ABS & Cycolac & Good impact, easy to mold/paint, 80\,\degC & 0.5--0.7\% & Enclosures, LEGO \\
-  PC & Lexan & High impact, optical clarity, 130\,\degC, UV-sensitive & 0.5--0.7\% & Lenses, phone cases \\
+  ABS & Cycolac & Good impact, easy to mold/paint, 80\,\degC{} & 0.5--0.7\% & Enclosures, LEGO \\
+  PC & Lexan & High impact, optical clarity, 130\,\degC{}, UV-sensitive & 0.5--0.7\% & Lenses, phone cases \\
   PP & Pro-fax & Chemical resistant, living hinge\index{living hinge}, low cost & 1.0--2.5\% & Containers, caps \\
   Nylon (PA) & Zytel & High strength/stiffness, absorbs moisture & 0.8--1.5\% & Gears, connectors \\
   POM & Delrin & Low friction, dimensional stability, fatigue & 1.8--2.5\% & Gears, zippers \\
@@ -349,7 +349,7 @@ ABS, PC, and nylon all crack at a living hinge within a few cycles. \textbf{Only
 \end{tipbox}
 
 \subsection{Snap-Fit Clips}
-Cantilever snaps are the most common: a beam deflects during assembly, then locks behind a lip. Design for the allowable strain of your material: 2\% for ABS, 4\% for PP, 1.5\% for PC. Maximum deflection: $y = \epsilon L^2 / (1.5t)$ where $\epsilon$ = allowable strain, $L$ = beam length, $t$ = beam thickness. Include a lead-in angle (30--45$^{\circ}$) for easy assembly and a steeper retaining angle (80--90$^{\circ}$) for secure locking. Snap-fits eliminate screw hardware; a significant DFA (Design for Assembly) advantage.
+Cantilever snaps are the most common: a beam deflects during assembly, then locks behind a lip. Design for the allowable strain of your material: 2\% for ABS, 4\% for PP, 1.5\% for PC. Maximum deflection: $y = \epsilon L^2 / (1.5t)$ where $\epsilon$ = allowable strain, $L$ = beam length, $t$ = beam thickness. Include a lead-in angle (30--\ang{45}) for easy assembly and a steeper retaining angle (80--\ang{90}) for secure locking. Snap-fits eliminate screw hardware; a significant DFA (Design for Assembly) advantage.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Artifact Handoff: What This Chapter Supports}
@@ -427,7 +427,7 @@ Injection molding constraints generate system requirements:
 \subsection{Application / Scenario Questions}
 
 \begin{enumerate}[resume,leftmargin=1.5em]
-  \item You are designing a two-piece snap-fit enclosure for an IoT sensor that will be installed outdoors. The enclosure must be IP65, withstand $-20$ to $+60$\,\degC, resist UV for 5+ years, and cost under \$3/part at 10,000 units. Select the material, specify wall thickness, describe the snap-fit design, and estimate whether injection molding is economically justified.
+  \item You are designing a two-piece snap-fit enclosure for an IoT sensor that will be installed outdoors. The enclosure must be IP65, withstand $-20$ to $+60$\,\degC{}, resist UV for 5+ years, and cost under \$3/part at 10,000 units. Select the material, specify wall thickness, describe the snap-fit design, and estimate whether injection molding is economically justified.
 
   \item Your teammate's CAD model for a motor mount bracket has: 5\,mm walls, zero draft on all vertical surfaces, sharp inside corners, and a boss with OD = 1.5$\times$ hole ID. List every DFM violation, predict the defects that will result from each, and specify the corrected dimensions.
 
@@ -445,13 +445,13 @@ Injection molding constraints generate system requirements:
 
   \item (a) Reorient the snap hook to flex along the mold-open direction; if the hook can deflect during ejection, no side action is needed (the hook ``snaps'' past the mold surface). (b) Replace the snap hook with a separate clip that installs post-molding via a push-fit or ultrasonic weld, eliminating the undercut entirely.
 
-  \item ABS. Both have adequate impact strength, but ABS accepts paint directly (smooth surface, good adhesion) while PP requires flame treatment or specialty primers due to its low surface energy. ABS also has a higher HDT ($\sim$95\,$^{\circ}$C versus $\sim$60\,$^{\circ}$C for unfilled PP), providing more thermal margin. ABS shrinkage (0.5--0.7\%) is lower and more predictable than PP (1.0--2.5\%), enabling tighter dimensional control for snap-fits and mating features.
+  \item ABS. Both have adequate impact strength, but ABS accepts paint directly (smooth surface, good adhesion) while PP requires flame treatment or specialty primers due to its low surface energy. ABS also has a higher HDT ($\sim$95\,\degC{} versus $\sim$60\,\degC{} for unfilled PP), providing more thermal margin. ABS shrinkage (0.5--0.7\%) is lower and more predictable than PP (1.0--2.5\%), enabling tighter dimensional control for snap-fits and mating features.
 
   \item Gating at the thickest section ensures that the section that shrinks the most remains connected to the runner for packing pressure the longest. If you gate at a thin section, the thin area freezes first and seals off (``gates off''), cutting the thick section off from packing pressure. The result is severe sink marks and voids in the thick section because the material cannot be replenished as it shrinks.
 
   \item No. The texture-depth rule requires adding \ang{1} per 0.001\,in of depth. At 0.002\,in depth, add \ang{2} beyond the standard \ang{1} for a total of \ang{3} per side. Without adequate draft, the textured surface acts like sandpaper during ejection, leaving drag marks that ruin the finish and gouge the mold steel.
 
-  \item Material: ASA (acrylic-styrene-acrylonitrile), UV-stable variant of ABS, good impact from $-20$ to $+80$\,\degC, IP65-rated with proper gasket design, paintable if needed. Wall thickness: 2.0\,mm nominal (meets structural requirements, enables IP65 with perimeter gasket groove). Snap-fit: cantilever snaps along the mold-open axis (no side action), 2\% max strain for ASA, designed with \ang{1.5} draft. Economics: at 10,000 units with a Class~104 mold (\$25K), tooling amortization is \$2.50/part. Material (20\,g $\times$ \$0.003): \$0.06. Cycle (20\,s at \$60/hr): \$0.33. Total: $\sim$\$2.89/part, under the \$3 target. Injection molding is justified.
+  \item Material: ASA (acrylic-styrene-acrylonitrile), UV-stable variant of ABS, good impact from $-20$ to $+80$\,\degC{}, IP65-rated with proper gasket design, paintable if needed. Wall thickness: 2.0\,mm nominal (meets structural requirements, enables IP65 with perimeter gasket groove). Snap-fit: cantilever snaps along the mold-open axis (no side action), 2\% max strain for ASA, designed with \ang{1.5} draft. Economics: at 10,000 units with a Class~104 mold (\$25K), tooling amortization is \$2.50/part. Material (20\,g $\times$ \$0.003): \$0.06. Cycle (20\,s at \$60/hr): \$0.33. Total: $\sim$\$2.89/part, under the \$3 target. Injection molding is justified.
 
   \item Violations and fixes: (a) 5\,mm walls are too thick for any common plastic; excessive cooling time, sink marks, voids. Fix: core out to 2\,mm uniform walls, add ribs for stiffness. (b) Zero draft on all vertical surfaces; parts will stick, ejector damage, mold wear. Fix: add minimum \ang{1} per side to all surfaces parallel to pull. (c) Sharp inside corners; stress concentrations ($3\times$ multiplier), impeded flow. Fix: add $R = 0.5 \times 2 = 1$\,mm fillet to all inside corners; outside radius = $1 + 2 = 3$\,mm. (d) Boss OD at $1.5\times$ hole ID is too thin-walled, creating a thick ring that sinks. Fix: increase OD to $2.0\times$ hole ID. Predicted defects: sink marks everywhere (thick walls + oversized boss), warpage (non-uniform cooling from variable thickness), ejection damage (no draft), cracking at corners under load (no radii).
 

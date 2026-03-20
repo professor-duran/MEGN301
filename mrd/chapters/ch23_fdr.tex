@@ -114,17 +114,6 @@ Good lessons learned are specific, actionable, and traceable to evidence:
 \subsection{Reflection and Future Work}
 Honest assessment: did the system solve the original problem? What requirements were not met and why? What would a v2.0 address? What skills did the team develop? This section demonstrates engineering maturity; the ability to critically evaluate your own work.
 
-\section{Evaluation Criteria}
-
-\begin{tipbox}[Common FDR Failures]
-(1) VCRM shows ``PASS'' for requirements that were never actually tested. (2) No measured data; just assertions. (3) As-built documentation does not match the physical system. (4) O\&M manual is missing or is just a copy of the design report. (5) No lessons learned or reflection.
-\end{tipbox}
-
-\begin{tipbox}[The FDR Litmus Test]
-Could a new team, given only your FDR package, operate, maintain, troubleshoot, and eventually improve your system without ever talking to you? If yes, your knowledge transfer is complete. If they would need to call you for ``that one trick to get it to boot''; you have not finished.
-\end{tipbox}
-
-
 \subsection{Budget Final Accounting}
 Final cost accounting: planned vs.\ actual for every BOM category. Total project cost including labor hours (if tracked). Cost drivers identified: what was more expensive than expected and why. This is valuable data for future project planning.
 
@@ -139,13 +128,13 @@ Planned vs.\ actual milestone dates. Critical path analysis: was the critical pa
 \toprule
 \textbf{Criterion} & \textbf{What Reviewers Look For} & \textbf{Ref} \\
 \midrule
-VCRM completeness & Every req has final status with evidence? No unaddressed items? & Ch.~4 \\
-Test rigor & Measured values reported (not just PASS/FAIL)? Repeated trials? Boundary tests? & Ch.~4 \\
-Failure honesty & Failures documented with root cause? Waivers justified? No hidden defects? & Ch.~4 \\
-As-built accuracy & Documents match what was actually built? BOM, drawings, wiring current? & Ch.~5 \\
-O\&M readiness & Quick-start usable? Spare parts identified? Maintenance plan actionable? & Ch.~6 \\
+VCRM completeness & Every req has final status with evidence? No unaddressed items? & Ch.~5 \\
+Test rigor & Measured values reported (not just PASS/FAIL)? Repeated trials? Boundary tests? & Ch.~5 \\
+Failure honesty & Failures documented with root cause? Waivers justified? No hidden defects? & Ch.~5 \\
+As-built accuracy & Documents match what was actually built? BOM, drawings, wiring current? & Ch.~6 \\
+O\&M readiness & Quick-start usable? Spare parts identified? Maintenance plan actionable? & Ch.~7 \\
 Design evolution & Journey from PDR $\to$ CDR $\to$ FDR documented with rationale? & All \\
-Lessons learned & Specific and actionable? Demonstrate growth in engineering judgment? &; \\
+Lessons learned & Specific and actionable? Demonstrate growth in engineering judgment? & All \\
 Budget accounting & As-designed vs.\ as-built cost? Variances explained? & Ch.~3 \\
 \bottomrule
 \end{tabularx}

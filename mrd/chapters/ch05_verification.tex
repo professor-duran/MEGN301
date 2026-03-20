@@ -52,7 +52,7 @@ The gold standard: another engineer with no project knowledge can reproduce your
 Every test procedure contains: (1) Purpose; requirement IDs verified; (2) Test setup; equipment with model numbers and calibration; (3) Preconditions; system state before starting; (4) Procedure steps; numbered, single-action, imperative voice, with expected results; (5) Pass/fail criteria; quantitative thresholds from requirements; (6) Data recording; format, resolution, blank table; (7) Safety precautions; (8) Results and verdict; (9) Signatures; (10) Attachments.
 
 \subsection{Writing Good Procedure Steps}
-Each step is a single action with an expected result. Use specific values (``Set reference bath to 25.0 $\pm$ 0.1\,$^{\circ}$ C''), not vague instructions (``check temperature''). Include wait times for stabilization. Imperative voice: ``Set\ldots'' ``Record\ldots'' ``Verify\ldots''
+Each step is a single action with an expected result. Use specific values (``Set reference bath to 25.0 $\pm$ 0.1\,\degC{}''), not vague instructions (``check temperature''). Include wait times for stabilization. Imperative voice: ``Set\ldots'' ``Record\ldots'' ``Verify\ldots''
 
 \section{Handling Results}
 \begin{figure}[htbp]\centering
@@ -251,9 +251,9 @@ A test procedure must be detailed enough that someone who did not design the sys
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]
 \item Explain how a system can pass all verification tests but fail validation. Give a concrete example.
-\item Classify each requirement by verification method (T/A/I/D): (a) ``Shall withstand 50\,N load without permanent deformation.'' (b) ``Shall display the company logo on the front panel.'' (c) ``Shall complete a power-on sequence within 10 seconds.'' (d) ``Shall have a thermal margin of $\geq$20\,$^{\circ}$ C at max power under worst-case ambient.''
-\item Write a complete test procedure (all 10 sections) for verifying: ``SYS-REQ-007: The system shall measure ambient temperature with accuracy of $\pm$0.5\,$^{\circ}$ C over 0 to 50\,$^{\circ}$ C.''
-\item A test result shows 0.6\,$^{\circ}$ C error against a requirement of $\pm$0.5\,$^{\circ}$ C. What is the verdict? Describe the three possible root causes and the investigation sequence.
+\item Classify each requirement by verification method (T/A/I/D): (a) ``Shall withstand 50\,N load without permanent deformation.'' (b) ``Shall display the company logo on the front panel.'' (c) ``Shall complete a power-on sequence within 10 seconds.'' (d) ``Shall have a thermal margin of $\geq$20\,\degC{} at max power under worst-case ambient.''
+\item Write a complete test procedure (all 10 sections) for verifying: ``SYS-REQ-007: The system shall measure ambient temperature with accuracy of $\pm$0.5\,\degC{} over 0 to 50\,\degC{}.''
+\item A test result shows 0.6\,\degC{} error against a requirement of $\pm$0.5\,\degC{}. What is the verdict? Describe the three possible root causes and the investigation sequence.
 \item Your VCRM shows 18 PASS, 2 FAIL, and 1 PARTIAL PASS out of 21 requirements at FDR. What do you present to the stakeholder?
 \end{enumerate}
 
@@ -261,8 +261,8 @@ A test procedure must be detailed enough that someone who did not design the sys
 \begin{enumerate}[leftmargin=1.5em]
 \item A greenhouse monitoring system meets all temperature accuracy, data rate, and communication requirements (verified). But the stakeholder discovers the display is unreadable in direct sunlight; a need that was never captured as a requirement. The system was built right (verification), but it was not the right system (validation failed). This is a requirements-capture failure.
 \item (a) Test; apply 50\,N load and measure deformation. (b) Inspection; visually confirm logo presence and placement. (c) Demonstration; power on and time the sequence. (d) Analysis; thermal simulation under worst-case conditions.
-\item Purpose: verifies SYS-REQ-007. Setup: NIST-traceable temperature bath ($\pm$0.05\,$^{\circ}$ C), calibrated reference thermometer, DUT powered and warmed 30 min. Preconditions: DUT firmware v2.1, ambient 23$\pm$3\,$^{\circ}$ C. Steps: (1) Set bath to 0.0\,$^{\circ}$ C, wait 10 min, record DUT and reference. (2) Repeat at 10, 20, 30, 40, 50\,$^{\circ}$ C. Pass/fail: $|$DUT $-$ reference$|$ $\leq$ 0.5\,$^{\circ}$ C at every point. Data: table with columns for setpoint, reference, DUT, error. Safety: bath uses water, standard lab PPE. Signatures: tester, witness, date.
-\item Verdict: FAIL (0.6 $>$ 0.5). Investigation: (1) Check test: was the reference bath stable? Was the reference thermometer calibrated? Repeat with verified equipment. (2) Check implementation: sensor calibration coefficients, ADC linearity, thermal coupling. (3) Check requirement: was $\pm$0.5\,$^{\circ}$ C justified? If the application can tolerate $\pm$1.0\,$^{\circ}$ C, a requirements change (with stakeholder approval) may be appropriate. Open a DR regardless.
+\item Purpose: verifies SYS-REQ-007. Setup: NIST-traceable temperature bath ($\pm$0.05\,\degC{}), calibrated reference thermometer, DUT powered and warmed 30 min. Preconditions: DUT firmware v2.1, ambient 23$\pm$3\,\degC{}. Steps: (1) Set bath to 0.0\,\degC{}, wait 10 min, record DUT and reference. (2) Repeat at 10, 20, 30, 40, 50\,\degC{}. Pass/fail: $|$DUT $-$ reference$|$ $\leq$ 0.5\,\degC{} at every point. Data: table with columns for setpoint, reference, DUT, error. Safety: bath uses water, standard lab PPE. Signatures: tester, witness, date.
+\item Verdict: FAIL (0.6 $>$ 0.5). Investigation: (1) Check test: was the reference bath stable? Was the reference thermometer calibrated? Repeat with verified equipment. (2) Check implementation: sensor calibration coefficients, ADC linearity, thermal coupling. (3) Check requirement: was $\pm$0.5\,\degC{} justified? If the application can tolerate $\pm$1.0\,\degC{}, a requirements change (with stakeholder approval) may be appropriate. Open a DR regardless.
 \item Present the VCRM showing all 21 requirements with status. For the 18 PASS items, show evidence summaries. For the 2 FAIL items, present root cause analysis, corrective actions, and retest plan with timeline. For the PARTIAL PASS, present which criteria passed, which failed, risk assessment, and recommendation (fix, waive, or defer). The stakeholder decides on the partial pass and accepts or rejects the open items.
 \end{enumerate}
 

@@ -5,10 +5,6 @@
 \end{tipbox}
 
 
-\begin{tipbox}[When to Consult This Chapter]
-\textbf{Sprint~3 (CDR)}: When specifying connectors in your BOM and wiring diagrams. Use the quick-reference table at the end for common families. \textbf{Sprint~4--5}: When debugging intermittent connections during integration.
-\end{tipbox}
-
 % ── Title Block ───────────────────────────────────────────────────────
 
 
@@ -185,7 +181,7 @@ Always derate for multi-pin loaded connectors. When adjacent contacts all carry 
 \end{warningbox}
 
 \begin{tipbox}[Bridging to Wire Selection (AWG)]
-The connector's current rating sets the \emph{minimum} wire gauge you can use. Standard practice: select wire whose ampacity (per NEC Table~310.16 or MIL-W-22759 for aerospace) meets or exceeds the derated connector contact rating. Common reference points for chassis wiring in free air at 30\,\degC{}: 22~AWG $\approx$ 7\,A, 18~AWG $\approx$ 10\,A, 16~AWG $\approx$ 13\,A, 14~AWG $\approx$ 17\,A, 12~AWG $\approx$ 23\,A, 10~AWG $\approx$ 33\,A. Always verify that the connector contact accepts your chosen wire gauge; crimp contacts are rated for a specific AWG range (e.g., 18--22~AWG), and using the wrong gauge produces unreliable crimps.
+The connector's current rating sets the \emph{minimum} wire gauge you can use. Standard practice: select wire whose ampacity (per NEC Table~310.16 or MIL-W-22759 for aerospace) meets or exceeds the derated connector contact rating. Common reference points for chassis wiring in free air at 30\,\degC{}: 22~AWG $\approx$ 7\,A, 18~AWG $\approx$ 10\,A, 16~AWG $\approx$ 13\,A, 14~AWG $\approx$ 17\,A, 12~AWG $\approx$ 23\,A, 10~AWG $\approx$ 33\,A. \textbf{Note}: these values are from NEC Table~310.16 for building wire in conduit/raceway and include additional derating. Ch.~\ref{ch:electronics} Table values are for chassis wiring in open air (per MIL-W-22759), which has better cooling and therefore higher ampacity at the same gauge. Always verify that the connector contact accepts your chosen wire gauge; crimp contacts are rated for a specific AWG range (e.g., 18--22~AWG), and using the wrong gauge produces unreliable crimps.
 \end{tipbox}
 
 \subsubsection{Voltage Rating}
@@ -341,14 +337,6 @@ NPT threads are tapered at \ang{60}. BSP threads are tapered at \ang{55}. A \ang
 \end{itemize}
 
 
-\begin{warningbox}[Thread Galling: The Point of No Return]
-In stainless steel or aluminum, forcing a mismatched or cross-threaded fitting with a wrench causes \textbf{galling}; a cold-weld that permanently destroys both components. Once galling begins, reaching for a bigger wrench turns a \$50 component into a \$100 mistake (two destroyed parts plus the replacement).
-
-\textbf{The Finger Test}: if you cannot thread a fitting at least three full turns by hand, \textbf{STOP}. You are either cross-threaded or mixing thread standards. No amount of force or sealant can fix galled threads.
-
-\textbf{Prevention for stainless-on-stainless connections}: apply nickel-based anti-seize compound (e.g., Permatex Nickel Anti-Seize or Loctite LB 8023) to the male threads before assembly. Anti-seize reduces friction and prevents the metal-to-metal adhesion that initiates galling. This is mandatory for any stainless steel fluid fitting in your design.
-\end{warningbox}
-
 \begin{warningbox}[Critical Incompatibility]
 NPT (\ang{60} pointed threads) and BSP (\ang{55} rounded threads) are \textbf{NOT} interchangeable. They may appear to engage for a few turns but will not seal properly. Cross-threading causes galling, thread damage, and leaks that may develop catastrophically under pressure. \textbf{Always} verify thread standard with a thread pitch gauge before assembly.
 \end{warningbox}
@@ -384,7 +372,7 @@ Figure~\ref{fig:thread_profiles} places the two thread forms side by side so the
 
 Unlike threaded pipe fittings (which connect pipes), tube fittings connect \emph{tubing}; a product specified by outside diameter (OD) and wall thickness\index{wall thickness (injection molding)}, with tighter dimensional tolerances than pipe.
 
-\subsubsection{JIC 37$^{\circ}$\ Flare (SAE J514)}
+\subsubsection{JIC \ang{37} Flare (SAE J514)}
 
 The tube end is flared to a \ang{37} cone that mates with a matching seat in the fitting body. The joint seals metal-to-metal; no sealant, tape, or elastomeric seal is required. The fitting uses a straight (non-tapered) thread; the thread provides clamping force only and does not contribute to sealing.
 
@@ -434,7 +422,7 @@ Two halves, a plug and a socket, connect and disconnect by hand, often with a lo
   \toprule
   \textbf{Fitting Family} & \textbf{Pressure} & \textbf{Seal Type} & \textbf{Key Characteristic} \\
   \midrule
-  JIC 37$^{\circ}$\ Flare & 10000\,psi & Metal-to-metal & Reassemblable; hydraulic standard \\
+  JIC \ang{37} Flare & 10000\,psi & Metal-to-metal & Reassemblable; hydraulic standard \\
   Compression & 20000\,psi & Ferrule swage & No special tools; gaugeable \\
   Push-to-Connect & 250\,psi & O-ring & Tool-free; pneumatics \\
   Quick-Disconnect & Varies & Valve + O-ring & Hand-connect; self-sealing \\
@@ -485,10 +473,10 @@ Temperature determines seal material selection:
   \toprule
   \textbf{Seal Material} & \textbf{Range} & \textbf{Notes} \\
   \midrule
-  Buna-N (Nitrile, NBR) & $-40$ to 250\,$^{\circ}$F & General purpose; petroleum-compatible \\
-  Viton (FKM) & $-20$ to 400\,$^{\circ}$F & Chemical resistance; fuel systems \\
-  PTFE (Teflon) & $-100$ to 500\,$^{\circ}$F & Widest range; chemically inert; no elasticity \\
-  EPDM & $-65$ to 300\,$^{\circ}$F & Steam/water service; not oil-compatible \\
+  Buna-N (Nitrile, NBR) & $-40$ to 250\,\degF{} & General purpose; petroleum-compatible \\
+  Viton (FKM) & $-20$ to 400\,\degF{} & Chemical resistance; fuel systems \\
+  PTFE (Teflon) & $-100$ to 500\,\degF{} & Widest range; chemically inert; no elasticity \\
+  EPDM & $-65$ to 300\,\degF{} & Steam/water service; not oil-compatible \\
   \bottomrule
 \end{tabularx}
 \caption{Seal material temperature ranges and applications.}
@@ -515,10 +503,10 @@ Verify fitting body material and seal material against the working fluid using m
 
 \subsubsection{End Configuration}
 
-Select the geometry that connects the fitting to your system: straight, elbow (45$^{\circ}$\ or 90$^{\circ}$), tee, cross, union, reducer, or bulkhead. 
+Select the geometry that connects the fitting to your system: straight, elbow (\ang{45} or \ang{90}), tee, cross, union, reducer, or bulkhead. 
 
 \begin{tipbox}[Minimize Joints]
-Every fitting joint is a potential leak point. Design your routing to minimize the total number of fittings in a line. Avoid stacking street elbows in series; use a single 90$^{\circ}$\ elbow or a pre-bent tube run instead.
+Every fitting joint is a potential leak point. Design your routing to minimize the total number of fittings in a line. Avoid stacking street elbows in series; use a single \ang{90} elbow or a pre-bent tube run instead.
 \end{tipbox}
 
 
@@ -632,7 +620,7 @@ The connector determines wire gauge, tube OD, termination tooling, and housing e
   IEC 60529~[3] & IEC & IP ingress protection rating system (IP67, IP68, IP69K) \\
   MIL-DTL-38999 & U.S.\ DoD & Military circular connectors for high-performance, harsh-environment applications \\
   UL 486A-486B & UL & Safety certification for wire connectors: crimp, solder, and IDC terminations \\
-  SAE J514 & SAE & JIC 37$^{\circ}$\ flare hydraulic tube fittings; dimensions and performance requirements \\
+  SAE J514 & SAE & JIC \ang{37} flare hydraulic tube fittings; dimensions and performance requirements \\
   ASME B1.20.1 & ASME & NPT tapered pipe thread form, dimensions, and tolerances \\
   ISO 228 / ISO 7-1 & ISO & BSP parallel (BSPP) and tapered (BSPT) pipe thread standards \\
   ASME B31.3 & ASME & Process piping code; materials, fabrication, inspection, and testing \\
@@ -678,7 +666,7 @@ Incorrect connector selection is one of the most common failure modes in student
 \begin{enumerate}[nosep,leftmargin=1.5em]
   \item Electrical connectors are classified by \emph{what they connect} (wire-to-wire, wire-to-board, board-to-board) and \emph{how they terminate} (crimp, solder, IDC, screw, press-fit).
   \item For every electrical connection, specify: current rating, voltage rating, IP rating, contact resistance, and mating cycles, and derate for temperature.
-  \item Fluid connectors require matching thread standards. NPT $\neq$ BSP. JIC 37$^{\circ}$\ flare and compression fittings avoid the pitfalls of tapered-thread sealing.
+  \item Fluid connectors require matching thread standards. NPT $\neq$ BSP. JIC \ang{37} flare and compression fittings avoid the pitfalls of tapered-thread sealing.
   \item Failure modes differ by domain: electrical joints fail from fretting corrosion and $I^2R$ overheating; fluid joints fail from cross-threading and seal degradation.
   \item Every connector specification follows the same logic: \textbf{rating $\to$ environment $\to$ serviceability $\to$ cost $\to$ standards $\to$ space}. Document everything in your BOM.
 \end{enumerate}
@@ -757,7 +745,7 @@ Use these questions to test your understanding. Answers follow on the next page.
 
   \item You measure 50\,m$\Omega$ contact resistance on a connector carrying 8\,A. How much power is dissipated as heat at that contact? Is this a concern?
 
-  \item Compare the sealing mechanisms of NPT, JIC 37$^{\circ}$\ flare, and compression fittings. Which requires sealant?
+  \item Compare the sealing mechanisms of NPT, JIC \ang{37} flare, and compression fittings. Which requires sealant?
 \end{enumerate}
 
 \subsection{Application / Scenario Questions}
@@ -769,7 +757,7 @@ Use these questions to test your understanding. Answers follow on the next page.
 
   \item Your design uses both NPT and BSP components (sourced from U.S.\ and European manufacturers). What steps must you take to ensure safe assembly?
 
-  \item You are specifying connectors for a cooling loop carrying a 50/50 ethylene glycol--water mix at 200\,$^{\circ}$F and 50\,psi. What seal material would you select? What body material?
+  \item You are specifying connectors for a cooling loop carrying a 50/50 ethylene glycol--water mix at 200\,\degF{} and 50\,psi. What seal material would you select? What body material?
 
   \item At your CDR, a reviewer asks: ``How did you verify your crimp terminations are reliable?'' Describe the test procedure you would reference.
 
@@ -787,7 +775,7 @@ Use these questions to test your understanding. Answers follow on the next page.
 
   \item Fretting corrosion develops slowly from micro-vibration, manifests as intermittent (not permanent) high resistance, is invisible without disassembly, and is difficult to reproduce during troubleshooting. By the time symptoms are consistent, oxide debris has accumulated extensively.
 
-  \item JIC 37$^{\circ}$\ flare (SAE J514). It handles 10000\,psi (well above 5000\,psi), provides a metal-to-metal seal that doesn't degrade with reassembly, and is designed for repeated disconnect/reconnect without special tools beyond standard wrenches. Compression would also work but ferrules deform on initial assembly, making reassembly less reliable.
+  \item JIC \ang{37} flare (SAE J514). It handles 10000\,psi (well above 5000\,psi), provides a metal-to-metal seal that doesn't degrade with reassembly, and is designed for repeated disconnect/reconnect without special tools beyond standard wrenches. Compression would also work but ferrules deform on initial assembly, making reassembly less reliable.
 
   \item Incorrect. BSPP (G-type) uses parallel threads that do \emph{not} seal on the threads. Sealing is achieved with a bonded washer or O-ring against a flat face. PTFE tape is used on \emph{tapered} threads (NPT, BSPT) where the thread interference provides the primary seal. Applying tape to BSPP serves no useful purpose and may prevent proper washer compression.
 
@@ -799,7 +787,7 @@ Use these questions to test your understanding. Answers follow on the next page.
 
   \item $P = I^2R = (8)^2 \times 0.050 = 3.2\,W$. Yes, this is a concern; 3.2\,W of localized heat will raise the contact and housing temperature significantly. This level of contact resistance suggests degraded contacts that should be inspected and potentially replaced.
 
-  \item NPT: Thread interference creates a wedge seal, but clearance at crests/roots requires supplemental sealant (PTFE tape or pipe dope). JIC 37$^{\circ}$: Metal-to-metal cone seal at the flared tube end; no sealant required. Compression: Ferrule swaged onto tube OD creates the seal mechanically; no sealant required. Only NPT (and BSPT) requires sealant.
+  \item NPT: Thread interference creates a wedge seal, but clearance at crests/roots requires supplemental sealant (PTFE tape or pipe dope). JIC \ang{37}: Metal-to-metal cone seal at the flared tube end; no sealant required. Compression: Ferrule swaged onto tube OD creates the seal mechanically; no sealant required. Only NPT (and BSPT) requires sealant.
 
   \item IP67 (dust-tight, survives 1\,m immersion for rain/flooding protection). Gold plating (resists corrosion in outdoor environment with humidity and temperature cycling). 25--50 mating cycles (permanent installation, only disconnected for rare maintenance). Lower mating cycle connectors are less expensive and can be more robust.
 
@@ -807,7 +795,7 @@ Use these questions to test your understanding. Answers follow on the next page.
 
   \item (a) Create a thread identification chart for the project listing which ports are NPT and which are BSP. (b) Verify every connection with a thread pitch gauge (\ang{60} = NPT, \ang{55} = BSP) before assembly. (c) If adaptation is needed, use NPT-to-BSP adapter fittings from a reputable manufacturer. Never force-thread. (d) Label all ports on your assembly drawings with thread standard.
 
-  \item Seal: Viton (FKM); compatible with ethylene glycol, rated to 400\,$^{\circ}$F (above the 200\,$^{\circ}$F operating temperature). Body: stainless steel or brass (both compatible with glycol--water). Avoid carbon steel unless corrosion-protected, as glycol solutions can be mildly corrosive to unprotected ferrous metals.
+  \item Seal: Viton (FKM); compatible with ethylene glycol, rated to 400\,\degF{} (above the 200\,\degF{} operating temperature). Body: stainless steel or brass (both compatible with glycol--water). Avoid carbon steel unless corrosion-protected, as glycol solutions can be mildly corrosive to unprotected ferrous metals.
 
   \item Reference IPC/WHMA-A-620 standard. Procedure: (a) Pull-test a statistical sample of crimps at the specified force for the wire gauge and contact size. (b) Cross-section a sample crimp to verify the cold-weld zone under magnification. (c) Measure contact resistance across each mated pair with a milliohm meter; verify $<$20\,m$\Omega$ for gold-plated contacts. (d) Document results with crimp force values, pass/fail criteria, and inspector sign-off.
 
