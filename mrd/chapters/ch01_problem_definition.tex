@@ -166,29 +166,6 @@ Context Diagram & System boundary with external interfaces labeled & Ch.~2 (inte
 \end{table}
 
 
-\begin{greenshieldbox}[GreenShield: ConOps to Requirements Mapping]
-\textbf{System}: GreenShield. Automated Greenhouse Frost Protection System.
-
-\textbf{ConOps excerpt}: ``When nighttime temperature drops below 3\,\degC{}, the system activates supplemental heating and alerts the operator via SMS. In degraded mode (cellular failure), the system continues autonomous control using local logic.''
-
-\textbf{Requirements derived}:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item SYS-REQ-001: The system shall monitor air temperature continuously at $\geq$1\,Hz.
-\item SYS-REQ-002: The system shall activate the heater when temperature $\leq$ setpoint (default 3\,\degC{}).
-\item SYS-REQ-003: The system shall send an SMS alert within 60\,s of heater activation.
-\item SYS-REQ-004: The system shall continue autonomous heating control during communication failure.
-\end{itemize}
-Every ConOps sentence should map to at least one requirement. Unmapped sentences indicate vague ConOps or missing requirements.
-\end{greenshieldbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: \S4.1 Stakeholder Needs Definition, \S4.2 System Requirements Definition.
-\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~4.1 Stakeholder Expectations Definition.
-\item \textbf{IEEE 29148}: Requirements engineering processes.
-\end{itemize}
-\end{keyconceptbox}
-
 \section{Stakeholder Analysis Techniques}
 \subsection{Stakeholder Identification}
 Begin by casting a wide net: who is affected by this product? Beyond the obvious end user, consider: the person who purchases it (may differ from the user), the person who installs and maintains it, the person who disposes of it, regulatory bodies that must approve it, adjacent systems that interact with it, and communities affected by its production and use.
@@ -259,11 +236,11 @@ Organize this information in a competitive comparison matrix. The matrix reveals
 
 \subsection{Answers}
 \begin{enumerate}[leftmargin=1.5em]
-\item ``Small-farm operators [WHO] lack access to real-time, site-specific weather data [WHAT] at remote agricultural locations without grid power [WHERE], leading to crop management decisions based on regional forecasts that miss micro-climate variations by up to 5\,$^{\circ}$ C [WHY], within a \$300 budget using only renewable power sources [CONSTRAINTS].''
+\item ``Small-farm operators [WHO] lack access to real-time, site-specific weather data [WHAT] at remote agricultural locations without grid power [WHERE], leading to crop management decisions based on regional forecasts that miss micro-climate variations by up to 5\,\degC{} [WHY], within a \$300 budget using only renewable power sources [CONSTRAINTS].''
 \item Primary users: elderly pet owner (operator). Beneficiaries: the pet; family members who worry remotely. Sponsor: the pet owner or their family. Maintainers: family member or home-care aide who refills food and troubleshoots. Regulators: food-safety standards for pet food storage; electrical safety (UL). Integrators: home Wi-Fi network; smartphone (if app-connected). Adversaries: the pet (may try to defeat the mechanism). Trainers: whoever teaches the elderly user. Disposal: recycling or trash service.
 \item Her actual need is automated frost protection, not a temperature display. The display is her current workaround for a lack of automation. The real requirement is: ``The system shall activate the supplemental heater when temperature drops below a user-defined setpoint.'' The display becomes a secondary want, not the primary need. This changes the architecture from a passive monitor to an active control system.
 \item (a) University president: high power, low interest $\to$ Keep Satisfied. (b) Commuter student: low power, high interest $\to$ Keep Informed. (c) Campus police: high power, high interest $\to$ Manage Closely (they enforce parking rules). (d) City traffic department: moderate power, low interest $\to$ Keep Satisfied (jurisdiction over surrounding roads). (e) Disability services: moderate power, high interest $\to$ Manage Closely (ADA compliance is non-negotiable).
-\item ``The frost protection system monitors greenhouse air temperature continuously. During normal operation, when temperature drops below the user-defined threshold (default 3\,$^{\circ}$ C), the system automatically activates the supplemental heater and sends an alert to the operator's phone. The operator can acknowledge the alert, adjust the setpoint, or override the system remotely. In degraded mode (communication failure), the system continues autonomous control using local logic, activating the heater based on its last-known setpoint and logging events locally until communication is restored. The operator discovers the communication failure on their next manual check or when they notice the absence of the daily status report.''
+\item ``The frost protection system monitors greenhouse air temperature continuously. During normal operation, when temperature drops below the user-defined threshold (default 3\,\degC{}), the system automatically activates the supplemental heater and sends an alert to the operator's phone. The operator can acknowledge the alert, adjust the setpoint, or override the system remotely. In degraded mode (communication failure), the system continues autonomous control using local logic, activating the heater based on its last-known setpoint and logging events locally until communication is restored. The operator discovers the communication failure on their next manual check or when they notice the absence of the daily status report.''
 \item MoSCoW: \textbf{Must}: system cost under \$500 (sponsor constraint; non-negotiable). Modular components for field replacement (maintainer need; essential for long-term usability). \textbf{Should}: visual status display (user need; but a low-cost LCD or LED indicators at \$5 may satisfy the need without a \$50 touchscreen). \textbf{Could}: touchscreen interface (user want; only if budget allows after must-haves). \textbf{Won't}: full-color graphical touchscreen in v1.0. Resolution: the display is a legitimate need but the \emph{touchscreen} is a want. Propose a 2-line LCD (\$3) for v1.0 with a touchscreen upgrade path for v2.0 if the sponsor increases budget.
 \end{enumerate}
 

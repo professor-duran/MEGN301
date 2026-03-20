@@ -194,7 +194,7 @@ Motor PWM switching generates noise on every power and ground trace. Mitigation:
 Components that dissipate significant power require thermal design:
 \begin{itemize}[leftmargin=1.5em]
 \item \textbf{Thermal pads}: many voltage regulators and motor drivers have an exposed pad on the bottom of the package. This pad \textbf{must} be soldered to a copper area on the PCB and connected to internal ground planes with thermal vias (array of 0.3\,mm vias on 1.0\,mm pitch under the pad).
-\item \textbf{Copper pour as heatsink}: for SOT-223 or D-PAK regulators, extend the ground pour under and around the package. Each square centimeter of 1-oz copper on the outer layer provides approximately $60\,^{\circ}$C/W of thermal resistance to ambient.
+\item \textbf{Copper pour as heatsink}: for SOT-223 or D-PAK regulators, extend the ground pour under and around the package. Each square centimeter of 1-oz copper on the outer layer provides approximately 60\,\degC{}/W of thermal resistance to ambient.
 \item \textbf{Thermal relief}: for hand-soldering, use thermal relief pads (spoke connections) on ground-connected pads. Without them, the ground plane wicks heat away faster than the soldering iron can supply it, resulting in cold joints\index{cold joint}.
 \end{itemize}
 
@@ -249,7 +249,7 @@ The PCB trace must be wide enough to carry the required current without excessiv
 \item 5.0\,mm (200\,mil): 7.0\,A (high-current power)
 \end{itemize}
 
-These values assume 10\,\degC{} temperature rise above ambient. For buried (internal) layers: derate by 50\%. For 2\,oz copper: multiply current capacity by $\sqrt{2} \approx 1.4$.
+These values assume 10\,\degC{} temperature rise above ambient, which yields higher ampacity than the IPC-2221B Section~6.2 values in the warning box earlier in this chapter (which use the IPC-2221B default temperature rise assumptions). For buried (internal) layers: derate by 50\%. For 2\,oz copper: multiply current capacity by $\sqrt{2} \approx 1.4$.
 
 \begin{tipbox}[Use an Online IPC-2221 Calculator]
 The lookup table above gives conservative approximations. For exact trace width calculations, use an online IPC-2221 calculator (search ``IPC-2221 trace width calculator''; Saturn PCB Toolkit is a popular free option). Enter your current, copper weight, allowable temperature rise, and ambient temperature to get a precise result. This is more accurate than a table and accounts for your specific conditions. For MEGN~301 projects, always round up to the next standard trace width and add 25\% margin on power traces.

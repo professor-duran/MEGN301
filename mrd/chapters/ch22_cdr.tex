@@ -103,14 +103,14 @@ For every BOM item: ordered/received/backordered status. Any substitutions from 
 \toprule
 \textbf{Criterion} & \textbf{What Reviewers Look For} & \textbf{Ref} \\
 \midrule
-Design completeness & Can this be built from CDR package alone? All parts specified? & Ch.~2--3 \\
+Design completeness & Can this be built from CDR package alone? All parts specified? & Ch.~3--4 \\
 Drawings quality & Fully dimensioned? Toleranced? Material and finish specified? & Ch.~3 \\
-DFM compliance & Polymer parts pass IM checklist? Draft, wall, ribs correct? & Ch.~12 \\
-Analysis evidence & Calculations/simulations show reqs met with margin? & Ch.~2, 4 \\
+DFM compliance & Polymer parts pass IM checklist? Draft, wall, ribs correct? & Ch.~17 \\
+Analysis evidence & Calculations/simulations show reqs met with margin? & Ch.~3, 5 \\
 FMEA maturity & Updated for detailed design? High-RPN resolved? Safety hazards mitigated? & Ch.~3, 6 \\
 BOM completeness & Every component listed, priced, Plan B for critical parts? Within budget? & Ch.~3 \\
-Requirements currency & Changes since PDR documented? RTM current? & Ch.~2 \\
-Test readiness & Critical procedures written? Equipment identified? & Ch.~4, 5 \\
+Requirements currency & Changes since PDR documented? RTM current? & Ch.~3 \\
+Test readiness & Critical procedures written? Equipment identified? & Ch.~5 \\
 \bottomrule
 \end{tabularx}
 \caption{CDR evaluation criteria.}
@@ -232,7 +232,7 @@ At CDR, the review board expects:
 \item Amazon listings change without notice (price, availability, even the actual product). A proper BOM entry needs: manufacturer name, manufacturer part number, key specifications (voltage, RPM, torque, current), and a stable vendor with a datasheet. Amazon is a marketplace, not a specification source.
 \item 93\% utilization leaves only 0.2\,A margin. Motor inrush alone could draw 6--10$\times$ running current for 50--100\,ms. The supply will current-limit or brown-out, causing MCU resets. Design rule: 20--25\% current margin minimum. This team needs a larger supply or must reduce the load.
 
-\item CDR fail; missing analysis evidence. Required thermal analysis: input voltage (e.g., 5\,V from USB), output 3.3\,V at 240\,mA peak. LDO power dissipation $P = (V_{in} - V_{out}) \times I = (5.0 - 3.3) \times 0.24 = 0.41$\,W. At thermal resistance $\theta_{JA} \approx 150$\,\degC/W for SOT-223, junction temp rise = $0.41 \times 150 = 61.5$\,\degC. At 25\,\degC ambient: $T_J = 86.5$\,\degC; below the 125\,\degC limit but with only 38.5\,\degC margin. At 40\,\degC ambient: $T_J = 101.5$\,\degC; still acceptable but worth documenting. The analysis takes 5 minutes and prevents a field failure.
+\item CDR fail; missing analysis evidence. Required thermal analysis: input voltage (e.g., 5\,V from USB), output 3.3\,V at 240\,mA peak. LDO power dissipation $P = (V_{in} - V_{out}) \times I = (5.0 - 3.3) \times 0.24 = 0.41$\,W. At thermal resistance $\theta_{JA} \approx 150$\,\degC{}/W for SOT-223, junction temp rise = $0.41 \times 150 = 61.5$\,\degC{}. At 25\,\degC{} ambient: $T_J = 86.5$\,\degC{}; below the 125\,\degC{} limit but with only 38.5\,\degC{} margin. At 40\,\degC{} ambient: $T_J = 101.5$\,\degC{}; still acceptable but worth documenting. The analysis takes 5 minutes and prevents a field failure.
 \item Options: (a) select a TSSOP or SOIC alternative of the same IC, (b) order a QFN breakout board/adapter, (c) use the JLCPCB assembly service (SMT placement for \$8). Option (a) is best if available. Never plan to hand-solder QFN; it requires a hot air station at minimum and even then has high defect rates.
 \end{enumerate}
 

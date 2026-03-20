@@ -48,7 +48,7 @@ Dry chain wears at $10\times$ the rate of lubricated chain. Apply chain lubrican
 \caption{Power transmission methods with efficiency, characteristics, and recommendations.}\label{fig:ptypes}
 \end{figure}
 
-\textbf{Spur}: straight teeth, 94--98\%/mesh, noisy at speed. \textbf{Helical}: angled teeth, quieter, generates axial thrust. \textbf{Bevel}: intersecting shafts (90$^{\circ}$). \textbf{Worm}: high ratio single-stage (5:1--100:1), 40--90\% efficient, \textbf{self-locking} when lead angle $<$$\sim$\ang{6}. \textbf{Planetary}: compact, coaxial, 95--97\%/stage.
+\textbf{Spur}: straight teeth, 94--98\%/mesh, noisy at speed. \textbf{Helical}: angled teeth, quieter, generates axial thrust. \textbf{Bevel}: intersecting shafts (\ang{90}). \textbf{Worm}: high ratio single-stage (5:1--100:1), 40--90\% efficient, \textbf{self-locking} when lead angle $<$$\sim$\ang{6}. \textbf{Planetary}: compact, coaxial, 95--97\%/stage.
 
 \begin{tipbox}[Gear Selection for Student Projects]
 ServoCity (servocity.com) sells matched spur gear\index{spur gear} sets with standardized shafts and hubs. McMaster has individual gears in any size. For 3D-printed gears: PETG or nylon, module $\geq$1.5, add 0.1--0.2\,mm backlash.
@@ -139,7 +139,7 @@ where $P$ is power (W), $T$ is torque (N$\cdot$m), and $\omega$ is angular veloc
 \section{Lead Screws and Linear Motion}
 Converting rotary motion to linear motion:
 
-\textbf{Lead screws}: a threaded rod turns in a nut, translating rotary motion to linear motion. The lead $l$ (linear distance per revolution) determines the speed and force: $v = l \cdot n$ (speed), $F = 2\pi T/(l \cdot \eta)$ (force). Standard trapezoidal (ACME) thread: $\eta \approx 40\%$. Ball screws (recirculating ball bearings in the nut): $\eta \approx 90\%$, but 10$\times$ the cost.
+\textbf{Lead screws}: a threaded rod turns in a nut, translating rotary motion to linear motion. The lead $l$ (linear distance per revolution) determines the speed and force: $v = l \cdot n$ (speed), $F = 2\pi T \eta / l$ (force, motor driving load). Standard trapezoidal (ACME) thread: $\eta \approx 40\%$. Ball screws (recirculating ball bearings in the nut): $\eta \approx 90\%$, but 10$\times$ the cost.
 
 \textbf{Rack and pinion}: a spur gear (pinion) meshes with a linear gear (rack). Linear speed $= \pi d n$ where $d$ is the pinion pitch diameter. Used in CNC machines, steering systems, and linear actuators.
 

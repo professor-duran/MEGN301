@@ -64,8 +64,8 @@ A well-formed requirement has: (1) a unique ID (SYS-REQ-042) for traceability, (
 \subsection{Requirement Types}
 \begin{itemize}[leftmargin=1.5em]
 \item \textbf{Functional}: What the system shall \emph{do}. Actions: sense, compute, transmit, actuate, display. ``The system shall measure ambient temperature.''
-\item \textbf{Performance}: How \emph{well} it does it. Quantitative criteria. ``\ldots with accuracy of $\pm 0.5$\,$^{\circ}$ C over $-20$ to $+60$\,$^{\circ}$ C at $\geq$1\,Hz.'' A functional requirement without a paired performance requirement is incomplete.
-\item \textbf{Non-Functional (NFR)}: Constraints on \emph{how} it is built. Environmental (``operate at $-20$ to $+60$\,$^{\circ}$ C''), regulatory (``comply with FCC Part 15''), material (``RoHS\index{RoHS Directive}-compliant''), reliability (``$\geq$1000 hrs MTBF\index{MTBF (Mean Time Between Failures)}''), interface (``CAN 2.0B'').
+\item \textbf{Performance}: How \emph{well} it does it. Quantitative criteria. ``\ldots with accuracy of $\pm 0.5$\,\degC{} over $-20$ to $+60$\,\degC{} at $\geq$1\,Hz.'' A functional requirement without a paired performance requirement is incomplete.
+\item \textbf{Non-Functional (NFR)}: Constraints on \emph{how} it is built. Environmental (``operate at $-20$ to $+60$\,\degC{}''), regulatory (``comply with FCC Part 15''), material (``RoHS\index{RoHS Directive}-compliant''), reliability (``$\geq$1000 hrs MTBF\index{MTBF (Mean Time Between Failures)}''), interface (``CAN 2.0B'').
 \end{itemize}
 
 \subsection{Requirements Hierarchy and Traceability}
@@ -341,7 +341,7 @@ Document the tradeoff analysis in the PDR package. The review board wants to see
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]
 \item Rewrite this bad requirement as a well-formed shall-statement: ``The system should be fast and accurate.''
-\item A system requirement states ``shall measure temperature to $\pm$0.5\,$^{\circ}$ C.'' Decompose this into three subsystem requirements for the sensor, ADC, and display subsystems.
+\item A system requirement states ``shall measure temperature to $\pm$0.5\,\degC{}.'' Decompose this into three subsystem requirements for the sensor, ADC, and display subsystems.
 \item Your project has a requirement: ``shall use an Arduino Mega 2560.'' Is this a valid requirement? Why or why not? Rewrite it properly.
 \item Explain the difference between forward and backward traceability. Why do you need both?
 \item Create a weighted decision matrix comparing three MCU options for a battery-powered sensor node. Define at least five criteria with weights.
@@ -351,8 +351,8 @@ Document the tradeoff analysis in the PDR package. The review board wants to see
 
 \subsection{Answers}
 \begin{enumerate}[leftmargin=1.5em]
-\item Two requirements: ``SYS-REQ-001: The system shall respond to user input within 200\,ms of activation.'' ``SYS-REQ-002: The system shall measure ambient temperature with accuracy of $\pm$0.5\,$^{\circ}$ C.''
-\item (a) ``The sensor shall output a signal proportional to temperature with linearity $\leq \pm$0.2\,$^{\circ}$ C over $-20$ to $+60$\,$^{\circ}$ C.'' (b) ``The ADC shall digitize the sensor signal with resolution $\leq$0.1\,$^{\circ}$ C and total error $\leq \pm$0.15\,$^{\circ}$ C.'' (c) ``The display shall present the temperature value with update rate $\geq$1\,Hz and display resolution of 0.1\,$^{\circ}$ C.'' Note: $\sqrt{0.2^2+0.15^2+\text{display}}$ $<$ 0.5\,$^{\circ}$ C RSS.
+\item Two requirements: ``SYS-REQ-001: The system shall respond to user input within 200\,ms of activation.'' ``SYS-REQ-002: The system shall measure ambient temperature with accuracy of $\pm$0.5\,\degC{}.''
+\item (a) ``The sensor shall output a signal proportional to temperature with linearity $\leq \pm$0.2\,\degC{} over $-20$ to $+60$\,\degC{}.'' (b) ``The ADC shall digitize the sensor signal with resolution $\leq$0.1\,\degC{} and total error $\leq \pm$0.15\,\degC{}.'' (c) ``The display shall present the temperature value with update rate $\geq$1\,Hz and display resolution of 0.1\,\degC{}.'' Note: $\sqrt{0.2^2+0.15^2+\text{display}}$ $<$ 0.5\,\degC{} RSS.
 \item Not valid; it specifies implementation (HOW) rather than need (WHAT). Rewrite: ``SYS-REQ-XXX: The controller shall provide $\geq$12 analog input channels, $\geq$4 serial interfaces, and $\geq$256\,KB flash memory. Rationale: sensor count and communication needs.''
 \item Forward: parent $\to$ children. Checks completeness, every requirement is decomposed. Backward: child $\to$ parent. Checks justification, every spec traces to a need. Without forward, requirements go unimplemented. Without backward, unnecessary work gets done.
 \item Criteria might include: power consumption (0.25), analog channels (0.20), cost (0.20), flash/RAM (0.15), ecosystem/library support (0.10), package size (0.10). Options: STM32L4, ESP32, ATmega328P.
