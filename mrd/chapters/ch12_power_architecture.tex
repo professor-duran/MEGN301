@@ -197,7 +197,7 @@ A fusible element melts at its rated current.\index{inrush current} \textbf{Fast
 Polymer PTC (positive temperature coefficient) devices. Resistance increases dramatically at the trip point, limiting current. Self-resets when cooled. Slower than traditional fuses. Best for USB ports and sensor circuits where the fault is intermittent.
 
 \subsubsection{Electronic Fuses (eFuse)}
-A MOSFET in series with the load, controlled by a current-sense amplifier. Programmable trip point, fast response, automatic retry or latched shutdown. Provides current \emph{limiting} (not just cutting); can hold current at a safe level during motor inrush. Common: TPS2596, LTC4368, MAX14690.
+A MOSFET in series with the load, controlled by a current-sense amplifier. Programmable trip point, fast response, automatic retry or latched shutdown. Provides current \emph{limiting} (not just cutting); can hold current at a safe level during motor inrush. Common: TPS2596, LTC4368, TPS25944.
 
 \subsubsection{Circuit Breakers}
 Thermal or magnetic trip mechanism with manual reset. Common for AC branch circuits (15\,A, 20\,A per NEC). In DC systems, used for battery main disconnects. \textbf{Must be DC-rated}; an AC breaker may not safely interrupt\index{interrupt (ISR)} DC arcs because DC does not cross zero.
@@ -362,7 +362,7 @@ P-FET reverse pol.\ & IRLML6402 & Low-loss reverse polarity; $R_{DS(on)} < 50$\,
 PTC fuse (resettable) & MF-R050 (500\,mA) & Signal line overcurrent; auto-resets after fault clears \\
 Blade/glass fuse & ATC (automotive) & Main power rail; sized at 125\% of max continuous current \\
 eFuse IC & TPS2596 & Programmable current limit, soft-start, fault reporting \\
-Varistor (MOV) & 14D471K (300\,V) & AC mains transient suppression \\
+Varistor (MOV) & 14D471K (470\,V) & AC mains transient suppression \\
 Ferrite bead & BLM18PG221 & High-frequency noise filtering on DC power lines \\
 \bottomrule
 \end{tabularx}

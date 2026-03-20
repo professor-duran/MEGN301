@@ -184,7 +184,7 @@ Wi-Fi/BLE (0.10) & 5 (0.50) & 1 (0.10) & 1 (0.10) \\
 \caption{MCU trade study for battery-powered sensor node.}
 \end{table}
 
-\textbf{Sensitivity check}: If ``Power consumption'' weight increases from 0.25 to 0.30 (taking 0.05 from Wi-Fi), STM32L4 total rises to 4.05 and ESP32 drops to 4.40; winner unchanged. Selection is robust.
+\textbf{Sensitivity check}: If ``Power consumption'' weight increases from 0.25 to 0.30 (taking 0.05 from Wi-Fi), STM32L4 total rises to 4.00 and ESP32 drops to 4.40; winner unchanged. Selection is robust.
 
 \begin{figure}[htbp]\centering
 \begin{tikzpicture}[>=Stealth]
@@ -266,28 +266,6 @@ Trade Study Reports & Weighted decision matrices with sensitivity analysis & Ch.
 \end{tabularx}
 \end{table}
 
-
-\begin{greenshieldbox}[GreenShield: Functional Decomposition]
-\textbf{Top-level function}: Protect greenhouse crops from frost damage.
-
-Decomposition:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{Sense Environment} $\to$ Measure Air Temp, Measure Soil Temp, Detect Heater Status
-\item \textbf{Process Data} $\to$ Compare to Setpoint, Apply Hysteresis, Log Data
-\item \textbf{Control Actuator} $\to$ Activate Heater Relay, Deactivate Heater Relay
-\item \textbf{Communicate Status} $\to$ Send SMS Alert, Display Local Status, Receive Remote Commands
-\item \textbf{Provide Power} $\to$ Regulate Supply Voltage, Manage Battery, Protect Circuits
-\end{itemize}
-Each leaf maps to a physical component. ``Measure Air Temp'' $\to$ DS18B20 sensor. ``Regulate Supply Voltage'' $\to$ 5\,V buck converter.
-\end{greenshieldbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: \S4.2 System Requirements Definition, \S4.3 Architecture Definition.
-\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~4.2 Technical Requirements, Ch.~4.3 Logical Decomposition.
-\item \textbf{IEEE 1233}: Guide for developing system requirements specifications.
-\end{itemize}
-\end{keyconceptbox}
 
 \section{Writing Good Requirements: Advanced Techniques}
 \subsection{The SHALL/SHOULD/MAY Hierarchy}
