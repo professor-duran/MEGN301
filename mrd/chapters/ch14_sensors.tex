@@ -67,7 +67,7 @@ A \textbf{transducer} converts energy from one domain to another. A \textbf{sens
 
 \textbf{Inductive/Electromagnetic}: the measurand changes inductance or generates voltage via Faraday's law. Examples: LVDTs (displacement changes transformer coupling), tachometers (rotation generates AC voltage), eddy current proximity sensors.
 
-\textbf{Piezoelectric}: mechanical stress generates charge (Seebeck effect in reverse). Examples: dynamic force/pressure sensors (quartz, PZT), accelerometers, ultrasonic transducers. Critical limitation: piezoelectric sensors measure only \emph{dynamic} quantities; charge leaks for static loads.
+\textbf{Piezoelectric}: mechanical stress generates charge (direct piezoelectric effect). Examples: dynamic force/pressure sensors (quartz, PZT), accelerometers, ultrasonic transducers. Critical limitation: piezoelectric sensors measure only \emph{dynamic} quantities; charge leaks for static loads.
 
 \textbf{Thermoelectric}: temperature difference at a junction of dissimilar metals generates voltage (Seebeck effect). The thermocouple produces $\sim$10--60\,$\mu$V/\degC{} depending on type, requiring amplification and cold-junction compensation.
 
@@ -103,7 +103,7 @@ When selecting a sensor, evaluate these against your system requirements:
 \section{Actuator Principles}
 
 \subsection{Electromagnetic Actuators}
-\textbf{DC motors} (brushed, BLDC): torque proportional to current, speed proportional to voltage minus back-EMF. Controlled via PWM + H-bridge (Chapter~12). \textbf{Stepper motors}: discrete steps (typically 1.8\degC{}/step), open-loop positioning, no encoder required. \textbf{Servo motors}: integrated motor + feedback + controller; accept position/velocity commands. \textbf{Solenoids}: linear on/off force from energized coil; fast ($<$10\,ms), inductive (flyback diode mandatory per Chapter~12).
+\textbf{DC motors} (brushed, BLDC): torque proportional to current, speed proportional to voltage minus back-EMF. Controlled via PWM + H-bridge (Chapter~12). \textbf{Stepper motors}: discrete steps (typically \ang{1.8}/step), open-loop positioning, no encoder required. \textbf{Servo motors}: integrated motor + feedback + controller; accept position/velocity commands. \textbf{Solenoids}: linear on/off force from energized coil; fast ($<$10\,ms), inductive (flyback diode mandatory per Chapter~12).
 
 \subsection{Thermal Actuators}
 \textbf{Resistive heaters}: $P = I^2R$, controlled via PWM through SSR or MOSFET. \textbf{Peltier devices}: semiconductor heat pump; can heat or cool depending on current direction; low efficiency.
@@ -130,7 +130,7 @@ Temperature & BME280 & I2C/SPI & $-40$--85\,\degC{} & Also humidity + pressure \
 Temperature & Type K TC & Analog (mV) & $-200$--1250\,\degC{} & Use MAX31855 amplifier \\
 Proximity & HC-SR04 & Pulse (echo) & 2--400\,cm & Ultrasonic; 3\,mm resolution \\
 Proximity & VL53L0X & I2C & 3--200\,cm & ToF laser; 1\,mm resolution \\
-Force/Weight & HX711 + load cell & I2C-like & 0--200\,kg & 24-bit ADC built-in \\
+Force/Weight & HX711 + load cell & Proprietary serial & 0--200\,kg & 24-bit ADC built-in \\
 Accel/Gyro & MPU-6050 & I2C & $\pm$16\,g / $\pm$\ang{2000}/s & 6-axis IMU \\
 Current & ACS712 & Analog & $\pm$5/20/30\,A & Hall-effect, isolated \\
 Pressure & BMP390 & I2C/SPI & 300--1250\,hPa & Barometric; $\pm$0.5\,hPa \\

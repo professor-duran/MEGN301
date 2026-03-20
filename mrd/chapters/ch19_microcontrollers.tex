@@ -196,7 +196,7 @@ A microcontroller (MCU) is a complete computer on a single chip: processor (CPU)
 
 \textbf{ADC}: the ESP32's internal ADC is 12-bit with significant nonlinearity and noise ($\pm$50\,LSB at 12-bit). For precision measurement: use an external ADC (ADS1115: 16-bit, I2C, \$3) or the NI~DAQ. The internal ADC is adequate for: battery voltage monitoring, potentiometer reading, and coarse sensor measurement where $\pm$5\% accuracy suffices.
 
-\textbf{Communication interfaces}: UART (serial: 3 ports), SPI (high-speed: 2 ports), I2C (moderate speed: 1 port, expandable). Wi-Fi (802.11b/g/n) and Bluetooth (Classic + BLE) are built-in, enabling wireless data logging, remote monitoring, and over-the-air firmware updates.
+\textbf{Communication interfaces}: UART (serial: 3 ports), SPI (high-speed: 2 ports), I2C (moderate speed: 2 ports). Wi-Fi (802.11b/g/n) and Bluetooth (Classic + BLE) are built-in, enabling wireless data logging, remote monitoring, and over-the-air firmware updates.
 
 \section{ESP32 Pin Planning}
 Before writing code, create a pin assignment table mapping every signal to a specific GPIO pin. Constraints to observe:
@@ -237,7 +237,7 @@ Low priority: display update and Wi-Fi communication. Runs when higher-priority 
 This ensures the control loop always meets its timing deadline, even when lower-priority tasks are slow.
 
 \section{Common ESP32 Pitfalls in MEGN 301}
-(1) \textbf{Watchdog timer resets}: the ESP32's watchdog timer resets the system if the main loop (or a FreeRTOS task) does not yield within $\sim$3\,s. Long operations (SD card initialization, Wi-Fi connection) trigger the watchdog. Solution: call \texttt{yield()} or \texttt{vTaskDelay(1)} inside long operations.
+(1) \textbf{Watchdog timer resets}: the ESP32's watchdog timer resets the system if the main loop (or a FreeRTOS task) does not yield within $\sim$5\,s (default timeout). Long operations (SD card initialization, Wi-Fi connection) trigger the watchdog. Solution: call \texttt{yield()} or \texttt{vTaskDelay(1)} inside long operations.
 
 (2) \textbf{Power supply noise}: the ESP32's Wi-Fi transmitter draws 120--240\,mA current pulses that cause voltage sag on weak supplies. Symptoms: random resets, ADC reading spikes, Wi-Fi disconnections. Solution: use a dedicated 5\,V supply with $\geq$1\,A capacity and place a 470\,$\mu$F capacitor at the ESP32's 3.3\,V input.
 
