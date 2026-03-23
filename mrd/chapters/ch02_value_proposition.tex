@@ -1,41 +1,44 @@
 \chapter{Value Proposition \& Triple Bottom Line\index{triple bottom line}}\label{ch:value}
 
 \begin{tipbox}[When to Read This Chapter]
-\textbf{Sprint~1}: Read Sections~2.1--2.3 (four-dimension framework, feasibility, desirability). These feed directly into your problem statement justification. \textbf{Sprint~2}: Read Section~2.5 (competitive analysis) before PDR. \textbf{Sprint~3}: Return to Section~2.4 (viability, cost analysis) when building your power budget and BOM.
+\textbf{Sprint~1}: Read Sections~2.1--2.3 (five-dimension framework, feasibility, desirability). These feed directly into your problem statement justification. \textbf{Sprint~2}: Read Sections~2.5--2.6 (ethical responsibility, competitive analysis) before PDR. \textbf{Sprint~3}: Return to Section~2.4 (viability, cost analysis) when building your power budget and BOM.
 \end{tipbox}
 
 \section{Why Value Proposition Matters in Engineering Design}
-A technically brilliant product that nobody wants, nobody can afford, or nobody can sustain is a failure. Before investing hundreds of engineering hours in requirements, design, and fabrication, you must answer a fundamental question: \textbf{is this product worth building?} The value proposition\index{value proposition} framework (Figure~\ref{fig:value_framework}) provides a structured method for answering that question by examining four dimensions: feasibility\index{feasibility assessment}, desirability, viability, and sustainability. Together, these dimensions ensure that a product concept is not just technically possible, but genuinely valuable to its intended users and stakeholders.
+A technically brilliant product that nobody wants, nobody can afford, nobody can sustain, or nobody \emph{should} build is a failure. Before investing hundreds of engineering hours in requirements, design, and fabrication, you must answer a fundamental question: \textbf{is this product worth building---and should it be built at all?} The value proposition\index{value proposition} framework (Figure~\ref{fig:value_framework}) provides a structured method for answering that question by examining five dimensions: feasibility\index{feasibility assessment}, desirability, viability, sustainability, and ethical responsibility\index{ethical responsibility}. Together, these dimensions ensure that a product concept is not just technically possible, but genuinely valuable to its intended users and stakeholders---and that building it is the right thing to do.
 
-In MEGN~301, your team's GreenShield project must satisfy all four dimensions. A common failure mode in student projects is building something that works (feasible) but that nobody actually needs (not desirable), costs more than the benefit it provides (not viable), or creates environmental harm that outweighs its utility (not sustainable). The value proposition analysis forces you to confront these questions early, when the cost of pivoting is measured in whiteboard sessions rather than scrapped prototypes.
+In MEGN~301, your team's GreenShield project must satisfy all five dimensions. A common failure mode in student projects is building something that works (feasible) but that nobody actually needs (not desirable), costs more than the benefit it provides (not viable), creates environmental harm that outweighs its utility (not sustainable), or raises ethical concerns that were never examined (not responsible). The value proposition analysis forces you to confront these questions early, when the cost of pivoting is measured in whiteboard sessions rather than scrapped prototypes.
 
-\section{The Four-Dimension Value Framework}
+\section{The Five-Dimension Value Framework (FDVSE)}
 
 \begin{figure}[htbp]\centering
 \begin{tikzpicture}[]
-% Four overlapping circles
-\node[dim=MinesBlue] (feas) at (-1.6,1.2) {Feasibility\\{\tiny Can we build it?}};
-\node[dim=AccentTeal] (des) at (1.6,1.2) {Desirability\\{\tiny Does anyone want it?}};
-\node[dim=WarnOrange] (via) at (-1.6,-1.2) {Viability\\{\tiny Can it sustain itself?}};
-\node[dim=diagPurple] (sus) at (1.6,-1.2) {Sustainability\\{\tiny Is it responsible?}};
+% Five dimensions arranged in a pentagon
+\node[dim=MinesBlue] (feas) at (90:2.4) {Feasibility\\{\tiny Can we build it?}};
+\node[dim=AccentTeal] (des) at (162:2.4) {Desirability\\{\tiny Does anyone want it?}};
+\node[dim=WarnOrange] (via) at (234:2.4) {Viability\\{\tiny Can it sustain itself?}};
+\node[dim=diagPurple] (sus) at (306:2.4) {Sustainability\\{\tiny Is it responsible\\long-term?}};
+\node[dim=diagRed] (eth) at (18:2.4) {Ethical\\Responsibility\\{\tiny Should we build it?}};
 
 % Center label
 \node[rectangle, rounded corners=4pt, draw=MinesBlue, fill=white,
     font=\small\sffamily\bfseries, inner sep=4pt, line width=1.2pt] at (0,0) {VALUE};
 
-% Corner failure labels
-\node[dlabel=MinesBlue, text width=2.5cm] at (-4.0,2.5) {Feasible but unwanted\\{\tiny ``Solution seeking\\a problem''}};
-\node[dlabel=AccentTeal, text width=2.5cm] at (4.0,2.5) {Desired but unbuildable\\{\tiny ``Vaporware''}};
-\node[dlabel=WarnOrange, text width=2.5cm] at (-4.0,-2.5) {Affordable but\\nobody wants it\\{\tiny ``Race to the bottom''}};
-\node[dlabel=diagPurple, text width=2.5cm] at (4.0,-2.5) {Sustainable but\\impractical\\{\tiny ``Green fantasy''}};
+% Failure labels around the outside
+\node[dlabel=MinesBlue, text width=2.5cm] at (90:4.4) {Feasible but unwanted\\{\tiny ``Solution seeking\\a problem''}};
+\node[dlabel=AccentTeal, text width=2.5cm] at (162:4.4) {Desired but unbuildable\\{\tiny ``Vaporware''}};
+\node[dlabel=WarnOrange, text width=2.5cm] at (234:4.4) {Affordable but\\nobody wants it\\{\tiny ``Race to the bottom''}};
+\node[dlabel=diagPurple, text width=2.5cm] at (306:4.4) {Sustainable but\\impractical\\{\tiny ``Green fantasy''}};
+\node[dlabel=diagRed, text width=2.5cm] at (18:4.4) {Capable but\\irresponsible\\{\tiny ``Can doesn't\\mean should''}};
 
 % Arrows from failure to circle
-\draw[->,MinesBlue!40,line width=0.5pt] (-3.2,2.0) -- (feas);
-\draw[->,AccentTeal!40,line width=0.5pt] (3.2,2.0) -- (des);
-\draw[->,WarnOrange!40,line width=0.5pt] (-3.2,-2.0) -- (via);
-\draw[->,diagPurple!40,line width=0.5pt] (3.2,-2.0) -- (sus);
+\draw[->,MinesBlue!40,line width=0.5pt] (90:3.8) -- (feas);
+\draw[->,AccentTeal!40,line width=0.5pt] (162:3.8) -- (des);
+\draw[->,WarnOrange!40,line width=0.5pt] (234:3.8) -- (via);
+\draw[->,diagPurple!40,line width=0.5pt] (306:3.8) -- (sus);
+\draw[->,diagRed!40,line width=0.5pt] (18:3.8) -- (eth);
 \end{tikzpicture}
-\caption{The four-dimension value framework. A product must satisfy all four dimensions to create genuine value. Meeting only one or two dimensions produces the characteristic failure modes shown at each corner. The center represents the intersection where feasibility, desirability, viability, and sustainability all align.}\label{fig:value_framework}
+\caption{The five-dimension value framework (FDVSE). A product must satisfy all five dimensions to create genuine value. Meeting only some dimensions produces the characteristic failure modes shown at each edge. The fifth dimension---ethical responsibility---asks the question that the other four do not: even if we \emph{can} build it, \emph{should} we? The center represents the intersection where feasibility, desirability, viability, sustainability, and ethical responsibility all align.}\label{fig:value_framework}
 \end{figure}
 
 \subsection{Feasibility: Can We Build It?}
@@ -90,6 +93,27 @@ Sustainability asks whether the product's benefits outweigh its environmental an
 
 \textbf{Circular economy alignment}: can the product be designed for disassembly, material recovery, and component reuse? Can a take-back program return end-of-life products to the manufacturer for refurbishment or recycling?
 
+\subsection{Ethical Responsibility: Should We Build It?}\index{ethical responsibility}
+Ethical responsibility asks the question that the other four dimensions do not: even if a product is feasible, desirable, viable, and sustainable, \textbf{should it be built?} Engineering capability creates moral obligation. The ability to build something does not grant permission to build it. This dimension is grounded in the NSPE Code of Ethics\index{NSPE Code of Ethics}, particularly Canon~1: ``Engineers shall hold paramount the safety, health, and welfare of the public.'' It encompasses:
+
+\textbf{Public safety and welfare}: does the product protect or endanger the health, safety, and welfare of the public? Could it be misused in ways that cause harm? A technically excellent surveillance system is feasible, desirable (to the buyer), viable, and sustainable---but if deployed without safeguards, it may violate civil liberties and cause disproportionate harm to vulnerable populations. The ethical dimension demands that engineers consider not just intended use, but foreseeable misuse.
+
+\textbf{Dual-use potential}\index{dual-use}: could the technology be repurposed for harmful applications? Products involving sensors, data collection, autonomous decision-making, or chemical/biological processes carry inherent dual-use risk. A drone designed for agricultural monitoring can also conduct surveillance. An automated chemical dosing system designed for water treatment could be misused for other purposes. Engineers must assess dual-use potential and design safeguards (access controls, use logging, tamper detection) that reduce the risk of harmful repurposing.
+
+\textbf{Informed consent and data ethics}\index{data ethics}: if the product collects, stores, or transmits user data, does it do so transparently? Do users understand what data is collected, how it is used, who has access, and how long it is retained? The ethical standard is not ``what is legally permitted'' but ``what would a reasonable user expect and consent to if fully informed?'' Design privacy in from the start, not as an afterthought.
+
+\textbf{Justice and equity}\index{equity in design}: does the product distribute benefits and burdens fairly? A product that benefits affluent users while imposing environmental costs on disadvantaged communities fails the equity test. Consider: who benefits from this product? Who bears the costs or risks? Are the populations who bear the burden the same ones who benefit? If not, what can be redesigned to distribute impacts more fairly?
+
+\textbf{Unintended consequences}: what second- and third-order effects might this product create? A labor-saving automation system may eliminate jobs. A social media feature designed to increase engagement may amplify misinformation. Engineers cannot predict every consequence, but they are obligated to think beyond the immediate use case and consider systemic effects. The practice of \textbf{moral imagination}\index{moral imagination}---deliberately asking ``what could go wrong, for whom, and under what conditions?''---is a professional skill, not an academic exercise.
+
+\textbf{Professional obligation}: the NSPE Code of Ethics establishes that engineers must ``perform services only in areas of their competence,'' ``act for each employer or client as faithful agents or trustees,'' and ``conduct themselves honorably, responsibly, ethically, and lawfully.'' When a project raises ethical concerns that cannot be resolved through design changes, the engineer has a professional obligation to raise those concerns---even if doing so is uncomfortable or unpopular. In MEGN~301, this means: if your team identifies an ethical concern with the project direction, raise it with your instructor. Ethical courage is as much a professional skill as technical competence.
+
+\begin{warningbox}[The ``Can vs.\ Should'' Gateway]
+The ethical responsibility dimension functions as a gateway: a product that passes the first four dimensions (feasible, desirable, viable, sustainable) but fails the ethical dimension should not proceed without modification. This is not a soft guideline. The NSPE Code of Ethics places public safety, health, and welfare above the interests of the client, the employer, and the engineer. If a product cannot be built ethically, it should not be built---or it should be redesigned until it can.
+
+\textbf{A concrete MEGN~301 example}: a team designs a smart home energy monitor that collects granular appliance-level power data. The product is feasible (proven technology), desirable (users want to reduce energy bills), viable (competitive price point), and sustainable (reduces energy waste). But the data stream reveals when occupants are home, when they sleep, and what appliances they use---information that could enable stalking, burglary targeting, or insurance discrimination. The ethical dimension requires the team to design privacy safeguards (local-only processing, data aggregation, explicit opt-in for cloud features) before the product can claim genuine value.
+\end{warningbox}
+
 \section{The Triple Bottom Line}
 The Triple Bottom Line (TBL) framework, introduced by John Elkington in 1994, evaluates organizational and product performance across three dimensions:
 
@@ -110,8 +134,8 @@ For a rough LCA in MEGN~301: (1)~Sum the mass of each material category. (2)~Mul
 \subsection{Profit (Economic)}
 The economic dimension ensures the product is financially sustainable. A product that loses money on every unit sold, no matter how socially and environmentally beneficial, cannot persist. The economic dimension includes: unit manufacturing cost, expected selling price, gross margin ($\geq$40\% for hardware products to cover overhead, distribution, and warranty), development cost recovery (break-even volume), and total cost of ownership\index{total cost of ownership (TCO)} for the user (purchase price + operating costs + maintenance + disposal).
 
-\section{Applying TBL to the GreenShield Project}
-Every GreenShield project should include a TBL assessment in the Preliminary Design Review:
+\section{Applying FDVSE and TBL to the GreenShield Project}
+Every GreenShield project should include an FDVSE assessment and TBL analysis in the Preliminary Design Review:
 
 \textbf{People}: who benefits? Who is affected? What safety considerations exist? How does the product improve the user's daily experience?
 
@@ -119,9 +143,11 @@ Every GreenShield project should include a TBL assessment in the Preliminary Des
 
 \textbf{Profit}: what is the estimated BOM cost? What would a realistic selling price be? How many units would need to be sold to recover the development investment? What is the user's return on investment (cost savings or productivity improvement)?
 
-The TBL analysis does not require precise numbers at the concept stage. Order-of-magnitude estimates are sufficient to identify show-stoppers (e.g., a product that costs \$500 to build but competes with \$20 alternatives, or a product whose battery contains 5\,kg of lithium that cannot be recycled).
+\textbf{Ethics}: does the product collect user data? If so, what safeguards protect privacy? Could the product be misused or repurposed in harmful ways? Does it distribute benefits and burdens equitably across affected populations? What unintended consequences has the team identified, and what design decisions mitigate them?
 
-\begin{greenshieldbox}[GreenShield Template: Value Proposition Summary]
+The TBL and ethical analysis does not require precise numbers at the concept stage. Order-of-magnitude estimates and structured qualitative reasoning are sufficient to identify show-stoppers (e.g., a product that costs \$500 to build but competes with \$20 alternatives, a product whose battery contains 5\,kg of lithium that cannot be recycled, or a data-collecting product with no privacy safeguards).
+
+\begin{greenshieldbox}[GreenShield Template: Value Proposition Summary (FDVSE)]
 Include in your PDR package:
 \begin{itemize}[nosep,leftmargin=1.5em]
 \item \textbf{User}: Who is the primary user? What is their unmet need?
@@ -130,6 +156,7 @@ Include in your PDR package:
 \item \textbf{Desirability}: What evidence do we have that users want this? (Interview quotes, survey data, competitive gap.)
 \item \textbf{Viability}: Estimated BOM cost vs.\ target price. Estimated market size.
 \item \textbf{Sustainability}: Estimated embodied energy. End-of-life plan. Key environmental risks.
+\item \textbf{Ethical Responsibility}: What data does the product collect, and how is it protected? What dual-use or misuse risks exist? Who bears the costs or risks of this product, and is that distribution equitable? What unintended consequences has the team considered?
 \item \textbf{TBL Summary}: One sentence each for People, Planet, Profit impact.
 \end{itemize}
 \end{greenshieldbox}
@@ -219,18 +246,22 @@ For B2B (business-to-business) products, the value proposition must be quantifie
 For B2C (business-to-consumer) products, value is often experiential rather than financial, and quantification is harder. Use: willingness-to-pay surveys, comparable product pricing, and customer satisfaction metrics.
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]
-\item Your team proposes a solar-powered phone charging station for campus bus stops. Evaluate feasibility, desirability, viability, and sustainability. Identify the highest-risk dimension and propose a mitigation strategy.
+\item Your team proposes a solar-powered phone charging station for campus bus stops. Evaluate all five FDVSE dimensions (feasibility, desirability, viability, sustainability, and ethical responsibility). Identify the highest-risk dimension and propose a mitigation strategy.
 \item A GreenShield team's product costs \$120 in materials and takes 8 hours to assemble. The product saves the user approximately \$15/month in energy costs. Calculate the payback period. Is this viable for a consumer market? For an industrial market?
 \item Conduct a simplified TBL assessment for a battery-powered portable fan. List two considerations for each dimension (People, Planet, Profit).
 \item Explain why a product can be feasible and desirable but not viable. Give a specific example from consumer electronics.
 \item Your product uses a 5000\,mAh lithium-polymer battery. Research the environmental impact of lithium mining and battery disposal. Propose a design change that would improve the product's sustainability score.
+\item A team designs a wearable fitness tracker for elementary school children that monitors heart rate, activity level, location, and sleep patterns, and reports the data to parents via a smartphone app. The product is feasible, desirable (parents want it), viable (competitive price point), and sustainable (low-power design, recyclable materials). Conduct an ethical responsibility assessment using the FDVSE framework. Identify at least three ethical concerns and propose design modifications that address each one.
+\item Explain the difference between the sustainability dimension and the ethical responsibility dimension. Give an example of a product that scores well on sustainability but poorly on ethical responsibility, and vice versa.
 \end{enumerate}
 
 \subsection{Answers}
 \begin{enumerate}[leftmargin=1.5em]
-\item Feasibility: solar panel + charge controller + USB outlets is proven technology; risk is weather variability and vandalism. Desirability: students waiting at bus stops often have low phone battery; validated by informal survey. Viability: \$200 BOM, no revenue model unless campus funds it; viable as a university sustainability project, not as a commercial product. Sustainability: solar energy is renewable; battery and electronics require recycling; aluminum enclosure is recyclable. Highest risk: viability (no clear revenue); mitigation: frame as a grant-funded campus improvement, not a commercial product.
+\item Feasibility: solar panel + charge controller + USB outlets is proven technology; risk is weather variability and vandalism. Desirability: students waiting at bus stops often have low phone battery; validated by informal survey. Viability: \$200 BOM, no revenue model unless campus funds it; viable as a university sustainability project, not as a commercial product. Sustainability: solar energy is renewable; battery and electronics require recycling; aluminum enclosure is recyclable. Ethical responsibility: minimal data collection risk (no user tracking); equitable access (free, public); minor concern about equitable placement across campus (are stations placed only at ``prestigious'' stops?). Highest risk: viability (no clear revenue); mitigation: frame as a grant-funded campus improvement, not a commercial product.
 \item Payback $= \$120/\$15 = 8$ months. For consumer: borderline viable (consumers prefer $<$6-month payback for energy products). For industrial: excellent (industrial buyers accept 1--3 year payback). Viability depends on the target market, not just the technology.
 \item People: (+) provides comfort in hot environments, ($-$) battery creates disposal hazard. Planet: (+) reduces need for large HVAC, ($-$) battery and motor require mining and energy-intensive manufacturing. Profit: (+) low BOM (\$15--30), ($-$) intense competition from established brands drives margins below 20\%.
 \item A product can be technically buildable (feasible) and users may want it (desirable), but if it costs more to produce than customers will pay, it is not viable. Example: modular smartphones (Project Ara) were technically feasible and highly desired by tech enthusiasts, but the modular design added \$100+ to manufacturing cost, making the price uncompetitive with integrated designs.
 \item LiPo batteries contain lithium (from brine extraction in Chile/Argentina, high water consumption), cobalt (from DRC\index{DRC (design rule check)}, ethical concerns), and electrolytes (flammable, toxic). Design change: reduce battery capacity to 2500\,mAh (sufficient for the application) and design the enclosure for easy battery replacement and return. Add a QR code linking to a battery recycling drop-off locator. Switch from cobalt-based to lithium iron phosphate (LFP) chemistry, which is cobalt-free and more recyclable.
+\item Ethical concerns: (1)~\textbf{Data privacy for minors}: children cannot meaningfully consent to continuous biometric and location monitoring; the product collects sensitive health data on a vulnerable population. Mitigation: minimize data collection to only what is necessary for the stated purpose, store data locally on the parent's device rather than in the cloud, and implement automatic data deletion after 30 days. (2)~\textbf{Surveillance normalization}: continuous tracking conditions children to accept constant monitoring as normal, potentially affecting their development of autonomy and privacy expectations. Mitigation: design age-appropriate privacy controls that give older children increasing control over what is shared, and include a ``school mode'' that disables location tracking during school hours. (3)~\textbf{Equity and access}: if the tracker becomes a social norm, children whose families cannot afford it may be stigmatized or excluded from activities that assume all children are tracked. Mitigation: offer a basic non-connected version at a lower price point, and avoid features that create social pressure (e.g., no leaderboards or competitive fitness challenges for children). (4)~\textbf{Data security}: a breach of children's location and health data creates severe harm (predator targeting, identity theft). Mitigation: end-to-end encryption, no cloud storage of location history, and third-party security audit before launch.
+\item Sustainability asks ``what are the long-term environmental and social consequences?'' and focuses on resource use, emissions, durability, and circular economy alignment over the product's life cycle. Ethical responsibility asks ``should we build this at all?'' and focuses on consent, equity, dual-use risk, unintended consequences, and alignment with professional codes of ethics. \textbf{High sustainability, low ethics}: a solar-powered facial recognition camera system built from recycled materials with a 20-year lifespan (excellent sustainability) but deployed without community consent for mass surveillance of a specific neighborhood (poor ethical responsibility). \textbf{High ethics, low sustainability}: a medical diagnostic device designed with full informed consent, equitable access, and strong data protections (excellent ethics) but built with rare-earth minerals, non-recyclable plastics, and a 2-year disposable lifespan (poor sustainability).
 \end{enumerate}
