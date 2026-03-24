@@ -23,10 +23,26 @@ jobs:
 
       - name: Build Master Reference Document
         uses: xu-cheng/latex-action@v3
+        id: build_mrd
+        continue-on-error: true
         with:
           working_directory: mrd
           root_file: main.tex
           args: -pdf -f -interaction=nonstopmode -file-line-error
+
+      - name: Upload MRD build log on failure
+        if: steps.build_mrd.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrd-build-log
+          path: mrd/main.log
+
+      - name: Fail if MRD build failed
+        if: steps.build_mrd.outcome == 'failure'
+        run: |
+          echo "=== LAST 200 LINES OF main.log ==="
+          tail -200 mrd/main.log
+          exit 1
 
       - name: Build Student Guide
         uses: xu-cheng/latex-action@v3
