@@ -50,6 +50,39 @@ MEGN301/
 
 ---
 
+## Document Structure (23 Chapters)
+
+### Part I: The Design-Build Process
+1. **Problem Definition & Stakeholder Engagement** — Identifying the right problem, stakeholder analysis, concept of operations, competitive benchmarking
+2. **Value Proposition & Triple Bottom Line** — Feasibility, desirability, viability, sustainability (FDVS) framework; competitive analysis; cost analysis
+3. **Writing Requirements & Defining Architecture** — SDRD, functional decomposition, trade studies, FMEA, interface definitions
+4. **Concept Generation & Early Design** — Morphological charts, decision matrices, prototype types, BOM development
+5. **Verification, Validation & Test Plans** — V&V concepts, TAID methods, test procedures, VCRM, boundary testing
+6. **Subsystem Integration** — Integration sequence planning, N² diagrams, debugging, configuration management
+7. **Operations & Maintenance** — Lifecycle cost, serviceability, quick-start guides, maintenance manuals
+8. **Post-Build Testing, Verification & Validation** — Test execution workflow, non-conformance reports, root cause analysis
+9. **End of Life & System Retirement** — Design for recycling, design for disassembly, disposal planning
+
+### Part II: Technical Reference
+10. **Electrical & Fluid Connectors** — Connector family selection, failure modes, NPT vs BSP standards
+11. **Power Supplies, Motors & Pumps** — Motor/pump sizing, driver selection, battery sizing, belt conveyor examples
+12. **Power Architecture & Circuit Safety** — Power budget design, grounding strategy, protection circuits, EMI management
+13. **Electronics Fundamentals, Safety & Component Selection** — Ohm's Law, KVL/KCL, voltage dividers, electrical safety
+14. **Principles of Sensors and Actuators** — Transduction principles, six-criteria selection framework, signal conditioning
+15. **Mechanical Fasteners & Bearings** — Metric fastener specification, threaded inserts, bearing selection, torque guidelines
+16. **Mechanical Power Transmission** — Motor-to-load matching, gear design (including 3D-printed gears), speed/torque trade-offs
+17. **Designing for Injection Molding** — Six DFM rules, uniform walls, draft angles, radii, tooling economics
+18. **Printed Circuit Board Design Fundamentals** — PCB structure, grounding and decoupling, trace width, bring-up protocol
+19. **Microcontrollers & the ESP32** — MCU fundamentals, GPIO pin map, communication protocols, firmware best practices
+20. **Systematic Debugging and Troubleshooting** — Debugging pyramid, five-step protocol, bottom-up integration verification
+
+### Part III: Major Project Milestones
+21. **Preliminary Design Review (PDR)** — "Should this design work?" Problem verification, requirements validation, concept selection rationale
+22. **Critical Design Review (CDR)** — "Will this design work?" Detailed design completeness, manufacturability, verification procedures
+23. **Final Design Review (FDR)** — "How well did it work?" System validation, as-built documentation, lessons learned, operations package
+
+---
+
 ## Building Locally
 
 Requires a TeX Live or MiKTeX installation with `pdflatex` and `makeindex`.
