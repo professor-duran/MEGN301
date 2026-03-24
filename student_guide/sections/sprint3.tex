@@ -45,7 +45,7 @@ Imagine handing your CDR to a competent engineering team that has never met you.
 \toprule
 \textbf{Component} & \textbf{Rail} & \textbf{Cont.} & \textbf{Peak} & \textbf{Notes} \\
 \midrule
-ESP32 DevKit (Wi-Fi active) & 5\,V USB & 240\,mA & 350\,mA & TX bursts \\
+ESP32 DevKit (Wi-Fi active) & 5\,V USB & 240\,mA & 350\,mA & TX bursts; draws from 5\,V USB through its onboard LDO to supply the 3.3\,V rail \\
 DS18B20 temperature sensor & 3.3\,V & 1.5\,mA & 1.5\,mA & Parasitic mode: 0\,mA \\
 12\,V DC gearmotor + DRV8871 & 12\,V & 2.0\,A & 15\,A & Stall = 15\,A; size fuse here \\
 \midrule

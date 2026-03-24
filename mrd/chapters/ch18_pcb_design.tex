@@ -21,7 +21,7 @@ A printed circuit board is a layered sandwich of insulating substrate (FR-4 fibe
 FR-4 substrate, 1.6\,mm standard thickness, 1\,oz (35\,$\mu$m) copper, 6\,mil minimum trace/space, 0.3\,mm minimum drill. Surface finishes: HASL (cheapest, good for THT), ENIG (flat pads, good for SMD), OSP (organic, short shelf life).
 
 \begin{warningbox}[Trace Width for Current]
-A 10-mil trace on 1-oz external copper safely carries only 0.3\,A. Power traces must be sized for actual current: 10\,mil\,=\,0.3\,A, 20\,mil\,=\,0.7\,A, 50\,mil\,=\,1.5\,A, 100\,mil\,=\,3.0\,A, 200\,mil\,=\,6.0\,A (per IPC-2221B\index{IPC-2221}, Section~6.2). Use the IPC-2221 calculator for exact values. Signal traces can use minimums; power traces must be sized for current.
+A 10-mil trace on 1-oz external copper safely carries only 0.3\,A. These are conservative/derated values with safety margin for quick reference: 10\,mil\,=\,0.3\,A, 20\,mil\,=\,0.7\,A, 50\,mil\,=\,1.5\,A, 100\,mil\,=\,3.0\,A, 200\,mil\,=\,6.0\,A. Use the IPC-2221 calculator for exact values. Signal traces can use minimums; power traces must be sized for current. See the detailed table in Section~\ref{sec:trace_current} for IPC-2221B\index{IPC-2221} values at 10\,\degC{} rise.
 \end{warningbox}
 
 \subsection{Component Packages}
@@ -238,8 +238,8 @@ BOM (electronics) & Components with package, value, vendor, Plan B & CDR, FDR \\
 \end{table}
 
 \section{PCB Design Rules for Student Projects}
-\subsection{Trace Width and Current Capacity}
-The PCB trace must be wide enough to carry the required current without excessive temperature rise. For external layers on 1\,oz copper (35\,$\mu$m thick):
+\subsection{Trace Width and Current Capacity}\label{sec:trace_current}
+The PCB trace must be wide enough to carry the required current without excessive temperature rise. The following values are per IPC-2221B at 10\,\degC{} temperature rise for external layers on 1\,oz copper (35\,$\mu$m thick). These are slightly higher than the conservative/derated quick-reference values in the warning box above, which include additional safety margin:
 
 \begin{itemize}[nosep,leftmargin=1.5em]
 \item 0.25\,mm (10\,mil): 0.5\,A max (signal traces)

@@ -124,53 +124,6 @@ Test plan completeness & Every req has TAID method and test description? & Ch.~4
 Could a different team, given only your PDR documents, understand the problem, agree with your concept selection, and begin detailed design without asking you questions? If yes, you pass. If they would need to ask ``what did you mean by\ldots''; you are not ready.
 \end{tipbox}
 
-\section{PDR Purpose and Timing}
-The Preliminary Design Review occurs at approximately the 30--40\% completion point of the design process. At PDR, the team presents a proposed design concept that has been analyzed but not yet built. The purpose is to obtain stakeholder approval to proceed from conceptual design to detailed design and fabrication. PDR is a gate: if the design concept is flawed, it is far cheaper to redirect now than after fabrication.
-
-\section{PDR Content Requirements}
-A complete PDR presentation addresses nine areas:
-
-\textbf{Problem statement and stakeholder needs}: restate the problem being solved and the evidence that it is a real, significant problem. Include stakeholder interview summaries or survey data.
-
-\textbf{Value proposition}: present the feasibility, desirability, viability, and sustainability assessment (Chapter~2). The review board needs confidence that the project is worth pursuing.
-
-\textbf{Requirements (SDRD)}: present the complete System Design Requirements Document with all ``shall'' statements, rationale, and verification methods. Every requirement must be traceable to a stakeholder need.
-
-\textbf{System architecture}: present the functional decomposition, block diagram, interface definitions, and key design decisions. Explain \emph{why} this architecture was chosen over alternatives.
-
-\textbf{Concept of operations (ConOps)}: describe how the system will be used in practice. Walk through a typical use scenario from power-on to shutdown. Include user interactions, failure modes, and recovery procedures.
-
-\textbf{Preliminary design}: present the mechanical layout (CAD models, assembly drawings), electrical schematic (block level, key components identified), and software architecture (state machine, data flow, control algorithm). The design must be detailed enough to estimate feasibility but need not include final component selections or detailed drawings.
-
-\textbf{Risk assessment}: identify the top 5--10 technical risks, their likelihood and impact, and the mitigation strategies. The highest-risk element should have a prototype or analysis demonstrating feasibility (a ``risk-reduction prototype'').
-
-\textbf{Test plan}: present the verification approach for each requirement (Chapter~4). The VCRM should be drafted, with test methods identified for all critical requirements.
-
-\textbf{Project plan}: present the schedule (Gantt chart), budget (BOM estimate), and task assignments for the remaining work. The schedule must be realistic given the team's capacity and the remaining time.
-
-\section{PDR Review Criteria}
-The review board evaluates PDR on four criteria:
-
-\textbf{Completeness}: are all nine content areas addressed? Missing sections indicate incomplete systems engineering.
-
-\textbf{Feasibility}: is the proposed design technically achievable within the project constraints? Are the highest risks identified and mitigated?
-
-\textbf{Requirements quality}: are the requirements testable, unambiguous, and traceable? Are there gaps or contradictions?
-
-\textbf{Readiness to proceed}: is the team prepared to begin detailed design and fabrication? Do they have the skills, tools, and materials?
-
-PDR outcomes: \textbf{Proceed} (design is sound, proceed to detailed design), \textbf{Proceed with conditions} (minor issues to resolve before fabrication begins), or \textbf{Return} (major issues require redesign; re-present at a follow-up review).
-
-\section{Common PDR Failures}
-(1) \textbf{No real stakeholder engagement}: the problem is assumed, not validated. The review board cannot assess desirability without evidence.
-
-(2) \textbf{Requirements are vague}: ``the system shall be fast'' is not testable. ``The system shall respond within 2\,s'' is.
-
-(3) \textbf{Architecture is a component list, not a design}: listing ``ESP32, motor, pump, sensor'' is not architecture. Architecture defines how these components interact, what signals flow between them, and what each subsystem's responsibility is.
-
-(4) \textbf{No risk mitigation}: listing risks without mitigation strategies is acknowledging problems without solving them.
-
-(5) \textbf{Unrealistic schedule}: compressing 15 weeks of work into 8 weeks by assuming everything goes right is not planning; it is wishful thinking.
 \section{The PDR Presentation: Structure and Delivery}
 A PDR presentation typically runs 20--30 minutes plus 10--15 minutes for questions. Structure the presentation to tell a coherent story:
 

@@ -105,7 +105,7 @@ For every BOM item: ordered/received/backordered status. Any substitutions from 
 \midrule
 Design completeness & Can this be built from CDR package alone? All parts specified? & Ch.~2--3 \\
 Drawings quality & Fully dimensioned? Toleranced? Material and finish specified? & Ch.~3 \\
-DFM compliance & Polymer parts pass IM checklist? Draft, wall, ribs correct? & Ch.~12 \\
+DFM compliance & Polymer parts pass IM checklist? Draft, wall, ribs correct? & Ch.~17 \\
 Analysis evidence & Calculations/simulations show reqs met with margin? & Ch.~2, 4 \\
 FMEA maturity & Updated for detailed design? High-RPN resolved? Safety hazards mitigated? & Ch.~3, 6 \\
 BOM completeness & Every component listed, priced, Plan B for critical parts? Within budget? & Ch.~3 \\
@@ -123,41 +123,6 @@ Test readiness & Critical procedures written? Equipment identified? & Ch.~4, 5 \
 \begin{tipbox}[The CDR Litmus Test]
 Could a contract manufacturer build your system from only the CDR documents (BOM, schematics, drawings, assembly instructions) without calling you? If yes, your documentation is complete. If they would need to ask ``what connector goes here?'' or ``what tolerance is this?''; you are not ready.
 \end{tipbox}
-
-\section{CDR Purpose and Timing}
-The Critical Design Review occurs at approximately the 60--70\% completion point, after detailed design is complete but before (or during early) fabrication. At CDR, the team presents the fully detailed design with specific component selections, final CAD models, complete schematics, firmware architecture, and a refined test plan. The purpose is to verify that the detailed design faithfully implements the requirements approved at PDR and that fabrication can proceed with confidence.
-
-\section{CDR Content Requirements}
-CDR builds on PDR with increased detail:
-
-\textbf{Requirements update}: present any requirements changes since PDR, with rationale and stakeholder approval. Track changes formally (additions, deletions, modifications) in the SDRD revision history.
-
-\textbf{Detailed mechanical design}: complete CAD assembly with all parts modeled, interference checks performed, tolerances specified, and manufacturing drawings (2D drawings with dimensions, tolerances, surface finishes, and material callouts). For 3D-printed parts: include orientation, support strategy, and post-processing requirements.
-
-\textbf{Detailed electrical design}: complete schematics (not block diagrams) with all component values, part numbers, and pin assignments. PCB layout (if applicable) with design rule check (DRC) passing. Wire harness drawing with connector pinouts, wire gauges, and cable routing.
-
-\textbf{Firmware/software design}: complete state machine with all states and transitions defined. Control algorithm with tuning parameters. Communication protocol specification. User interface design with screen layouts and button functions.
-
-\textbf{Bill of Materials (BOM)}: every component with part number, supplier, quantity, unit cost, and total cost. The BOM total must be within the project budget. Include lead times and identify any long-lead items that must be ordered immediately.
-
-\textbf{Assembly procedure}: step-by-step instructions for building the system from components. Include required tools, estimated time per step, and quality checkpoints (``verify continuity before proceeding to next step'').
-
-\textbf{Updated test plan}: refined with specific equipment identified, pass/fail criteria quantified, and test procedures written in sufficient detail for another team to execute.
-
-\textbf{Updated risk register}: re-evaluate risks based on detailed design decisions. Have the PDR risks been mitigated? Have new risks emerged?
-
-\textbf{Updated schedule}: revised Gantt chart showing fabrication, assembly, testing, and FDR preparation tasks with realistic durations and dependencies.
-
-\section{CDR Review Criteria}
-\textbf{Design completeness}: can the system be built from the presented documentation without additional design decisions? If a fabricator needs to guess anything, the design is incomplete.
-
-\textbf{Traceability}: does every design element trace to a requirement? Are there requirements without corresponding design elements (unimplemented requirements) or design elements without requirements (gold-plating)?
-
-\textbf{Producibility}: can the design be fabricated with available tools, materials, and skills? Are tolerances achievable with the specified manufacturing processes?
-
-\textbf{Testability}: can every requirement be verified with the specified test equipment and procedures?
-
-CDR outcomes: \textbf{Proceed to fabrication}, \textbf{Proceed with conditions} (resolve specific issues before fabrication of affected subsystems), or \textbf{Return} (significant design flaws requiring redesign).
 
 \section{The CDR-to-Fabrication Transition}
 After CDR approval: (1) place orders for all BOM items, (2) begin fabrication of mechanical parts (3D printing, machining, laser cutting), (3) begin PCB fabrication and component procurement if using custom PCBs, (4) begin firmware development in parallel with hardware fabrication, (5) prepare the test station (calibrate instruments, build test fixtures). The goal is to have all subsystems ready for integration within 2--3 weeks of CDR.

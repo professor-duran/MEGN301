@@ -34,7 +34,7 @@ The ESP32-WROOM-32 is the recommended MCU for MEGN 301 projects: dual-core Xtens
 \item \textbf{ADC2 disabled when Wi-Fi active}: use ADC1 (GPIO 32--39) only.
 \item \textbf{ADC nonlinear above $\sim$3.1\,V}: use \texttt{esp\_adc\_cal} library for calibration; design voltage dividers to map sensor output into the 0--2.5\,V linear range rather than using the full 0--3.3\,V span. For precision, use an external ADC (ADS1115, 16-bit, I2C, \$3).
 \item \textbf{3.3\,V logic}: use level shifters\index{level shifter} for 5\,V sensors/actuators.
-\item \textbf{Boot pins (0, 2, 12, 15)}: avoid for critical signals; unexpected levels prevent boot.
+\item \textbf{Boot/strapping pins (0, 2, 5, 12, 15)}: avoid for critical signals; unexpected levels prevent boot.
 \end{itemize}
 \end{keyconceptbox}
 
@@ -196,7 +196,7 @@ A microcontroller (MCU) is a complete computer on a single chip: processor (CPU)
 
 \textbf{ADC}: the ESP32's internal ADC is 12-bit with significant nonlinearity and noise ($\pm$50\,LSB at 12-bit). For precision measurement: use an external ADC (ADS1115: 16-bit, I2C, \$3) or the NI~DAQ. The internal ADC is adequate for: battery voltage monitoring, potentiometer reading, and coarse sensor measurement where $\pm$5\% accuracy suffices.
 
-\textbf{Communication interfaces}: UART (serial: 3 ports), SPI (high-speed: 2 ports), I2C (moderate speed: 1 port, expandable). Wi-Fi (802.11b/g/n) and Bluetooth (Classic + BLE) are built-in, enabling wireless data logging, remote monitoring, and over-the-air firmware updates.
+\textbf{Communication interfaces}: UART (serial: 3 ports), SPI (high-speed: 2 ports), I2C (moderate speed: 2 ports). Wi-Fi (802.11b/g/n) and Bluetooth (Classic + BLE) are built-in, enabling wireless data logging, remote monitoring, and over-the-air firmware updates.
 
 \section{ESP32 Pin Planning}
 Before writing code, create a pin assignment table mapping every signal to a specific GPIO pin. Constraints to observe:

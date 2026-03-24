@@ -22,6 +22,20 @@ The main body should contain your narrative, key results, and high-level design 
 Each sprint's deliverables become \textit{supporting evidence} in the appendix, not the main text. In the body, summarize: ``The power subsystem was redesigned between CDR and FDR to address a motor inrush brown-out (see Appendix~C for the full change log). The revised design eliminated the 3.3\,V rail sag measured during Sprint~4 testing.'' Do not paste in the raw Sprint~4 report. A reader should be able to understand the full project story from the main body alone, then consult the appendices for proof.
 \end{protip}
 
+\begin{warningbox}[Map the Narrative to the Required Report Sections]
+The Design Project spec defines 7 numbered final report sections. Make sure the narrative arc above covers all of them; it is easy to miss the standalone sections that do not fit neatly into the story:
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item \textbf{Introduction} (problem, stakeholders, background)
+\item \textbf{Design Evolution} (concept selection, key decisions, as-designed vs.\ as-built)
+\item \textbf{Hazards Discussion} (FMEA update, highest-RPN items, mitigations applied; often omitted by accident)
+\item \textbf{Future Work} (v2.0 improvements, DfD, O\&M, lifecycle considerations; also frequently omitted)
+\item \textbf{Results} (VCRM verdicts, test data, system performance vs.\ requirements)
+\item \textbf{Budget} (as-designed vs.\ as-built cost, variances explained)
+\item \textbf{Lessons Learned} (specific, actionable reflections)
+\end{enumerate}
+Sections~3 (Hazards Discussion) and 4 (Future Work) are the most commonly omitted because they stand alone rather than emerging naturally from the narrative. Build them into your outline from the start.
+\end{warningbox}
+
 \begin{faqbox}[Q: What should go in the ``Future Work'' and ``Hazards Discussion'' sections?]
 For \textbf{Future Work}: think in terms of lifecycle and sustainability. The Master Reference Document includes a formal Design for Disassembly requirement: ``The system shall be fully disassembled into its base material categories using only standard hand tools in under 5 minutes.'' This is testable at FDR by demonstration. If your design uses permanent adhesives where fasteners would work, document why and propose a DfD-compliant redesign for the next version. What refinements would bring the prototype to a production-ready product? Consider serviceability (can a technician access and replace the most failure-prone components?), maintenance planning (what are the wear items and their replacement intervals?), and a spare parts list with vendor part numbers. Thinking about Operations \& Maintenance is not an afterthought; it accounts for 50--70\% of a product's lifecycle cost. For the \textbf{Hazards Discussion}: revisit your FMEA with updated RPN scores. Discuss the highest-RPN failure modes you identified, what design changes you made to mitigate them, and whether those changes actually reduced the risk. Also address any new hazards discovered during prototyping and testing that were not in the original FMEA. See MRD Chapter~7 (Operations \& Maintenance) for serviceability principles and the lifecycle cost figure, and Chapter~9 (End of Life) for disposal planning.
 \end{faqbox}

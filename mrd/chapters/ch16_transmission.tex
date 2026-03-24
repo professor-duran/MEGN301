@@ -150,7 +150,7 @@ Couplings connect two shafts and transmit torque. They must accommodate misalign
 
 \textbf{Flexible couplings}: accommodate angular, parallel, and axial misalignment. Types: jaw (elastomer insert absorbs vibration; most common in student projects), beam (single-piece helical cut; allows angular and axial flex), Oldham (sliding disk; accommodates parallel offset), and universal joint (large angular misalignment for non-parallel shafts).
 
-\textbf{Selection criteria}: (1) torque rating $\geq 2\times$ the maximum torque (safety factor for shock loads), (2) bore size matches both shafts, (3) misalignment tolerance $\geq$ the expected misalignment (typically $\pm$1\degC{} angular and $\pm$0.5\,mm parallel for student assemblies), (4) set screw or clamp style (clamp is preferred; set screws can loosen and damage the shaft).
+\textbf{Selection criteria}: (1) torque rating $\geq 2\times$ the maximum torque (safety factor for shock loads), (2) bore size matches both shafts, (3) misalignment tolerance $\geq$ the expected misalignment (typically $\pm$\ang{1} angular and $\pm$0.5\,mm parallel for student assemblies), (4) set screw or clamp style (clamp is preferred; set screws can loosen and damage the shaft).
 
 \section{Efficiency and Heat Generation}
 Every transmission element converts some input power to heat through friction. Typical efficiencies: spur gears 95--98\% per stage, timing belt 95--98\%, roller chain 95--98\%, V-belt 90--95\%, worm gear 40--90\% (depending on ratio), lead screw 30--50\% (ACME), ball screw 85--95\%.
@@ -185,7 +185,7 @@ The pump requires $T_{\text{load}} = 0.3$\,N$\cdot$m at $n_{\text{load}} = 300$\
 \section{Linear Actuator Design}
 For applications requiring linear force (clamping, pressing, positioning), convert rotary motor output to linear motion:
 
-\textbf{Lead screw actuator}: motor $\to$ coupling $\to$ lead screw $\to$ nut. Linear speed $v = l \times n$ (lead $\times$ RPM). Force $F = 2\pi T_{\text{motor}} \times i / l \times \eta$. Self-locking when the lead angle $< \arctan(\mu)$ (typically $< 5$\degC{}), meaning the load cannot back-drive the motor. This is useful for holding position without power.
+\textbf{Lead screw actuator}: motor $\to$ coupling $\to$ lead screw $\to$ nut. Linear speed $v = l \times n$ (lead $\times$ RPM). Force $F = 2\pi T_{\text{motor}} \times i / l \times \eta$. Self-locking when the lead angle $< \arctan(\mu)$ (typically $< \ang{5}$), meaning the load cannot back-drive the motor. This is useful for holding position without power.
 
 \textbf{Belt-driven linear stage}: motor $\to$ timing pulley $\to$ belt $\to$ carriage. Linear speed $v = \pi d n$ (pulley diameter $\times$ RPM). Not self-locking; the carriage moves freely when the motor is unpowered (use a brake or worm gear if holding is needed). Very fast: typical belt-driven CNC axes achieve 200--500\,mm/s.
 
