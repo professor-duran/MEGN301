@@ -1,0 +1,47 @@
+% fig_concept_process.tex — The concept generation process
+\begin{tikzpicture}[>=Stealth]
+% Phase 1: Divergent
+\node[phase=MinesBlue, text width=2.8cm]  (d1) at (0,0)   {Brainstorm\\{\tiny Defer judgment, 50+ ideas}};
+\node[phase=MinesBlue, text width=2.8cm]  (d2) at (0,-1.6) {SCAMPER\\{\tiny 7 systematic triggers}};
+\node[phase=MinesBlue, text width=2.8cm]  (d3) at (0,-3.2) {Morphological\\Chart\\{\tiny Combine systematically}};
+\node[phase=MinesBlue, text width=2.8cm]  (d4) at (0,-4.8) {Biomimicry\\{\tiny Nature-inspired}};
+
+% Phase label
+\node[font=\small\sffamily\bfseries, color=MinesBlue, rotate=90, anchor=south] at (-2.5,-2.4)
+    {DIVERGE};
+
+% Transition
+\node[rectangle, rounded corners=4pt, draw=MinesSilver, fill=MinesSilver!10,
+    text width=2.6cm, minimum height=1.2cm, align=center,
+    font=\scriptsize\sffamily\bfseries, line width=0.8pt] (trans) at (5,-2.4)
+    {$\geq$20 Concepts\\Generated};
+
+% Phase 2: Convergent
+\node[phase=AccentTeal, text width=2.8cm] (c1) at (10,0)   {Feasibility\\Screen\\{\tiny 4 lenses}};
+\node[phase=AccentTeal, text width=2.8cm] (c2) at (10,-1.6) {Pugh\\Screening\\{\tiny +/S/$-$ vs.\ datum}};
+\node[phase=AccentTeal, text width=2.8cm] (c3) at (10,-3.2) {Weighted\\Decision Matrix\\{\tiny Quantitative scores}};
+\node[phase=AccentTeal, text width=2.8cm] (c4) at (10,-4.8) {Selected\\Concept\\{\tiny With sensitivity check}};
+
+% Phase label
+\node[font=\small\sffamily\bfseries, color=AccentTeal, rotate=90, anchor=south] at (12.5,-2.4)
+    {CONVERGE};
+
+% Arrows: divergent to transition
+\foreach \n in {d1,d2,d3,d4} {
+    \draw[flow=MinesBlue!60] (\n) -- (trans);
+}
+
+% Arrows: transition to convergent
+\draw[flow=AccentTeal] (trans) -- (c1);
+
+% Arrows: convergent chain
+\draw[flow=AccentTeal] (c1) -- (c2);
+\draw[flow=AccentTeal] (c2) -- (c3);
+\draw[flow=AccentTeal] (c3) -- (c4);
+
+% Counts
+\node[font=\tiny\sffamily, color=WarnOrange, anchor=west] at (11.8,-0.2) {All concepts};
+\node[font=\tiny\sffamily, color=WarnOrange, anchor=west] at (11.8,-1.8) {Eliminate weak};
+\node[font=\tiny\sffamily, color=WarnOrange, anchor=west] at (11.8,-3.4) {3--5 finalists};
+\node[font=\tiny\sffamily, color=WarnOrange, anchor=west] at (11.8,-5.0) {1 winner};
+\end{tikzpicture}

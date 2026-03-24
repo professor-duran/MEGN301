@@ -1,0 +1,62 @@
+% fig_power_trans_selection.tex — Power transmission selection decision tree
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    decision/.style={diamond, draw=#1, fill=#1!8, aspect=2.2, align=center, font=\scriptsize\sffamily\bfseries, inner sep=2pt, line width=0.8pt, text width=2.0cm},
+    result/.style={stage={#1}, text width=2.6cm, minimum height=0.9cm, font=\scriptsize\sffamily\bfseries},
+    yesno/.style={font=\tiny\sffamily\bfseries, color=#1},
+    conn/.style={flow={MinesBlue!70}},
+]
+
+% Start
+\node[stage=MinesBlue, text width=3.0cm, minimum height=1.0cm] (start) at (0,0) {Motion\\Type?};
+
+% Level 1: Rotary vs Linear
+\node[decision=AccentTeal, below left=1.5cm and 4.0cm of start] (rot) {Rotary};
+\node[decision=WarnOrange, below right=1.5cm and 4.0cm of start] (lin) {Linear};
+
+\draw[conn] (start.south) -- ++(0,-0.4) -| (rot.north) node[pos=0.25, above, yesno=AccentTeal] {Rotary};
+\draw[conn] (start.south) -- ++(0,-0.4) -| (lin.north) node[pos=0.25, above, yesno=WarnOrange] {Linear};
+
+% Rotary branch: Self-locking needed?
+\node[decision=diagPurple, below left=1.5cm and 1.5cm of rot] (selflock) {Self-locking\\needed?};
+\node[decision=MinesBlue, below right=1.5cm and 1.5cm of rot] (ratio) {Ratio\\$> 10$:1?};
+
+\draw[conn] (rot.south) -- ++(0,-0.3) -| (selflock.north) node[pos=0.3, left, yesno=diagPurple] {};
+\draw[conn] (rot.south) -- ++(0,-0.3) -| (ratio.north) node[pos=0.3, right, yesno=MinesBlue] {};
+
+% Self-locking results
+\node[result=diagPurple, below=1.3cm of selflock] (worm) {Worm Gear\\($\eta = 40$--$90\%$)};
+\draw[conn] (selflock.south) -- (worm.north) node[midway, right, yesno=diagGreen] {Yes};
+
+% High ratio results
+\node[result=diagGreen, below left=1.3cm and 0.3cm of ratio] (planetary) {Planetary\\Gearbox};
+\node[result=MinesBlue, below right=1.3cm and 0.3cm of ratio] (spur2) {2-Stage\\Spur Gears};
+
+\draw[conn] (ratio.south) -- ++(0,-0.3) -| (planetary.north) node[pos=0.25, left, yesno=diagGreen] {Yes};
+\draw[conn] (ratio.south) -- ++(0,-0.3) -| (spur2.north) node[pos=0.25, right, yesno=WarnOrange] {No};
+
+% Linear branch: Precision needed?
+\node[decision=diagGreen, below left=1.5cm and 1.5cm of lin] (prec) {Precision\\$< 0.1$\,mm?};
+\node[decision=diagYellow, below right=1.5cm and 1.5cm of lin] (speed) {Speed\\$> 100$\,mm/s?};
+
+\draw[conn] (lin.south) -- ++(0,-0.3) -| (prec.north);
+\draw[conn] (lin.south) -- ++(0,-0.3) -| (speed.north);
+
+% Precision results
+\node[result=AccentTeal, below=1.3cm of prec] (ballscrew) {Ball Screw\\($\eta = 85$--$95\%$)};
+\draw[conn] (prec.south) -- (ballscrew.north) node[midway, right, yesno=diagGreen] {Yes};
+
+% Speed results
+\node[result=WarnOrange, below=1.3cm of speed] (belt) {Belt-Driven\\Linear Stage};
+\draw[conn] (speed.south) -- (belt.north) node[midway, right, yesno=diagGreen] {Yes};
+
+% Budget note
+\node[rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!6, font=\tiny\sffamily, align=center, inner sep=5pt, text width=6cm]
+    at (0,-8.5)
+    {\textbf{Budget defaults:} GT2 belt for linear, T8 lead screw for precision,\\spur gears for rotary reduction. Start here for MEGN 301.};
+
+\end{tikzpicture}
+\caption{Power transmission selection: motion type, precision, self-locking, ratio, budget.}
+\label{fig:ptsel}
+\end{figure}

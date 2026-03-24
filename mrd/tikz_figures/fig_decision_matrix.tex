@@ -1,0 +1,50 @@
+% fig_decision_matrix.tex — Weighted decision matrix example: motor selection
+\begin{tikzpicture}[>=Stealth]
+% Table header
+\node[font=\small\sffamily\bfseries, color=MinesBlue, anchor=west] at (0,0.8)
+    {Weighted Decision Matrix: Motor Selection};
+
+% Column headers
+\node[font=\scriptsize\sffamily\bfseries, color=MinesBlue, anchor=west] at (0,0) {Criterion};
+\node[font=\scriptsize\sffamily\bfseries, color=MinesBlue] at (4.0,0) {Weight};
+\node[font=\scriptsize\sffamily\bfseries, color=AccentTeal] at (5.8,0) {Stepper};
+\node[font=\scriptsize\sffamily\bfseries, color=WarnOrange] at (7.6,0) {DC Gear};
+\node[font=\scriptsize\sffamily\bfseries, color=diagPurple] at (9.4,0) {Servo};
+
+% Divider line
+\draw[MinesBlue, line width=0.6pt] (0,-0.3) -- (10.4,-0.3);
+
+% Data rows
+\foreach \y/\crit/\wt/\sa/\wa/\sb/\wb/\sc/\wc in {
+    -0.7/Torque/0.25/4/1.00/5/1.25/3/0.75,
+    -1.2/Speed/0.15/2/0.30/4/0.60/5/0.75,
+    -1.7/Cost/0.20/3/0.60/5/1.00/2/0.40,
+    -2.2/Precision/0.20/5/1.00/2/0.40/4/0.80,
+    -2.7/Power draw/0.10/2/0.20/4/0.40/3/0.30,
+    -3.2/Ease of control/0.10/3/0.30/4/0.40/4/0.40%
+} {
+    \node[font=\tiny\sffamily, anchor=west] at (0,\y) {\crit};
+    \node[font=\tiny\sffamily] at (4.0,\y) {\wt};
+    \node[font=\tiny\sffamily, color=AccentTeal] at (5.8,\y) {\sa\ (\wa)};
+    \node[font=\tiny\sffamily, color=WarnOrange] at (7.6,\y) {\sb\ (\wb)};
+    \node[font=\tiny\sffamily, color=diagPurple] at (9.4,\y) {\sc\ (\wc)};
+}
+
+% Total row
+\draw[MinesBlue, line width=0.6pt] (0,-3.6) -- (10.4,-3.6);
+\node[font=\scriptsize\sffamily\bfseries, anchor=west] at (0,-4.0) {Total};
+\node[font=\scriptsize\sffamily\bfseries] at (4.0,-4.0) {1.00};
+\node[font=\scriptsize\sffamily\bfseries, color=AccentTeal] at (5.8,-4.0) {3.40};
+\node[font=\scriptsize\sffamily\bfseries, color=WarnOrange] at (7.6,-4.0) {4.05};
+\node[font=\scriptsize\sffamily\bfseries, color=diagPurple] at (9.4,-4.0) {3.40};
+
+% Winner highlight
+\draw[WarnOrange, line width=1.2pt, rounded corners=3pt] (6.7,-4.4) rectangle (8.5,-3.6);
+\node[font=\tiny\sffamily\bfseries, color=WarnOrange] at (7.6,-4.8) {Winner};
+
+% Legend
+\node[font=\tiny\sffamily, color=MinesSilver, text width=5cm, anchor=west] at (0,-5.3)
+    {Rating scale: 1 = poor, 5 = excellent.\\
+     Score = Rating $\times$ Weight.\\
+     Check sensitivity: vary weights $\pm$0.05.};
+\end{tikzpicture}

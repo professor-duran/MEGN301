@@ -1,0 +1,96 @@
+% fig_mcu_comparison.tex — Six MCU platforms compared
+\begin{tikzpicture}[>=Stealth,
+    mcubox/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=2.2cm, minimum height=2.6cm, align=center,
+        font=\tiny\sffamily, line width=0.7pt, inner sep=4pt},
+    mcutitle/.style={font=\scriptsize\sffamily\bfseries, color=#1},
+    specrow/.style={font=\tiny\sffamily, color=MinesBlue!80!black},
+    recbadge/.style={rectangle, rounded corners=2pt, draw=AccentTeal, fill=AccentTeal!15,
+        font=\tiny\sffamily\bfseries, color=AccentTeal, inner sep=2pt}
+]
+
+% --- MCU Boxes ---
+% Arduino Uno
+\node[mcubox=MinesBlue] (m1) at (0,0) {
+    ATmega328P\\[2pt]
+    16\,MHz, 8-bit\\
+    32\,KB flash\\
+    2\,KB RAM\\
+    14 GPIO, 6 ADC\\
+    UART, SPI, I2C\\
+    No wireless\\[2pt]
+    \textbf{\$3--5}
+};
+\node[mcutitle=MinesBlue, above=0.15cm of m1] {Arduino Uno};
+
+% Arduino Nano 33 IoT
+\node[mcubox=AccentTeal] (m2) at (3.0,0) {
+    SAMD21\\[2pt]
+    48\,MHz, 32-bit\\
+    256\,KB flash\\
+    32\,KB RAM\\
+    14 GPIO, 8 ADC\\
+    UART, SPI, I2C\\
+    Wi-Fi + BLE\\[2pt]
+    \textbf{\$15--20}
+};
+\node[mcutitle=AccentTeal, above=0.15cm of m2] {Nano 33 IoT};
+
+% ESP32
+\node[mcubox=diagGreen] (m3) at (6.0,0) {
+    Xtensa LX6\\[2pt]
+    240\,MHz, dual-core\\
+    4\,MB flash\\
+    520\,KB RAM\\
+    34 GPIO, 18 ADC\\
+    UART, SPI, I2C, CAN\\
+    Wi-Fi + BT + BLE\\[2pt]
+    \textbf{\$4--8}
+};
+\node[mcutitle=diagGreen, above=0.15cm of m3] {ESP32};
+\node[recbadge, above=0.55cm of m3] {RECOMMENDED};
+
+% STM32 (Blue Pill)
+\node[mcubox=WarnOrange] (m4) at (9.0,0) {
+    Cortex-M3\\[2pt]
+    72\,MHz, 32-bit\\
+    64\,KB flash\\
+    20\,KB RAM\\
+    37 GPIO, 10 ADC\\
+    UART, SPI, I2C, CAN\\
+    No wireless\\[2pt]
+    \textbf{\$2--5}
+};
+\node[mcutitle=WarnOrange, above=0.15cm of m4] {STM32 Blue Pill};
+
+% Raspberry Pi Pico
+\node[mcubox=diagPurple] (m5) at (12.0,0) {
+    RP2040\\[2pt]
+    133\,MHz, dual-core\\
+    2\,MB flash\\
+    264\,KB RAM\\
+    26 GPIO, 3 ADC\\
+    UART, SPI, I2C\\
+    Pico W: Wi-Fi\\[2pt]
+    \textbf{\$4--6}
+};
+\node[mcutitle=diagPurple, above=0.15cm of m5] {RPi Pico};
+
+% Teensy 4.0
+\node[mcubox=diagYellow!80!black] (m6) at (15.0,0) {
+    Cortex-M7\\[2pt]
+    600\,MHz, 32-bit\\
+    2\,MB flash\\
+    1\,MB RAM\\
+    40 GPIO, 14 ADC\\
+    UART, SPI, I2C, CAN\\
+    No wireless\\[2pt]
+    \textbf{\$20--25}
+};
+\node[mcutitle=diagYellow!80!black, above=0.15cm of m6] {Teensy 4.0};
+
+% Bottom annotation
+\node[font=\tiny\sffamily\itshape, color=MinesSilver, text width=14cm, align=center]
+    at (7.5,-2.6) {Selection criteria: GPIO count (+20\% margin), protocols needed, processing power, power budget, ecosystem, cost/availability.};
+
+\end{tikzpicture}

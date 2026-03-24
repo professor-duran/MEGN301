@@ -11,21 +11,13 @@ Integration always takes longer than expected. Plan for integration to consume 3
 \vspace{1em}
 \vspace{1em}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_integration_strategy.png}
-\caption{Bottom-up integration with test gates.}\end{figure}
+\input{tikz_figures/fig_integration_strategy}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_interface_management.png}
-\caption{Interface types and common failure modes.}\end{figure}
+\input{tikz_figures/fig_interface_management}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_debugging_process.png}
-\caption{Five-step systematic debugging process.}\end{figure}
+\input{tikz_figures/fig_debugging_process}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_config_management.png}
-\caption{Configuration management pillars.}\end{figure}
+\input{tikz_figures/fig_config_management}
 
 \section{Integration Strategy}
 \subsection{Bottom-Up Integration}
@@ -74,9 +66,7 @@ The V-Model maps integration from bottom-up: \textbf{Component verification} (ea
 
 \subsection{Integration Sequence Planning}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_integration_plan.png}
-\caption{Integration sequence plan\index{integration planning}: power-first, risk-ordered subsystem build-up with test gates.}\label{fig:integration_plan}\end{figure}
+\input{tikz_figures/fig_integration_plan}
 
 The order of integration matters (Figure~\ref{fig:integration_plan}). Rules: (1) Integrate power first; nothing works without power. (2) Add the lowest-risk subsystem next. (3) Add the highest-risk subsystem last (so problems are isolated to one new element). (4) Never add two new elements simultaneously (if something breaks, you cannot isolate the cause).
 
@@ -139,9 +129,7 @@ Integration Test Results & Subsystem and system-level data & FDR \\
 
 \section{Interface Management}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_interface_types.png}
-\caption{The six interface types\index{interface types}: electrical, mechanical, thermal, software, fluid, and human.}\label{fig:interface_types}\end{figure}
+\input{tikz_figures/fig_interface_types}
 
 80\% of integration failures occur at interfaces (Figure~\ref{fig:interface_types}). Six types: electrical (voltage, protocols, grounding), mechanical (mounting, tolerances, alignment), thermal (heat flow, contact resistance), software (APIs, data formats, timing), fluid (fittings, pressure, seals), and human (displays, controls, ergonomics).
 
@@ -241,9 +229,7 @@ Before connecting two subsystems, verify each interface independently using loop
 
 \section{Integration Sequence for a Typical GreenShield Project}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_handoff_package.png}
-\caption{Integration handoff package\index{handoff package}: documentation artifacts that transfer from design to integration.}\label{fig:handoff_package}\end{figure}
+\input{tikz_figures/fig_handoff_package}
 
 The integration handoff package (Figure~\ref{fig:handoff_package}) ensures documentation transfers cleanly from design to build.
 

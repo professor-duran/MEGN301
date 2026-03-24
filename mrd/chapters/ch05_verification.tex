@@ -9,10 +9,7 @@
 \vspace{1em}
 
 \section{Verification vs.\ Validation}
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_vv_comparison.png}
-\caption{Verification (meets requirements) vs.\ validation (meets needs); two different questions.}\label{fig:vv}
-\end{figure}
+\input{tikz_figures/fig_vv_comparison}
 
 \textbf{Verification}\index{Verification} asks: ``Did we build the system RIGHT?'' It compares the implemented system against the written specification. Done by the engineering team using Test, Analysis, Inspection, or Demonstration (TAID\index{TAID (Test, Analysis, Inspection, Demonstration)}). Each requirement receives an individual PASS/FAIL verdict.
 
@@ -23,10 +20,7 @@ All requirements met perfectly, but the wrong requirements were written. This is
 \end{warningbox}
 
 \section{Four Verification Methods: TAID}
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_taid_methods.png}
-\caption{Test, Analysis, Inspection, and Demonstration with usage percentages and selection guidance.}\label{fig:taid}
-\end{figure}
+\input{tikz_figures/fig_taid_methods}
 
 \begin{itemize}[leftmargin=1.5em]
 \item \textbf{Test (T, $\sim$60\% of reqs)}: Stimulate the system and measure the response against quantitative criteria. Most rigorous. Preferred whenever feasible.
@@ -44,10 +38,7 @@ If you cannot identify a verification method, the requirement is untestable and 
 The gold standard: another engineer with no project knowledge can reproduce your results exactly. Five qualities: \textbf{Traceable} (maps to requirement IDs), \textbf{Reproducible} (specific enough for independent replication), \textbf{Binary} (quantitative pass/fail, no judgment calls), \textbf{Complete} (all sections filled), \textbf{Executed as written} (no ad-hoc deviations).
 
 \subsection{Test Procedure Structure}
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_test_plan_template.png}
-\caption{Complete test procedure template with all 10 required sections.}\label{fig:tp}
-\end{figure}
+\input{tikz_figures/fig_test_plan_template}
 
 Every test procedure contains: (1) Purpose; requirement IDs verified; (2) Test setup; equipment with model numbers and calibration; (3) Preconditions; system state before starting; (4) Procedure steps; numbered, single-action, imperative voice, with expected results; (5) Pass/fail criteria; quantitative thresholds from requirements; (6) Data recording; format, resolution, blank table; (7) Safety precautions; (8) Results and verdict; (9) Signatures; (10) Attachments.
 
@@ -55,10 +46,7 @@ Every test procedure contains: (1) Purpose; requirement IDs verified; (2) Test s
 Each step is a single action with an expected result. Use specific values (``Set reference bath to 25.0 $\pm$ 0.1\,$^{\circ}$ C''), not vague instructions (``check temperature''). Include wait times for stabilization. Imperative voice: ``Set\ldots'' ``Record\ldots'' ``Verify\ldots''
 
 \section{Handling Results}
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_results_disposition.png}
-\caption{Three verification outcomes: PASS, FAIL, PARTIAL PASS with disposition workflows.}\label{fig:disp}
-\end{figure}
+\input{tikz_figures/fig_results_disposition}
 
 \subsection{PASS}
 All criteria met. Record results in RTM, mark requirement VERIFIED, archive raw data. Include actual measurement values, not just ``PASS.''

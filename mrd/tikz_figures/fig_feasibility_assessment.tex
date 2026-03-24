@@ -1,0 +1,54 @@
+% fig_feasibility_assessment.tex — Four-lens feasibility assessment
+\begin{tikzpicture}[>=Stealth,
+    lens/.style={rectangle, rounded corners=5pt, draw=#1, fill=#1!8,
+        text width=3.2cm, minimum height=3.0cm, align=left,
+        font=\tiny\sffamily, line width=0.9pt, inner sep=6pt}
+]
+% Four lenses
+\node[lens=MinesBlue] (tech) at (0,0) {
+    {\scriptsize\bfseries Technical}\\[4pt]
+    Can we build it?\\[2pt]
+    \textbullet\ Technology readiness\\
+    \textbullet\ Skills available\\
+    \textbullet\ Manufacturing\\
+    \textbullet\ Integration risk
+};
+
+\node[lens=AccentTeal] (econ) at (4.2,0) {
+    {\scriptsize\bfseries Economic}\\[4pt]
+    Can we afford it?\\[2pt]
+    \textbullet\ BOM cost vs.\ budget\\
+    \textbullet\ Labor hours\\
+    \textbullet\ Tool/equipment needs\\
+    \textbullet\ ROI for user
+};
+
+\node[lens=WarnOrange] (sched) at (8.4,0) {
+    {\scriptsize\bfseries Schedule}\\[4pt]
+    Can we finish in time?\\[2pt]
+    \textbullet\ Lead times\\
+    \textbullet\ Fab queue time\\
+    \textbullet\ Learning curve\\
+    \textbullet\ Integration buffer
+};
+
+\node[lens=diagPurple] (ops) at (12.6,0) {
+    {\scriptsize\bfseries Operational}\\[4pt]
+    Will users accept it?\\[2pt]
+    \textbullet\ Ease of use\\
+    \textbullet\ Maintenance burden\\
+    \textbullet\ Training required\\
+    \textbullet\ Environment fit
+};
+
+% Center verdict
+\node[rectangle, rounded corners=3pt, draw=diagRed, fill=diagRed!8,
+    font=\scriptsize\sffamily\bfseries, inner sep=5pt, line width=0.9pt]
+    (verdict) at (6.3,-2.8) {Failing any one lens = show-stopper};
+
+% Arrows from each lens to verdict
+\draw[flow=MinesBlue!50]  (tech.south)  -- (verdict);
+\draw[flow=AccentTeal!50] (econ.south)  -- (verdict);
+\draw[flow=WarnOrange!50] (sched.south) -- (verdict);
+\draw[flow=diagPurple!50] (ops.south)   -- (verdict);
+\end{tikzpicture}

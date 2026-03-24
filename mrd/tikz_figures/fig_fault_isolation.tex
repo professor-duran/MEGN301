@@ -1,0 +1,71 @@
+% fig_fault_isolation.tex — Fault isolation strategy: systematic disconnection
+\begin{tikzpicture}[>=Stealth,
+    sysblock/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!10,
+        text width=1.8cm, minimum height=1.1cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.8pt},
+    iface/.style={circle, draw=MinesSilver, fill=MinesSilver!15,
+        minimum size=0.5cm, font=\tiny\sffamily\bfseries, inner sep=0pt},
+    disconnect/.style={line width=1.5pt, color=diagRed, dashed},
+    sigflow/.style={->, line width=1pt, color=MinesBlue},
+    steplbl/.style={rectangle, rounded corners=2pt, draw=#1, fill=#1!8,
+        font=\tiny\sffamily\bfseries, inner sep=3pt, line width=0.6pt},
+    annotation/.style={font=\tiny\sffamily, color=MinesBlue!70!black, text width=2.5cm, align=center}
+]
+
+% ============ Full System Chain (top) ============
+\node[font=\small\sffamily\bfseries, color=MinesBlue] at (6.5,4.5) {Fault Isolation: Systematic Disconnection};
+
+\node[sysblock=MinesBlue]  (sensor) at (0,3)    {Sensor};
+\node[iface]               (i1)     at (2.0,3)  {1};
+\node[sysblock=AccentTeal] (cond)   at (4.0,3)  {Signal\\Cond.};
+\node[iface]               (i2)     at (6.0,3)  {2};
+\node[sysblock=WarnOrange] (mcu)    at (8.0,3)  {MCU\\(ADC)};
+\node[iface]               (i3)     at (10.0,3) {3};
+\node[sysblock=diagPurple] (driver) at (12.0,3) {Driver};
+\node[iface]               (i4)     at (14.0,3) {4};
+\node[sysblock=diagRed]    (act)    at (16.0,3) {Actuator};
+
+% Signal flow
+\draw[sigflow] (sensor) -- (i1);
+\draw[sigflow] (i1) -- (cond);
+\draw[sigflow] (cond) -- (i2);
+\draw[sigflow] (i2) -- (mcu);
+\draw[sigflow] (mcu) -- (i3);
+\draw[sigflow] (i3) -- (driver);
+\draw[sigflow] (driver) -- (i4);
+\draw[sigflow] (i4) -- (act);
+
+% Interface labels
+\node[font=\tiny\sffamily, color=MinesSilver, above=0.15cm of i1] {interface};
+\node[font=\tiny\sffamily, color=MinesSilver, above=0.15cm of i3] {interface};
+
+% ============ Strategy Steps (bottom) ============
+
+% Step 1: Disconnect at interface 3
+\node[steplbl=WarnOrange] (step1) at (2.0,1.2) {Step 1: Disconnect at 3};
+\node[annotation, below=0.1cm of step1] {Separate sensor path\\from actuator path.\\Which side has the fault?};
+\draw[->, line width=0.6pt, WarnOrange] (step1.north) -- ++(0,0.8) -| (i3);
+
+% Step 2: Inject known signal
+\node[steplbl=AccentTeal] (step2) at (7.0,1.2) {Step 2: Inject known signal};
+\node[annotation, below=0.1cm of step2] {Replace suspect input\\with bench supply or\\fixed test value.};
+\draw[->, line width=0.6pt, AccentTeal] (step2.north) -- ++(0,0.5);
+
+% Step 3: Measure at each node
+\node[steplbl=MinesBlue] (step3) at (12.0,1.2) {Step 3: Measure each node};
+\node[annotation, below=0.1cm of step3] {Scope/DMM at each\\interface. First deviation\\= fault location.};
+\draw[->, line width=0.6pt, MinesBlue] (step3.north) -- ++(0,0.8) -| (i4);
+
+% Binary search annotation
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, line width=0.6pt, diagGreen]
+    (-0.5,2.3) -- (7.5,2.3)
+    node[midway, below=6pt, font=\tiny\sffamily\bfseries, color=diagGreen] {If fault here: sensor path};
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, line width=0.6pt, diagRed]
+    (8.5,2.3) -- (16.5,2.3)
+    node[midway, below=6pt, font=\tiny\sffamily\bfseries, color=diagRed] {If fault here: actuator path};
+
+% Key principle
+\node[font=\tiny\sffamily\itshape, color=MinesSilver, text width=14cm, align=center]
+    at (8.0,-0.4) {Disconnect subsystems one at a time. The last disconnected subsystem is the suspect. Substitute known-good signals to bypass suspect components.};
+
+\end{tikzpicture}

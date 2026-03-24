@@ -1,0 +1,69 @@
+% fig_end_of_life.tex — EOL pathways: from active service through retirement
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    eolbox/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=2.4cm, minimum height=1.2cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.8pt},
+    trigger/.style={rectangle, rounded corners=2pt, draw=MinesSilver, fill=LightBG,
+        text width=2.0cm, minimum height=0.6cm, align=center,
+        font=\tiny\sffamily, line width=0.5pt},
+    arr/.style={->, line width=1pt, color=MinesBlue},
+    darr/.style={->, line width=0.8pt, color=MinesSilver}
+]
+% Main flow
+\node[eolbox=diagGreen] (active) at (0,0) {Active\\Service};
+\node[eolbox=diagYellow] (trigger) at (3.8,0) {Retirement\\Trigger};
+\node[eolbox=WarnOrange] (decom) at (7.6,0) {Decommission};
+\node[eolbox=MinesBlue] (disasm) at (11.4,0) {Disassembly};
+
+% Arrows
+\draw[arr] (active) -- (trigger);
+\draw[arr] (trigger) -- (decom);
+\draw[arr] (decom) -- (disasm);
+
+% Trigger types below trigger node
+\node[trigger] (t1) at (1.8,-1.8) {Wear-out\\failure};
+\node[trigger] (t2) at (4.0,-1.8) {Technology\\obsolescence};
+\node[trigger] (t3) at (6.2,-1.8) {Economic\\obsolescence};
+\draw[darr] (trigger.south) -- ++(0,-0.3) -| (t1.north);
+\draw[darr] (trigger.south) -- (t2.north);
+\draw[darr] (trigger.south) -- ++(0,-0.3) -| (t3.north);
+
+% Decommission steps
+\node[font=\tiny\sffamily, MinesSilver, below=0.3cm of decom, text width=2.4cm, align=center] {Power off\\Drain fluids\\Remove batteries\\Data preservation};
+
+% Disposal pathways from disassembly
+\node[eolbox=AccentTeal] (reuse) at (9.0,-3.5) {Reuse /\\Refurbish};
+\node[eolbox=diagGreen] (recycle) at (12.0,-3.5) {Recycle};
+\node[eolbox=diagRed] (landfill) at (15.0,-3.5) {Landfill};
+
+\draw[arr, AccentTeal] (disasm.south) -- ++(0,-0.8) -| (reuse.north);
+\draw[arr, diagGreen] (disasm.south) -- ++(0,-0.8) -| (recycle.north);
+\draw[arr, diagRed] (disasm.south) -- ++(0,-0.8) -| (landfill.north);
+
+% Material streams under recycle
+\node[font=\tiny\sffamily, AccentTeal, below=0.2cm of reuse, text width=2.4cm, align=center] {Working modules\\Second-life batteries\\Structural components};
+\node[font=\tiny\sffamily, diagGreen, below=0.2cm of recycle, text width=2.4cm, align=center] {Metals (Al, Cu, steel)\\Thermoplastics\\PCB precious metals};
+\node[font=\tiny\sffamily, diagRed, below=0.2cm of landfill, text width=2.4cm, align=center] {Thermosets\\Contaminated material\\(Last resort)};
+
+% Hazmat callout
+\node[rectangle, rounded corners=2pt, draw=WarnOrange, fill=WarnOrange!8,
+      font=\tiny\sffamily, inner sep=3pt, text width=5cm, align=center,
+      line width=0.5pt] at (3.0,-4.2) {
+    \textcolor{WarnOrange}{\textbf{Hazardous materials}} (batteries, mercury, Pb solder)\\
+    require licensed disposal --- never regular trash
+};
+
+% Data security callout
+\node[rectangle, rounded corners=2pt, draw=MinesBlue, fill=MinesBlue!6,
+      font=\tiny\sffamily, inner sep=3pt, text width=4.5cm, align=center,
+      line width=0.5pt] at (15.0,1.5) {
+    \textbf{Data sanitization} ---\\
+    Erase EEPROM/flash/SD before\\
+    recycling or disposal
+};
+\draw[darr] (disasm.north) -- ++(0,0.3) -| (15.0,1.0);
+\end{tikzpicture}}%
+\caption{End-of-life pathways\index{end of life}: from active service through retirement, disposal, and material recovery.}\label{fig:eol_pathways}
+\end{figure}

@@ -1,0 +1,56 @@
+% fig_stakeholder_grid.tex — Power/interest grid with engagement strategies
+\begin{tikzpicture}[>=Stealth]
+% Grid axes
+\draw[->,line width=1pt,MinesBlue] (0,0) -- (8.5,0) node[below,font=\small\sffamily\bfseries]{Interest};
+\draw[->,line width=1pt,MinesBlue] (0,0) -- (0,8.5) node[above,font=\small\sffamily\bfseries,rotate=90,anchor=south]{Power};
+
+% Quadrant dividers
+\draw[MinesSilver,densely dashed,line width=0.6pt] (4,0) -- (4,8);
+\draw[MinesSilver,densely dashed,line width=0.6pt] (0,4) -- (8,4);
+
+% Axis labels
+\node[font=\tiny\sffamily,MinesSilver] at (2,-.4) {Low};
+\node[font=\tiny\sffamily,MinesSilver] at (6,-.4) {High};
+\node[font=\tiny\sffamily,MinesSilver,rotate=90] at (-.4,2) {Low};
+\node[font=\tiny\sffamily,MinesSilver,rotate=90] at (-.4,6) {High};
+
+% Quadrant fills
+\fill[diagGreen!8] (0,4) rectangle (4,8);   % high power, low interest
+\fill[AccentTeal!10] (4,4) rectangle (8,8);  % high power, high interest
+\fill[MinesSilver!8] (0,0) rectangle (4,4);  % low power, low interest
+\fill[diagYellow!10] (4,0) rectangle (8,4);  % low power, high interest
+
+% Quadrant labels
+\node[font=\small\sffamily\bfseries, color=diagGreen, text width=3cm, align=center] at (2,7)
+    {Keep\\Satisfied};
+\node[font=\tiny\sffamily, color=diagGreen, text width=3cm, align=center] at (2,5.8)
+    {Powerful but passive.\\Address their concerns\\proactively.};
+
+\node[font=\small\sffamily\bfseries, color=AccentTeal, text width=3cm, align=center] at (6,7)
+    {Manage\\Closely};
+\node[font=\tiny\sffamily, color=AccentTeal, text width=3cm, align=center] at (6,5.8)
+    {Key decision-makers.\\Engage frequently.\\Co-create requirements.};
+
+\node[font=\small\sffamily\bfseries, color=MinesSilver!70!black, text width=3cm, align=center] at (2,3)
+    {Monitor};
+\node[font=\tiny\sffamily, color=MinesSilver!70!black, text width=3cm, align=center] at (2,1.8)
+    {Minimal effort.\\Periodic updates\\only.};
+
+\node[font=\small\sffamily\bfseries, color=diagYellow!80!black, text width=3cm, align=center] at (6,3)
+    {Keep\\Informed};
+\node[font=\tiny\sffamily, color=diagYellow!80!black, text width=3cm, align=center] at (6,1.8)
+    {Valuable input.\\Regular communication.\\May become advocates.};
+
+% Nine-category checklist on the right
+\node[font=\small\sffamily\bfseries, color=MinesBlue, anchor=north west] at (9.5,8.2) {Nine Categories to Check:};
+\foreach \i/\lbl in {1/Primary Users, 2/Beneficiaries, 3/Sponsor \& Funder, 4/Maintainers, 5/Regulators, 6/Integrators (adj.\ systems), 7/Adversaries, 8/Trainers, 9/Disposal Handlers} {
+    \node[font=\scriptsize\sffamily, anchor=west, color=MinesBlue!80] at (9.5, 8.2 - \i*0.75)
+        {\textbf{\i.} \lbl};
+}
+
+% Commonly missed callout
+\draw[WarnOrange, line width=0.8pt, rounded corners=2pt]
+    (9.3, 8.2-4*0.75+0.25) rectangle (14.5, 8.2-6*0.75-0.25);
+\node[font=\tiny\sffamily\bfseries, color=WarnOrange, anchor=west] at (9.5, 8.2-5*0.75-0.55)
+    {Commonly missed by students!};
+\end{tikzpicture}

@@ -28,10 +28,7 @@ M6$\times$1.0 and 1/4-20 UNC look nearly identical (6.0\,mm vs.\ 6.35\,mm diamet
 
 \subsection{Bolt Grades and Strength}
 
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_bolt_grades.png}
-\caption{SAE and ISO bolt grade markings with strength data and torque-preload relationship.}\label{fig:grades}
-\end{figure}
+\input{tikz_figures/fig_bolt_grades}
 
 \textbf{SAE (inch)}: Grade~2 (no marks, 74\,ksi, general purpose), Grade~5 (3 radial lines, 120\,ksi, most common structural), Grade~8 (6 radial lines, 150\,ksi, high strength). \textbf{ISO (metric)}: Class~4.6 ($\approx$ Gr.~2), 8.8 ($\approx$ Gr.~5), 10.9 ($\approx$ Gr.~8), 12.9 (socket heads, 1220\,MPa). The first digit $\times$100 gives the UTS in MPa; the product of digits gives yield.
 
@@ -79,10 +76,7 @@ Bearings support a rotating or sliding shaft while minimizing friction. Every be
 \textbf{Deep groove ball} (6000 series): default for students. Radial + light axial, high speed, low cost. \textbf{Angular contact}: combined radial + axial; installed in pairs. \textbf{Tapered roller}: heavy combined loads (wheel bearings). \textbf{Needle roller}: compact, high radial, zero axial. \textbf{Thrust}: axial only; always pair with a radial bearing. \textbf{Sleeve/bushing}: no rolling elements, low cost, quiet. Igus iglide\textregistered{} polymer bushings are excellent for 3D-printed housings.
 
 \subsection{Bearing Selection}
-\begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_bearing_selection.png}
-\caption{Five-step bearing selection framework with common failure modes.}\label{fig:bsel}
-\end{figure}
+\input{tikz_figures/fig_bearing_selection}
 
 Five steps: (1) \textbf{Load type and magnitude}; calculate equivalent dynamic load $P$. (2) \textbf{Speed}; check limiting RPM. (3) \textbf{Space}; bore and OD constraints. (4) \textbf{Life}; $L_{10} = (C/P)^p \times 10^6 / (60n)$ hours. (5) \textbf{Mounting}; press fit, retaining ring, adhesive.
 

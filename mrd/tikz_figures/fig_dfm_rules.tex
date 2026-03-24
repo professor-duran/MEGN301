@@ -1,0 +1,109 @@
+% fig_dfm_rules.tex — Six critical DFM geometry rules for injection molding
+\begin{tikzpicture}[>=Stealth,
+    rulebox/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=4.2cm, minimum height=3.0cm, align=center,
+        font=\scriptsize\sffamily, line width=0.8pt, inner sep=5pt},
+    ruletitle/.style={font=\scriptsize\sffamily\bfseries, color=#1},
+    ruledetail/.style={font=\tiny\sffamily, color=MinesBlue!80!black, text width=4.0cm, align=center},
+    goodlbl/.style={font=\tiny\sffamily\bfseries, color=AccentTeal},
+    badlbl/.style={font=\tiny\sffamily\bfseries, color=diagRed}
+]
+
+% --- Row 1 ---
+% Rule 1: Uniform Wall Thickness
+\node[rulebox=MinesBlue] (r1) at (0,0) {};
+\node[ruletitle=MinesBlue, above] at (r1.north) {1.\ Uniform Wall Thickness};
+\begin{scope}[shift={(r1.center)}, yshift=3pt]
+  % Good: uniform wall
+  \draw[AccentTeal, line width=1.2pt] (-1.2,0.5) -- (1.2,0.5);
+  \draw[AccentTeal, line width=1.2pt] (-1.2,-0.1) -- (1.2,-0.1);
+  \draw[<->, AccentTeal, line width=0.5pt] (1.4,0.5) -- node[right, font=\tiny\sffamily]{t} (1.4,-0.1);
+  \node[goodlbl] at (0,0.85) {\checkmark\ Uniform};
+  % Bad: thick-to-thin transition
+  \draw[diagRed, line width=1.2pt] (-1.2,-0.7) -- (0,-0.7) -- (0,-0.9) -- (1.2,-0.9);
+  \draw[diagRed, line width=1.2pt] (-1.2,-1.3) -- (1.2,-1.3);
+  \node[badlbl] at (0,-0.45) {\texttimes\ Varying};
+\end{scope}
+
+% Rule 2: Draft Angles
+\node[rulebox=AccentTeal] (r2) at (5.2,0) {};
+\node[ruletitle=AccentTeal, above] at (r2.north) {2.\ Draft Angles};
+\begin{scope}[shift={(r2.center)}, yshift=3pt]
+  % Good: drafted walls
+  \draw[AccentTeal, line width=1.2pt] (-0.5,0.7) -- (-0.7,-0.5) -- (0.7,-0.5) -- (0.5,0.7) -- cycle;
+  \draw[<->, AccentTeal, line width=0.5pt] (0.9,0.7) -- node[right, font=\tiny\sffamily]{$1$--$3^{\circ}$} (0.7,-0.5);
+  \node[goodlbl] at (0,1.0) {\checkmark\ Drafted};
+  % Bad: straight walls
+  \draw[diagRed, line width=1.2pt] (-0.5,-0.8) -- (-0.5,-1.4) -- (0.5,-1.4) -- (0.5,-0.8) -- cycle;
+  \node[badlbl] at (0,-0.6) {\texttimes\ $0^{\circ}$};
+\end{scope}
+
+% Rule 3: Ribs & Bosses
+\node[rulebox=WarnOrange] (r3) at (10.4,0) {};
+\node[ruletitle=WarnOrange, above] at (r3.north) {3.\ Ribs \& Bosses};
+\begin{scope}[shift={(r3.center)}, yshift=3pt]
+  % Rib cross-section
+  \draw[AccentTeal, line width=1.2pt] (-1.5,-0.2) -- (1.5,-0.2); % wall
+  \draw[AccentTeal, line width=1.0pt] (-0.15,-0.2) -- (-0.1,0.8) -- (0.1,0.8) -- (0.15,-0.2); % rib
+  \draw[<->, AccentTeal, line width=0.5pt] (-0.3,0.8) -- node[left, font=\tiny\sffamily]{$\leq 3t$} (-0.3,-0.2);
+  \draw[<->, AccentTeal, line width=0.5pt] (-0.15,1.0) -- node[above, font=\tiny\sffamily]{$0.5$--$0.7t$} (0.15,1.0);
+  \node[goodlbl] at (0.9,0.6) {\checkmark\ Thin rib};
+  % Bad: thick rib
+  \draw[diagRed, line width=1.0pt] (-0.4,-0.8) -- (-0.4,-1.3) -- (0.4,-1.3) -- (0.4,-0.8);
+  \draw[diagRed, line width=1.2pt] (-1.0,-0.8) -- (1.0,-0.8);
+  \node[badlbl] at (0.9,-1.1) {\texttimes\ Thick};
+\end{scope}
+
+% --- Row 2 ---
+% Rule 4: Radii (no sharp corners)
+\node[rulebox=diagPurple] (r4) at (0,-4.2) {};
+\node[ruletitle=diagPurple, above] at (r4.north) {4.\ Inside Radii};
+\begin{scope}[shift={(r4.center)}, yshift=3pt]
+  % Good: radiused corner
+  \draw[AccentTeal, line width=1.2pt] (-1.0,0.8) -- (-1.0,0.1) arc[start angle=180, end angle=270, radius=0.4] -- (1.0,-0.3);
+  \node[goodlbl] at (0.5,0.8) {\checkmark\ $r \geq 0.5t$};
+  \draw[<->, AccentTeal, line width=0.5pt] (-0.6,0.1) -- node[above right, font=\tiny\sffamily]{$r$} (-0.6,-0.3);
+  % Bad: sharp corner
+  \draw[diagRed, line width=1.2pt] (-1.0,-0.6) -- (-1.0,-1.3) -- (1.0,-1.3);
+  \node[badlbl] at (0.5,-0.6) {\texttimes\ Sharp};
+  \node[font=\tiny\sffamily, diagRed] at (-0.5,-0.9) {stress};
+\end{scope}
+
+% Rule 5: Undercuts
+\node[rulebox=diagGreen] (r5) at (5.2,-4.2) {};
+\node[ruletitle=diagGreen, above] at (r5.north) {5.\ Avoid Undercuts};
+\begin{scope}[shift={(r5.center)}, yshift=3pt]
+  % Good: no undercut, clean release
+  \draw[AccentTeal, line width=1.2pt] (-1.0,0.7) -- (-0.8,0.1) -- (0.8,0.1) -- (1.0,0.7);
+  \draw[->, AccentTeal, line width=0.7pt] (0,0.1) -- (0,-0.3);
+  \node[goodlbl] at (0,0.95) {\checkmark\ Clean release};
+  % Bad: undercut feature
+  \draw[diagRed, line width=1.2pt] (-1.0,-0.6) -- (-0.5,-0.6) -- (-0.5,-0.9)
+    -- (-0.8,-0.9) -- (-0.8,-1.3) -- (0.8,-1.3) -- (0.8,-0.9)
+    -- (0.5,-0.9) -- (0.5,-0.6) -- (1.0,-0.6);
+  \node[badlbl] at (0,-0.4) {\texttimes\ Trapped};
+  \draw[->, diagRed, line width=0.5pt, dashed] (0,-1.3) -- (0,-1.7) node[below, font=\tiny\sffamily]{can't eject};
+\end{scope}
+
+% Rule 6: Gate Location
+\node[rulebox=diagYellow] (r6) at (10.4,-4.2) {};
+\node[ruletitle=diagYellow!80!black, above] at (r6.north) {6.\ Gate Location};
+\begin{scope}[shift={(r6.center)}, yshift=3pt]
+  % Part outline
+  \draw[MinesBlue!60, line width=1.0pt] (-1.2,0.7) rectangle (1.2,-0.5);
+  % Good gate: thickest section
+  \fill[AccentTeal] (-1.2,0.1) circle(3pt);
+  \node[goodlbl, right] at (-0.9,0.1) {gate at thickest};
+  \draw[->, AccentTeal, line width=0.7pt] (-0.9,0.1) -- (0.8,0.1);
+  \node[font=\tiny\sffamily, AccentTeal] at (0,0.45) {flow};
+  % Bad gate: thin section
+  \draw[MinesBlue!60, line width=1.0pt] (-1.2,-0.9) rectangle (1.2,-1.5);
+  \fill[diagRed] (1.2,-1.2) circle(3pt);
+  \node[badlbl, left] at (0.9,-1.2) {gate at thin};
+  \node[font=\tiny\sffamily, diagRed] at (0,-1.7) {short shots, weld lines};
+\end{scope}
+
+% Title
+\node[font=\small\sffamily\bfseries, color=MinesBlue] at (5.2,2.4) {Six Critical DFM Rules for Injection Molding};
+
+\end{tikzpicture}

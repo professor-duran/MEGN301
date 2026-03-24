@@ -1,0 +1,55 @@
+% fig_elicitation_methods.tex — Six elicitation methods with best-use cases
+\begin{tikzpicture}[
+    mbox/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=3.8cm, minimum height=2.6cm, align=left,
+        font=\tiny\sffamily, line width=0.8pt, inner sep=5pt},
+    mtitle/.style={font=\scriptsize\sffamily\bfseries, color=#1}
+]
+% Row 1
+\node[mbox=MinesBlue] (int) at (0,0) {
+    \mtitle{MinesBlue}{1. Interviews}\\[3pt]
+    \textbf{Best for:} Stated needs, context\\
+    \textbf{Strength:} Deep understanding\\
+    \textbf{Watch-out:} Leading questions; social desirability bias
+};
+\node[mbox=AccentTeal] (obs) at (4.8,0) {
+    \mtitle{AccentTeal}{2. Observation}\\[3pt]
+    \textbf{Best for:} Unstated needs, workflow\\
+    \textbf{Strength:} Reveals real behavior\\
+    \textbf{Watch-out:} Hawthorne effect (people behave differently when watched)
+};
+\node[mbox=WarnOrange] (sur) at (9.6,0) {
+    \mtitle{WarnOrange}{3. Surveys}\\[3pt]
+    \textbf{Best for:} Broad quantitative data\\
+    \textbf{Strength:} Large sample size\\
+    \textbf{Watch-out:} Low response rate; poorly worded questions skew results
+};
+
+% Row 2
+\node[mbox=diagPurple] (pro) at (0,-3.4) {
+    \mtitle{diagPurple}{4. Prototyping}\\[3pt]
+    \textbf{Best for:} Validating assumptions\\
+    \textbf{Strength:} Tangible feedback\\
+    \textbf{Watch-out:} Users may fixate on prototype flaws, missing the concept
+};
+\node[mbox=diagGreen] (doc) at (4.8,-3.4) {
+    \mtitle{diagGreen}{5. Document Analysis}\\[3pt]
+    \textbf{Best for:} Regulations, standards\\
+    \textbf{Strength:} Objective, authoritative\\
+    \textbf{Watch-out:} Documents may be outdated or incomplete
+};
+\node[mbox=diagRed] (foc) at (9.6,-3.4) {
+    \mtitle{diagRed}{6. Focus Groups}\\[3pt]
+    \textbf{Best for:} Exploring preferences\\
+    \textbf{Strength:} Group dynamics spark ideas\\
+    \textbf{Watch-out:} Dominant voices suppress quieter participants
+};
+
+% Recommended combination callout
+\node[rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!5,
+    text width=13cm, align=center, font=\scriptsize\sffamily,
+    line width=0.8pt, inner sep=5pt] at (4.8,-5.8)
+    {\textbf{Recommended combination:} \textcolor{MinesBlue}{Interviews} (stated needs)
+     + \textcolor{AccentTeal}{Observation} (unstated needs)
+     + \textcolor{diagPurple}{Prototyping} (validate assumptions)};
+\end{tikzpicture}

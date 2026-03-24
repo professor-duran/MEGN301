@@ -1,0 +1,62 @@
+% fig_interface_types.tex — Six interface types with details
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    itype/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=4.5cm, minimum height=1.8cm, align=left,
+        font=\scriptsize\sffamily, line width=0.7pt, inner sep=5pt}
+]
+% Row 1
+\node[itype=MinesBlue] (elec) at (0,0) {
+    \textbf{Electrical}\\[3pt]
+    {\tiny Voltage levels, current capacity,\\
+    signal protocols (I2C, SPI, UART),\\
+    grounding, EMI, impedance matching}
+};
+
+\node[itype=AccentTeal] (mech) at (5.5,0) {
+    \textbf{Mechanical}\\[3pt]
+    {\tiny Mounting features, fastener holes,\\
+    tolerances, alignment, press fits,\\
+    clearance for tools and wires}
+};
+
+\node[itype=diagYellow] (therm) at (11,0) {
+    \textbf{Thermal}\\[3pt]
+    {\tiny Heat flow paths, thermal contact\\
+    resistance, thermal interface materials,\\
+    heat sink mounting, air flow}
+};
+
+% Row 2
+\node[itype=WarnOrange] (sw) at (0,-2.6) {
+    \textbf{Software}\\[3pt]
+    {\tiny APIs, data formats (int vs float),\\
+    communication timing, error handling,\\
+    message protocols, state machines}
+};
+
+\node[itype=diagPurple] (fluid) at (5.5,-2.6) {
+    \textbf{Fluid}\\[3pt]
+    {\tiny Fittings (barb, compression, NPT),\\
+    pressure ratings, seal types,\\
+    flow rate, fluid compatibility}
+};
+
+\node[itype=diagGreen] (human) at (11,-2.6) {
+    \textbf{Human}\\[3pt]
+    {\tiny Display readability, control layout,\\
+    ergonomics, labeling, safety interlocks,\\
+    operator skill level assumptions}
+};
+
+% ICD requirement box
+\node[rectangle, rounded corners=2pt, draw=MinesBlue, fill=MinesBlue!6,
+      font=\tiny\sffamily, inner sep=4pt, text width=14cm, align=center,
+      line width=0.6pt] at (5.5,-4.6) {
+    Each interface requires an \textbf{Interface Control Document (ICD)} specifying: physical connection, electrical characteristics,\\
+    protocol details, ownership (who provides pull-ups, power, termination), and test method. \textbf{Both sides must sign.}
+};
+\end{tikzpicture}}%
+\caption{The six interface types\index{interface types}: electrical, mechanical, thermal, software, fluid, and human.}\label{fig:interface_types}
+\end{figure}

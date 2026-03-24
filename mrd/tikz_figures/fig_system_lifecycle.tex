@@ -1,0 +1,47 @@
+% fig_system_lifecycle.tex — System lifecycle phases with cost distribution
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    lphase/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=2.4cm, minimum height=1.6cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.8pt},
+    arr/.style={->, line width=1pt, color=MinesSilver}
+]
+% Lifecycle phases
+\node[lphase=MinesBlue] (concept) at (0,0) {Concept\\[3pt]{\tiny\normalfont Define needs\\and ConOps}};
+\node[lphase=AccentTeal] (design) at (3.4,0) {Design\\[3pt]{\tiny\normalfont PDR, CDR\\specifications}};
+\node[lphase=WarnOrange] (build) at (6.8,0) {Build \&\\Test\\[3pt]{\tiny\normalfont Integration,\\V\&V}};
+\node[lphase=diagGreen, text width=3.4cm] (ops) at (11.0,0) {Operations \&\\Maintenance\\[3pt]{\tiny\normalfont 50--70\% of\\lifecycle cost}};
+\node[lphase=diagRed] (eol) at (15.0,0) {End of\\Life\\[3pt]{\tiny\normalfont Retirement,\\disposal}};
+
+% Flow arrows
+\draw[arr] (concept) -- (design);
+\draw[arr] (design) -- (build);
+\draw[arr] (build) -- (ops);
+\draw[arr] (ops) -- (eol);
+
+% Cost bar below
+\node[font=\scriptsize\sffamily\bfseries, MinesSilver, anchor=east] at (-1.2,-2.2) {Cost};
+\fill[MinesBlue!20] (0,-2.6) rectangle (0.8,-1.8);
+\fill[AccentTeal!30] (0.8,-2.6) rectangle (2.5,-1.8);
+\fill[WarnOrange!30] (2.5,-2.6) rectangle (5.0,-1.8);
+\fill[diagGreen!30] (5.0,-2.6) rectangle (13.0,-1.8);
+\fill[diagRed!20] (13.0,-2.6) rectangle (15.0,-1.8);
+\draw[MinesSilver, line width=0.5pt] (0,-2.6) rectangle (15.0,-1.8);
+
+\node[font=\tiny\sffamily] at (0.4,-2.2) {5\%};
+\node[font=\tiny\sffamily] at (1.65,-2.2) {10\%};
+\node[font=\tiny\sffamily] at (3.75,-2.2) {15\%};
+\node[font=\tiny\sffamily\bfseries, diagGreen] at (9.0,-2.2) {50--70\%};
+\node[font=\tiny\sffamily] at (14.0,-2.2) {5\%};
+
+% Key insight
+\node[rectangle, rounded corners=2pt, draw=diagRed, fill=diagRed!6,
+      font=\tiny\sffamily, inner sep=3pt, text width=10cm, align=center,
+      line width=0.5pt] at (7.5,-3.6) {
+    \textcolor{diagRed}{\textbf{80\% of O\&M cost is locked in by decisions made during concept and design.}}
+    Design-for-serviceability must start at PDR, not FDR.
+};
+\end{tikzpicture}}%
+\caption{System lifecycle with cost distribution.}\label{fig:system_lifecycle}
+\end{figure}

@@ -1,0 +1,61 @@
+% fig_results_disposition.tex — Three verification outcomes with disposition workflows
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    outcome/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!10,
+        text width=3.8cm, minimum height=1.2cm, align=center,
+        font=\small\sffamily\bfseries, line width=0.9pt},
+    action/.style={rectangle, rounded corners=2pt, draw=#1, fill=#1!6,
+        text width=3.2cm, minimum height=0.6cm, align=center,
+        font=\tiny\sffamily, line width=0.6pt, inner sep=3pt},
+    arr/.style={->, line width=0.8pt, color=#1}
+]
+% Three outcomes
+\node[outcome=diagGreen] (pass) at (0,0) {\textcolor{diagGreen}{PASS}};
+\node[outcome=diagRed] (fail) at (5.5,0) {\textcolor{diagRed}{FAIL}};
+\node[outcome=diagYellow] (partial) at (11,0) {\textcolor{diagYellow!80!black}{PARTIAL PASS}};
+
+% PASS actions
+\node[action=diagGreen] (pa1) at (0,-1.5) {Record results in RTM};
+\node[action=diagGreen] (pa2) at (0,-2.5) {Mark req.\ VERIFIED};
+\node[action=diagGreen] (pa3) at (0,-3.5) {Archive raw data};
+\draw[arr=diagGreen] (pass) -- (pa1);
+\draw[arr=diagGreen] (pa1) -- (pa2);
+\draw[arr=diagGreen] (pa2) -- (pa3);
+
+% FAIL actions
+\node[action=diagRed] (fa1) at (5.5,-1.5) {Root cause analysis};
+\node[action=diagRed] (fa2) at (5.5,-2.5) {Open Discrepancy Report};
+\node[action=diagRed] (fa3) at (5.5,-3.5) {Corrective action};
+\node[action=diagRed] (fa4) at (5.5,-4.5) {Retest after correction};
+\draw[arr=diagRed] (fail) -- (fa1);
+\draw[arr=diagRed] (fa1) -- (fa2);
+\draw[arr=diagRed] (fa2) -- (fa3);
+\draw[arr=diagRed] (fa3) -- (fa4);
+
+% Root cause sub-labels
+\node[font=\tiny\sffamily\itshape, MinesSilver, right=0.2cm of fa1, text width=2.8cm, align=left] {%
+    1.\ Test wrong?\\2.\ Implementation wrong?\\3.\ Requirement wrong?};
+
+% PARTIAL PASS actions — three resolution paths
+\node[action=diagYellow] (pp0) at (11,-1.5) {Document which passed/failed};
+\node[action=MinesBlue] (pp1) at (8.8,-2.8) {Fix};
+\node[action=WarnOrange] (pp2) at (11,-2.8) {Waive};
+\node[action=AccentTeal] (pp3) at (13.2,-2.8) {Defer};
+\draw[arr=diagYellow!80!black] (partial) -- (pp0);
+\draw[arr=MinesBlue] (pp0.south) -- ++(-2.2,-0.5) -- (pp1.north);
+\draw[arr=WarnOrange] (pp0) -- (pp2);
+\draw[arr=AccentTeal] (pp0.south) -- ++(2.2,-0.5) -- (pp3.north);
+
+% Sub-labels for partial paths
+\node[font=\tiny\sffamily, MinesBlue, below=0.1cm of pp1, text width=2.2cm, align=center] {Redesign\\+ retest};
+\node[font=\tiny\sffamily, WarnOrange, below=0.1cm of pp2, text width=2.6cm, align=center] {Stakeholder accepts\\deviation with risk};
+\node[font=\tiny\sffamily, AccentTeal, below=0.1cm of pp3, text width=2.2cm, align=center] {Postpone with\\plan \& deadline};
+
+% Include actual values note
+\node[rectangle, rounded corners=2pt, draw=MinesSilver, fill=LightBG,
+      font=\tiny\sffamily, inner sep=3pt, text width=3.4cm, align=center,
+      line width=0.4pt, below=0.1cm of pa3] {Include actual measurement\\values, not just ``PASS''};
+\end{tikzpicture}}%
+\caption{Three verification outcomes: PASS, FAIL, PARTIAL PASS with disposition workflows.}\label{fig:disp}
+\end{figure}

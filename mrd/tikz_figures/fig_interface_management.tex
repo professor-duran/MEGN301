@@ -1,0 +1,46 @@
+% fig_interface_management.tex — Interface types and common failure modes
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    iface/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=2.6cm, minimum height=1.8cm, align=center,
+        font=\scriptsize\sffamily, line width=0.7pt, inner sep=4pt},
+    arr/.style={->, line width=0.8pt, color=MinesSilver}
+]
+% Central node
+\node[rectangle, rounded corners=4pt, draw=MinesBlue, fill=MinesBlue!10,
+      minimum width=2.8cm, minimum height=1.2cm, align=center,
+      font=\small\sffamily\bfseries, line width=1pt] (center) at (0,0) {Interface\\Management};
+
+% Stat callout
+\node[rectangle, rounded corners=2pt, draw=diagRed, fill=diagRed!6,
+      font=\tiny\sffamily\bfseries, inner sep=3pt, line width=0.5pt] at (0,-1.2) {
+    \textcolor{diagRed}{80\% of integration failures occur at interfaces}
+};
+
+% Six interface types around the center
+\node[iface=MinesBlue] (elec) at (-5,2.5) {\textbf{Electrical}\\[3pt]{\tiny Voltage levels,\\protocols, grounding,\\EMI}};
+\node[iface=AccentTeal] (mech) at (0,3.5) {\textbf{Mechanical}\\[3pt]{\tiny Mounting, tolerances,\\alignment, clearance}};
+\node[iface=diagYellow] (therm) at (5,2.5) {\textbf{Thermal}\\[3pt]{\tiny Heat flow, contact\\resistance, dissipation}};
+\node[iface=WarnOrange] (sw) at (-5,-2.5) {\textbf{Software}\\[3pt]{\tiny APIs, data formats,\\timing, protocols}};
+\node[iface=diagPurple] (fluid) at (0,-3.5) {\textbf{Fluid}\\[3pt]{\tiny Fittings, pressure,\\seals, flow rate}};
+\node[iface=diagGreen] (human) at (5,-2.5) {\textbf{Human}\\[3pt]{\tiny Displays, controls,\\ergonomics, labels}};
+
+% Connections
+\draw[arr] (center) -- (elec);
+\draw[arr] (center) -- (mech);
+\draw[arr] (center) -- (therm);
+\draw[arr] (center) -- (sw);
+\draw[arr] (center) -- (fluid);
+\draw[arr] (center) -- (human);
+
+% ICD annotation
+\node[rectangle, rounded corners=2pt, draw=MinesSilver, fill=LightBG,
+      font=\tiny\sffamily, inner sep=3pt, text width=5cm, align=center,
+      line width=0.4pt] at (0,-5.2) {
+    Every interface needs an \textbf{Interface Control Document (ICD)}\\
+    written \textit{during architecture}, not during integration
+};
+\end{tikzpicture}}%
+\caption{Interface types and common failure modes.}\label{fig:interface_mgmt}
+\end{figure}

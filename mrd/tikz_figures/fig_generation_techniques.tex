@@ -1,0 +1,37 @@
+% fig_generation_techniques.tex — Concept generation techniques: divergent to convergent
+\begin{tikzpicture}[>=Stealth]
+% Divergent section (left, expanding)
+\fill[MinesBlue!6] (0,-2.5) -- (5.5,-3.5) -- (5.5,3.5) -- (0,2.5) -- cycle;
+\node[font=\small\sffamily\bfseries, color=MinesBlue] at (2.75,3.0) {DIVERGENT};
+\node[font=\tiny\sffamily\itshape, color=MinesBlue] at (2.75,2.5) {Generate many ideas};
+
+% Convergent section (right, contracting)
+\fill[AccentTeal!6] (5.5,-3.5) -- (11,2.0) -- (11,-2.0) -- cycle;
+\node[font=\small\sffamily\bfseries, color=AccentTeal] at (8.5,2.8) {CONVERGENT};
+\node[font=\tiny\sffamily\itshape, color=AccentTeal] at (8.5,2.3) {Evaluate \& select};
+
+% Divergent techniques
+\node[cat=MinesBlue, text width=2.0cm] at (1.2,1.2) {Brainstorming};
+\node[cat=MinesBlue, text width=2.0cm] at (1.2,-0.2) {SCAMPER};
+\node[cat=MinesBlue, text width=2.0cm] at (1.2,-1.6) {Biomimicry};
+\node[cat=diagPurple, text width=2.2cm] at (4.0,1.2) {Morphological\\Chart};
+\node[cat=diagPurple, text width=2.2cm] at (4.0,-0.2) {Functional\\Decomposition};
+\node[cat=diagPurple, text width=2.2cm] at (4.0,-1.6) {TRIZ / Patent\\Analysis};
+
+% Convergent techniques
+\node[cat=WarnOrange, text width=2.0cm] at (7.5,0.6)  {Pugh Screening\\Matrix};
+\node[cat=WarnOrange, text width=2.0cm] at (7.5,-0.9) {Feasibility\\Check};
+\node[cat=AccentTeal, text width=2.0cm] at (10.0,0.6)  {Weighted\\Decision Matrix};
+\node[cat=AccentTeal, text width=2.0cm] at (10.0,-0.9) {Sensitivity\\Analysis};
+
+% Center transition
+\draw[line width=1.5pt, MinesSilver] (5.5,-3.5) -- (5.5,3.5);
+\node[font=\tiny\sffamily\bfseries, color=MinesSilver, fill=white, inner sep=2pt] at (5.5,-3.8)
+    {Transition: $\geq$20 concepts before screening};
+
+% Flow arrow at bottom
+\draw[->,line width=1.2pt, MinesBlue] (0,-4.2) -- (5.3,-4.2)
+    node[midway, above, font=\tiny\sffamily\bfseries, color=MinesBlue] {Quantity over quality};
+\draw[->,line width=1.2pt, AccentTeal] (5.7,-4.2) -- (11,-4.2)
+    node[midway, above, font=\tiny\sffamily\bfseries, color=AccentTeal] {Quality over quantity};
+\end{tikzpicture}

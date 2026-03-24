@@ -1,0 +1,49 @@
+% fig_integration_plan.tex — Integration sequence: power-first, risk-ordered
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    integ/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=2.4cm, minimum height=1.2cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.8pt},
+    gate/.style={diamond, draw=WarnOrange, fill=WarnOrange!15, aspect=1.5,
+        text width=0.8cm, align=center, font=\tiny\sffamily\bfseries,
+        inner sep=1pt, line width=0.6pt},
+    arr/.style={->, line width=1pt, color=MinesBlue},
+    rule/.style={font=\tiny\sffamily, text width=2.2cm, align=center}
+]
+% Integration order
+\node[integ=MinesBlue] (pwr) at (0,0) {Power\\System};
+\node[gate] (g1) at (2.6,0) {Test};
+\node[integ=AccentTeal] (mcu) at (5.2,0) {MCU +\\Comms Bus};
+\node[gate] (g2) at (7.8,0) {Test};
+\node[integ=diagGreen] (low) at (10.4,0) {Low-Risk\\Subsystem};
+\node[gate] (g3) at (13.0,0) {Test};
+\node[integ=WarnOrange] (high) at (15.6,0) {High-Risk\\Subsystem};
+
+% Arrows
+\draw[arr] (pwr) -- (g1);
+\draw[arr] (g1) -- (mcu);
+\draw[arr] (mcu) -- (g2);
+\draw[arr] (g2) -- (low);
+\draw[arr] (low) -- (g3);
+\draw[arr] (g3) -- (high);
+
+% Rules below
+\node[rule, MinesBlue, below=0.5cm of pwr] {Rule 1:\\Power first---\\nothing works\\without it};
+\node[rule, AccentTeal, below=0.5cm of mcu] {Rule 2:\\Add the\\backbone\\next};
+\node[rule, diagGreen, below=0.5cm of low] {Rule 3:\\Lowest risk\\subsystem\\next};
+\node[rule, WarnOrange, below=0.5cm of high] {Rule 4:\\Highest risk\\last (problems\\isolated)};
+
+% Order annotation
+\draw[<-, line width=0.6pt, MinesSilver, dashed] (0,1.2) -- (15.6,1.2);
+\node[font=\tiny\sffamily\bfseries, MinesSilver, fill=white, inner sep=2pt] at (7.8,1.2) {Integration order: risk-ranked};
+
+% Rule 5 at bottom
+\node[rectangle, rounded corners=2pt, draw=diagRed, fill=diagRed!6,
+      font=\tiny\sffamily\bfseries, inner sep=3pt, text width=10cm, align=center,
+      line width=0.5pt] at (7.8,-3.0) {
+    \textcolor{diagRed}{Rule 5: Never add two new elements simultaneously---if something breaks, you cannot isolate the cause}
+};
+\end{tikzpicture}}%
+\caption{Integration sequence plan\index{integration planning}: power-first, risk-ordered subsystem build-up with test gates.}\label{fig:integration_plan}
+\end{figure}

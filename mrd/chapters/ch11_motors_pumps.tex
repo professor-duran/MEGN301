@@ -157,12 +157,7 @@ Rotate in discrete angular steps (typically \ang{1.8} = 200 steps/rev). Open-loo
 
 A motor + encoder + controller in a closed-loop system. Hobby servos (SG90, MG996R) are self-contained with PWM control. Industrial servos use BLDC motors with high-resolution encoders and dedicated controllers running PID loops at kHz rates.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{master_figs/fig_motor_curves.png}
-\caption{Torque--speed characteristics for brushed DC (linear), BLDC (flat mid-range), and stepper (high-torque at low RPM) with comparison table.}
-\label{fig:motor_curves}
-\end{figure}
+\input{tikz_figures/fig_motor_curves}
 
 \subsection{Key Motor Specifications}
 
@@ -224,12 +219,7 @@ Rollers compress a flexible tube, pushing fluid forward. Zero contamination risk
 \subsubsection{Centrifugal / Impeller Pumps}
 Spinning impeller accelerates fluid radially. Smooth, high-volume flow. Requires flooded suction (not self-priming). Poor with viscous fluids. Small 12V DC impeller pumps are widely available for student cooling and circulation projects.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{master_figs/fig_pump_matrix.png}
-\caption{Pump selection matrix; type, performance envelope, strengths, limitations, and best applications.}
-\label{fig:pump_matrix}
-\end{figure}
+\input{tikz_figures/fig_pump_matrix}
 
 \subsection{Key Pump Specifications}
 
@@ -280,12 +270,7 @@ DC gearmotor: L298N H-bridge (2\,A continuous, inadequate for 5.5\,A stall). Bet
 
 \subsection{Unified Selection Framework}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{master_figs/fig_selection_framework.png}
-\caption{Parallel selection flows for power supply, motor, and pump with integration verification checklist.}
-\label{fig:selection_framework_b}
-\end{figure}
+\input{tikz_figures/fig_selection_framework_ch11}
 
 \subsection{Design Rules}
 

@@ -1,0 +1,94 @@
+% fig_mcu_protocols.tex — Six communication protocols comparison
+\begin{tikzpicture}[>=Stealth,
+    protbox/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=2.2cm, minimum height=3.2cm, align=center,
+        font=\tiny\sffamily, line width=0.8pt, inner sep=5pt},
+    prottitle/.style={font=\scriptsize\sffamily\bfseries, color=#1},
+    wireicon/.style={font=\tiny\sffamily\bfseries, color=#1},
+    usecase/.style={font=\tiny\sffamily\itshape, color=MinesBlue!60!black, text width=2.2cm, align=center}
+]
+
+% --- Protocol boxes ---
+% UART
+\node[protbox=MinesBlue] (p1) at (0,0) {
+    \textbf{2 wires}\\
+    TX, RX\\[3pt]
+    Point-to-point\\
+    9600--115\,k baud\\[3pt]
+    Asynchronous\\
+    Simple, universal\\[3pt]
+    ESP32: 3 ports
+};
+\node[prottitle=MinesBlue, above=0.15cm of p1] {UART};
+\node[usecase, below=0.2cm of p1] {Debug, GPS,\\cellular modules};
+
+% SPI
+\node[protbox=AccentTeal] (p2) at (3.0,0) {
+    \textbf{4 wires + CS}\\
+    SCK, MOSI,\\MISO, CS\\[3pt]
+    Bus topology\\
+    Up to 80\,MHz\\[3pt]
+    Full-duplex\\
+    Fastest protocol\\[3pt]
+    ESP32: 2 ports
+};
+\node[prottitle=AccentTeal, above=0.15cm of p2] {SPI};
+\node[usecase, below=0.2cm of p2] {Displays, SD cards,\\fast sensors};
+
+% I2C
+\node[protbox=WarnOrange] (p3) at (6.0,0) {
+    \textbf{2 wires}\\
+    SDA, SCL\\[3pt]
+    Bus, 127 addr\\
+    100--400\,kHz\\[3pt]
+    Half-duplex\\
+    Needs 4.7\,k pull-ups\\[3pt]
+    ESP32: 2 ports
+};
+\node[prottitle=WarnOrange, above=0.15cm of p3] {I2C};
+\node[usecase, below=0.2cm of p3] {Most sensors:\\BME280, MPU6050};
+
+% CAN
+\node[protbox=diagPurple] (p4) at (9.0,0) {
+    \textbf{2 wires}\\
+    CAN\_H, CAN\_L\\[3pt]
+    Multi-node\\
+    Up to 1\,Mbps\\[3pt]
+    Differential\\
+    + transceiver IC\\[3pt]
+    ESP32: 1 port
+};
+\node[prottitle=diagPurple, above=0.15cm of p4] {CAN};
+\node[usecase, below=0.2cm of p4] {Automotive,\\industrial};
+
+% Wi-Fi
+\node[protbox=diagGreen] (p5) at (12.0,0) {
+    \textbf{Wireless}\\
+    802.11 b/g/n\\[3pt]
+    Star (via AP)\\
+    Up to 54\,Mbps\\[3pt]
+    TCP/UDP/HTTP\\
+    High power draw\\[3pt]
+    ESP32: built-in
+};
+\node[prottitle=diagGreen, above=0.15cm of p5] {Wi-Fi};
+\node[usecase, below=0.2cm of p5] {IoT, cloud logging,\\OTA updates};
+
+% BLE
+\node[protbox=diagYellow!80!black] (p6) at (15.0,0) {
+    \textbf{Wireless}\\
+    Bluetooth LE 4.2\\[3pt]
+    Star / mesh\\
+    1--2\,Mbps\\[3pt]
+    GATT profiles\\
+    Low power\\[3pt]
+    ESP32: built-in
+};
+\node[prottitle=diagYellow!80!black, above=0.15cm of p6] {BLE};
+\node[usecase, below=0.2cm of p6] {Phone apps,\\short range};
+
+% Decision rule at bottom
+\node[font=\tiny\sffamily\itshape, color=MinesSilver, text width=14cm, align=center]
+    at (7.5,-3.3) {Decision rule: I2C for sensors (simple). SPI for displays/SD (fast). UART for debug/GPS. Wi-Fi/BLE for IoT. CAN for automotive.};
+
+\end{tikzpicture}

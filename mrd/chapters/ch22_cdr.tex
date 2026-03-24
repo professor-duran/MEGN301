@@ -7,6 +7,8 @@
 
 \vspace{1em}
 
+The Critical Design Review is the second formal design gate, following PDR. Where PDR confirmed that the team selected a feasible concept, CDR confirms that the concept has been developed into a complete, buildable design.
+
 The CDR answers: \textbf{``Will this design work?''} It evaluates whether the detailed design is complete, manufacturable, and verifiable. CDR is the gate between design and fabrication; passing CDR authorizes the team to build.
 
 \vspace{1em}
@@ -115,6 +117,10 @@ Test readiness & Critical procedures written? Equipment identified? & Ch.~4, 5 \
 \end{tabularx}
 \caption{CDR evaluation criteria.}
 \end{table}
+
+\begin{tipbox}[How CDR Differs From PDR]
+CDR requires a completed, fabrication-ready design---not just a feasible concept. At PDR, the team demonstrated that the selected concept \emph{should} work (feasibility-level analysis, preliminary architecture, concept sketches). At CDR, every component is specified by part number, every interface is defined with pinouts and wire gauges, every custom part has dimensioned and toleranced drawings, and every analysis uses actual component data rather than estimates. PDR earns the right to spend money on design; CDR earns the right to build.
+\end{tipbox}
 
 \begin{tipbox}[Common CDR Failures]
 \textbf{Incomplete drawings}: CAD exists but engineering drawings with tolerances and manufacturing notes do not. \textbf{BOM gaps}: fasteners, wire, consumables missing; budget surprises. \textbf{No Plan B}: sole-source component goes out of stock with no alternative. \textbf{DFM ignored}: polymer parts have zero draft and non-uniform walls. \textbf{Stale FMEA}: PDR version never updated. \textbf{Late purchase requests}: ordered at CDR deadline instead of immediately after approval.

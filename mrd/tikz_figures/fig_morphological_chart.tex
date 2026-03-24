@@ -1,0 +1,58 @@
+% fig_morphological_chart.tex — Morphological chart with concept combinations
+\begin{tikzpicture}[>=Stealth,
+    fcell/.style={rectangle, rounded corners=2pt, draw=MinesBlue!40, fill=MinesBlue!5,
+        text width=1.5cm, minimum height=0.7cm, align=center,
+        font=\tiny\sffamily, line width=0.5pt},
+    ocell/.style={rectangle, rounded corners=2pt, draw=#1!50, fill=#1!8,
+        text width=1.8cm, minimum height=0.7cm, align=center,
+        font=\tiny\sffamily, line width=0.5pt}
+]
+
+% Title
+\node[font=\small\sffamily\bfseries, color=MinesBlue, anchor=west] at (0,1.0)
+    {Morphological Chart: 5 Functions $\times$ 3 Options = 243 Combinations};
+
+% Function column header
+\node[font=\scriptsize\sffamily\bfseries, color=MinesBlue] at (1.0,0) {Function};
+\node[font=\scriptsize\sffamily\bfseries, color=AccentTeal] at (3.5,0) {Option A};
+\node[font=\scriptsize\sffamily\bfseries, color=WarnOrange] at (5.8,0) {Option B};
+\node[font=\scriptsize\sffamily\bfseries, color=diagPurple] at (8.1,0) {Option C};
+
+\draw[MinesBlue, line width=0.5pt] (0,-0.3) -- (9.5,-0.3);
+
+% Row data
+\foreach \y/\func/\oa/\ob/\oc in {
+    -0.9/Sense Temp/DS18B20\\digital/BME280\\(T+H+P)/Thermocouple\\+ amplifier,
+    -1.8/Control Logic/ESP32\\(Wi-Fi)/Arduino\\Nano/RPi Zero,
+    -2.7/Heat Actuator/Ceramic heater\\+ relay/Heat lamp\\+ relay/Heated water\\loop,
+    -3.6/Communication/SMS via\\SIM7000G/Wi-Fi\\+ cloud/LoRa to\\base station,
+    -4.5/Power Source/120 VAC\\wall adapter/12V solar\\+ battery/PoE%
+} {
+    \node[fcell] at (1.0,\y) {\func};
+    \node[ocell=AccentTeal] at (3.5,\y) {\oa};
+    \node[ocell=WarnOrange] at (5.8,\y) {\ob};
+    \node[ocell=diagPurple] at (8.1,\y) {\oc};
+}
+
+% Concept path 1 (AccentTeal highlights — grid-connected)
+\draw[AccentTeal, line width=1.5pt, rounded corners=3pt, densely dashed]
+    (2.4,-0.55) -- (2.4,-1.25) -- (2.4,-1.45) -- (2.4,-2.15)
+    -- (2.4,-2.35) -- (2.4,-3.05) -- (4.7,-3.25) -- (4.7,-3.95)
+    -- (2.4,-4.15) -- (2.4,-4.85);
+
+% Concept path 2 (WarnOrange highlights — off-grid)
+\draw[WarnOrange, line width=1.5pt, rounded corners=3pt, dotted]
+    (4.7,-0.55) -- (4.7,-1.25) -- (2.4,-1.45) -- (2.4,-2.15)
+    -- (2.4,-2.35) -- (2.4,-3.05) -- (7.0,-3.25) -- (7.0,-3.95)
+    -- (4.7,-4.15) -- (4.7,-4.85);
+
+% Concept labels
+\node[font=\tiny\sffamily\bfseries, color=AccentTeal, anchor=west] at (10,-1.5)
+    {--- Concept 1\\(Grid-Connected)};
+\node[font=\tiny\sffamily\bfseries, color=WarnOrange, anchor=west] at (10,-2.5)
+    {$\cdots$ Concept 2\\(Off-Grid Solar)};
+
+% Bottom note
+\node[font=\tiny\sffamily, color=MinesSilver, anchor=west] at (0,-5.5)
+    {Each concept = one option per row. Screen for compatibility before evaluation.};
+\end{tikzpicture}

@@ -1,0 +1,62 @@
+% fig_back_emf.tex — Back-EMF generation and four protection solutions
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.55\textwidth,
+    height=5.5cm,
+    xlabel={Time (ms)},
+    ylabel={Voltage (V)},
+    xmin=0, xmax=5,
+    ymin=-80, ymax=20,
+    axis line style={MinesBlue, line width=0.8pt},
+    grid=major,
+    grid style={MinesSilver!40},
+    tick label style={font=\tiny\sffamily},
+    label style={font=\scriptsize\sffamily\bfseries, color=MinesBlue},
+    every axis plot/.append style={line width=1.4pt},
+    legend style={at={(0.97,0.97)}, anchor=north east, font=\tiny\sffamily, draw=MinesBlue!50, fill=white, rounded corners=2pt},
+    title={\scriptsize\sffamily\bfseries\color{MinesBlue} Inductive Load Switching Transient},
+    title style={at={(0.5,1.05)}},
+]
+% Supply voltage before switch-off
+\addplot[color=AccentTeal, thick] coordinates {(0,12) (1.9,12)};
+
+% Spike at switch-off (no protection)
+\addplot[color=diagRed, thick, smooth] coordinates {
+    (1.9,12) (2.0,-70) (2.05,-60) (2.1,-30) (2.2,-10)
+    (2.3,-3) (2.5,0) (3.0,0) (5.0,0)
+};
+\addlegendentry{No protection (spike)}
+
+% With flyback diode
+\addplot[color=diagGreen, thick, dashed, smooth] coordinates {
+    (1.9,12) (2.0,-0.7) (2.1,-0.6) (2.5,-0.3) (3.0,-0.1) (4.0,0) (5.0,0)
+};
+\addlegendentry{With flyback diode}
+
+% Switch-off marker
+\draw[WarnOrange, line width=1pt, dashed] (axis cs:2.0,-80) -- (axis cs:2.0,20);
+\node[font=\tiny\sffamily\bfseries, color=WarnOrange, rotate=90, anchor=south] at (axis cs:2.0,15) {Switch OFF};
+
+\end{axis}
+
+% Protection solutions — four blocks on the right
+\node[anchor=north west, font=\scriptsize\sffamily\bfseries, color=MinesBlue] at (8.0,4.5) {Protection Methods:};
+
+\node[rectangle, rounded corners=2pt, draw=diagGreen, fill=diagGreen!8, text width=3.2cm, minimum height=0.6cm, align=left, font=\tiny\sffamily, inner sep=3pt] (p1) at (9.6,3.6)
+    {\textbf{Flyback Diode}\\Clamps to $-0.7$\,V};
+
+\node[rectangle, rounded corners=2pt, draw=AccentTeal, fill=AccentTeal!8, text width=3.2cm, minimum height=0.6cm, align=left, font=\tiny\sffamily, inner sep=3pt] (p2) at (9.6,2.5)
+    {\textbf{RC Snubber}\\100$\,\Omega$ + 100\,nF};
+
+\node[rectangle, rounded corners=2pt, draw=MinesBlue, fill=MinesBlue!8, text width=3.2cm, minimum height=0.6cm, align=left, font=\tiny\sffamily, inner sep=3pt] (p3) at (9.6,1.4)
+    {\textbf{TVS Diode}\\Board-level clamp};
+
+\node[rectangle, rounded corners=2pt, draw=WarnOrange, fill=WarnOrange!8, text width=3.2cm, minimum height=0.6cm, align=left, font=\tiny\sffamily, inner sep=3pt] (p4) at (9.6,0.3)
+    {\textbf{Zener + Diode}\\Controlled clamp voltage};
+
+\end{tikzpicture}
+\caption{Back-EMF generation from inductive load switching and four protection solutions: flyback diode, RC snubber, TVS clamp, and Zener+diode.}
+\label{fig:backemf}
+\end{figure}

@@ -1,0 +1,53 @@
+% fig_maintenance_strategies.tex — Maintenance strategies from reactive to RCM
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    strat/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=3.4cm, minimum height=3.4cm, align=center,
+        font=\sffamily, line width=0.9pt, inner sep=6pt}
+]
+% Four strategies
+\node[strat=diagRed] (reactive) at (0,0) {
+    \textbf{Reactive}\\[4pt]
+    {\scriptsize Run to failure}\\[6pt]
+    {\tiny Cheapest upfront}\\[2pt]
+    {\tiny Most expensive\\long-term}\\[4pt]
+    {\tiny\textit{Fix it when\\it breaks}}
+};
+
+\node[strat=diagYellow] (prevent) at (4.4,0) {
+    \textbf{Preventive}\\[4pt]
+    {\scriptsize Scheduled replacement}\\[6pt]
+    {\tiny Fixed intervals based\\on expected life}\\[2pt]
+    {\tiny May replace parts\\still working}\\[4pt]
+    {\tiny\textit{Replace before\\it breaks}}
+};
+
+\node[strat=AccentTeal] (predict) at (8.8,0) {
+    \textbf{Predictive}\\[4pt]
+    {\scriptsize Condition-based}\\[6pt]
+    {\tiny Monitor vibration,\\temperature, wear}\\[2pt]
+    {\tiny Replace when data\\indicates degradation}\\[4pt]
+    {\tiny\textit{Replace when\\data says so}}
+};
+
+\node[strat=MinesBlue] (rcm) at (13.2,0) {
+    \textbf{Reliability-\\Centered (RCM)}\\[4pt]
+    {\scriptsize FMEA-driven}\\[6pt]
+    {\tiny Different strategy\\per component based\\on failure mode}\\[4pt]
+    {\tiny\textit{Optimized per\\failure mode}}
+};
+
+% Sophistication arrow
+\draw[->, line width=0.8pt, MinesSilver] (-1.2,-2.6) -- (14.4,-2.6);
+\node[font=\tiny\sffamily\bfseries, MinesSilver, fill=white, inner sep=2pt] at (6.6,-2.6) {Increasing sophistication and effectiveness};
+
+% MEGN 301 recommendation
+\node[rectangle, rounded corners=2pt, draw=AccentTeal, fill=AccentTeal!6,
+      font=\tiny\sffamily, inner sep=3pt, text width=8cm, align=center,
+      line width=0.5pt] at (6.6,-3.6) {
+    \textcolor{AccentTeal}{\textbf{For MEGN 301:}} Define a \textbf{preventive} schedule and design for easy field replacement
+};
+\end{tikzpicture}}%
+\caption{Maintenance strategies from reactive to RCM.}\label{fig:maint_strategies}
+\end{figure}

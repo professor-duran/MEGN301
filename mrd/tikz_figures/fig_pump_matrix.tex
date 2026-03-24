@@ -1,0 +1,48 @@
+% fig_pump_matrix.tex — Pump selection matrix
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    hdr/.style={rectangle, fill=#1, text=white, minimum width=2.2cm, minimum height=0.7cm, align=center, font=\scriptsize\sffamily\bfseries},
+    cell/.style={rectangle, draw=MinesBlue!30, minimum width=2.2cm, minimum height=1.4cm, align=center, font=\tiny\sffamily, inner sep=3pt, text width=2.0cm},
+    rowhdr/.style={rectangle, fill=#1!15, draw=#1!50, minimum width=2.0cm, minimum height=1.4cm, align=center, font=\scriptsize\sffamily\bfseries, text width=1.8cm, inner sep=3pt},
+]
+
+% Column headers
+\node[hdr=MinesBlue] at (0,0) {Pump Type};
+\node[hdr=AccentTeal] at (2.4,0) {Flow / Pressure};
+\node[hdr=diagGreen] at (4.8,0) {Strengths};
+\node[hdr=WarnOrange] at (7.2,0) {Limitations};
+\node[hdr=diagPurple] at (9.6,0) {Best For};
+
+% Row 1: Diaphragm
+\node[rowhdr=AccentTeal] at (0,-1.5) {Diaphragm};
+\node[cell] at (2.4,-1.5) {Low--Med flow\\High pressure\\(60+ psi)};
+\node[cell] at (4.8,-1.5) {Self-priming\\Dry-run safe\\Pulsatile};
+\node[cell] at (7.2,-1.5) {Pulsating flow\\Vibration\\Diaphragm wear};
+\node[cell] at (9.6,-1.5) {Spraying\\Chemical dosing\\Pressure washing};
+
+% Row 2: Peristaltic
+\node[rowhdr=MinesBlue] at (0,-3.0) {Peristaltic};
+\node[cell] at (2.4,-3.0) {Low flow\\Low pressure\\($<$30 psi)};
+\node[cell] at (4.8,-3.0) {Zero contamination\\Easy maintenance\\Gentle on fluid};
+\node[cell] at (7.2,-3.0) {Tube fatigue\\Low pressure\\Pulsatile};
+\node[cell] at (9.6,-3.0) {Medical/bio\\Food-safe\\Shear-sensitive};
+
+% Row 3: Centrifugal
+\node[rowhdr=diagPurple] at (0,-4.5) {Centrifugal};
+\node[cell] at (2.4,-4.5) {High flow\\Med pressure\\Smooth};
+\node[cell] at (4.8,-4.5) {Smooth flow\\High volume\\Simple design};
+\node[cell] at (7.2,-4.5) {Not self-priming\\Poor with viscous\\Cavitation risk};
+\node[cell] at (9.6,-4.5) {Cooling loops\\Circulation\\Water systems};
+
+% Row 4: Gear
+\node[rowhdr=WarnOrange] at (0,-6.0) {Gear};
+\node[cell] at (2.4,-6.0) {Med flow\\High pressure\\(100+ psi)};
+\node[cell] at (4.8,-6.0) {Steady flow\\High pressure\\Self-priming};
+\node[cell] at (7.2,-6.0) {Wear particles\\Not for solids\\Noise};
+\node[cell] at (9.6,-6.0) {Hydraulics\\Oil transfer\\Fuel systems};
+
+\end{tikzpicture}
+\caption{Pump selection matrix; type, performance envelope, strengths, limitations, and best applications.}
+\label{fig:pump_matrix}
+\end{figure}

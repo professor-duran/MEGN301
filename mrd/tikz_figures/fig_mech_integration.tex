@@ -1,0 +1,43 @@
+% fig_mech_integration.tex — Motor-to-load power flow with key sizing equations
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    comp/.style={stage={#1}, text width=2.2cm, minimum height=1.2cm, font=\scriptsize\sffamily\bfseries},
+    eq/.style={font=\tiny\sffamily, color=MinesBlue, align=center, text width=2.2cm},
+    conn/.style={flow={MinesBlue}, line width=1.5pt},
+    loss/.style={font=\tiny\sffamily\itshape, color=WarnOrange},
+]
+
+% Components left to right
+\node[comp=MinesBlue] (motor) at (0,0) {Motor\\$\tau_m$, $\omega_m$};
+\node[comp=AccentTeal] (coupling) at (3.5,0) {Coupling};
+\node[comp=diagPurple] (gear) at (7.0,0) {Gear\\Reduction\\$GR = N_2/N_1$};
+\node[comp=WarnOrange] (output) at (10.5,0) {Output\\Mechanism};
+\node[comp=diagGreen] (load) at (14.0,0) {Load\\$\tau_L$, $\omega_L$};
+
+% Flow arrows
+\draw[conn] (motor) -- (coupling) node[midway, above, font=\tiny\sffamily\bfseries, color=MinesBlue] {Shaft};
+\draw[conn] (coupling) -- (gear) node[midway, above, font=\tiny\sffamily\bfseries, color=MinesBlue] {Shaft};
+\draw[conn] (gear) -- (output) node[midway, above, font=\tiny\sffamily\bfseries, color=MinesBlue] {Shaft};
+\draw[conn] (output) -- (load) node[midway, above, font=\tiny\sffamily\bfseries, color=MinesBlue] {Work};
+
+% Equations below each stage
+\node[eq, below=0.5cm of motor] {$P_m = \tau_m \cdot \omega_m$};
+\node[eq, below=0.5cm of gear] {$\tau_{out} = \tau_m \times GR \times \eta$\\$\omega_{out} = \omega_m / GR$};
+\node[eq, below=0.5cm of load] {$P_L = \tau_L \cdot \omega_L$};
+
+% Efficiency losses
+\node[loss, above=0.6cm of coupling] {$\eta_c \approx 0.99$};
+\node[loss, above=0.6cm of gear] {$\eta_g = 0.85$--$0.98$};
+\node[loss, above=0.6cm of output] {$\eta_o$ (mechanism)};
+
+% Overall equation at bottom
+\node[rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!6, font=\scriptsize\sffamily, align=center, inner sep=6pt, text width=12cm]
+    at (7.0,-2.2)
+    {\textbf{Overall:} \quad $P_{motor} \geq P_{load} / (\eta_c \times \eta_g \times \eta_o)$
+     \qquad \textbf{Safety factor:} $\tau_m \geq 1.5 \times \tau_{required}$};
+
+\end{tikzpicture}
+\caption{Motor-to-load power flow through coupling, gear reduction, and output mechanism with key sizing equations.}
+\label{fig:mech}
+\end{figure}

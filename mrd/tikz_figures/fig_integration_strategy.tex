@@ -1,0 +1,47 @@
+% fig_integration_strategy.tex — Bottom-up integration with test gates
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    level/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=3.0cm, minimum height=1.6cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.8pt},
+    gate/.style={rectangle, draw=WarnOrange, fill=WarnOrange!15,
+        text width=1.0cm, minimum height=0.6cm, align=center,
+        font=\tiny\sffamily\bfseries, line width=0.6pt},
+    arr/.style={->, line width=1pt, color=MinesBlue}
+]
+% Bottom-up levels
+\node[level=MinesBlue] (comp) at (0,0) {Component\\Verification\\[4pt]{\tiny Each part works\\in isolation}};
+\node[gate] (g1) at (2.8,0) {Gate};
+\node[level=AccentTeal] (sub) at (5.6,0) {Subsystem\\Integration\\[4pt]{\tiny Components within\\subsystem work together}};
+\node[gate] (g2) at (8.4,0) {Gate};
+\node[level=WarnOrange] (sys) at (11.2,0) {System\\Integration\\[4pt]{\tiny All subsystems\\work together}};
+\node[gate] (g3) at (14.0,0) {Gate};
+\node[level=diagGreen] (val) at (16.8,0) {Validation\\[4pt]{\tiny System meets\\stakeholder needs}};
+
+% Arrows
+\draw[arr] (comp) -- (g1);
+\draw[arr] (g1) -- (sub);
+\draw[arr] (sub) -- (g2);
+\draw[arr] (g2) -- (sys);
+\draw[arr] (sys) -- (g3);
+\draw[arr] (g3) -- (val);
+
+% Gate criteria below
+\node[font=\tiny\sffamily, MinesBlue, below=0.3cm of g1, text width=2.0cm, align=center] {All parts\\pass standalone};
+\node[font=\tiny\sffamily, AccentTeal, below=0.3cm of g2, text width=2.2cm, align=center] {Subsystem demos\\pass};
+\node[font=\tiny\sffamily, WarnOrange, below=0.3cm of g3, text width=2.0cm, align=center] {VCRM all\\PASS};
+
+% Key principle
+\node[rectangle, rounded corners=2pt, draw=diagRed, fill=diagRed!6,
+      font=\tiny\sffamily\bfseries, text width=8cm, align=center,
+      inner sep=4pt, line width=0.6pt] at (8.4,-2.2) {
+    \textcolor{diagRed}{Add ONE new element at a time. If something breaks, the new element is the suspect. Never big-bang.}
+};
+
+% V-model annotation
+\draw[<->, line width=0.5pt, MinesSilver, dashed] (-0.5,1.4) -- (17.3,1.4);
+\node[font=\tiny\sffamily\itshape, MinesSilver, fill=white, inner sep=2pt] at (8.4,1.4) {Maps to V-Model right side (bottom up)};
+\end{tikzpicture}}%
+\caption{Bottom-up integration with test gates.}\label{fig:integration_strategy}
+\end{figure}

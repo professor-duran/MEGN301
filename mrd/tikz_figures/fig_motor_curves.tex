@@ -1,0 +1,42 @@
+% fig_motor_curves.tex — Torque-speed characteristics for Brushed DC, BLDC, and Stepper
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.85\textwidth,
+    height=6.5cm,
+    xlabel={Speed (RPM)},
+    ylabel={Torque (N$\cdot$m)},
+    xmin=0, xmax=6500,
+    ymin=0, ymax=0.55,
+    legend style={at={(0.97,0.97)}, anchor=north east, font=\scriptsize\sffamily, draw=MinesBlue!50, fill=white, rounded corners=2pt},
+    grid=major,
+    grid style={MinesSilver!40},
+    axis line style={MinesBlue, line width=0.8pt},
+    tick label style={font=\tiny\sffamily},
+    label style={font=\scriptsize\sffamily\bfseries, color=MinesBlue},
+    every axis plot/.append style={line width=1.4pt},
+]
+% Brushed DC — linear from stall torque to no-load speed
+\addplot[color=MinesBlue, domain=0:6000, samples=2] {0.45*(1 - x/6000)};
+\addlegendentry{Brushed DC (linear)}
+
+% BLDC — flat mid-range then drops
+\addplot[color=AccentTeal, smooth] coordinates {
+    (0,0.40) (500,0.40) (1000,0.40) (2000,0.39) (3000,0.38)
+    (4000,0.36) (4500,0.32) (5000,0.24) (5500,0.12) (6000,0)
+};
+\addlegendentry{BLDC (flat mid-range)}
+
+% Stepper — high torque at low RPM, drops rapidly
+\addplot[color=WarnOrange, smooth] coordinates {
+    (0,0.50) (100,0.48) (200,0.45) (400,0.38) (600,0.30)
+    (800,0.22) (1000,0.16) (1200,0.10) (1500,0.05) (2000,0.02)
+};
+\addlegendentry{Stepper (high torque, low RPM)}
+
+\end{axis}
+\end{tikzpicture}
+\caption{Torque--speed characteristics for brushed DC (linear), BLDC (flat mid-range), and stepper (high-torque at low RPM).}
+\label{fig:motor_curves}
+\end{figure}

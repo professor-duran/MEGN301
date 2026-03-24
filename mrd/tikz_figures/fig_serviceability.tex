@@ -1,0 +1,43 @@
+% fig_serviceability.tex — Four serviceability design principles
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    princ/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=3.4cm, minimum height=3.0cm, align=center,
+        font=\sffamily, line width=0.9pt, inner sep=6pt}
+]
+% Four principles
+\node[princ=MinesBlue] (access) at (0,0) {
+    \textbf{Access}\\[6pt]
+    {\scriptsize Can the technician\\reach the component?}\\[4pt]
+    {\tiny Access panels\\Hinged covers\\Quick-release fasteners}
+};
+
+\node[princ=AccentTeal] (modular) at (4.4,0) {
+    \textbf{Modularity}\\[6pt]
+    {\scriptsize Can failed modules\\be swapped?}\\[4pt]
+    {\tiny Connectorized modules\\Independently testable\\Line Replaceable Units}
+};
+
+\node[princ=WarnOrange] (diag) at (8.8,0) {
+    \textbf{Diagnostics}\\[6pt]
+    {\scriptsize Can the fault be\\identified quickly?}\\[4pt]
+    {\tiny Status LEDs\\Test points\\Error codes / BIST}
+};
+
+\node[princ=diagGreen] (std) at (13.2,0) {
+    \textbf{Standardization}\\[6pt]
+    {\scriptsize Can common tools\\and parts be used?}\\[4pt]
+    {\tiny Standard fasteners\\Multi-source components\\One screwdriver size}
+};
+
+% Reliability equation below
+\node[rectangle, rounded corners=2pt, draw=MinesSilver, fill=LightBG,
+      font=\scriptsize\sffamily, inner sep=5pt, text width=12cm, align=center,
+      line width=0.5pt] at (6.6,-2.6) {
+    $A = \dfrac{\text{MTBF}}{\text{MTBF} + \text{MTTR}}$ \quad ---\quad
+    \textbf{Improving MTTR} (repair time) through better serviceability is often \textbf{cheaper} than improving MTBF
+};
+\end{tikzpicture}}%
+\caption{Four serviceability principles.}\label{fig:serviceability}
+\end{figure}

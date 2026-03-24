@@ -1,0 +1,46 @@
+% fig_selection_funnel.tex — Concept selection funnel
+\begin{tikzpicture}[>=Stealth]
+% Funnel shape (trapezoid layers)
+\fill[MinesBlue!8]   (-5.0,0)  -- (5.0,0)  -- (4.2,-1.5) -- (-4.2,-1.5) -- cycle;
+\fill[AccentTeal!8]  (-4.2,-1.5) -- (4.2,-1.5) -- (3.2,-3.0) -- (-3.2,-3.0) -- cycle;
+\fill[WarnOrange!8]  (-3.2,-3.0) -- (3.2,-3.0) -- (2.0,-4.5) -- (-2.0,-4.5) -- cycle;
+\fill[diagPurple!8]  (-2.0,-4.5) -- (2.0,-4.5) -- (1.2,-6.0) -- (-1.2,-6.0) -- cycle;
+\fill[diagGreen!10]  (-1.2,-6.0) -- (1.2,-6.0) -- (0.8,-7.0) -- (-0.8,-7.0) -- cycle;
+
+% Outlines
+\draw[MinesBlue, line width=0.8pt]  (-5.0,0) -- (5.0,0) -- (4.2,-1.5) -- (-4.2,-1.5) -- cycle;
+\draw[AccentTeal, line width=0.8pt] (-4.2,-1.5) -- (4.2,-1.5) -- (3.2,-3.0) -- (-3.2,-3.0) -- cycle;
+\draw[WarnOrange, line width=0.8pt] (-3.2,-3.0) -- (3.2,-3.0) -- (2.0,-4.5) -- (-2.0,-4.5) -- cycle;
+\draw[diagPurple, line width=0.8pt] (-2.0,-4.5) -- (2.0,-4.5) -- (1.2,-6.0) -- (-1.2,-6.0) -- cycle;
+\draw[diagGreen, line width=0.8pt]  (-1.2,-6.0) -- (1.2,-6.0) -- (0.8,-7.0) -- (-0.8,-7.0) -- cycle;
+
+% Stage labels inside funnel
+\node[font=\scriptsize\sffamily\bfseries, color=MinesBlue]  at (0,-0.75)  {Broad Ideation};
+\node[font=\scriptsize\sffamily\bfseries, color=AccentTeal] at (0,-2.25)  {Feasibility Screen};
+\node[font=\scriptsize\sffamily\bfseries, color=WarnOrange] at (0,-3.75)  {Pugh Screening};
+\node[font=\scriptsize\sffamily\bfseries, color=diagPurple] at (0,-5.25)  {Weighted Matrix};
+\node[font=\scriptsize\sffamily\bfseries, color=diagGreen]  at (0,-6.5)   {Selected};
+
+% Counts on the right
+\node[font=\tiny\sffamily, color=MinesBlue, anchor=west]  at (5.5,-0.75) {50+ raw ideas};
+\node[font=\tiny\sffamily, color=AccentTeal, anchor=west] at (5.5,-2.25) {20+ feasible concepts};
+\node[font=\tiny\sffamily, color=WarnOrange, anchor=west] at (5.5,-3.75) {5--8 screened candidates};
+\node[font=\tiny\sffamily, color=diagPurple, anchor=west] at (5.5,-5.25) {3--5 scored finalists};
+\node[font=\tiny\sffamily, color=diagGreen, anchor=west]  at (5.5,-6.5)  {1 committed design};
+
+% Methods on the left
+\node[font=\tiny\sffamily\itshape, color=MinesBlue, anchor=east]  at (-5.5,-0.75)
+    {Brainstorm, SCAMPER,\\biomimicry};
+\node[font=\tiny\sffamily\itshape, color=AccentTeal, anchor=east] at (-5.5,-2.25)
+    {4-lens feasibility\\check};
+\node[font=\tiny\sffamily\itshape, color=WarnOrange, anchor=east] at (-5.5,-3.75)
+    {+/S/$-$ vs.\ datum};
+\node[font=\tiny\sffamily\itshape, color=diagPurple, anchor=east] at (-5.5,-5.25)
+    {Weighted scores\\+ sensitivity};
+\node[font=\tiny\sffamily\itshape, color=diagGreen, anchor=east]  at (-5.5,-6.5)
+    {Block diagram,\\BOM, risk plan};
+
+% Output arrow
+\draw[->,line width=1.2pt, diagGreen] (0,-7.0) -- (0,-7.8)
+    node[below, font=\scriptsize\sffamily\bfseries, color=diagGreen] {To PDR};
+\end{tikzpicture}

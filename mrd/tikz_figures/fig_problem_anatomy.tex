@@ -1,0 +1,46 @@
+% fig_problem_anatomy.tex — Five-element problem statement framework
+\begin{tikzpicture}[>=Stealth,
+    elem/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!10,
+        text width=2.8cm, minimum height=1.4cm, align=center,
+        font=\small\sffamily\bfseries, line width=0.9pt},
+    exgood/.style={font=\tiny\sffamily, text width=2.8cm, align=center, color=AccentTeal},
+    exbad/.style={font=\tiny\sffamily, text width=2.8cm, align=center, color=diagRed}
+]
+% Five element boxes across the top
+\node[elem=MinesBlue]   (who)   at (0,0)    {WHO};
+\node[elem=AccentTeal]  (what)  at (3.4,0)  {WHAT};
+\node[elem=WarnOrange]  (where) at (6.8,0)  {WHERE};
+\node[elem=diagPurple]  (why)   at (10.2,0) {WHY IT\\MATTERS};
+\node[elem=diagRed]     (con)   at (13.6,0) {CONSTRAINTS};
+
+% Sub-labels
+\node[font=\tiny\sffamily, color=MinesBlue, below=0.1cm of who]   {Who experiences\\the problem?};
+\node[font=\tiny\sffamily, color=AccentTeal, below=0.1cm of what]  {Measurable gap\\between states};
+\node[font=\tiny\sffamily, color=WarnOrange, below=0.1cm of where] {Physical/operational\\context};
+\node[font=\tiny\sffamily, color=diagPurple, below=0.1cm of why]   {Consequences of\\not solving};
+\node[font=\tiny\sffamily, color=diagRed, below=0.1cm of con]      {Budget, schedule,\\regulations};
+
+% Good example row
+\node[font=\scriptsize\sffamily\bfseries, color=AccentTeal] at (-2.2,-2.8) {Good:};
+\node[exgood] at (0,-2.8)    {Greenhouse\\operators};
+\node[exgood] at (3.4,-2.8)  {Cannot maintain\\optimal temps};
+\node[exgood] at (6.8,-2.8)  {Unheated hoop\\houses, CO Front Range};
+\node[exgood] at (10.2,-2.8) {\$12k/season\\crop losses};
+\node[exgood] at (13.6,-2.8) {\$500 budget,\\renewable power};
+
+% Bad example row
+\node[font=\scriptsize\sffamily\bfseries, color=diagRed] at (-2.2,-4.0) {Bad:};
+\node[exbad] at (0,-4.0)    {We};
+\node[exbad] at (3.4,-4.0)  {Need to build\\a system};
+\node[exbad] at (6.8,-4.0)  {(not specified)};
+\node[exbad] at (10.2,-4.0) {(not specified)};
+\node[exbad] at (13.6,-4.0) {Arduino, solar\\panel};
+
+% Arrows connecting elements
+\foreach \a/\b in {who/what, what/where, where/why, why/con} {
+    \draw[flow=MinesSilver] (\a) -- (\b);
+}
+
+% Title annotation
+\node[font=\small\sffamily\bfseries, color=MinesBlue] at (6.8,1.6) {Five-Element Problem Statement Framework};
+\end{tikzpicture}

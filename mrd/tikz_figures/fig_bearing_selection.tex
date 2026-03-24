@@ -1,0 +1,47 @@
+% fig_bearing_selection.tex — Five-step bearing selection framework with failure modes
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    step/.style={stage={#1}, text width=2.8cm, minimum height=1.4cm, font=\scriptsize\sffamily\bfseries},
+    num/.style={circle, fill=#1, text=white, font=\scriptsize\sffamily\bfseries, minimum size=0.5cm, inner sep=0pt},
+    fail/.style={rectangle, rounded corners=2pt, draw=diagRed!70, fill=diagRed!6, text width=2.4cm, minimum height=0.7cm, align=center, font=\tiny\sffamily, inner sep=3pt},
+    conn/.style={flow={MinesBlue!70}, line width=1.2pt},
+]
+
+% Five steps in a row
+\node[step=MinesBlue] (s1) at (0,0) {Load Type\\and Magnitude\\Calculate $P$};
+\node[step=AccentTeal] (s2) at (3.4,0) {Speed\\Check limiting\\RPM};
+\node[step=diagPurple] (s3) at (6.8,0) {Space\\Bore \& OD\\constraints};
+\node[step=WarnOrange] (s4) at (10.2,0) {Life\\$L_{10}$ calculation};
+\node[step=diagGreen] (s5) at (13.6,0) {Mounting\\Press fit,\\retaining ring};
+
+% Step numbers
+\node[num=MinesBlue, above left=0.1cm and 0.1cm of s1.north west] {1};
+\node[num=AccentTeal, above left=0.1cm and 0.1cm of s2.north west] {2};
+\node[num=diagPurple, above left=0.1cm and 0.1cm of s3.north west] {3};
+\node[num=WarnOrange, above left=0.1cm and 0.1cm of s4.north west] {4};
+\node[num=diagGreen, above left=0.1cm and 0.1cm of s5.north west] {5};
+
+% Arrows between steps
+\draw[conn] (s1) -- (s2);
+\draw[conn] (s2) -- (s3);
+\draw[conn] (s3) -- (s4);
+\draw[conn] (s4) -- (s5);
+
+% Life equation
+\node[rectangle, rounded corners=2pt, draw=MinesBlue, fill=MinesBlue!6, font=\tiny\sffamily, align=center, inner sep=4pt]
+    at (10.2,-1.8)
+    {$L_{10} = \left(\frac{C}{P}\right)^3 \times \frac{10^6}{60n}$ hrs};
+
+% Failure modes section
+\node[font=\small\sffamily\bfseries, color=diagRed] at (6.8,-3.0) {Common Failure Modes};
+
+\node[fail] (f1) at (1.7,-4.0) {\textbf{Brinelling}\\Static overload\\dents raceway};
+\node[fail] (f2) at (5.1,-4.0) {\textbf{Spalling}\\Fatigue flaking\\(normal end-of-life)};
+\node[fail] (f3) at (8.5,-4.0) {\textbf{Contamination}\\Particles accelerate\\wear $10\times$};
+\node[fail] (f4) at (11.9,-4.0) {\textbf{Misalignment}\\Angular error\\causes edge loading};
+
+\end{tikzpicture}
+\caption{Five-step bearing selection framework with common failure modes.}
+\label{fig:bsel}
+\end{figure}

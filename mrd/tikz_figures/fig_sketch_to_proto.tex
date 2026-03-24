@@ -1,0 +1,58 @@
+% fig_sketch_to_proto.tex — From sketch to prototype: progressive fidelity
+\begin{tikzpicture}[>=Stealth,
+    pbox/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=2.6cm, minimum height=2.4cm, align=center,
+        font=\tiny\sffamily, line width=0.8pt, inner sep=5pt}
+]
+% Fidelity arrow at top
+\draw[->,line width=1.5pt, MinesSilver] (0,2.2) -- (14,2.2)
+    node[above,midway,font=\scriptsize\sffamily\bfseries,color=MinesSilver]{Increasing Fidelity};
+\node[font=\tiny\sffamily, color=MinesSilver] at (0,2.6) {Low};
+\node[font=\tiny\sffamily, color=MinesSilver] at (14,2.6) {High};
+
+% Stages
+\node[pbox=MinesBlue] (sk) at (1.5,0) {
+    {\scriptsize\bfseries Napkin Sketch}\\[4pt]
+    Hand-drawn\\concept\\[2pt]
+    {\color{MinesBlue!60}Minutes to create}
+};
+
+\node[pbox=AccentTeal] (cad) at (5.0,0) {
+    {\scriptsize\bfseries CAD Model}\\[4pt]
+    3D geometry\\defined\\[2pt]
+    {\color{AccentTeal!60}Hours to create}
+};
+
+\node[pbox=WarnOrange] (poc) at (8.5,0) {
+    {\scriptsize\bfseries Proof of\\Concept}\\[4pt]
+    Key physics\\validated\\[2pt]
+    {\color{WarnOrange!60}1--3 days}
+};
+
+\node[pbox=diagPurple] (ff) at (12.0,0) {
+    {\scriptsize\bfseries Form/Fit\\Prototype}\\[4pt]
+    Physical fit\\verified at 1:1\\[2pt]
+    {\color{diagPurple!60}2--4 days}
+};
+
+% Arrows between stages
+\draw[flow=MinesBlue]  (sk)  -- (cad);
+\draw[flow=AccentTeal] (cad) -- (poc);
+\draw[flow=WarnOrange] (poc) -- (ff);
+
+% What each answers
+\node[font=\tiny\sffamily\itshape, color=MinesBlue, below=0.3cm of sk, text width=2.6cm, align=center]
+    {``Does the concept\\make sense?''};
+\node[font=\tiny\sffamily\itshape, color=AccentTeal, below=0.3cm of cad, text width=2.6cm, align=center]
+    {``Does the geometry\\work?''};
+\node[font=\tiny\sffamily\itshape, color=WarnOrange, below=0.3cm of poc, text width=2.6cm, align=center]
+    {``Does the physics/\\algorithm work?''};
+\node[font=\tiny\sffamily\itshape, color=diagPurple, below=0.3cm of ff, text width=2.6cm, align=center]
+    {``Does it fit the\\physical space?''};
+
+% Cost annotation
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, line width=0.7pt, diagRed]
+    (0,-2.8) -- (14,-2.8);
+\node[font=\tiny\sffamily\bfseries, color=diagRed] at (7,-3.3)
+    {Cost of iteration increases $\to$ validate early, iterate cheaply};
+\end{tikzpicture}

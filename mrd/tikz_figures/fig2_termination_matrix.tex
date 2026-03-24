@@ -1,0 +1,55 @@
+% fig2_termination_matrix.tex — Termination tradeoff matrix
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    hdr/.style={rectangle, fill=#1, text=white, minimum width=2.4cm, minimum height=0.7cm, align=center, font=\scriptsize\sffamily\bfseries},
+    cell/.style={rectangle, draw=MinesBlue!30, minimum width=2.4cm, minimum height=1.4cm, align=center, font=\tiny\sffamily, inner sep=3pt, text width=2.2cm},
+    rowhdr/.style={rectangle, fill=#1!15, draw=#1!50, minimum width=2.0cm, minimum height=1.4cm, align=center, font=\scriptsize\sffamily\bfseries, text width=1.8cm, inner sep=3pt},
+]
+
+% Column headers
+\node[hdr=MinesBlue] at (0,0) {Method};
+\node[hdr=AccentTeal] at (2.6,0) {Mechanism};
+\node[hdr=diagGreen] at (5.2,0) {Strengths};
+\node[hdr=WarnOrange] at (7.8,0) {Limitations};
+\node[hdr=diagPurple] at (10.4,0) {Best For};
+
+% Row 1: Solder
+\node[rowhdr=AccentTeal] at (0,-1.5) {Solder};
+\node[cell] at (2.6,-1.5) {Molten alloy\\bonds wire\\to pad/pin};
+\node[cell] at (5.2,-1.5) {Lowest resistance\\Permanent\\Compact};
+\node[cell] at (7.8,-1.5) {Requires skill\\Not field-serviceable\\Heat-sensitive parts};
+\node[cell] at (10.4,-1.5) {PCB assembly\\Permanent wiring\\High-reliability};
+
+% Row 2: Crimp
+\node[rowhdr=MinesBlue] at (0,-3.0) {Crimp};
+\node[cell] at (2.6,-3.0) {Cold weld via\\controlled\\deformation};
+\node[cell] at (5.2,-3.0) {Gas-tight joint\\Repeatable\\Fast};
+\node[cell] at (7.8,-3.0) {Requires tooling\\Wire-size specific\\One-time use};
+\node[cell] at (10.4,-3.0) {Harnesses\\Automotive\\Aerospace};
+
+% Row 3: IDC
+\node[rowhdr=diagPurple] at (0,-4.5) {IDC};
+\node[cell] at (2.6,-4.5) {Blade pierces\\insulation to\\contact wire};
+\node[cell] at (5.2,-4.5) {No stripping\\Mass termination\\Low cost};
+\node[cell] at (7.8,-4.5) {Limited current\\Vibration-sensitive\\Small wire only};
+\node[cell] at (10.4,-4.5) {Ribbon cables\\Internal PCB\\connections};
+
+% Row 4: Screw Clamp
+\node[rowhdr=WarnOrange] at (0,-6.0) {Screw\\Clamp};
+\node[cell] at (2.6,-6.0) {Screw presses\\wire against\\plate};
+\node[cell] at (5.2,-6.0) {Re-usable\\Field-serviceable\\No special tools};
+\node[cell] at (7.8,-6.0) {Loosens with\\vibration\\Bulky};
+\node[cell] at (10.4,-6.0) {Panel wiring\\Industrial\\Prototyping};
+
+% Row 5: Spring Cage
+\node[rowhdr=diagGreen] at (0,-7.5) {Spring\\Cage};
+\node[cell] at (2.6,-7.5) {Spring clamp\\grips wire\\automatically};
+\node[cell] at (5.2,-7.5) {Vibration-proof\\Tool-free\\Fast};
+\node[cell] at (7.8,-7.5) {Higher cost\\Limited wire\\range};
+\node[cell] at (10.4,-7.5) {Industrial\\automation\\Wago 221 series};
+
+\end{tikzpicture}
+\caption{Termination tradeoff matrix; mechanism, strengths, limitations, and best applications.}
+\label{fig:termination_matrix}
+\end{figure}

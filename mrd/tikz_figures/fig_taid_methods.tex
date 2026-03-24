@@ -1,0 +1,52 @@
+% fig_taid_methods.tex — TAID verification methods with usage percentages
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    method/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!10,
+        text width=3.2cm, minimum height=3.2cm, align=center,
+        font=\sffamily, line width=0.9pt, inner sep=6pt}
+]
+% Four method boxes
+\node[method=MinesBlue] (T) at (0,0) {
+    \textbf{\large T}\\[2pt]
+    \textbf{Test}\\[6pt]
+    {\scriptsize$\sim$60\% of reqs}\\[4pt]
+    {\tiny Stimulate system,\\measure response\\against quantitative\\criteria}\\[4pt]
+    {\tiny\textit{Most rigorous}}
+};
+
+\node[method=AccentTeal] (A) at (4.2,0) {
+    \textbf{\large A}\\[2pt]
+    \textbf{Analysis}\\[6pt]
+    {\scriptsize$\sim$20\% of reqs}\\[4pt]
+    {\tiny Math models,\\simulation,\\calculation}\\[4pt]
+    {\tiny\textit{When testing is\\impractical}}
+};
+
+\node[method=diagYellow] (I) at (8.4,0) {
+    \textbf{\large I}\\[2pt]
+    \textbf{Inspection}\\[6pt]
+    {\scriptsize$\sim$10\% of reqs}\\[4pt]
+    {\tiny Visual / physical\\examination;\\presence, labeling,\\workmanship}\\[4pt]
+    {\tiny\textit{Directly observable}}
+};
+
+\node[method=WarnOrange] (D) at (12.6,0) {
+    \textbf{\large D}\\[2pt]
+    \textbf{Demonstration}\\[6pt]
+    {\scriptsize$\sim$10\% of reqs}\\[4pt]
+    {\tiny Operate under\\defined conditions,\\observe qualitative\\behavior}\\[4pt]
+    {\tiny\textit{No measurement}}
+};
+
+% Selection guidance arrow
+\draw[<->, line width=0.8pt, MinesSilver] (-1.2,-2.4) -- (13.8,-2.4);
+\node[font=\tiny\sffamily\bfseries, MinesBlue, above] at (0,-2.4) {Most rigorous};
+\node[font=\tiny\sffamily\bfseries, WarnOrange, above] at (12.6,-2.4) {Least rigorous};
+\node[font=\tiny\sffamily, MinesSilver, below] at (6.3,-2.4) {Use the most rigorous method that is feasible and cost-effective};
+
+% Preference annotation
+\draw[->, line width=0.7pt, diagGreen] (-1.5,1.8) -- node[above, font=\tiny\sffamily\bfseries, diagGreen, fill=white, inner sep=2pt] {Prefer Test whenever feasible} (1.0,1.8);
+\end{tikzpicture}}%
+\caption{Test, Analysis, Inspection, and Demonstration with usage percentages and selection guidance.}\label{fig:taid}
+\end{figure}

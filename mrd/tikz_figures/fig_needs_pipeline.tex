@@ -1,0 +1,31 @@
+% fig_needs_pipeline.tex — Five-stage needs-capture pipeline
+\begin{tikzpicture}[>=Stealth]
+% Pipeline stages
+\node[stage=MinesBlue]   (s1) at (0,0)    {1. Problem\\Definition};
+\node[stage=AccentTeal]  (s2) at (3.2,0)  {2. Stakeholder\\Identification};
+\node[stage=WarnOrange]  (s3) at (6.4,0)  {3. Needs\\Elicitation};
+\node[stage=diagPurple]  (s4) at (9.6,0)  {4. ConOps\\Development};
+\node[stage=diagGreen]   (s5) at (12.8,0) {5. Requirements\\Formalization};
+
+% Arrows
+\draw[flow=MinesBlue]  (s1) -- (s2);
+\draw[flow=AccentTeal] (s2) -- (s3);
+\draw[flow=WarnOrange] (s3) -- (s4);
+\draw[flow=diagPurple] (s4) -- (s5);
+
+% Deliverables below each stage
+\node[font=\tiny\sffamily, text width=2.4cm, align=center, color=MinesBlue!80, below=0.4cm of s1]
+    {Five-element\\statement\\Context diagram};
+\node[font=\tiny\sffamily, text width=2.4cm, align=center, color=AccentTeal!80, below=0.4cm of s2]
+    {Power/interest grid\\Nine-category list};
+\node[font=\tiny\sffamily, text width=2.4cm, align=center, color=WarnOrange!80, below=0.4cm of s3]
+    {Interview notes\\Observation data\\MoSCoW ranking};
+\node[font=\tiny\sffamily, text width=2.4cm, align=center, color=diagPurple!80, below=0.4cm of s4]
+    {Usage scenarios\\(normal, degraded,\\emergency)};
+\node[font=\tiny\sffamily, text width=2.4cm, align=center, color=diagGreen!80, below=0.4cm of s5]
+    {SDRD with\\traceability\\V\&V plan};
+
+% Feedback arrow
+\draw[->,line width=0.7pt, densely dashed, color=MinesSilver]
+    (s5.south) -- ++(0,-1.8) -| node[below,pos=0.25,font=\tiny\sffamily,color=MinesSilver]{Iterate as understanding grows} (s1.south);
+\end{tikzpicture}

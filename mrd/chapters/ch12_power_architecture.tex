@@ -230,12 +230,7 @@ Keyed connectors, polarized plugs, and different-sized pins physically prevent r
 
 Every time you switch an inductive load, motor, relay, solenoid, you create a voltage transient. The physics: $V = -L \times dI/dt$. Current cannot change instantaneously in an inductor, so the collapsing magnetic field generates a spike that can reach hundreds of volts from a 12\,V motor.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{master_figs/fig_back_emf.png}
-\caption{Back-EMF generation from inductive load switching and four protection solutions: flyback diode, RC snubber, TVS clamp, and Zener+diode.}
-\label{fig:backemf}
-\end{figure}
+\input{tikz_figures/fig_back_emf}
 
 \subsubsection{Flyback Diode (Freewheeling Diode)}
 \textbf{The single most important protection for inductive loads.} A diode across the motor, relay, or solenoid (cathode to V+) provides a current path when the switch opens. Without it, the collapsing field generates a spike that destroys the switching device. Use a fast-recovery or Schottky diode. H-bridge driver ICs include these internally, but if you drive a relay or solenoid with a bare MOSFET, you \textbf{must} add one externally.
@@ -255,12 +250,7 @@ Place a TVS across each power rail at the board edge where external cables conne
 \label{sec:mechint}
 % ══════════════════════════════════════════════════════════════════════
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{master_figs/fig_mech_integration.png}
-\caption{Motor-to-load power flow through coupling, gear reduction, and output mechanism with key sizing equations.}
-\label{fig:mech}
-\end{figure}
+\input{tikz_figures/fig_mech_integration}
 
 \subsection{Gear Reduction}
 

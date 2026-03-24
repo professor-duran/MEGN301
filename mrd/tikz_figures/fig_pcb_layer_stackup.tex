@@ -1,0 +1,89 @@
+% fig_pcb_layer_stackup.tex — PCB layer stack-ups: single, double, four-layer
+\begin{tikzpicture}[>=Stealth,
+    copperlayer/.style={rectangle, draw=#1, fill=#1!25, minimum width=3.8cm,
+        minimum height=0.3cm, font=\tiny\sffamily\bfseries, inner sep=0pt},
+    substrate/.style={rectangle, draw=diagYellow!60!black, fill=diagYellow!15,
+        minimum width=3.8cm, minimum height=0.5cm, font=\tiny\sffamily, inner sep=0pt},
+    soldermask/.style={rectangle, draw=diagGreen!60!black, fill=diagGreen!20,
+        minimum width=3.8cm, minimum height=0.15cm, inner sep=0pt},
+    stacklabel/.style={font=\small\sffamily\bfseries, color=MinesBlue},
+    speclabel/.style={font=\tiny\sffamily, color=MinesBlue!70!black, text width=3.8cm, align=center},
+    costlabel/.style={font=\tiny\sffamily\bfseries, color=AccentTeal}
+]
+
+% ============ Single-Sided ============
+\node[stacklabel] at (0,2.8) {Single-Sided};
+% Solder mask top
+\node[soldermask] (s1mt) at (0,2.2) {};
+% Copper top
+\node[copperlayer=WarnOrange] (s1c) at (0,1.95) {Signal (Cu)};
+% Substrate
+\node[substrate] (s1sub) at (0,1.5) {FR-4};
+% Solder mask bottom
+\node[soldermask] (s1mb) at (0,1.1) {};
+% Specs
+\node[speclabel] at (0,0.6) {1 copper layer\\Simplest, jumper wires for crossings};
+\node[costlabel] at (0,0.15) {\$2--5};
+
+% ============ Double-Sided ============
+\node[stacklabel] at (5.4,2.8) {Double-Sided};
+% Solder mask top
+\node[soldermask] at (5.4,2.35) {};
+% Copper top
+\node[copperlayer=WarnOrange] at (5.4,2.1) {Top Signal (Cu)};
+% Substrate
+\node[substrate] at (5.4,1.65) {FR-4 Core};
+% Copper bottom
+\node[copperlayer=AccentTeal] at (5.4,1.2) {Bottom / GND (Cu)};
+% Solder mask bottom
+\node[soldermask] at (5.4,0.95) {};
+% Via symbol
+\draw[MinesBlue, line width=0.6pt] (7.7,2.1) -- (7.7,1.2);
+\fill[MinesBlue] (7.7,2.1) circle(2pt);
+\fill[MinesBlue] (7.7,1.2) circle(2pt);
+\node[font=\tiny\sffamily, color=MinesBlue, right] at (7.9,1.65) {via};
+% Specs
+\node[speclabel] at (5.4,0.45) {2 copper layers, connected by vias\\90\% of student projects};
+\node[costlabel] at (5.4,0.0) {\$5--15};
+
+% ============ Four-Layer ============
+\node[stacklabel] at (11.2,2.8) {Four-Layer};
+% Solder mask top
+\node[soldermask] at (11.2,2.45) {};
+% Copper L1
+\node[copperlayer=WarnOrange] at (11.2,2.2) {L1: Signal (Cu)};
+% Prepreg
+\node[substrate, minimum height=0.25cm] at (11.2,1.925) {\tiny prepreg};
+% Copper L2 - GND
+\node[copperlayer=MinesBlue] at (11.2,1.7) {L2: GND Plane};
+% Core
+\node[substrate] at (11.2,1.35) {FR-4 Core};
+% Copper L3 - Power
+\node[copperlayer=diagRed] at (11.2,1.0) {L3: Power Plane};
+% Prepreg
+\node[substrate, minimum height=0.25cm] at (11.2,0.725) {\tiny prepreg};
+% Copper L4
+\node[copperlayer=AccentTeal] at (11.2,0.5) {L4: Signal (Cu)};
+% Solder mask bottom
+\node[soldermask] at (11.2,0.25) {};
+% Specs
+\node[speclabel] at (11.2,-0.25) {Dedicated GND \& power planes\\Mixed-signal / EMI-sensitive};
+\node[costlabel] at (11.2,-0.7) {\$10--30};
+
+% ============ Quick-Reference: Trace Width vs Current ============
+\node[font=\scriptsize\sffamily\bfseries, color=MinesBlue] at (5.4,-1.4) {Trace Width Quick Reference (1\,oz Cu, external, derated)};
+\draw[MinesBlue!40, line width=0.5pt] (0.2,-1.7) -- (10.6,-1.7);
+
+\node[font=\tiny\sffamily, color=MinesBlue!80!black, anchor=west] at (0.2,-2.0)
+    {10\,mil = 0.3\,A};
+\node[font=\tiny\sffamily, color=MinesBlue!80!black, anchor=west] at (3.0,-2.0)
+    {20\,mil = 0.7\,A};
+\node[font=\tiny\sffamily, color=MinesBlue!80!black, anchor=west] at (5.8,-2.0)
+    {50\,mil = 1.5\,A};
+\node[font=\tiny\sffamily, color=MinesBlue!80!black, anchor=west] at (8.2,-2.0)
+    {100\,mil = 3.0\,A};
+
+\node[font=\tiny\sffamily\itshape, color=MinesSilver] at (5.4,-2.5)
+    {Conservative/derated values.\ Use IPC-2221 calculator for exact.};
+
+\end{tikzpicture}

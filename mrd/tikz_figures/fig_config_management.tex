@@ -1,0 +1,54 @@
+% fig_config_management.tex — Configuration management three pillars
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    pillar/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
+        text width=4.0cm, minimum height=3.2cm, align=center,
+        font=\sffamily, line width=0.9pt, inner sep=6pt}
+]
+% Title bar
+\node[rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!12,
+      minimum width=14cm, minimum height=0.8cm, align=center,
+      font=\small\sffamily\bfseries, line width=0.8pt, text=MinesBlue] (title) at (5,3) {Configuration Management};
+
+% Three pillars
+\node[pillar=MinesBlue] (vc) at (0,0) {
+    \textbf{Version Control}\\[6pt]
+    {\scriptsize Git for code}\\[2pt]
+    {\scriptsize Revision letters for\\drawings}\\[2pt]
+    {\scriptsize Versioned BOMs}\\[4pt]
+    {\tiny\textit{Track every change}}
+};
+
+\node[pillar=AccentTeal] (bl) at (5,0) {
+    \textbf{Baseline\\Management}\\[6pt]
+    {\scriptsize PDR / CDR / FDR\\snapshots}\\[2pt]
+    {\scriptsize Formal change control\\after baseline}\\[4pt]
+    {\tiny\textit{Know what you had}}
+};
+
+\node[pillar=WarnOrange] (cc) at (10,0) {
+    \textbf{Change Control}\\[6pt]
+    {\scriptsize Change request}\\[2pt]
+    {\scriptsize Impact assessment}\\[2pt]
+    {\scriptsize Approval}\\[2pt]
+    {\scriptsize Implementation}\\[2pt]
+    {\scriptsize Verification}\\[4pt]
+    {\tiny\textit{Manage every change}}
+};
+
+% Connections from title
+\draw[->, line width=0.8pt, MinesSilver] (title.south) -- ++(0,-0.3) -| (vc.north);
+\draw[->, line width=0.8pt, MinesSilver] (title.south) -- (bl.north);
+\draw[->, line width=0.8pt, MinesSilver] (title.south) -- ++(0,-0.3) -| (cc.north);
+
+% Bottom annotation
+\node[rectangle, rounded corners=2pt, draw=diagRed, fill=diagRed!6,
+      font=\tiny\sffamily, inner sep=3pt, text width=10cm, align=center,
+      line width=0.5pt] at (5,-2.4) {
+    \textcolor{diagRed}{\textbf{Common failure:}} A teammate changes firmware without telling anyone. The system stops working.\\
+    Without CM, you cannot roll back or identify what changed.
+};
+\end{tikzpicture}}%
+\caption{Configuration management pillars.}\label{fig:config_mgmt}
+\end{figure}

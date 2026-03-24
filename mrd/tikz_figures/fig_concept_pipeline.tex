@@ -1,0 +1,37 @@
+% fig_concept_pipeline.tex — Concept-to-design pipeline with PDR deliverables
+\begin{tikzpicture}[>=Stealth]
+% Pipeline stages
+\node[stage=MinesBlue]   (s1) at (0,0)    {Functional\\Decomposition};
+\node[stage=AccentTeal]  (s2) at (3.2,0)  {Morphological\\Chart};
+\node[stage=WarnOrange]  (s3) at (6.4,0)  {Pugh\\Screening};
+\node[stage=diagPurple]  (s4) at (9.6,0)  {Weighted\\Decision Matrix};
+\node[stage=diagGreen]   (s5) at (12.8,0) {Selected\\Concept};
+
+% Arrows
+\draw[flow=MinesBlue]  (s1) -- (s2);
+\draw[flow=AccentTeal] (s2) -- (s3);
+\draw[flow=WarnOrange] (s3) -- (s4);
+\draw[flow=diagPurple] (s4) -- (s5);
+
+% Counts below
+\node[font=\tiny\sffamily, color=MinesBlue!80, below=0.3cm of s1, text width=2.4cm, align=center]
+    {5--8 functions\\identified};
+\node[font=\tiny\sffamily, color=AccentTeal!80, below=0.3cm of s2, text width=2.4cm, align=center]
+    {$\geq$20 concept\\combinations};
+\node[font=\tiny\sffamily, color=WarnOrange!80, below=0.3cm of s3, text width=2.4cm, align=center]
+    {Screen to\\3--5 finalists};
+\node[font=\tiny\sffamily, color=diagPurple!80, below=0.3cm of s4, text width=2.4cm, align=center]
+    {Quantitative\\scoring + sensitivity};
+\node[font=\tiny\sffamily, color=diagGreen!80, below=0.3cm of s5, text width=2.4cm, align=center]
+    {Block diagram\\+ BOM + risk};
+
+% PDR deliverables bracket
+\draw[decorate, decoration={brace, amplitude=6pt}, line width=0.8pt, diagRed]
+    (-1.0,1.2) -- (13.8,1.2);
+\node[font=\scriptsize\sffamily\bfseries, color=diagRed] at (6.4,1.9)
+    {PDR Deliverables Package};
+
+% Input from requirements
+\draw[->,line width=0.7pt, densely dashed, MinesSilver] (-2.5,0) -- (s1.west)
+    node[above,midway,font=\tiny\sffamily,color=MinesSilver]{From Ch.\,3\\Requirements};
+\end{tikzpicture}

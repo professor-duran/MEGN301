@@ -1,0 +1,63 @@
+% fig1_connector_taxonomy.tex — Electrical connector taxonomy by connection type
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    root/.style={stage={MinesBlue}, text width=3.0cm, minimum height=1.2cm, font=\small\sffamily\bfseries},
+    catnode/.style={cat={#1}, text width=2.4cm, minimum height=0.9cm},
+    leaf/.style={rectangle, rounded corners=2pt, draw=#1!60, fill=#1!6, text width=2.0cm, minimum height=0.6cm, align=center, font=\tiny\sffamily, line width=0.5pt},
+    conn/.style={flow={#1}},
+]
+% Root
+\node[root] (root) {Electrical\\Connectors};
+
+% Level 1 — Connection Types
+\node[catnode=AccentTeal, below left=1.4cm and 4.5cm of root] (perm) {Permanent};
+\node[catnode=MinesBlue, below left=1.4cm and 1.2cm of root] (semi) {Semi-Permanent};
+\node[catnode=diagPurple, below right=1.4cm and 1.2cm of root] (quick) {Quick-Disconnect};
+\node[catnode=WarnOrange, below right=1.4cm and 4.5cm of root] (toolless) {Tool-Free};
+
+% Level 2 — Examples under Permanent
+\node[leaf=AccentTeal, below left=1.0cm and 0.6cm of perm] (solder) {Solder};
+\node[leaf=AccentTeal, below right=1.0cm and 0.6cm of perm] (crimp) {Crimp};
+
+% Examples under Semi-Permanent
+\node[leaf=MinesBlue, below left=1.0cm and 0.4cm of semi] (screw) {Screw Terminal};
+\node[leaf=MinesBlue, below right=1.0cm and 0.4cm of semi] (idc) {IDC};
+
+% Examples under Quick-Disconnect
+\node[leaf=diagPurple, below left=1.0cm and 0.4cm of quick] (molex) {Pin Header\\(Molex/Dupont)};
+\node[leaf=diagPurple, below right=1.0cm and 0.4cm of quick] (circular) {Circular\\(Deutsch/MIL)};
+
+% Examples under Tool-Free
+\node[leaf=WarnOrange, below left=1.0cm and 0.4cm of toolless] (lever) {Lever Nut\\(Wago)};
+\node[leaf=WarnOrange, below right=1.0cm and 0.4cm of toolless] (push) {Push-In\\Terminal};
+
+% Arrows from root
+\draw[conn=AccentTeal] (root.south) -- ++(0,-0.3) -| (perm.north);
+\draw[conn=MinesBlue] (root.south) -- ++(0,-0.3) -| (semi.north);
+\draw[conn=diagPurple] (root.south) -- ++(0,-0.3) -| (quick.north);
+\draw[conn=WarnOrange] (root.south) -- ++(0,-0.3) -| (toolless.north);
+
+% Arrows to leaves
+\draw[conn=AccentTeal] (perm.south) -- ++(0,-0.2) -| (solder.north);
+\draw[conn=AccentTeal] (perm.south) -- ++(0,-0.2) -| (crimp.north);
+\draw[conn=MinesBlue] (semi.south) -- ++(0,-0.2) -| (screw.north);
+\draw[conn=MinesBlue] (semi.south) -- ++(0,-0.2) -| (idc.north);
+\draw[conn=diagPurple] (quick.south) -- ++(0,-0.2) -| (molex.north);
+\draw[conn=diagPurple] (quick.south) -- ++(0,-0.2) -| (circular.north);
+\draw[conn=WarnOrange] (toolless.south) -- ++(0,-0.2) -| (lever.north);
+\draw[conn=WarnOrange] (toolless.south) -- ++(0,-0.2) -| (push.north);
+
+% Termination methods label bar at bottom
+\node[below=3.8cm of root, font=\small\sffamily\bfseries, color=MinesBlue] (termlabel) {Five Termination Methods};
+
+\node[block=AccentTeal, below left=0.5cm and 4.0cm of termlabel] (t1) {Solder};
+\node[block=MinesBlue, below left=0.5cm and 1.5cm of termlabel] (t2) {Crimp};
+\node[block=diagPurple, below=0.5cm of termlabel] (t3) {IDC};
+\node[block=WarnOrange, below right=0.5cm and 1.5cm of termlabel] (t4) {Screw\\Clamp};
+\node[block=diagGreen, below right=0.5cm and 4.0cm of termlabel] (t5) {Spring\\Cage};
+
+\end{tikzpicture}
+\caption{Electrical connector taxonomy by connection type with five termination methods.}
+\label{fig:connector_taxonomy}
+\end{figure}

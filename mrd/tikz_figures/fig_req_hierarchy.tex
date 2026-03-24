@@ -1,0 +1,61 @@
+% fig_req_hierarchy.tex — Requirements hierarchy with traceability
+\begin{tikzpicture}[>=Stealth,
+    level/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!10,
+        text width=3.0cm, minimum height=0.9cm, align=center,
+        font=\scriptsize\sffamily\bfseries, line width=0.8pt},
+    rtype/.style={rectangle, rounded corners=2pt, draw=#1, fill=#1!8,
+        text width=2.0cm, minimum height=0.6cm, align=center,
+        font=\tiny\sffamily\bfseries, line width=0.6pt}
+]
+% Level 0: Stakeholder Needs
+\node[level=MinesBlue] (sn) at (6,0) {Stakeholder Needs};
+\node[font=\tiny\sffamily, color=MinesSilver, right=0.3cm of sn] {``I need to keep crops alive''};
+
+% Level 1: System Requirements
+\node[level=AccentTeal] (sr1) at (2,-2) {SYS-REQ-001\\Measure Temp};
+\node[level=AccentTeal] (sr2) at (6,-2) {SYS-REQ-002\\Control Heater};
+\node[level=AccentTeal] (sr3) at (10,-2) {SYS-REQ-003\\Send Alert};
+
+% Level 2: Subsystem Requirements
+\node[level=WarnOrange] (sub1) at (0.5,-4) {SENS-001\\Accuracy $\pm$0.5\,\degC{}};
+\node[level=WarnOrange] (sub2) at (3.5,-4) {SENS-002\\Range $-$20 to 60\,\degC{}};
+\node[level=WarnOrange] (sub3) at (6.5,-4) {CTRL-001\\Response $<$10\,s};
+\node[level=WarnOrange] (sub4) at (9.5,-4) {COM-001\\SMS within 60\,s};
+
+% Level 3: Component Specs
+\node[level=diagPurple] (comp1) at (0.5,-6) {DS18B20\\$\pm$0.5\,\degC{}};
+\node[level=diagPurple] (comp2) at (3.5,-6) {ESP32 ADC\\12-bit};
+\node[level=diagPurple] (comp3) at (6.5,-6) {SSR Relay\\10\,ms switch};
+
+% Connections
+\draw[flow=MinesBlue] (sn) -- (sr1);
+\draw[flow=MinesBlue] (sn) -- (sr2);
+\draw[flow=MinesBlue] (sn) -- (sr3);
+\draw[flow=AccentTeal] (sr1) -- (sub1);
+\draw[flow=AccentTeal] (sr1) -- (sub2);
+\draw[flow=AccentTeal] (sr2) -- (sub3);
+\draw[flow=AccentTeal] (sr3) -- (sub4);
+\draw[flow=WarnOrange] (sub1) -- (comp1);
+\draw[flow=WarnOrange] (sub2) -- (comp2);
+\draw[flow=WarnOrange] (sub3) -- (comp3);
+
+% Level labels on the left
+\node[font=\scriptsize\sffamily\bfseries, color=MinesBlue, rotate=90, anchor=south] at (-1.5,0) {Needs};
+\node[font=\scriptsize\sffamily\bfseries, color=AccentTeal, rotate=90, anchor=south] at (-1.5,-2) {System};
+\node[font=\scriptsize\sffamily\bfseries, color=WarnOrange, rotate=90, anchor=south] at (-1.5,-4) {Subsystem};
+\node[font=\scriptsize\sffamily\bfseries, color=diagPurple, rotate=90, anchor=south] at (-1.5,-6) {Component};
+
+% Traceability arrows on the right
+\draw[<->,line width=0.7pt,densely dashed, diagGreen] (12,0) -- (12,-2)
+    node[midway,right,font=\tiny\sffamily,color=diagGreen,text width=1.8cm,align=left]{Forward:\\need $\to$ req};
+\draw[<->,line width=0.7pt,densely dashed, diagGreen] (12,-2) -- (12,-4)
+    node[midway,right,font=\tiny\sffamily,color=diagGreen,text width=1.8cm,align=left]{Backward:\\spec $\to$ need};
+
+% Three requirement types legend
+\node[rtype=MinesBlue] at (2,-7.8) {Functional};
+\node[font=\tiny\sffamily, color=MinesSilver] at (2,-8.5) {What it does};
+\node[rtype=AccentTeal] at (6,-7.8) {Performance};
+\node[font=\tiny\sffamily, color=MinesSilver] at (6,-8.5) {How well};
+\node[rtype=WarnOrange] at (10,-7.8) {Non-Functional};
+\node[font=\tiny\sffamily, color=MinesSilver] at (10,-8.5) {Constraints};
+\end{tikzpicture}

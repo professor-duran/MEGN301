@@ -16,12 +16,17 @@ A microcontroller (MCU) integrates a CPU, memory (flash + SRAM), and peripherals
 \caption{MCU internal architecture: CPU, memory, peripherals, communication, and power on one chip.}\end{figure}
 
 \subsection{MCU Platform Comparison}
-\begin{figure}[htbp]\centering\includegraphics[width=\textwidth]{master_figs/fig_mcu_comparison.png}
+\begin{figure}[htbp]\centering\input{tikz_figures/fig_mcu_comparison}
 \caption{Six MCU platforms compared. ESP32 recommended for MEGN 301.}\end{figure}
 
 \textbf{Selection criteria}: GPIO count (add 20\% margin), communication protocols needed, processing power, power budget (deep sleep current for battery), ecosystem (libraries, community), and cost/availability.
 
 \section{ESP32 Deep Dive}
+
+\begin{tipbox}[ESP32 Variant Landscape]
+Espressif has released newer variants of the ESP32 family, including the ESP32-S3 (USB-OTG and vector instructions for AI/ML acceleration), the ESP32-C3 (RISC-V core at lower cost), and the ESP32-C6 (Wi-Fi~6, Thread, and Zigbee support). The ESP32-WROOM-32 remains the recommended platform for MEGN~301 due to its extensive library support, mature documentation, broad community resources, and low cost. Students interested in exploring newer variants for personal or capstone projects can use the same Arduino framework and programming patterns taught in this course.
+\end{tipbox}
+
 The ESP32-WROOM-32 is the recommended MCU for MEGN 301 projects: dual-core Xtensa LX6 at 240\,MHz, 520\,KB SRAM, 4\,MB flash, built-in Wi-Fi (802.11 b/g/n) and Bluetooth (Classic + BLE 4.2), 34 GPIO, 18 ADC channels (12-bit), 2 DAC channels (8-bit), 16 PWM channels, 3 UART, 2 SPI, 2 I2C, 1 CAN, 10 capacitive touch pins, deep sleep at $\sim$10\,$\mu$A. Cost: \$4--8 for a DevKit board.
 
 \begin{figure}[htbp]\centering\includegraphics[width=\textwidth]{master_figs/fig_esp32_deep_dive.png}
@@ -67,7 +72,7 @@ The ESP32-WROOM-32 is the recommended MCU for MEGN 301 projects: dual-core Xtens
 Active ($\sim$240\,mA with Wi-Fi), modem sleep ($\sim$20\,mA, radio off), light sleep ($\sim$0.8\,mA, CPU paused), deep sleep ($\sim$10\,$\mu$A, RTC only). Battery sizing example: 2000\,mAh LiPo at active+Wi-Fi = 10 hours; at deep sleep with 1-min wakeups ($\sim$0.5\,mA average) = 166 days.
 
 \section{Communication Protocols}
-\begin{figure}[htbp]\centering\includegraphics[width=\textwidth]{master_figs/fig_mcu_protocols.png}
+\begin{figure}[htbp]\centering\input{tikz_figures/fig_mcu_protocols}
 \caption{Six communication protocols with wire count, speed, topology, and ESP32 support.}\end{figure}
 
 \textbf{UART}: 2 wires, point-to-point, 9600--115200 baud. Debug, GPS, cellular. \textbf{SPI}: 4 wires + CS, bus, up to 80\,MHz. Displays, SD cards, fast sensors. \textbf{I2C}: 2 wires, bus, 100--400\,kHz, 127 addresses. Most sensors (BME280, MPU6050). Needs 4.7\,k$\Omega$ pull-ups. \textbf{CAN}: 2 wires + transceiver, multi-node, 1\,Mbps. Automotive/industrial. \textbf{Wi-Fi/BLE}: wireless IoT.

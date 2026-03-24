@@ -72,7 +72,7 @@ A well-formed requirement has: (1) a unique ID (SYS-REQ-042) for traceability, (
 Requirements decompose top-down: stakeholder needs $\to$ system requirements $\to$ subsystem requirements $\to$ component specifications. Each level adds detail. Every child requirement traces to a parent (backward traceability). Every parent is decomposed into children (forward traceability). An orphan requirement has no justification; an undecomposed requirement has no implementation.
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_req_hierarchy.png}
+\input{tikz_figures/fig_req_hierarchy}
 \caption{Requirements hierarchy from stakeholder needs through system, subsystem, and component levels with traceability and three requirement types.}\label{fig:hier}
 \end{figure}
 
@@ -104,7 +104,7 @@ A requirement that fails any test must be rewritten before PDR.
 Define WHAT the system must do (functions) before deciding HOW (physical components). Break the mission into primary functions, sub-functions, and leaf functions. Each leaf maps to a physical component. Use verb-noun naming: Sense Temperature, Process Data, Provide Power.
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_functional_decomp.png}
+\input{tikz_figures/fig_functional_decomp}
 \caption{Functional decomposition: functions defined before physical allocation. Functions are stable; implementations change.}\label{fig:func}
 \end{figure}
 
@@ -144,6 +144,34 @@ Every system operates in an environment that imposes constraints. Systematically
 \item \textbf{Materials}: RoHS compliance, California Prop 65, food-contact (FDA 21~CFR).
 \end{itemize}
 
+\section{Accessibility and Universal Design}
+Accessibility is a non-functional requirement category that is easy to overlook and expensive to retrofit. Universal Design, a framework developed by Ronald Mace at NC State University, holds that products and environments should be usable by \emph{all people}, to the greatest extent possible, without the need for adaptation or specialized design. The seven principles of Universal Design provide a practical checklist for evaluating your design:
+
+\begin{enumerate}[nosep,leftmargin=1.5em]
+\item \textbf{Equitable Use}: the design is useful and marketable to people with diverse abilities. No user group is segregated or stigmatized by the design.
+\item \textbf{Flexibility in Use}: the design accommodates a wide range of individual preferences and abilities, including right- or left-handed use and adaptable pacing.
+\item \textbf{Simple and Intuitive Use}: the design is easy to understand regardless of the user's experience, knowledge, language skills, or concentration level.
+\item \textbf{Perceptible Information}: the design communicates necessary information effectively to the user, regardless of ambient conditions or the user's sensory abilities. Use redundant modes (visual + audible + tactile).
+\item \textbf{Tolerance for Error}: the design minimizes hazards and adverse consequences of accidental or unintended actions. Fail-safe features and confirmation steps reduce risk.
+\item \textbf{Low Physical Effort}: the design can be used efficiently and comfortably with minimum fatigue. Controls require reasonable force and allow a neutral body position.
+\item \textbf{Size and Space for Approach and Use}: appropriate size and space is provided for approach, reach, manipulation, and use regardless of the user's body size, posture, or mobility aid.
+\end{enumerate}
+
+\subsection{Regulatory Requirements}
+For products with \textbf{physical interfaces} (controls, handles, displays, enclosures), the Americans with Disabilities Act (ADA) establishes minimum accessibility standards. ADA compliance is not optional for products deployed in public spaces, educational institutions, or workplaces. Key considerations include: reach ranges, operating force limits, tactile indicators, and clearances for wheelchair access.
+
+For products with \textbf{digital interfaces} (screens, apps, web dashboards), the Web Content Accessibility Guidelines (WCAG~2.1) define three conformance levels (A, AA, AAA). Level~AA is the most common compliance target and covers: text alternatives for non-text content, keyboard navigability, sufficient color contrast ($\geq$4.5:1 for normal text), and screen reader compatibility.
+
+\begin{tipbox}[Accessibility Quick-Check]
+Before PDR, ask these three questions about your design:
+\begin{itemize}[nosep,leftmargin=1.5em]
+\item \textbf{Limited mobility}: Can the product be operated with one hand? Can all controls be reached from a seated position? Do any controls require more than 5\,lbf of force?
+\item \textbf{Limited vision}: Are all critical indicators available in at least two sensory modes (e.g., visual + audible)? Is text $\geq$12\,pt? Does the display maintain $\geq$4.5:1 contrast ratio?
+\item \textbf{Limited hearing}: Are all audible alerts accompanied by a visual indicator? Are instructions available in text form rather than audio only?
+\end{itemize}
+If the answer to any question is ``no,'' write a requirement to address it. Accessibility requirements are testable: ``The system shall be operable with one hand and require no more than 5\,lbf of actuation force on any control'' is a well-formed SHALL statement.
+\end{tipbox}
+
 \section{Trade Studies and Decision Making}
 \subsection{The Trade Study\index{trade study} Process}
 \begin{enumerate}[leftmargin=1.5em]
@@ -158,7 +186,7 @@ Every system operates in an environment that imposes constraints. Systematically
 \textbf{Pugh (screening)}: rate options as $+$, S, $-$ against a datum. Fast. No weights. Eliminates clearly inferior options. \textbf{Weighted matrix (selection)}: numerical ratings $\times$ weights. Rigorous, quantitative, traceable. Best practice: Pugh to screen $\to$ weighted matrix to select.
 
 \begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_decision_matrix.png}
+\input{tikz_figures/fig_decision_matrix}
 \caption{Weighted decision matrix example: motor selection with six criteria, three options.}\label{fig:matrix}
 \end{figure}
 
@@ -221,7 +249,7 @@ Wi-Fi/BLE (0.10) & 5 (0.50) & 1 (0.10) & 1 (0.10) \\
 
 \section{Requirements-to-Architecture Flow}
 \begin{figure}[htbp]\centering
-\includegraphics[width=\textwidth]{master_figs/fig_design_flow.png}
+\input{tikz_figures/fig_design_flow}
 \caption{Five-stage design flow: stakeholder needs $\to$ requirements $\to$ functional decomposition $\to$ trade studies $\to$ architecture.}\label{fig:flow}
 \end{figure}
 

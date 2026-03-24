@@ -1,0 +1,59 @@
+% fig4_selection_framework.tex — Decision tree for electrical and fluid connector selection
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    decision/.style={diamond, draw=#1, fill=#1!8, aspect=2.2, align=center, font=\scriptsize\sffamily\bfseries, inner sep=2pt, line width=0.8pt, text width=2.0cm},
+    result/.style={stage={#1}, text width=2.4cm, minimum height=0.9cm, font=\scriptsize\sffamily\bfseries},
+    yesno/.style={font=\tiny\sffamily\bfseries, color=#1},
+    conn/.style={flow={MinesBlue!70}},
+]
+
+% Start
+\node[stage=MinesBlue, text width=3.0cm, minimum height=1.0cm] (start) {Connection\\Type?};
+
+% Branch: Electrical vs Fluid
+\node[decision=AccentTeal, below left=1.5cm and 3.5cm of start] (elec) {Electrical};
+\node[decision=WarnOrange, below right=1.5cm and 3.5cm of start] (fluid) {Fluid};
+
+\draw[conn] (start.south) -- ++(0,-0.4) -| (elec.north) node[pos=0.25, above, yesno=AccentTeal] {Electrical};
+\draw[conn] (start.south) -- ++(0,-0.4) -| (fluid.north) node[pos=0.25, above, yesno=WarnOrange] {Fluid};
+
+% Electrical branch
+\node[decision=MinesBlue, below left=1.5cm and 1.5cm of elec] (highcur) {$I > 15$\,A?};
+\node[decision=diagPurple, below right=1.5cm and 1.5cm of elec] (disconnect) {Frequent\\disconnect?};
+
+\draw[conn] (elec.south) -- ++(0,-0.3) -| (highcur.north);
+\draw[conn] (elec.south) -- ++(0,-0.3) -| (disconnect.north);
+
+% High current results
+\node[result=WarnOrange, below left=1.3cm and 0.5cm of highcur] (ring) {Ring Terminal\\+ Stud};
+\node[result=AccentTeal, below right=1.3cm and 0.5cm of highcur] (anderson) {Anderson SB\\Connector};
+
+\draw[conn] (highcur.south) -- ++(0,-0.3) -| (ring.north) node[pos=0.25, left, yesno=diagGreen] {Perm.};
+\draw[conn] (highcur.south) -- ++(0,-0.3) -| (anderson.north) node[pos=0.25, right, yesno=diagPurple] {Disc.};
+
+% Disconnect results
+\node[result=diagPurple, below left=1.3cm and 0.3cm of disconnect] (molex) {Molex/JST\\Headers};
+\node[result=MinesBlue, below right=1.3cm and 0.3cm of disconnect] (deutsch) {Deutsch DT\\(harsh env.)};
+
+\draw[conn] (disconnect.south) -- ++(0,-0.3) -| (molex.north) node[pos=0.25, left, yesno=diagGreen] {Indoor};
+\draw[conn] (disconnect.south) -- ++(0,-0.3) -| (deutsch.north) node[pos=0.25, right, yesno=WarnOrange] {Outdoor};
+
+% Fluid branch
+\node[decision=diagGreen, below left=1.5cm and 1.0cm of fluid] (press) {Pressure\\$> 50$\,psi?};
+\node[decision=diagYellow, below right=1.5cm and 1.0cm of fluid] (flex) {Flexible\\line?};
+
+\draw[conn] (fluid.south) -- ++(0,-0.3) -| (press.north);
+\draw[conn] (fluid.south) -- ++(0,-0.3) -| (flex.north);
+
+% Pressure results
+\node[result=diagRed, below=1.3cm of press] (npt) {NPT / AN\\Fittings};
+\node[result=diagGreen, below=1.3cm of flex] (barb) {Barb + Clamp\\/ Push-to-Connect};
+
+\draw[conn] (press.south) -- (npt.north);
+\draw[conn] (flex.south) -- (barb.north);
+
+\end{tikzpicture}
+\caption{Decision tree for electrical and fluid connector selection.}
+\label{fig:selection_framework}
+\end{figure}

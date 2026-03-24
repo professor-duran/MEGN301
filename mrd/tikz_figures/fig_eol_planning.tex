@@ -1,0 +1,67 @@
+% fig_eol_planning.tex — End-of-life planning deliverables
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    deliv/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=3.2cm, minimum height=1.6cm, align=center,
+        font=\scriptsize\sffamily, line width=0.7pt, inner sep=4pt},
+    arr/.style={->, line width=0.8pt, color=MinesSilver}
+]
+% Title
+\node[rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!12,
+      minimum width=4cm, minimum height=0.7cm, align=center,
+      font=\small\sffamily\bfseries, line width=0.8pt, text=MinesBlue] (title) at (6.5,3) {End-of-Life Planning};
+
+% Deliverables
+\node[deliv=AccentTeal] (dfd) at (0,0.8) {
+    \textbf{DfD Procedure}\\[3pt]
+    {\tiny Disassembly steps,\\tool list, time target\\($\leq$5 min)}
+};
+
+\node[deliv=MinesBlue] (matid) at (3.8,0.8) {
+    \textbf{Material ID}\\[3pt]
+    {\tiny Label each component\\by material category\\for sorting}
+};
+
+\node[deliv=WarnOrange] (hazmat) at (7.6,0.8) {
+    \textbf{Hazmat Handling}\\[3pt]
+    {\tiny Battery, solvents,\\lead solder --- special\\disposal pathways}
+};
+
+\node[deliv=diagGreen] (recycle) at (11.4,0.8) {
+    \textbf{Recycling Plan}\\[3pt]
+    {\tiny Route each material\\stream to appropriate\\recycler}
+};
+
+% Second row
+\node[deliv=diagPurple] (data) at (1.9,-1.6) {
+    \textbf{Data Sanitization}\\[3pt]
+    {\tiny Erase EEPROM, flash,\\SD cards with\\sensitive data}
+};
+
+\node[deliv=diagYellow] (archive) at (5.7,-1.6) {
+    \textbf{Documentation\\Archive}\\[3pt]
+    {\tiny Preserve calibration,\\maintenance history,\\design rationale}
+};
+
+\node[deliv=diagRed] (dispose) at (9.5,-1.6) {
+    \textbf{Disposal Records}\\[3pt]
+    {\tiny Date, responsible\\person, material\\dispositions, manifests}
+};
+
+% Connections
+\draw[arr] (title.south) -- ++(0,-0.5) -| (dfd.north);
+\draw[arr] (title.south) -- ++(0,-0.5) -| (matid.north);
+\draw[arr] (title.south) -- ++(0,-0.5) -| (hazmat.north);
+\draw[arr] (title.south) -- ++(0,-0.5) -| (recycle.north);
+
+% Design principle
+\node[rectangle, rounded corners=2pt, draw=AccentTeal, fill=AccentTeal!6,
+      font=\tiny\sffamily, inner sep=3pt, text width=10cm, align=center,
+      line width=0.5pt] at (5.7,-3.4) {
+    \textbf{Design rules:} Fasteners not adhesives \textbullet{} Single-material design \textbullet{}
+    Snap-fits must be releasable \textbullet{} Label material types on panels
+};
+\end{tikzpicture}}%
+\caption{End-of-life planning deliverables.}\label{fig:eol_planning}
+\end{figure}

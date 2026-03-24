@@ -1,0 +1,47 @@
+% fig_handoff_package.tex — Integration handoff package documentation artifacts
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    doc/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=3.0cm, minimum height=1.4cm, align=center,
+        font=\scriptsize\sffamily, line width=0.7pt, inner sep=4pt},
+    arr/.style={->, line width=0.8pt, color=MinesSilver}
+]
+% Design phase
+\node[rectangle, rounded corners=4pt, draw=MinesBlue, fill=MinesBlue!12,
+      minimum width=3.5cm, minimum height=0.7cm, align=center,
+      font=\small\sffamily\bfseries, line width=0.8pt, text=MinesBlue] (design) at (0,2.5) {Design Phase};
+
+% Integration phase
+\node[rectangle, rounded corners=4pt, draw=AccentTeal, fill=AccentTeal!12,
+      minimum width=3.5cm, minimum height=0.7cm, align=center,
+      font=\small\sffamily\bfseries, line width=0.8pt, text=AccentTeal] (integ) at (13,2.5) {Integration Phase};
+
+% Handoff arrow
+\draw[->, line width=1.5pt, WarnOrange] (2.5,2.5) -- node[above, font=\scriptsize\sffamily\bfseries, WarnOrange, fill=white, inner sep=2pt] {Handoff Package} (10.5,2.5);
+
+% Documentation artifacts
+\node[doc=MinesBlue] (schem) at (0,0.5) {\textbf{Schematics}\\[2pt]{\tiny Reviewed, versioned\\electrical drawings}};
+\node[doc=MinesBlue] (bom) at (3.5,0.5) {\textbf{BOM}\\[2pt]{\tiny Complete with\\vendors \& alternates}};
+\node[doc=AccentTeal] (icd) at (7,0.5) {\textbf{ICDs}\\[2pt]{\tiny Signed interface\\control documents}};
+\node[doc=AccentTeal] (fw) at (10.5,0.5) {\textbf{Firmware}\\[2pt]{\tiny Tagged release,\\build instructions}};
+\node[doc=WarnOrange] (tp) at (14,0.5) {\textbf{Test Plan}\\[2pt]{\tiny Procedures ready\\for execution}};
+
+% Row 2
+\node[doc=MinesBlue] (cad) at (0,-1.5) {\textbf{CAD / Drawings}\\[2pt]{\tiny Dimensioned,\\toleranced}};
+\node[doc=diagYellow] (intplan) at (3.5,-1.5) {\textbf{Integration Plan}\\[2pt]{\tiny Sequence, gates,\\schedule}};
+\node[doc=diagGreen] (safety) at (7,-1.5) {\textbf{Safety Review}\\[2pt]{\tiny Hazards identified,\\mitigations in place}};
+\node[doc=diagPurple] (spare) at (10.5,-1.5) {\textbf{Spare Parts}\\[2pt]{\tiny Critical spares\\on hand}};
+\node[doc=MinesSilver] (tools) at (14,-1.5) {\textbf{Tools \& Equip}\\[2pt]{\tiny Test equipment\\reserved}};
+
+% Connections from design
+\draw[arr] (design.south) -- ++(0,-0.5) -| (schem.north);
+\draw[arr] (design.south) -- ++(0,-0.5) -| (bom.north);
+\draw[arr] (design.south) -- ++(0,-0.5) -| (cad.north);
+
+% Connections to integration
+\draw[arr] (tp.north) -- ++(0,0.5) -| (integ.south);
+\draw[arr] (fw.north) -- ++(0,0.5) -| (integ.south);
+\end{tikzpicture}}%
+\caption{Integration handoff package\index{handoff package}: documentation artifacts that transfer from design to integration.}\label{fig:handoff_package}
+\end{figure}

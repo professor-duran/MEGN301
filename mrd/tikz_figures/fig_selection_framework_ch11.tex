@@ -1,0 +1,61 @@
+% fig_selection_framework_ch11.tex — Parallel selection flows for PSU, motor, pump
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    start/.style={stage={MinesBlue}, text width=2.8cm, minimum height=1.0cm, font=\scriptsize\sffamily\bfseries},
+    step/.style={block={#1}, text width=2.4cm, minimum height=0.7cm, font=\tiny\sffamily\bfseries},
+    check/.style={rectangle, rounded corners=2pt, draw=diagGreen, fill=diagGreen!8, text width=2.4cm, minimum height=0.7cm, align=center, font=\tiny\sffamily\bfseries, line width=0.7pt},
+    conn/.style={flow={#1}},
+]
+
+% === Power Supply Column ===
+\node[start] (psu) at (0,0) {Power Supply\\Selection};
+\node[step=AccentTeal, below=0.6cm of psu] (psu1) {List all voltage\\rails needed};
+\node[step=AccentTeal, below=0.5cm of psu1] (psu2) {Sum current per\\rail + 25\% margin};
+\node[step=AccentTeal, below=0.5cm of psu2] (psu3) {Choose topology\\(LDO vs.\ buck)};
+\node[step=AccentTeal, below=0.5cm of psu3] (psu4) {Verify thermal\\derating};
+
+\draw[conn=AccentTeal] (psu) -- (psu1);
+\draw[conn=AccentTeal] (psu1) -- (psu2);
+\draw[conn=AccentTeal] (psu2) -- (psu3);
+\draw[conn=AccentTeal] (psu3) -- (psu4);
+
+% === Motor Column ===
+\node[start] (mot) at (5,0) {Motor\\Selection};
+\node[step=MinesBlue, below=0.6cm of mot] (mot1) {Calculate load\\torque \& speed};
+\node[step=MinesBlue, below=0.5cm of mot1] (mot2) {Select motor type\\(DC/BLDC/stepper)};
+\node[step=MinesBlue, below=0.5cm of mot2] (mot3) {Size for 1.5$\times$\\load torque};
+\node[step=MinesBlue, below=0.5cm of mot3] (mot4) {Select driver\\IC / module};
+
+\draw[conn=MinesBlue] (mot) -- (mot1);
+\draw[conn=MinesBlue] (mot1) -- (mot2);
+\draw[conn=MinesBlue] (mot2) -- (mot3);
+\draw[conn=MinesBlue] (mot3) -- (mot4);
+
+% === Pump Column ===
+\node[start] (pump) at (10,0) {Pump\\Selection};
+\node[step=WarnOrange, below=0.6cm of pump] (pump1) {Map flow circuit\\(head loss)};
+\node[step=WarnOrange, below=0.5cm of pump1] (pump2) {Determine flow\\rate \& pressure};
+\node[step=WarnOrange, below=0.5cm of pump2] (pump3) {Select pump type\\(see matrix)};
+\node[step=WarnOrange, below=0.5cm of pump3] (pump4) {Verify operating\\point on curve};
+
+\draw[conn=WarnOrange] (pump) -- (pump1);
+\draw[conn=WarnOrange] (pump1) -- (pump2);
+\draw[conn=WarnOrange] (pump2) -- (pump3);
+\draw[conn=WarnOrange] (pump3) -- (pump4);
+
+% === Integration Verification ===
+\node[check, below=1.2cm of mot4, text width=8.0cm, minimum height=1.0cm] (verify)
+    {Integration Checklist: \quad
+     PSU handles motor inrush \quad $\bullet$ \quad
+     Grounds separated \quad $\bullet$ \quad
+     Flyback diodes installed};
+
+\draw[conn=diagGreen] (psu4.south) |- (verify.west);
+\draw[conn=diagGreen] (mot4.south) -- (verify.north);
+\draw[conn=diagGreen] (pump4.south) |- (verify.east);
+
+\end{tikzpicture}
+\caption{Parallel selection flows for power supply, motor, and pump with integration verification checklist.}
+\label{fig:selection_framework_b}
+\end{figure}

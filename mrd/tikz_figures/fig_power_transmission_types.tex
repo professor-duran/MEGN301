@@ -1,0 +1,55 @@
+% fig_power_transmission_types.tex — Power transmission methods comparison
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    hdr/.style={rectangle, fill=#1, text=white, minimum width=2.0cm, minimum height=0.65cm, align=center, font=\scriptsize\sffamily\bfseries},
+    cell/.style={rectangle, draw=MinesBlue!30, minimum width=2.0cm, minimum height=1.3cm, align=center, font=\tiny\sffamily, inner sep=3pt, text width=1.8cm},
+    rowhdr/.style={rectangle, fill=#1!15, draw=#1!50, minimum width=2.0cm, minimum height=1.3cm, align=center, font=\scriptsize\sffamily\bfseries, text width=1.8cm, inner sep=3pt},
+]
+
+% Column headers
+\node[hdr=MinesBlue] at (0,0) {Type};
+\node[hdr=AccentTeal] at (2.3,0) {Efficiency};
+\node[hdr=diagGreen] at (4.6,0) {Characteristics};
+\node[hdr=WarnOrange] at (6.9,0) {Limitations};
+\node[hdr=diagPurple] at (9.2,0) {Recommendation};
+
+% Spur Gear
+\node[rowhdr=MinesBlue] at (0,-1.4) {Spur Gear};
+\node[cell] at (2.3,-1.4) {94--98\%\\per mesh};
+\node[cell] at (4.6,-1.4) {Simple, cheap\\Straight teeth\\High capacity};
+\node[cell] at (6.9,-1.4) {Noisy at speed\\No axial\\load capacity};
+\node[cell] at (9.2,-1.4) {Default for\\student projects};
+
+% Timing Belt
+\node[rowhdr=AccentTeal] at (0,-2.8) {Timing\\Belt};
+\node[cell] at (2.3,-2.8) {97--99\%};
+\node[cell] at (4.6,-2.8) {No slip\\No lubrication\\Quiet};
+\node[cell] at (6.9,-2.8) {Limited torque\\Tension needed\\Belt wear};
+\node[cell] at (9.2,-2.8) {GT2 for light\\linear stages};
+
+% Worm Gear
+\node[rowhdr=diagPurple] at (0,-4.2) {Worm\\Gear};
+\node[cell] at (2.3,-4.2) {40--90\%};
+\node[cell] at (4.6,-4.2) {High ratio\\(5:1--100:1)\\Self-locking};
+\node[cell] at (6.9,-4.2) {Low efficiency\\Heat generation\\One-way drive};
+\node[cell] at (9.2,-4.2) {Position hold\\without power};
+
+% Planetary
+\node[rowhdr=WarnOrange] at (0,-5.6) {Planetary};
+\node[cell] at (2.3,-5.6) {95--97\%\\per stage};
+\node[cell] at (4.6,-5.6) {Compact\\Coaxial\\High torque};
+\node[cell] at (6.9,-5.6) {Complex\\Expensive\\Backlash};
+\node[cell] at (9.2,-5.6) {Space-constrained\\high-ratio apps};
+
+% Chain
+\node[rowhdr=diagGreen] at (0,-7.0) {Roller\\Chain};
+\node[cell] at (2.3,-7.0) {95--98\%};
+\node[cell] at (4.6,-7.0) {Positive drive\\High torque\\Shock tolerant};
+\node[cell] at (6.9,-7.0) {Needs lube\\Noisy\\Heavy};
+\node[cell] at (9.2,-7.0) {\#25 chain for\\high-load apps};
+
+\end{tikzpicture}
+\caption{Power transmission methods with efficiency, characteristics, and recommendations.}
+\label{fig:ptypes}
+\end{figure}

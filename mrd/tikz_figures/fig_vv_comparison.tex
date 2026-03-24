@@ -1,0 +1,45 @@
+% fig_vv_comparison.tex — Verification vs. Validation comparison
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth]
+% Verification box
+\node[rectangle, rounded corners=4pt, draw=MinesBlue, fill=MinesBlue!8,
+      text width=5.5cm, minimum height=3.8cm, align=center,
+      font=\sffamily, line width=1pt] (ver) at (0,0) {
+    \textbf{\large Verification}\\[6pt]
+    {\small\textit{``Did we build the system RIGHT?''}}\\[8pt]
+    {\scriptsize Compares \textbf{implementation}\\against \textbf{specification}}\\[6pt]
+    {\scriptsize Done by: \textbf{engineering team}}\\[4pt]
+    {\scriptsize Methods: \textbf{TAID}}\\[4pt]
+    {\scriptsize Output: \textbf{PASS / FAIL per req.}}
+};
+
+% Validation box
+\node[rectangle, rounded corners=4pt, draw=AccentTeal, fill=AccentTeal!8,
+      text width=5.5cm, minimum height=3.8cm, align=center,
+      font=\sffamily, line width=1pt] (val) at (8,0) {
+    \textbf{\large Validation}\\[6pt]
+    {\small\textit{``Did we build the RIGHT system?''}}\\[8pt]
+    {\scriptsize Compares \textbf{delivered system}\\against \textbf{stakeholder needs}}\\[6pt]
+    {\scriptsize Done by/with: \textbf{stakeholder}}\\[4pt]
+    {\scriptsize Methods: \textbf{user testing, field trials}}\\[4pt]
+    {\scriptsize Output: \textbf{acceptance / rejection}}
+};
+
+% Arrows between
+\draw[->, line width=1.2pt, MinesSilver] (ver.east) -- node[above, font=\tiny\sffamily\bfseries, fill=white, inner sep=2pt] {Both required} (val.west);
+
+% Bottom labels
+\node[font=\scriptsize\sffamily, MinesBlue, below=0.4cm of ver, text width=5cm, align=center] {Against \textbf{written specification}\\(requirements document)};
+\node[font=\scriptsize\sffamily, AccentTeal, below=0.4cm of val, text width=5cm, align=center] {Against \textbf{actual operational need}\\(stakeholder intent)};
+
+% Warning annotation
+\node[rectangle, rounded corners=2pt, draw=WarnOrange, fill=WarnOrange!8,
+      font=\tiny\sffamily, text width=6cm, align=center, inner sep=4pt,
+      line width=0.6pt] at (4,-3.4) {
+    \textcolor{WarnOrange}{\textbf{A verified system can fail validation}}\\
+    All requirements met, but the wrong requirements were written
+};
+\end{tikzpicture}}%
+\caption{Verification (meets requirements) vs.\ validation (meets needs); two different questions.}\label{fig:vv}
+\end{figure}

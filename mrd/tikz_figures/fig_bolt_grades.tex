@@ -1,0 +1,75 @@
+% fig_bolt_grades.tex — SAE and ISO bolt grade markings with strength data
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    hdr/.style={rectangle, fill=#1, text=white, minimum width=2.0cm, minimum height=0.65cm, align=center, font=\scriptsize\sffamily\bfseries},
+    cell/.style={rectangle, draw=MinesBlue!30, minimum width=2.0cm, minimum height=1.2cm, align=center, font=\tiny\sffamily, inner sep=3pt, text width=1.8cm},
+    grade/.style={rectangle, fill=#1!12, draw=#1!50, minimum width=2.0cm, minimum height=1.2cm, align=center, font=\scriptsize\sffamily\bfseries, text width=1.8cm, inner sep=3pt},
+    mark/.style={circle, draw=#1, fill=white, minimum size=1.0cm, line width=1pt, font=\tiny\sffamily\bfseries},
+]
+
+% === SAE Section ===
+\node[font=\small\sffamily\bfseries, color=MinesBlue] at (0,1.0) {SAE (Inch)};
+
+% Column headers
+\node[hdr=MinesBlue] at (0,0) {Grade};
+\node[hdr=AccentTeal] at (2.2,0) {Head Mark};
+\node[hdr=diagGreen] at (4.4,0) {UTS};
+\node[hdr=WarnOrange] at (6.6,0) {Use};
+
+% Grade 2
+\node[grade=MinesSilver] at (0,-1.3) {Grade 2};
+\node[cell] at (2.2,-1.3) {No marks};
+\node[cell] at (4.4,-1.3) {74 ksi\\(510 MPa)};
+\node[cell] at (6.6,-1.3) {General\\purpose};
+
+% Grade 5
+\node[grade=AccentTeal] at (0,-2.6) {Grade 5};
+\node[cell] at (2.2,-2.6) {3 radial lines};
+\node[cell] at (4.4,-2.6) {120 ksi\\(830 MPa)};
+\node[cell] at (6.6,-2.6) {Structural\\(most common)};
+
+% Grade 8
+\node[grade=WarnOrange] at (0,-3.9) {Grade 8};
+\node[cell] at (2.2,-3.9) {6 radial lines};
+\node[cell] at (4.4,-3.9) {150 ksi\\(1040 MPa)};
+\node[cell] at (6.6,-3.9) {High strength\\critical joints};
+
+% === ISO Section ===
+\node[font=\small\sffamily\bfseries, color=MinesBlue] at (10.5,1.0) {ISO (Metric)};
+
+\node[hdr=MinesBlue] at (9.0,0) {Class};
+\node[hdr=AccentTeal] at (11.2,0) {UTS (MPa)};
+\node[hdr=diagPurple] at (13.4,0) {Yield (MPa)};
+
+% 4.6
+\node[grade=MinesSilver] at (9.0,-1.3) {4.6};
+\node[cell] at (11.2,-1.3) {400};
+\node[cell] at (13.4,-1.3) {240\\($4 \times 6 \times 10$)};
+
+% 8.8
+\node[grade=AccentTeal] at (9.0,-2.6) {8.8};
+\node[cell] at (11.2,-2.6) {800};
+\node[cell] at (13.4,-2.6) {640\\($8 \times 8 \times 10$)};
+
+% 10.9
+\node[grade=diagPurple] at (9.0,-3.9) {10.9};
+\node[cell] at (11.2,-3.9) {1040};
+\node[cell] at (13.4,-3.9) {940};
+
+% 12.9
+\node[grade=WarnOrange] at (9.0,-5.2) {12.9};
+\node[cell] at (11.2,-5.2) {1220};
+\node[cell] at (13.4,-5.2) {1100};
+
+% Torque-preload relationship box
+\node[rectangle, rounded corners=3pt, draw=MinesBlue, fill=MinesBlue!6, font=\scriptsize\sffamily, align=center, inner sep=6pt, text width=13.0cm]
+    at (6.7,-6.5)
+    {\textbf{Torque--Preload:} \quad $T = K \cdot F \cdot d$ \qquad
+     $K = 0.20$ (dry) \quad $K = 0.15$ (lubricated) \quad $K = 0.12$ (anti-seize)\\[2pt]
+     \textcolor{WarnOrange}{\textbf{90\% of torque is lost to friction}; only 10\% generates clamping force.}};
+
+\end{tikzpicture}
+\caption{SAE and ISO bolt grade markings with strength data and torque-preload relationship.}
+\label{fig:grades}
+\end{figure}

@@ -1,0 +1,41 @@
+% fig_debugging_process.tex — Five-step systematic debugging process
+\begin{figure}[htbp]\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[>=Stealth,
+    step/.style={rectangle, rounded corners=3pt, draw=#1, fill=#1!8,
+        text width=2.6cm, minimum height=1.6cm, align=center,
+        font=\scriptsize\sffamily, line width=0.8pt, inner sep=4pt},
+    num/.style={circle, draw=#1, fill=#1, text=white,
+        minimum size=0.5cm, font=\scriptsize\sffamily\bfseries,
+        line width=0pt, inner sep=0pt},
+    arr/.style={->, line width=1pt, color=MinesSilver}
+]
+% Five steps
+\node[step=MinesBlue] (s1) at (0,0) {\textbf{Reproduce}\\[3pt]{\tiny Make the failure\\happen reliably\\and consistently}};
+\node[step=AccentTeal] (s2) at (3.8,0) {\textbf{Isolate}\\[3pt]{\tiny Disconnect modules\\until failure stops;\\last removed = suspect}};
+\node[step=diagYellow] (s3) at (7.6,0) {\textbf{Characterize}\\[3pt]{\tiny Measure signals\\at interface against\\the ICD spec}};
+\node[step=WarnOrange] (s4) at (11.4,0) {\textbf{Root Cause}\\[3pt]{\tiny Hardware, software,\\or interface\\specification error?}};
+\node[step=diagGreen] (s5) at (15.2,0) {\textbf{Verify Fix}\\[3pt]{\tiny Apply fix, retest,\\then regression-test\\related functions}};
+
+% Step numbers
+\node[num=MinesBlue, above=0.2cm of s1] {1};
+\node[num=AccentTeal, above=0.2cm of s2] {2};
+\node[num=diagYellow, above=0.2cm of s3] {3};
+\node[num=WarnOrange, above=0.2cm of s4] {4};
+\node[num=diagGreen, above=0.2cm of s5] {5};
+
+% Arrows
+\draw[arr] (s1) -- (s2);
+\draw[arr] (s2) -- (s3);
+\draw[arr] (s3) -- (s4);
+\draw[arr] (s4) -- (s5);
+
+% Key rule
+\node[rectangle, rounded corners=2pt, draw=diagRed, fill=diagRed!6,
+      font=\tiny\sffamily\bfseries, text width=10cm, align=center,
+      inner sep=4pt, line width=0.6pt] at (7.6,-1.8) {
+    \textcolor{diagRed}{Change ONE variable at a time --- if you change two things and the problem disappears, you do not know which change fixed it}
+};
+\end{tikzpicture}}%
+\caption{Five-step systematic debugging process.}\label{fig:debug_process}
+\end{figure}
