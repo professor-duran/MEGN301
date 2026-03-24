@@ -3,8 +3,9 @@
     mbox/.style={rectangle, rounded corners=4pt, draw=#1, fill=#1!8,
         text width=3.8cm, minimum height=2.6cm, align=left,
         font=\tiny\sffamily, line width=0.8pt, inner sep=5pt},
-    mtitle/.style={font=\scriptsize\sffamily\bfseries, color=#1}
+    mtitle/.style 2 args={font=\scriptsize\sffamily\bfseries, color=#1, text=#2}
 ]
+\newcommand{\mtitle}[2]{{\scriptsize\sffamily\bfseries\color{#1}#2}}
 % Row 1
 \node[mbox=MinesBlue] (int) at (0,0) {
     \mtitle{MinesBlue}{1. Interviews}\\[3pt]
