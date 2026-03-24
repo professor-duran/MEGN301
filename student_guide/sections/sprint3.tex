@@ -63,7 +63,7 @@ DS18B20 temperature sensor & 3.3\,V & 1.5\,mA & 1.5\,mA & Parasitic mode: 0\,mA 
 \end{warnbox}
 
 \begin{tipbox}
-\textbf{Identify a ``Plan B'' component for every critical item.} For any single-source or sole-vendor component in your BoM, record a backup part number and vendor in a notes column. If your specialty sensor, MOSFET, or pump goes out of stock the week before CDR, you need to order the backup \textit{immediately}, not start a new search. This is especially important for projects with specialty components like the \textit{Sous Vide Supreme} (heating elements) and \textit{Sol-Mate Purification Pal} (solar charge controllers), where lead times can exceed two weeks.
+\textbf{Identify a ``Plan B'' component for every critical item.} For any single-source or sole-vendor component in your BOM, record a backup part number and vendor in a notes column. If your specialty sensor, MOSFET, or pump goes out of stock the week before CDR, you need to order the backup \textit{immediately}, not start a new search. This is especially important for projects with specialty components like the \textit{Sous Vide Supreme} (heating elements) and \textit{Sol-Mate Purification Pal} (solar charge controllers), where lead times can exceed two weeks.
 \end{tipbox}
 
 \subsection{Sensor and Actuator Selection}
@@ -73,7 +73,7 @@ Use the six-criteria framework from Chapter~14 of the MRD: (1)~What physical qua
 \end{faqbox}
 
 \begin{warnbox}
-\textbf{Every actuator needs a driver circuit.} No motor, solenoid, or heater connects directly to a GPIO pin. Before you order an actuator, verify you also have the driver (H-bridge for DC motors, ESC for BLDC, stepper driver for steppers, MOSFET + flyback diode for solenoids, SSR for AC heaters). If the driver is not in your BoM, add it now. See Chapter~11 (Motors \& Pumps) and Chapter~12 (Power Architecture) for driver selection.
+\textbf{Every actuator needs a driver circuit.} No motor, solenoid, or heater connects directly to a GPIO pin. Before you order an actuator, verify you also have the driver (H-bridge for DC motors, ESC for BLDC, stepper driver for steppers, MOSFET + flyback diode for solenoids, SSR for AC heaters). If the driver is not in your BOM, add it now. See Chapter~11 (Motors \& Pumps) and Chapter~12 (Power Architecture) for driver selection.
 \end{warnbox}
 
 \begin{tipbox}

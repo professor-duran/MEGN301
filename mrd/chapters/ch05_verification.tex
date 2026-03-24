@@ -143,7 +143,7 @@ Requirements specify ranges (``0 to 50\,\degC{},'' ``0 to 100\% RH''). Test at: 
 Testing only at room temperature ($\sim$22\,\degC{}) is the most common V\&V shortcut. If your requirement says 0--50\,\degC{}, you \emph{must} test at 0\,\degC{} and 50\,\degC{}. Use the ME department environmental chamber or an ice bath + heat gun. A system that works at 22\,\degC{} but fails at 0\,\degC{} does not meet the requirement.
 \end{tipbox}
 
-\section{Minimum Viable V\&V for MEGN 301}
+\section{Minimum Viable V\&V for MEGN~301}
 The minimum V\&V package for student projects:
 \begin{enumerate}[nosep,leftmargin=1.5em]
 \item A VCRM with every requirement assigned a method and status.
@@ -181,7 +181,7 @@ At \textbf{FDR}: all rows should show PASS, FAIL with Discrepancy Report, or wai
 \end{itemize}
 \end{keyconceptbox}
 
-\section{Artifact Handoff: What Chapter 4 Produces}
+\section{Artifact Handoff: What Chapter 5 Produces}
 \begin{table}[htbp]\centering\small
 \begin{tabularx}{\textwidth}{l X l}
 \toprule
@@ -194,29 +194,6 @@ Test Reports & Results with data, verdict, and any DRs & FDR documentation \\
 \end{tabularx}
 \end{table}
 
-
-\begin{greenshieldbox}[GreenShield: VCRM at Three Milestones]
-\small
-\begin{tabularx}{\linewidth}{l l c c c}
-\toprule
-\textbf{Req ID} & \textbf{Requirement} & \textbf{Method} & \textbf{CDR} & \textbf{FDR} \\
-\midrule
-SYS-001 & Temp at $\geq$1\,Hz & T & In Progress & PASS \\
-SYS-002 & Heater at $\leq$ setpoint & T & PASS & PASS \\
-SYS-003 & SMS within 60\,s & T & Planned & PASS \\
-SYS-004 & Autonomous on comm fail & D & Planned & PASS \\
-SYS-005 & Accuracy $\pm$0.5\,\degC{} & T & PARTIAL & PASS \\
-\bottomrule
-\end{tabularx}
-\end{greenshieldbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: \S4.10 Verification, \S4.11 Validation.
-\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~5.3 Verification, Ch.~5.4 Validation.
-\item \textbf{IEEE 1012}: System, Software, and Hardware V\&V.
-\end{itemize}
-\end{keyconceptbox}
 
 \section{Test Method Selection: T-A-I-D}
 Every requirement must be verified by one of four methods:

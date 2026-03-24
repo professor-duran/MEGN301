@@ -280,7 +280,7 @@ Each leaf function maps to a physical component. ``Measure Air Temp'' $\to$ DS18
 \end{itemize}
 \end{keyconceptbox}
 
-\section{Artifact Handoff: What Chapter 2 Produces}
+\section{Artifact Handoff: What Chapter 3 Produces}
 \begin{table}[htbp]\centering\small
 \begin{tabularx}{\textwidth}{l X l}
 \toprule
@@ -294,28 +294,6 @@ Trade Study Reports & Weighted decision matrices with sensitivity analysis & Ch.
 \end{tabularx}
 \end{table}
 
-
-\begin{greenshieldbox}[GreenShield: Functional Decomposition]
-\textbf{Top-level function}: Protect greenhouse crops from frost damage.
-
-Decomposition:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{Sense Environment} $\to$ Measure Air Temp, Measure Soil Temp, Detect Heater Status
-\item \textbf{Process Data} $\to$ Compare to Setpoint, Apply Hysteresis, Log Data
-\item \textbf{Control Actuator} $\to$ Activate Heater Relay, Deactivate Heater Relay
-\item \textbf{Communicate Status} $\to$ Send SMS Alert, Display Local Status, Receive Remote Commands
-\item \textbf{Provide Power} $\to$ Regulate Supply Voltage, Manage Battery, Protect Circuits
-\end{itemize}
-Each leaf maps to a physical component. ``Measure Air Temp'' $\to$ DS18B20 sensor. ``Regulate Supply Voltage'' $\to$ 5\,V buck converter.
-\end{greenshieldbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: \S4.2 System Requirements Definition, \S4.3 Architecture Definition.
-\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~4.2 Technical Requirements, Ch.~4.3 Logical Decomposition.
-\item \textbf{IEEE 1233}: Guide for developing system requirements specifications.
-\end{itemize}
-\end{keyconceptbox}
 
 \section{Writing Good Requirements: Advanced Techniques}
 \subsection{The SHALL/SHOULD/MAY Hierarchy}

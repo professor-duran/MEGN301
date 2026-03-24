@@ -17,7 +17,7 @@ A microcontroller (MCU) integrates a CPU, memory (flash + SRAM), and peripherals
 
 \subsection{MCU Platform Comparison}
 \begin{figure}[htbp]\centering\input{tikz_figures/fig_mcu_comparison}
-\caption{Six MCU platforms compared. ESP32 recommended for MEGN 301.}\end{figure}
+\caption{Six MCU platforms compared. ESP32 recommended for MEGN~301.}\end{figure}
 
 \textbf{Selection criteria}: GPIO count (add 20\% margin), communication protocols needed, processing power, power budget (deep sleep current for battery), ecosystem (libraries, community), and cost/availability.
 
@@ -27,7 +27,7 @@ A microcontroller (MCU) integrates a CPU, memory (flash + SRAM), and peripherals
 Espressif has released newer variants of the ESP32 family, including the ESP32-S3 (USB-OTG and vector instructions for AI/ML acceleration), the ESP32-C3 (RISC-V core at lower cost), and the ESP32-C6 (Wi-Fi~6, Thread, and Zigbee support). The ESP32-WROOM-32 remains the recommended platform for MEGN~301 due to its extensive library support, mature documentation, broad community resources, and low cost. Students interested in exploring newer variants for personal or capstone projects can use the same Arduino framework and programming patterns taught in this course.
 \end{tipbox}
 
-The ESP32-WROOM-32 is the recommended MCU for MEGN 301 projects: dual-core Xtensa LX6 at 240\,MHz, 520\,KB SRAM, 4\,MB flash, built-in Wi-Fi (802.11 b/g/n) and Bluetooth (Classic + BLE 4.2), 34 GPIO, 18 ADC channels (12-bit), 2 DAC channels (8-bit), 16 PWM channels, 3 UART, 2 SPI, 2 I2C, 1 CAN, 10 capacitive touch pins, deep sleep at $\sim$10\,$\mu$A. Cost: \$4--8 for a DevKit board.
+The ESP32-WROOM-32 is the recommended MCU for MEGN~301 projects: dual-core Xtensa LX6 at 240\,MHz, 520\,KB SRAM, 4\,MB flash, built-in Wi-Fi (802.11 b/g/n) and Bluetooth (Classic + BLE 4.2), 34 GPIO, 18 ADC channels (12-bit), 2 DAC channels (8-bit), 16 PWM channels, 3 UART, 2 SPI, 2 I2C, 1 CAN, 10 capacitive touch pins, deep sleep at $\sim$10\,$\mu$A. Cost: \$4--8 for a DevKit board.
 
 \begin{figure}[htbp]\centering\includegraphics[width=\textwidth]{master_figs/fig_esp32_deep_dive.png}
 \caption{ESP32 specifications, gotchas, and development environment.}\end{figure}
@@ -241,7 +241,7 @@ Low priority: display update and Wi-Fi communication. Runs when higher-priority 
 
 This ensures the control loop always meets its timing deadline, even when lower-priority tasks are slow.
 
-\section{Common ESP32 Pitfalls in MEGN 301}
+\section{Common ESP32 Pitfalls in MEGN~301}
 (1) \textbf{Watchdog timer resets}: the ESP32's watchdog timer resets the system if the main loop (or a FreeRTOS task) does not yield within $\sim$3\,s. Long operations (SD card initialization, Wi-Fi connection) trigger the watchdog. Solution: call \texttt{yield()} or \texttt{vTaskDelay(1)} inside long operations.
 
 (2) \textbf{Power supply noise}: the ESP32's Wi-Fi transmitter draws 120--240\,mA current pulses that cause voltage sag on weak supplies. Symptoms: random resets, ADC reading spikes, Wi-Fi disconnections. Solution: use a dedicated 5\,V supply with $\geq$1\,A capacity and place a 470\,$\mu$F capacitor at the ESP32's 3.3\,V input.

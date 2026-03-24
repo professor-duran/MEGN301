@@ -159,35 +159,12 @@ In industry, the ConOps is often a formal deliverable reviewed at a System Requi
 Problem Statement & Five-element statement (who/what/where/why/constraints) & Ch.~2 (p.\,\pageref{ch:value}) \\
 Stakeholder Map & Power/interest grid with engagement strategies & Ch.~2, Ch.~4 (validation) \\
 Concept of Operations & Plain-language usage scenarios (normal, degraded, emergency) & Ch.~2, Ch.~6 (O\&M) \\
-Competitive Analysis & 3--5 competing solutions with gap identification & Ch.~3 (concept generation) \\
+Competitive Analysis & 3--5 competing solutions with gap identification & Ch.~4 (concept generation) \\
 Context Diagram & System boundary with external interfaces labeled & Ch.~2 (interface requirements) \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-
-\begin{greenshieldbox}[GreenShield: ConOps to Requirements Mapping]
-\textbf{System}: GreenShield. Automated Greenhouse Frost Protection System.
-
-\textbf{ConOps excerpt}: ``When nighttime temperature drops below 3\,\degC{}, the system activates supplemental heating and alerts the operator via SMS. In degraded mode (cellular failure), the system continues autonomous control using local logic.''
-
-\textbf{Requirements derived}:
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item SYS-REQ-001: The system shall monitor air temperature continuously at $\geq$1\,Hz.
-\item SYS-REQ-002: The system shall activate the heater when temperature $\leq$ setpoint (default 3\,\degC{}).
-\item SYS-REQ-003: The system shall send an SMS alert within 60\,s of heater activation.
-\item SYS-REQ-004: The system shall continue autonomous heating control during communication failure.
-\end{itemize}
-Every ConOps sentence should map to at least one requirement. Unmapped sentences indicate vague ConOps or missing requirements.
-\end{greenshieldbox}
-
-\begin{keyconceptbox}[Industry SE Parallels]
-\begin{itemize}[nosep,leftmargin=1.5em]
-\item \textbf{INCOSE SEH 4th ed.}: \S4.1 Stakeholder Needs Definition, \S4.2 System Requirements Definition.
-\item \textbf{NASA SP-2016-6105 Rev~2}: Ch.~4.1 Stakeholder Expectations Definition.
-\item \textbf{IEEE 29148}: Requirements engineering processes.
-\end{itemize}
-\end{keyconceptbox}
 
 \section{Stakeholder Analysis Techniques}
 \subsection{Stakeholder Identification}
@@ -245,7 +222,7 @@ Organize this information in a competitive comparison matrix. The matrix reveals
 \section{Practice Questions}
 \begin{enumerate}[leftmargin=1.5em]
 \item Rewrite this solution-as-problem into a proper five-element problem statement: ``We need to design a solar-powered weather station using a Raspberry Pi.''
-\item List all stakeholders for a MEGN 301 design project that designs an automated pet feeder for elderly users. Use the nine-category checklist.
+\item List all stakeholders for a MEGN~301 design project that designs an automated pet feeder for elderly users. Use the nine-category checklist.
 \item You interview a greenhouse operator who says ``I need a temperature display.'' Through observation, you notice she checks the display, then walks to the heater and turns it on manually. What is her \emph{actual} need? How does this change the requirements?
 \item Classify these stakeholders on a power/interest grid\index{power/interest grid} for a campus parking management system: (a) university president, (b) daily commuter student, (c) campus police, (d) city traffic department, (e) disability services office.
 \item Write a 1-paragraph ConOps for an automated frost protection system for a small greenhouse, including at least two operational scenarios (normal and degraded mode).
